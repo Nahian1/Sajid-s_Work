@@ -20,7 +20,7 @@ import com.cryptenet.thanatos.dtmweb.forgot.ForgotActivity;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
-import com.cryptenet.thanatos.dtmweb.setpassword.SetPasswordActivity;
+import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import dagger.Binds;

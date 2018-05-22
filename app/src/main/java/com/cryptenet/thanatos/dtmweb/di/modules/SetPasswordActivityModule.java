@@ -9,9 +9,9 @@ package com.cryptenet.thanatos.dtmweb.di.modules;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
-import com.cryptenet.thanatos.dtmweb.setpassword.mvp.SetPasswordActivityModel;
-import com.cryptenet.thanatos.dtmweb.setpassword.mvp.SetPasswordActivityPresenter;
-import com.cryptenet.thanatos.dtmweb.setpassword.mvp.SetPasswordActivityRepository;
+import com.cryptenet.thanatos.dtmweb.set_password.mvp.SetPasswordActivityModel;
+import com.cryptenet.thanatos.dtmweb.set_password.mvp.SetPasswordActivityPresenter;
+import com.cryptenet.thanatos.dtmweb.set_password.mvp.SetPasswordActivityRepository;
 
 import dagger.Module;
 import dagger.Provides;

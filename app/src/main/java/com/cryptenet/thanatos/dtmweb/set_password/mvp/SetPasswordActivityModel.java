@@ -5,12 +5,12 @@
  *  This project is under MIT license
  */
 
-package com.cryptenet.thanatos.dtmweb.setpassword.mvp;
+package com.cryptenet.thanatos.dtmweb.set_password.mvp;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
-import com.cryptenet.thanatos.dtmweb.setpassword.SetPasswordActivity;
+import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity

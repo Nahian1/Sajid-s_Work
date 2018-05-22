@@ -7,19 +7,36 @@
 
 package com.cryptenet.thanatos.dtmweb.di.modules;
 
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
+import com.cryptenet.thanatos.dtmweb.di.sub_components.PlanListFragmentSubComponent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.home.mvp.HomeActivityModel;
 import com.cryptenet.thanatos.dtmweb.home.mvp.HomeActivityPresenter;
 import com.cryptenet.thanatos.dtmweb.home.mvp.HomeActivityRepository;
+import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.AndroidInjector;
+import dagger.android.support.FragmentKey;
+import dagger.multibindings.IntoMap;
 
 @Module(
-        includes = BaseActivityModule.class
+        includes = BaseFragActivityModule.class,
+        subcomponents = {
+                PlanListFragmentSubComponent.class
+        }
 )
 public abstract class HomeActivityModule {
+    @Binds
+    @PerActivity
+    abstract AppCompatActivity activity(HomeActivity activity);
+
     @Provides
     @PerActivity
     static HomeActivityContract.Presenter providePresenter(HomeActivityContract.Model model){
@@ -37,4 +54,10 @@ public abstract class HomeActivityModule {
     static HomeActivityContract.Repository provideRepository() {
         return new HomeActivityRepository();
     }
+
+    @Binds
+    @IntoMap
+    @FragmentKey(PlanListFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment>
+    PlanListFragmentInjectorFactory(PlanListFragmentSubComponent.Builder builder);
 }

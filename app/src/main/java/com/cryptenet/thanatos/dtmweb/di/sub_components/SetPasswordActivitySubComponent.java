@@ -9,7 +9,7 @@ package com.cryptenet.thanatos.dtmweb.di.sub_components;
 
 import com.cryptenet.thanatos.dtmweb.di.modules.SetPasswordActivityModule;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
-import com.cryptenet.thanatos.dtmweb.setpassword.SetPasswordActivity;
+import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
 
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;

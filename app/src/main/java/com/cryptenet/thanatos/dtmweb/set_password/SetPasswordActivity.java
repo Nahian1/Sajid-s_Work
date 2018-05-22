@@ -5,7 +5,7 @@
  *  This project is under MIT license
  */
 
-package com.cryptenet.thanatos.dtmweb.setpassword;
+package com.cryptenet.thanatos.dtmweb.set_password;
 
 import android.os.Bundle;
 import android.util.Log;

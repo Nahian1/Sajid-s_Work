@@ -12,11 +12,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
+import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
-public class HomeActivity extends BaseActivity<HomeActivityContract.Presenter>
+public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presenter>
         implements HomeActivityContract.View {
     public static final String TAG = TagProvider.getDebugTag(HomeActivity.class);
 

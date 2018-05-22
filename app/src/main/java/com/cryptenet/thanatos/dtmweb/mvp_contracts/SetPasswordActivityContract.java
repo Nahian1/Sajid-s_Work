@@ -7,7 +7,7 @@
 
 package com.cryptenet.thanatos.dtmweb.mvp_contracts;
 
-import com.cryptenet.thanatos.dtmweb.setpassword.SetPasswordActivity;
+import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
 
 public interface SetPasswordActivityContract {
     interface Presenter extends BaseContract.Presenter<SetPasswordActivityContract.View> {
