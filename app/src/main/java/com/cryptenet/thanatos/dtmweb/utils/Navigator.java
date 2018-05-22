@@ -7,5 +7,13 @@
 
 package com.cryptenet.thanatos.dtmweb.utils;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class Navigator {
+    @Inject
+    public Navigator() {
+    }
+
 }

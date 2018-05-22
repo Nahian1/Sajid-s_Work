@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">DTMWEB</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_forgot">ForgotActivity</string>
+    <string name="title_activity_code">CodeActivity</string>
+    <string name="title_activity_set_password">SetPasswordActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
 </resources>

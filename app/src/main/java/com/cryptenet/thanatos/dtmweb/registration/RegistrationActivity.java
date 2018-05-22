@@ -1,36 +1,33 @@
 /*
  * Copyright (c) 2018.
- * Development Courtesy: Cryptenet Ltd.
- * Developer Credit: Alamgir Hossain, Nabil Shawkat
- * This project is under MIT license
+ *  Development Courtesy: Cryptenet Ltd.
+ *  Developer Credit: Alamgir Hossain, Nabil Shawkat
+ *  This project is under MIT license
  */
 
-package com.cryptenet.thanatos.dtmweb.launcher;
+package com.cryptenet.thanatos.dtmweb.registration;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
-import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
+import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
-
-public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
-        implements LoginActivityContract.View {
-    public static final String TAG = TagProvider.getDebugTag(LoginActivity.class);
+public class RegistrationActivity extends BaseActivity<RegistrationActivityContract.Presenter>
+        implements RegistrationActivityContract.View {
+    public static final String TAG = TagProvider.getDebugTag(RegistrationActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_registration);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,33 +39,12 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
                         .setAction("Action", null).show();
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public LoginActivity getActivity() {
-        return this;
+    public RegistrationActivity getActivity() {
+        return null;
     }
 
     @Override

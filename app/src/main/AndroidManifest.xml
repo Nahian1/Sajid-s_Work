@@ -20,6 +20,47 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".registration.RegistrationActivity"
+            android:label="@string/title_activity_registration"
+            android:parentActivityName=".launcher.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cryptenet.thanatos.dtmweb.launcher.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".forgot.ForgotActivity"
+            android:label="@string/title_activity_forgot"
+            android:parentActivityName=".launcher.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cryptenet.thanatos.dtmweb.launcher.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".code.CodeActivity"
+            android:label="@string/title_activity_code"
+            android:parentActivityName=".forgot.ForgotActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cryptenet.thanatos.dtmweb.forgot.ForgotActivity" />
+        </activity>
+        <activity
+            android:name=".setpassword.SetPasswordActivity"
+            android:label="@string/title_activity_set_password"
+            android:parentActivityName=".code.CodeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cryptenet.thanatos.dtmweb.code.CodeActivity" />
+        </activity>
+        <activity
+            android:name=".home.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:parentActivityName=".launcher.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cryptenet.thanatos.dtmweb.launcher.LoginActivity" />
+        </activity>
     </application>
 
 </manifest>
