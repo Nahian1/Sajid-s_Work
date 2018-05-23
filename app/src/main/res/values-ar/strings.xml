@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2018.
+  ~  Development Courtesy: Cryptenet Ltd.
+  ~  Developer Credit: Alamgir Hossain, Nabil Shawkat
+  ~  This project is under MIT license
+  -->
+
+<resources>
+    <string name="app_name">Fikra</string>
+
+    <string name="hint_et_email">البريد الالكتروني</string>
+    <string name="hint_et_pwd">كلمة المرور</string>
+    <string name="hint_et_name">اسم</string>
+    <string name="hint_et_confirm_pwd">تأكيد كلمة المرور</string>
+    <string name="tv_forgot_pwd">نسيت كلمة المرور؟</string>
+    <string name="tv_sign_up">سجل</string>
+    <string name="tv_sign_in">سجل الدخول</string>
+    <string name="tv_have_account">لديك حساب؟</string>
+    <string name="spin_head_country">الدولة</string>
+    <string name="spin_head_city">المدينة</string>
+    <string name="spin_label_acc_type">قم بالتسجيل</string>
+    <string name="hint_et_address">العنوان</string>
+    <string name="hint_et_bank_name">اسم البنك</string>
+    <string name="hint_et_bank_acc_name">اسم الحساب المصرفي</string>
+    <string name="hint_et_bank_acc_number">رقم الحساب المصرفي</string>
+    <string name="btn_go">اذهب</string>
+    <string name="btn_done">انتهى</string>
+    <string name="acc_type_investor">مستثمر</string>
+    <string name="acc_type_initiator">المبادر</string>
+    <string name="tv_add_photo">اضف صورة</string>
+</resources>
