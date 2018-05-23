@@ -31,7 +31,6 @@ public abstract class InvestorProjectFragmentModule {
     static InvestorProjectFragmentContract.Model provideModel(InvestorProjectFragmentContract.Repository repository) {
         return new InvestorProjectFragmentModel(repository);
     }
-
     @Provides
     @PerFragment
     static InvestorProjectFragmentContract.Repository provideRepository() {

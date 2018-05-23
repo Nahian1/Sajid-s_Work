@@ -5,7 +5,7 @@
  *  This project is under MIT license
  */
 
-package com.cryptenet.thanatos.dtmweb.home.plan_list;
+package com.cryptenet.thanatos.dtmweb.home.report_issue;
 
 
 import android.os.Bundle;
@@ -17,15 +17,16 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
-import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
+import com.cryptenet.thanatos.dtmweb.mvp_contracts.ReportIssueFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
-public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Presenter>
-        implements PlanListFragmentContract.View {
-    public static final String TAG = TagProvider.getDebugTag(PlanListFragment.class);
+
+public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContract.Presenter>
+        implements ReportIssueFragmentContract.View {
+    public static final String TAG = TagProvider.getDebugTag(ReportIssueFragment.class);
 
 
-    public PlanListFragment() {
+    public ReportIssueFragment() {
         // Required empty public constructor
     }
 
@@ -34,7 +35,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plan_list, container, false);
+        return inflater.inflate(R.layout.fragment_plan_desc, container, false);
     }
 
     @Override

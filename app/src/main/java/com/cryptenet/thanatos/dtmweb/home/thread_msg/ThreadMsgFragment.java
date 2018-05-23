@@ -5,7 +5,7 @@
  *  This project is under MIT license
  */
 
-package com.cryptenet.thanatos.dtmweb.home.plan_list;
+package com.cryptenet.thanatos.dtmweb.home.thread_msg;
 
 
 import android.os.Bundle;
@@ -17,15 +17,15 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
-import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
+import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadMsgFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
-public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Presenter>
-        implements PlanListFragmentContract.View {
-    public static final String TAG = TagProvider.getDebugTag(PlanListFragment.class);
+public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Presenter>
+        implements ThreadMsgFragmentContract.View {
+    public static final String TAG = TagProvider.getDebugTag(ThreadMsgFragment.class);
 
 
-    public PlanListFragment() {
+    public ThreadMsgFragment() {
         // Required empty public constructor
     }
 
