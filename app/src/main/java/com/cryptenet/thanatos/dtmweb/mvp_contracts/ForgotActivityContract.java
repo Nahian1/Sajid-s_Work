@@ -7,16 +7,16 @@
 
 package com.cryptenet.thanatos.dtmweb.mvp_contracts;
 
-import com.cryptenet.thanatos.dtmweb.forgot.ForgotActivity;
+import com.cryptenet.thanatos.dtmweb.forgot_password.ForgotPasswordActivity;
 
 public interface ForgotActivityContract {
     interface Presenter extends BaseContract.Presenter<ForgotActivityContract.View> {
     }
 
-    interface View extends BaseContract.View<ForgotActivity> {
+    interface View extends BaseContract.View<ForgotPasswordActivity> {
     }
 
-    interface Model extends BaseContract.Model<ForgotActivity> {
+    interface Model extends BaseContract.Model<ForgotPasswordActivity> {
     }
 
     interface Repository extends BaseContract.Repository {

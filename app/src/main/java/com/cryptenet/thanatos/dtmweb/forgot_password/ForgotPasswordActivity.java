@@ -1,4 +1,4 @@
-package com.cryptenet.thanatos.dtmweb.forgot;
+package com.cryptenet.thanatos.dtmweb.forgot_password;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,19 +9,19 @@ import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
-public class ForgotActivity extends BaseActivity<ForgotActivityContract.Presenter>
+public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.Presenter>
         implements ForgotActivityContract.View {
-    public static final String TAG = TagProvider.getDebugTag(ForgotActivity.class);
+    public static final String TAG = TagProvider.getDebugTag(ForgotPasswordActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot);
+        setContentView(R.layout.activity_forgot_password);
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    public ForgotActivity getActivity() {
+    public ForgotPasswordActivity getActivity() {
         return null;
     }
 

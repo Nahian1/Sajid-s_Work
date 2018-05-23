@@ -8,23 +8,29 @@
 package com.cryptenet.thanatos.dtmweb.di.modules;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.cryptenet.thanatos.dtmweb.code.CodeActivity;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.CodeActivitySubComponent;
-import com.cryptenet.thanatos.dtmweb.di.sub_components.ForgotActivitySubComponent;
+import com.cryptenet.thanatos.dtmweb.di.sub_components.ForgotPasswordActivitySubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.HomeActivitySubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.LoginActivitySubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.RegistrationActivitySubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.SetPasswordActivitySubComponent;
-import com.cryptenet.thanatos.dtmweb.forgot.ForgotActivity;
+import com.cryptenet.thanatos.dtmweb.forgot_password.ForgotPasswordActivity;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
+import com.cryptenet.thanatos.dtmweb.utils.CryptApplication;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import javax.inject.Singleton;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import dagger.android.ActivityKey;
 import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
@@ -35,7 +41,7 @@ import dagger.multibindings.IntoMap;
         subcomponents = {
                 LoginActivitySubComponent.class,
                 RegistrationActivitySubComponent.class,
-                ForgotActivitySubComponent.class,
+                ForgotPasswordActivitySubComponent.class,
                 CodeActivitySubComponent.class,
                 SetPasswordActivitySubComponent.class,
                 HomeActivitySubComponent.class
@@ -43,6 +49,12 @@ import dagger.multibindings.IntoMap;
 )
 public abstract class AppModule {
     private static final String TAG = TagProvider.getDebugTag(AppModule.class);
+
+    @Provides
+    @Singleton
+    static SharedPreferences providesSharedPreferences(CryptApplication context) {
+        return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+    }
 
     @Binds
     @IntoMap
@@ -58,9 +70,9 @@ public abstract class AppModule {
 
     @Binds
     @IntoMap
-    @ActivityKey(ForgotActivity.class)
+    @ActivityKey(ForgotPasswordActivity.class)
     abstract AndroidInjector.Factory<? extends Activity>
-    ForgotActivityInjectorFactory(ForgotActivitySubComponent.Builder builder);
+    ForgotActivityInjectorFactory(ForgotPasswordActivitySubComponent.Builder builder);
 
     @Binds
     @IntoMap

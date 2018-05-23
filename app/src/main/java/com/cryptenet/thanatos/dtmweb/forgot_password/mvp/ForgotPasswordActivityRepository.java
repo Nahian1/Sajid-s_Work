@@ -5,7 +5,7 @@
  *  This project is under MIT license
  */
 
-package com.cryptenet.thanatos.dtmweb.forgot.mvp;
+package com.cryptenet.thanatos.dtmweb.forgot_password.mvp;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
@@ -13,7 +13,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
-public class ForgotActivityRepository extends BaseRepository
+public class ForgotPasswordActivityRepository extends BaseRepository
         implements ForgotActivityContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(ForgotActivityRepository.class);
+    private static String TAG = TagProvider.getDebugTag(ForgotPasswordActivityRepository.class);
 }

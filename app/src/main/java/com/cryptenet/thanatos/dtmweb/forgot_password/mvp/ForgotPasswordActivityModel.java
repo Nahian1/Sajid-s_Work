@@ -5,25 +5,25 @@
  *  This project is under MIT license
  */
 
-package com.cryptenet.thanatos.dtmweb.forgot.mvp;
+package com.cryptenet.thanatos.dtmweb.forgot_password.mvp;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
-import com.cryptenet.thanatos.dtmweb.forgot.ForgotActivity;
+import com.cryptenet.thanatos.dtmweb.forgot_password.ForgotPasswordActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
-public class ForgotActivityModel extends BaseModel<ForgotActivityContract.Repository, ForgotActivity>
+public class ForgotPasswordActivityModel extends BaseModel<ForgotActivityContract.Repository, ForgotPasswordActivity>
         implements ForgotActivityContract.Model {
-private static final String TAG = TagProvider.getDebugTag(ForgotActivityModel.class);
+private static final String TAG = TagProvider.getDebugTag(ForgotPasswordActivityModel.class);
 
-public ForgotActivityModel(ForgotActivityContract.Repository repository) {
+public ForgotPasswordActivityModel(ForgotActivityContract.Repository repository) {
         super(repository);
         }
 
 @Override
-public void attachContext(ForgotActivity context) {
+public void attachContext(ForgotPasswordActivity context) {
         this.context = context;
         }
 }

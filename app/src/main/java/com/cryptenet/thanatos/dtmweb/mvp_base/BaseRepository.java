@@ -7,9 +7,16 @@
 
 package com.cryptenet.thanatos.dtmweb.mvp_base;
 
+import android.content.SharedPreferences;
+
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.BaseContract;
 
+import javax.inject.Inject;
+
 public abstract class BaseRepository implements BaseContract.Repository {
+    @Inject
+    protected SharedPreferences settingPreference;
+
     public BaseRepository() {
     }
 }

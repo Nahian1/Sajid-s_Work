@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cryptenet.thanatos.dtmweb">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".utils.CryptApplication"
         android:allowBackup="true"
@@ -32,9 +34,10 @@
         </activity>
 
         <activity
-            android:name=".forgot.ForgotActivity"
+            android:name=".forgot_password.ForgotPasswordActivity"
             android:label="@string/title_activity_forgot"
-            android:parentActivityName=".launcher.LoginActivity">
+            android:parentActivityName=".launcher.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cryptenet.thanatos.dtmweb.launcher.LoginActivity" />
@@ -43,16 +46,18 @@
         <activity
             android:name=".code.CodeActivity"
             android:label="@string/title_activity_code"
-            android:parentActivityName=".forgot.ForgotActivity">
+            android:parentActivityName=".forgot_password.ForgotPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cryptenet.thanatos.dtmweb.forgot.ForgotActivity" />
+                android:value="com.cryptenet.thanatos.dtmweb.forgot_password.ForgotPasswordActivity" />
         </activity>
 
         <activity
             android:name=".set_password.SetPasswordActivity"
             android:label="@string/title_activity_set_password"
-            android:parentActivityName=".code.CodeActivity">
+            android:parentActivityName=".code.CodeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cryptenet.thanatos.dtmweb.code.CodeActivity" />
@@ -61,7 +66,8 @@
         <activity
             android:name=".home.HomeActivity"
             android:label="@string/title_activity_home"
-            android:parentActivityName=".launcher.LoginActivity">
+            android:parentActivityName=".launcher.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cryptenet.thanatos.dtmweb.launcher.LoginActivity" />
