@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2018.
+  ~  Development Courtesy: Cryptenet Ltd.
+  ~  Developer Credit: Alamgir Hossain, Nabil Shawkat
+  ~  This project is under MIT license
+  -->
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:barrierAllowsGoneWidgets="true">
+
+    <EditText
+        android:id="@+id/add_report"
+        android:layout_width="350dp"
+        android:layout_height="99dp"
+        android:background="@drawable/background_text"
+        android:gravity="top"
+        android:hint="Tell us about the issue..."
+        android:inputType="textMultiLine"
+        android:lines="20"
+        android:minLines="5"
+        android:scrollbars="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/report_submit"
+        android:layout_width="172dp"
+        android:layout_height="26dp"
+        android:background="@drawable/btn_shape_g"
+        android:text="Submit"
+        app:layout_constraintTop_toBottomOf="@+id/add_report"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/report_cancel"
+        android:layout_width="172dp"
+        android:layout_height="26dp"
+        android:background="@drawable/btn_shape_g"
+        android:text="Cancel"
+        app:layout_constraintTop_toBottomOf="@+id/add_report"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

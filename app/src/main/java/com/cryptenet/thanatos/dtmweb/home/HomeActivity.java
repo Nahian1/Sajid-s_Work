@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
+import com.cryptenet.thanatos.dtmweb.home.other_report.OtherReportFragment;
+import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -24,7 +26,10 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if(savedInstanceState == null)
+            addFragment(R.id.frame_container, new OtherReportFragment());
     }
 
     @Override
