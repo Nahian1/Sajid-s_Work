@@ -20,6 +20,10 @@
     <string name="hint_et_bank_name">Bank Name</string>
     <string name="hint_et_bank_acc_name">Bank Account Name</string>
     <string name="hint_et_bank_acc_number">Bank Account Number</string>
+    <string name="hint_et_forgot">Email or Phone Number</string>
+    <string name="hint_et_new_pwd">New Password</string>
+    <string name="hint_et_confirm_new_pwd">Confirm New Password</string>
+    <string name="hint_et_code" translatable="false">00 00 00</string>
 
     <string name="spin_head_country">Country</string>
     <string name="spin_head_city">City</string>
@@ -30,9 +34,13 @@
     <string name="tv_sign_in">Sign in</string>
     <string name="tv_sign_up">Sign up</string>
     <string name="tv_add_photo">Add Photo</string>
+    <string name="tv_type_code">Type your code</string>
+    <string name="tv_set_new_pwd">Set New Password</string>
 
     <string name="btn_go">Go</string>
     <string name="btn_done">Done</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_submit">Submit</string>
 
     <string name="acc_type_investor">Investor</string>
     <string name="acc_type_initiator">Initiator</string>

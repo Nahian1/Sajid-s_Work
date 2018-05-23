@@ -29,4 +29,11 @@
     <string name="acc_type_investor">مستثمر</string>
     <string name="acc_type_initiator">المبادر</string>
     <string name="tv_add_photo">اضف صورة</string>
+    <string name="hint_et_forgot">البريد الالكتروني او رقم الهاتف</string>
+    <string name="btn_next">التالي</string>
+    <string name="hint_et_confirm_new_pwd">تأكيد كلمة المرور الجديدة</string>
+    <string name="hint_et_new_pwd">كلمة المرور الجديدة</string>
+    <string name="tv_set_new_pwd">ضع كلمة مرور جديدة</string>
+    <string name="tv_type_code">اكتب الكود الخاص بك</string>
+    <string name="btn_submit">قدم</string>
 </resources>

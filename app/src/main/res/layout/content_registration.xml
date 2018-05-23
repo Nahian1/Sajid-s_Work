@@ -308,7 +308,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_bank_name" />
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_sign_in"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -318,9 +318,9 @@
             android:layout_marginEnd="@dimen/margin_horizontal_48"
             android:layout_marginTop="@dimen/margin_vertical_16"
             android:layout_marginBottom="@dimen/margin_horizontal_8"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/img_btn_sign_in"
+            android:text="@string/btn_done"
+            android:textColor="@android:color/white"
+            android:background="@drawable/btn_shape_w"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -332,6 +332,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_horizontal_48"
             android:layout_marginStart="@dimen/margin_horizontal_48"
+            android:paddingBottom="40dp"
             android:text="@string/tv_have_account"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@android:color/white"
@@ -347,6 +348,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_horizontal_48"
             android:layout_marginEnd="@dimen/margin_horizontal_48"
+            android:paddingBottom="40dp"
             android:text="@string/tv_sign_in"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@android:color/white"

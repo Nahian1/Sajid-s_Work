@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2018.
+  ~  Development Courtesy: Cryptenet Ltd.
+  ~  Developer Credit: Alamgir Hossain, Nabil Shawkat
+  ~  This project is under MIT license
+  -->
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:id="@+id/rg_issues"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp">
+
+        <RadioButton
+            android:id="@+id/rb_sample"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            android:text="sample"/>
+    </RadioGroup>
+
+</android.support.constraint.ConstraintLayout>
