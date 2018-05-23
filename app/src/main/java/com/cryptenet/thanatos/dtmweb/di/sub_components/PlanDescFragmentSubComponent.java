@@ -7,19 +7,19 @@
 
 package com.cryptenet.thanatos.dtmweb.di.sub_components;
 
-import com.cryptenet.thanatos.dtmweb.di.modules.PlanListFragmentModule;
+import com.cryptenet.thanatos.dtmweb.di.modules.PlanDescFragmentModule;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
-import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
+import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 
 @PerFragment
-@Subcomponent (
-        modules = PlanListFragmentModule.class
+@Subcomponent(
+        modules = PlanDescFragmentModule.class
 )
-public interface PlanListFragmentSubComponent extends AndroidInjector<PlanListFragment> {
+public interface PlanDescFragmentSubComponent extends AndroidInjector<PlanDescFragment> {
     @Subcomponent.Builder
-    abstract class Builder extends AndroidInjector.Builder<PlanListFragment> {
+    abstract class Builder extends AndroidInjector.Builder<PlanDescFragment> {
     }
 }

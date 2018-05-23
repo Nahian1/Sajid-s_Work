@@ -11,11 +11,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
+import com.cryptenet.thanatos.dtmweb.di.sub_components.InvestorProjectFragmentSubComponent;
+import com.cryptenet.thanatos.dtmweb.di.sub_components.PlanDescFragmentSubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.PlanListFragmentSubComponent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
+import com.cryptenet.thanatos.dtmweb.home.investor_project.InvestorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.mvp.HomeActivityModel;
 import com.cryptenet.thanatos.dtmweb.home.mvp.HomeActivityPresenter;
 import com.cryptenet.thanatos.dtmweb.home.mvp.HomeActivityRepository;
+import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 
@@ -29,7 +33,9 @@ import dagger.multibindings.IntoMap;
 @Module(
         includes = BaseFragActivityModule.class,
         subcomponents = {
-                PlanListFragmentSubComponent.class
+                PlanListFragmentSubComponent.class,
+                PlanDescFragmentSubComponent.class,
+                InvestorProjectFragmentSubComponent.class
         }
 )
 public abstract class HomeActivityModule {
@@ -60,4 +66,16 @@ public abstract class HomeActivityModule {
     @FragmentKey(PlanListFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment>
     PlanListFragmentInjectorFactory(PlanListFragmentSubComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @FragmentKey(PlanDescFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment>
+    PlanDescFragmentInjectorFactory(PlanDescFragmentSubComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @FragmentKey(InvestorProjectFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment>
+    InvestorProjectFragmentInjectorFactory(InvestorProjectFragmentSubComponent.Builder builder);
 }
