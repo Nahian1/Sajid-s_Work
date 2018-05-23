@@ -13,6 +13,8 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
+import java.util.List;
+
 @PerActivity
 public class RegistrationActivityModel extends BaseModel<RegistrationActivityContract.Repository, RegistrationActivity>
         implements RegistrationActivityContract.Model {
@@ -25,5 +27,15 @@ public class RegistrationActivityModel extends BaseModel<RegistrationActivityCon
         @Override
         public void attachContext(RegistrationActivity context) {
                 this.context = context;
+        }
+
+        @Override
+        public List<Country> getAllCountries() {
+                return repository.getAllCountries();
+        }
+
+        @Override
+        public List<City> getLimitedCities(int countryCode) {
+                return repository.getLimitedCities();
         }
 }

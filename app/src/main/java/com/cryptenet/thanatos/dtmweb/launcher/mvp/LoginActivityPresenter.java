@@ -21,4 +21,9 @@ public class LoginActivityPresenter
     public LoginActivityPresenter(LoginActivityContract.Model model) {
         super(model);
     }
+
+    @Override
+    public void requestForLogin(String email, String password) {
+        view.showMessage("SUCCESS!");
+    }
 }

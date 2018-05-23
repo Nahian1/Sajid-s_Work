@@ -13,4 +13,6 @@ public class ConstantProvider {
     public static final String ACCESS_TOKEN = "access_token";
     public static final String CLIENT_ID = "client_id";
     public static final String CLIENT_SECRET = "client_secret";
+
+    public static final int RESULT_LOAD_IMG = 101;
 }

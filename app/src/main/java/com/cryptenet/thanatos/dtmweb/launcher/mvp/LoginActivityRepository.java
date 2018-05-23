@@ -16,4 +16,9 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 public class LoginActivityRepository extends BaseRepository
         implements LoginActivityContract.Repository {
     private static String TAG = TagProvider.getDebugTag(LoginActivityRepository.class);
+
+    @Override
+    public boolean validateLogin(String email, String password) {
+        return true;
+    }
 }
