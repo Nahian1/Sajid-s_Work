@@ -97,32 +97,19 @@ public class RegistrationActivityRepository extends BaseRepository
 
     @Override
     public boolean attemptReg(final RegistrationInput regData) {
-        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), regData.getPicture());
-        MultipartBody.Part picture = MultipartBody.Part.createFormData("upload",
-                regData.getPicture().getName(), reqFile);
-        RequestBody user_type = RequestBody.create(MediaType.parse("text/plain"), regData.getUserType());
-        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), regData.getName());
-        RequestBody email = RequestBody.create(MediaType.parse("text/plain"), regData.getEmail());
-        RequestBody password = RequestBody.create(MediaType.parse("text/plain"), regData.getPassword());
-        RequestBody address = RequestBody.create(MediaType.parse("text/plain"), regData.getAddress());
-        RequestBody country = RequestBody.create(MediaType.parse("text/plain"), regData.getCountry().toString());
-        RequestBody city = RequestBody.create(MediaType.parse("text/plain"), regData.getCountry().toString());
-        RequestBody bank_name = RequestBody.create(MediaType.parse("text/plain"), regData.getBankName());
-        RequestBody bank_account_name = RequestBody.create(MediaType.parse("text/plain"), regData.getBankAccountName());
-        RequestBody bank_account_number = RequestBody.create(MediaType.parse("text/plain"), regData.getBankAccountNumber());
 
         retrofit2.Call<okhttp3.ResponseBody> req = client.attemptReg(
-                picture,
-                user_type,
-                name,
-                email,
-                password,
-                address,
-                country,
-                city,
-                bank_name,
-                bank_account_name,
-                bank_account_number
+                regData.getPicture(),
+                regData.getUserType(),
+                regData.getName(),
+                regData.getEmail(),
+                regData.getPassword(),
+                regData.getAddress(),
+                regData.getCountry(),
+                regData.getCity(),
+                regData.getBankName(),
+                regData.getBankAccountName(),
+                regData.getBankAccountNumber()
         );
         
         req.enqueue(new Callback<ResponseBody>() {

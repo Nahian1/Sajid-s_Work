@@ -19,6 +19,6 @@ public class LoginActivityRepository extends BaseRepository
 
     @Override
     public boolean validateLogin(String email, String password) {
-
+        return false;
     }
 }
