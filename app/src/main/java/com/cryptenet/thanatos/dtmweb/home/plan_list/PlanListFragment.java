@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
@@ -29,12 +31,28 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         // Required empty public constructor
     }
 
+    private ListView projectLV;
+    private ProjectAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plan_list, container, false);
+        View convertView = inflater.inflate(R.layout.fragment_plan_list, container, false);
+        adapter = new ProjectAdapter(activityContext, ProjectListGenerator.generateProjects());
+        projectLV =  convertView.findViewById(R.id.projectListView);
+        projectLV.setAdapter(adapter);
+
+        projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(activityContext, "position: "+ProjectListGenerator.generateProjects().get(position), Toast.LENGTH_SHORT).show();
+
+                /*startActivity(new Intent(MainActivity.this,DetailsActivity.class)
+                .putExtra("pos",position));*/
+            }
+        });
+        return convertView;
     }
 
     @Override
