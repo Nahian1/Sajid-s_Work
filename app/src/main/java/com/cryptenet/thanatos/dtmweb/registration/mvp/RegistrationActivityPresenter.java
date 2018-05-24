@@ -20,4 +20,18 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
     public RegistrationActivityPresenter(RegistrationActivityContract.Model model) {
         super(model);
     }
+
+    @Override
+    public void getAllCountries() {
+        view.updateCountries(
+                model.getAllCountries()
+        );
+    }
+
+    @Override
+    public void getLimitedCities(int countryCode) {
+        view.updateCities(
+                model.getLimitedCities(countryCode)
+        );
+    }
 }

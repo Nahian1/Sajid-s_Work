@@ -9,6 +9,10 @@ package com.cryptenet.thanatos.dtmweb.launcher;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
@@ -16,15 +20,35 @@ import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
-        implements LoginActivityContract.View {
+        implements LoginActivityContract.View, View.OnClickListener {
     public static final String TAG = TagProvider.getDebugTag(LoginActivity.class);
+
+    @BindView(R.id.et_email)
+    EditText etEmail;
+
+    @BindView(R.id.et_pwd)
+    EditText etPwd;
+
+    @BindView(R.id.btn_sign_in)
+    Button btnSignIn;
+
+    @BindView(R.id.tv_sign_up)
+    TextView tvSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        viewUnbinder = ButterKnife.bind(this);
+
+        btnSignIn.setOnClickListener(this);
+        tvSignUp.setOnClickListener(this);
     }
 
     @Override
@@ -45,5 +69,26 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     @Override
     public void restoreState(Bundle savedState) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_sign_in:
+                presenter.requestForLogin(
+                        etEmail.getText().toString().trim(),
+                        etPwd.getText().toString().trim()
+                );
+                break;
+            case R.id.tv_sign_up:
+                navigator.toRegistrationActivity(this);
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.attachView(this);
     }
 }

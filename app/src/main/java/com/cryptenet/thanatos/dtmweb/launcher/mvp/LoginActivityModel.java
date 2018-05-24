@@ -27,4 +27,9 @@ public class LoginActivityModel
     public void attachContext(LoginActivity context) {
         this.context = context;
     }
+
+    @Override
+    public boolean requestForLogin(String email, String password) {
+        return repository.validateLogin(email, password);
+    }
 }

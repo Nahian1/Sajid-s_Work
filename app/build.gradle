@@ -22,17 +22,20 @@ ext {
     support_lib = '27.1.1'
     butter_knife = '8.8.1'
     dagger2 = '2.15'
+    gson = '2.8.4'
+    retrofit = '2.4.0'
+    circle_iv = '2.2.0'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$support_lib"
+    implementation "com.android.support:support-v4:$support_lib"
     implementation "com.android.support:design:$support_lib"
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 
     //butter knife - view injection
     implementation "com.jakewharton:butterknife:$butter_knife"
-    implementation 'com.android.support:support-v4:27.1.1'
     annotationProcessor "com.jakewharton:butterknife-compiler:$butter_knife"
 
     //dagger - dependency injection
@@ -40,6 +43,16 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger2"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger2"
+
+    //gson
+    implementation "com.google.code.gson:gson:$gson"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    //circular iv
+    implementation "de.hdodenhof:circleimageview:$circle_iv"
 
     //testing
     testImplementation 'junit:junit:4.12'
