@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_man_project"
+            android:icon="@drawable/ic_man_project"
+            android:title="@string/nav_man_project" />
+
+        <item
+            android:id="@+id/nav_man_request"
+            android:icon="@drawable/ic_man_request"
+            android:title="@string/nav_man_request"/>
+
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/ic_language"
+            android:title="@string/nav_language"/>
+
+        <item
+            android:id="@+id/nav_conversation"
+            android:icon="@drawable/ic_conversation"
+            android:title="@string/nav_conversation"/>
+
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@drawable/ic_report"
+            android:title="@string/nav_report"/>
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/nav_logout"/>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_tc"
+            android:title="@string/nav_tc"/>
+
+        <item
+            android:id="@+id/nav_rate"
+            android:title="@string/nav_rate"/>
+
+        <item
+            android:id="@+id/nav_about"
+            android:title="@string/nav_about"/>
+    </group>
+
+</menu>

@@ -24,6 +24,7 @@ ext {
     dagger2 = '2.15'
     gson = '2.8.4'
     retrofit = '2.4.0'
+    ok_http = '3.10.0'
     event_bus = '3.1.1'
     circle_iv = '2.2.0'
 }
@@ -51,6 +52,9 @@ dependencies {
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    //OkHttp3
+    implementation "com.squareup.okhttp3:okhttp:$ok_http"
 
     //circular iv
     implementation "de.hdodenhof:circleimageview:$circle_iv"

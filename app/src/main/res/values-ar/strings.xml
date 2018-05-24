@@ -36,4 +36,13 @@
     <string name="tv_set_new_pwd">ضع كلمة مرور جديدة</string>
     <string name="tv_type_code">اكتب الكود الخاص بك</string>
     <string name="btn_submit">قدم</string>
+    <string name="nav_man_project">إدارة مشروع</string>
+    <string name="nav_man_request">إدارة الطلبات</string>
+    <string name="nav_language">اللغة</string>
+    <string name="nav_conversation">محادثة</string>
+    <string name="nav_report">ابلغ عن مشكلة</string>
+    <string name="nav_logout">تسجيل الخروج</string>
+    <string name="nav_tc">الاحكام والشروط</string>
+    <string name="nav_about">عن</string>
+    <string name="nav_rate">قيّم التطبيق</string>
 </resources>

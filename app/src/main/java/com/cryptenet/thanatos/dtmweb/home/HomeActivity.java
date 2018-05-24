@@ -8,26 +8,41 @@
 package com.cryptenet.thanatos.dtmweb.home;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
-import com.cryptenet.thanatos.dtmweb.home.other_report.OtherReportFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
-import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presenter>
         implements HomeActivityContract.View {
     public static final String TAG = TagProvider.getDebugTag(HomeActivity.class);
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.lay_drawer)
+    DrawerLayout drawerLayout;
+
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        viewUnbinder = ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
 
         if(savedInstanceState == null)
             addFragment(R.id.frame_container, new PlanListFragment());
@@ -53,5 +68,10 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @Override
     public void restoreState(Bundle savedState) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

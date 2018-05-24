@@ -94,20 +94,21 @@ public class RegistrationActivityRepository extends BaseRepository
 
     @Override
     public boolean attemptReg(final RegistrationInput regData) {
+        Call<ResponseBody> req = client.attemptReg(regData);
 
-        retrofit2.Call<okhttp3.ResponseBody> req = client.attemptReg(
-                regData.getPicture(),
-                regData.getUserType(),
-                regData.getName(),
-                regData.getEmail(),
-                regData.getPassword(),
-                regData.getAddress(),
-                regData.getCountry(),
-                regData.getCity(),
-                regData.getBankName(),
-                regData.getBankAccountName(),
-                regData.getBankAccountNumber()
-        );
+//        Call<okhttp3.ResponseBody> req = client.attemptReg(
+//                regData.getPicture(),
+//                regData.getUserType(),
+//                regData.getName(),
+//                regData.getEmail(),
+//                regData.getPassword(),
+//                regData.getAddress(),
+//                regData.getCountry(),
+//                regData.getCity(),
+//                regData.getBankName(),
+//                regData.getBankAccountName(),
+//                regData.getBankAccountNumber()
+//        );
         
         req.enqueue(new Callback<ResponseBody>() {
             @Override
