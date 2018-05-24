@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -22,23 +23,27 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
+import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
+import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
+import com.cryptenet.thanatos.dtmweb.pojo.City;
+import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 
 public class RegistrationActivity extends BaseActivity<RegistrationActivityContract.Presenter>
         implements RegistrationActivityContract.View, AdapterView.OnItemSelectedListener {
@@ -48,6 +53,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     private int countryCode, cityCode;
     private List<Country> countries;
     private List<City> cities;
+    private List<String> sCountries, sCities;
+    private ArrayAdapter<String> spinAccTypeAdapter, spinCountryAdapter, spinCityAdapter;
 
     @BindView(R.id.iv_pp)
     ImageView ivPp;
@@ -91,11 +98,45 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         setContentView(R.layout.activity_registration);
 
         viewUnbinder = ButterKnife.bind(this);
+
+        init();
+    }
+
+    private void init() {
+        List<String> accTypes = new ArrayList<>();
+        sCountries = new ArrayList<>();
+        sCities = new ArrayList<>();
+
+        accTypes.add(getString(R.string.acc_type_initiator));
+        accTypes.add(getString(R.string.acc_type_investor));
+
+        spinAccTypeAdapter = new ArrayAdapter<>(this,
+                R.layout.node_spin_reg, accTypes);
+        spinAccTypeAdapter.setDropDownViewResource(R.layout.node_spin_reg);
+        spinAccType.setAdapter(spinAccTypeAdapter);
+
+        sCountries.add("Country");
+
+        spinCountryAdapter = new ArrayAdapter<>(this,
+                R.layout.node_spin_reg, sCountries);
+        spinCountryAdapter.setDropDownViewResource(R.layout.node_spin_reg);
+        spinCountry.setAdapter(spinCountryAdapter);
+
+        sCities.add("City");
+
+        spinCityAdapter = new ArrayAdapter<>(this,
+                R.layout.node_spin_reg, sCities);
+        spinCityAdapter.setDropDownViewResource(R.layout.node_spin_reg);
+        spinCity.setAdapter(spinCityAdapter);
+
+        spinAccType.setOnItemSelectedListener(this);
+        spinCountry.setOnItemSelectedListener(this);
+        spinCity.setOnItemSelectedListener(this);
     }
 
     @Override
     public RegistrationActivity getActivity() {
-        return null;
+        return this;
     }
 
     @Override
@@ -150,6 +191,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                 try {
                     final Uri imageUri = data.getData();
                     realPath = ImageFilePath.getPath(RegistrationActivity.this, data.getData());
+                    assert imageUri != null;
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     selectedImage = BitmapFactory.decodeStream(imageStream);
                     ivPp.setImageBitmap(selectedImage);
@@ -162,40 +204,66 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         }
     }
 
-    @Override
-    public void updateCountries(List<Country> countries) {
-
+    @Subscribe
+    public void onCountryFetchEvent(CountryFetchEvent event) {
+        this.countries = event.countries;
+        sCountries.clear();
+        for (Country country : this.countries)
+            sCountries.add(country.getName());
+        spinCountryAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void updateCities(List<City> cities) {
-
+    @Subscribe
+    public void onCityFetchEvent(CityFetchEvent event) {
+        this.cities = event.cities;
+        sCities.clear();
+        for (City city : this.cities)
+            sCities.add(city.getName());
+        spinCityAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
+        presenter.getAllCountries();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (view.getId()) {
+        switch (parent.getId()) {
             case R.id.spin_acc_type:
                 accType = spinAccType.getSelectedItem().toString();
                 break;
             case R.id.spin_country:
-                countryCode = countries.get(position).getCountryId();
-                presenter.getLimitedCities(countryCode);
+                if (countries != null)
+                countryCode = (countries.get(position)).getId();
+                Log.d(TAG, "onItemSelected: " + countryCode);
+                presenter.getLimitedCities(countryCode == 0 ? 1 : countryCode);
                 break;
             case R.id.spin_city:
-                cityCode = cities.get(position).getCityId();
+                if (cities != null)
+                cityCode = cities.get(position).getId();
                 break;
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        if (parent.getId() == R.id.spin_country) {
+            presenter.getLimitedCities(1);
+        }
     }
 }

@@ -10,10 +10,11 @@ package com.cryptenet.thanatos.dtmweb.registration.mvp;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
+import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
-import java.util.List;
+import java.io.File;
 
 @PerActivity
 public class RegistrationActivityModel extends BaseModel<RegistrationActivityContract.Repository, RegistrationActivity>
@@ -30,12 +31,24 @@ public class RegistrationActivityModel extends BaseModel<RegistrationActivityCon
         }
 
         @Override
-        public List<Country> getAllCountries() {
-                return repository.getAllCountries();
+        public void getAllCountries() {
+                repository.getAllCountries();
         }
 
         @Override
-        public List<City> getLimitedCities(int countryCode) {
-                return repository.getLimitedCities();
+        public void getLimitedCities(int countryCode) {
+                repository.getLimitedCities(countryCode);
+        }
+
+        @Override
+        public boolean attemptReg(File imageFile, String accType, String name, String email,
+                                  String pwd, String address, int countryCode, int cityCode,
+                                  String bankName, String bankAccName, String bankAccNumber) {
+                RegistrationInput input = new RegistrationInput(
+                        accType, name, email, imageFile, pwd, address, countryCode, cityCode,
+                        bankName, bankAccName, bankAccNumber
+                );
+
+                return repository.attemptReg(input);
         }
 }

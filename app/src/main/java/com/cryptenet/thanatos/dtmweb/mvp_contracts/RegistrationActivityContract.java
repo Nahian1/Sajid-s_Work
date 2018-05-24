@@ -7,28 +7,36 @@
 
 package com.cryptenet.thanatos.dtmweb.mvp_contracts;
 
+import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 
-import java.util.List;
+import java.io.File;
 
 public interface RegistrationActivityContract {
     interface Presenter extends BaseContract.Presenter<RegistrationActivityContract.View> {
+        void carryRegData(File imageFile, String accType, String name, String email, String pwd,
+                          String cPwd, String address, int countryCode, int cityCode,
+                          String bankName, String bankAccName, String bankAccNumber);
         void getAllCountries();
         void getLimitedCities(int countryCode);
     }
 
     interface View extends BaseContract.View<RegistrationActivity> {
-        void updateCountries(List<Country> countries);
-        void updateCities(List<City> cities);
     }
 
     interface Model extends BaseContract.Model<RegistrationActivity> {
-        List<Country> getAllCountries();
-        List<City> getLimitedCities(int countryCode);
+        void getAllCountries();
+        void getLimitedCities(int countryCode);
+
+        boolean attemptReg(File imageFile, String accType, String name, String email, String pwd,
+                           String address, int countryCode, int cityCode, String bankName,
+                           String bankAccName, String bankAccNumber);
     }
 
     interface Repository extends BaseContract.Repository {
-        List<Country> getAllCountries();
-        List<City> getLimitedCities(int countryCode);
+        void getAllCountries();
+        void getLimitedCities(int countryCode);
+
+        boolean attemptReg(RegistrationInput regData);
     }
 }

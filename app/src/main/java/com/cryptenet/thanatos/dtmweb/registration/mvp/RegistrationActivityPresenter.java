@@ -12,6 +12,8 @@ import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
+import java.io.File;
+
 @PerActivity
 public class RegistrationActivityPresenter extends BasePresenter<RegistrationActivityContract.View, RegistrationActivityContract.Model>
         implements RegistrationActivityContract.Presenter {
@@ -22,16 +24,24 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
     }
 
     @Override
+    public void carryRegData(File imageFile, String accType, String name, String email, String pwd,
+                             String cPwd, String address, int countryCode, int cityCode,
+                             String bankName, String bankAccName, String bankAccNumber) {
+        model.attachContext(view.getActivity());
+        if (pwd.equals(cPwd))
+            model.attemptReg(imageFile, accType, name, email, pwd, address, countryCode, cityCode,
+                    bankName, bankAccName, bankAccNumber);
+        else
+            view.showMessage("Password do not match!");
+    }
+
+    @Override
     public void getAllCountries() {
-        view.updateCountries(
-                model.getAllCountries()
-        );
+        model.getAllCountries();
     }
 
     @Override
     public void getLimitedCities(int countryCode) {
-        view.updateCities(
-                model.getLimitedCities(countryCode)
-        );
+        model.getLimitedCities(countryCode);
     }
 }

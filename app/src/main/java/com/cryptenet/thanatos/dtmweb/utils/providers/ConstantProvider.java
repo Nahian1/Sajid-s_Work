@@ -15,4 +15,6 @@ public class ConstantProvider {
     public static final String CLIENT_SECRET = "client_secret";
 
     public static final int RESULT_LOAD_IMG = 101;
+
+    public static final String BASE_URL = "https://fa-sa-801.herokuapp.com/api/v1/";
 }
