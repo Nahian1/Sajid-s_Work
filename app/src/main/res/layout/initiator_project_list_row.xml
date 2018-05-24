@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2018.
+  ~ Development Courtesy: Cryptenet Ltd.
+  ~ Developer Credit: Alamgir Hossain, Nabil Shawkat
+  ~ This project is under MIT license
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/titleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textColor="#939393"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/priceTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/titleTV"
+                android:text="Price: $670"
+                android:textColor="#939393"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/dateTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/priceTV"
+                android:layout_alignBottom="@+id/priceTV"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/priceTV"
+                android:text="10 March 2018"
+                android:textColor="#939393"
+                android:textSize="12sp" />
+
+
+            <ImageView
+                android:id="@+id/editIV"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignBottom="@+id/titleTV"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/editproject" />
+
+            <TextView
+                android:id="@+id/statusTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending"
+                android:padding="4dp"
+                android:textSize="12sp"
+                android:layout_alignBaseline="@+id/dateTV"
+                android:layout_toEndOf="@+id/dateTV"
+                android:layout_marginStart="20dp"
+                android:textColor="#ffff"
+                android:background="#FFA500"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
