@@ -20,4 +20,9 @@ public class ForgotPasswordActivityPresenter extends BasePresenter<ForgotActivit
     public ForgotPasswordActivityPresenter(ForgotActivityContract.Model model) {
         super(model);
     }
+
+    @Override
+    public void saveIdentifier(String identifier) {
+        model.saveIdentifier(identifier);
+    }
 }

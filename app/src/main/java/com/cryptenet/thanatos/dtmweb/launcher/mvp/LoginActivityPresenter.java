@@ -24,6 +24,6 @@ public class LoginActivityPresenter
 
     @Override
     public void requestForLogin(String email, String password) {
-        view.showMessage("SUCCESS!");
+        model.requestForLogin(email, password);
     }
 }

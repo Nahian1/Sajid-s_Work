@@ -21,4 +21,9 @@ public class CodeActivityPresenter
     public CodeActivityPresenter(CodeActivityContract.Model model) {
         super(model);
     }
+
+    @Override
+    public void makeResetReq(String code) {
+        model.makeResetReq(code);
+    }
 }

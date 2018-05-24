@@ -16,14 +16,19 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 @PerActivity
 public class ForgotPasswordActivityModel extends BaseModel<ForgotActivityContract.Repository, ForgotPasswordActivity>
         implements ForgotActivityContract.Model {
-private static final String TAG = TagProvider.getDebugTag(ForgotPasswordActivityModel.class);
+        private static final String TAG = TagProvider.getDebugTag(ForgotPasswordActivityModel.class);
 
-public ForgotPasswordActivityModel(ForgotActivityContract.Repository repository) {
-        super(repository);
-        }
+        public ForgotPasswordActivityModel(ForgotActivityContract.Repository repository) {
+                super(repository);
+                }
 
-@Override
-public void attachContext(ForgotPasswordActivity context) {
-        this.context = context;
+        @Override
+        public void attachContext(ForgotPasswordActivity context) {
+                this.context = context;
+                }
+
+        @Override
+        public void saveIdentifier(String identifier) {
+            repository.saveIdentifier(identifier);
         }
 }

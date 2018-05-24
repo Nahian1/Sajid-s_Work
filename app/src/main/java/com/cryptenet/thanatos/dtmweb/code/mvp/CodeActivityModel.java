@@ -29,4 +29,9 @@ public class CodeActivityModel
     public void attachContext(CodeActivity context) {
         this.context = context;
     }
+
+    @Override
+    public void makeResetReq(String code) {
+        repository.makeResetReq(code);
+    }
 }

@@ -40,6 +40,9 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     @BindView(R.id.tv_sign_up)
     TextView tvSignUp;
 
+    @BindView(R.id.tv_forgot_pwd)
+    TextView tvForgotPwd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
         btnSignIn.setOnClickListener(this);
         tvSignUp.setOnClickListener(this);
+        tvForgotPwd.setOnClickListener(this);
     }
 
     @Override
@@ -82,6 +86,9 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
                 break;
             case R.id.tv_sign_up:
                 navigator.toRegistrationActivity(this);
+                break;
+            case R.id.tv_forgot_pwd:
+                navigator.toForgotPasswordActivity(this);
                 break;
         }
     }
