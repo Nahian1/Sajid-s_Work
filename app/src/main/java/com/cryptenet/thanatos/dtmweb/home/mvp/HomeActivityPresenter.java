@@ -21,4 +21,9 @@ public class HomeActivityPresenter
     public HomeActivityPresenter(HomeActivityContract.Model model) {
         super(model);
     }
+
+    @Override
+    public void getNavHeaderData() {
+        view.getNavHeaderData(model.getNavHeaderData());
+    }
 }

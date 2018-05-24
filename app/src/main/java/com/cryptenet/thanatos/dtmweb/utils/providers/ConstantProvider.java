@@ -10,6 +10,12 @@ package com.cryptenet.thanatos.dtmweb.utils.providers;
 public class ConstantProvider {
     public static final String ACTIVITY_FRAGMENT_MANAGER = "ActivityFragmentManager";
 
+    public static final String NAV_PP_URL = "navPpUrl";
+    public static final String NAV_NAME = "navName";
+    public static final String NAV_TYPE = "navType";
+    public static final String NAV_ADDRESS = "navAddress";
+    public static final String NAV_DETAILS = "navDetails";
+
     public static final String ACCESS_TOKEN_INIT = "5vz8wX9G103AO0fY7eYZ1VeQvNRNa3";
     public static final String ACCESS_TOKEN_INVE = "rD9ANQ3R6mP6QCMzpzUOqklQ3IuHyV";
 

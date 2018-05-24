@@ -17,8 +17,12 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
+import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,7 +85,8 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
             case R.id.btn_sign_in:
                 presenter.requestForLogin(
                         etEmail.getText().toString().trim(),
-                        etPwd.getText().toString().trim()
+                        etPwd.getText().toString().trim(),
+                        1
                 );
                 break;
             case R.id.tv_sign_up:
@@ -93,9 +98,26 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         }
     }
 
+    @Subscribe
+    public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
+        EventBus.builder().
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }

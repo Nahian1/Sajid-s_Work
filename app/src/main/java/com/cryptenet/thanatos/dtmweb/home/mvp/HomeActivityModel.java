@@ -11,6 +11,7 @@ import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
+import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
@@ -25,5 +26,10 @@ public class HomeActivityModel extends BaseModel<HomeActivityContract.Repository
     @Override
     public void attachContext(HomeActivity context) {
         this.context = context;
+    }
+
+    @Override
+    public NavHeader getNavHeaderData() {
+        return repository.getNavHeaderData();
     }
 }

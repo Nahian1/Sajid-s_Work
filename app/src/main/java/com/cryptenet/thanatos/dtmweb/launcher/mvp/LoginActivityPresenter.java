@@ -23,7 +23,7 @@ public class LoginActivityPresenter
     }
 
     @Override
-    public void requestForLogin(String email, String password) {
-        model.requestForLogin(email, password);
+    public void requestForLogin(String email, String password, int type) {
+        model.requestForLogin(email, password, type);
     }
 }

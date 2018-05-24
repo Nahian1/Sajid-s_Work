@@ -9,10 +9,10 @@ package com.cryptenet.thanatos.dtmweb.registration.mvp;
 
 import android.util.Log;
 
+import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
 import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
-import com.cryptenet.thanatos.dtmweb.http.ApiClient;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
@@ -20,7 +20,6 @@ import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
-import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,32 +27,20 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @PerActivity
 public class RegistrationActivityRepository extends BaseRepository
         implements RegistrationActivityContract.Repository {
     private static String TAG = TagProvider.getDebugTag(RegistrationActivityRepository.class);
-    private ApiClient client;
     private List<Country> countries;
     private List<City> cities;
 
     public RegistrationActivityRepository() {
         countries = new ArrayList<>();
         cities = new ArrayList<>();
-        
-        if (client == null) {
-            Retrofit.Builder builder = new Retrofit.Builder()
-                    .baseUrl(ConstantProvider.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create());
-            Retrofit retrofit = builder.build();
-            client = retrofit.create(ApiClient.class);
-        }
     }
 
     @Override
@@ -94,7 +81,22 @@ public class RegistrationActivityRepository extends BaseRepository
 
     @Override
     public boolean attemptReg(final RegistrationInput regData) {
-        Call<ResponseBody> req = client.attemptReg(regData);
+        PostAsync async = new PostAsync();
+        async.execute(
+                "1",
+                regData.getName(),
+                regData.getEmail(),
+                regData.getPassword(),
+                regData.getPicture(),
+                regData.getAddress(),
+                regData.getCountry().toString(),
+                regData.getCity().toString(),
+                regData.getBankName(),
+                regData.getBankAccountName(),
+                regData.getBankAccountNumber(),
+                regData.getUserType()
+        );
+
 
 //        Call<okhttp3.ResponseBody> req = client.attemptReg(
 //                regData.getPicture(),
@@ -103,25 +105,25 @@ public class RegistrationActivityRepository extends BaseRepository
 //                regData.getEmail(),
 //                regData.getPassword(),
 //                regData.getAddress(),
-//                regData.getCountry(),
-//                regData.getCity(),
+//                regData.getCountry().toString(),
+//                regData.getCity().toString(),
 //                regData.getBankName(),
 //                regData.getBankAccountName(),
 //                regData.getBankAccountNumber()
 //        );
-        
-        req.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d(TAG, "onResponse: " + response.toString());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d(TAG, "onFailure: reg");
-                t.printStackTrace();
-            }
-        });
+//
+//        req.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                Log.d(TAG, "onResponse: " + response.toString());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Log.d(TAG, "onFailure: reg");
+//                t.printStackTrace();
+//            }
+//        });
 
         return false;
     }

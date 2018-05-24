@@ -11,17 +11,17 @@ import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
 
 public interface LoginActivityContract {
     interface Presenter extends BaseContract.Presenter<LoginActivityContract.View> {
-        void requestForLogin(String email, String password);
+        void requestForLogin(String email, String password, int type);
     }
 
     interface View extends BaseContract.View<LoginActivity> {
     }
 
     interface Model extends BaseContract.Model<LoginActivity> {
-        boolean requestForLogin(String email, String password);
+        boolean requestForLogin(String email, String password, int type);
     }
 
     interface Repository extends BaseContract.Repository {
-        boolean validateLogin(String email, String password);
+        boolean validateLogin(String email, String password, int type);
     }
 }

@@ -237,8 +237,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @Override
     protected void onStop() {
-        super.onStop();
         EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override

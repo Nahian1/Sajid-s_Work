@@ -48,7 +48,7 @@ public class ImageFilePath {
                 final String type = split[0];
 
                 if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/"
+                    return Environment.getExternalStorageDirectory().getAbsolutePath() + "/"
                             + split[1];
                 }
             }
