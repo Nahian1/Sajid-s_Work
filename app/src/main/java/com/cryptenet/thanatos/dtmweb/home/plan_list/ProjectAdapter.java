@@ -40,6 +40,13 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
         this.projects = projects;
     }
 
+    public void updateList(List<Projects> projs){
+        this.projects.clear();
+        this.projects.addAll(projs);
+        this.notifyDataSetChanged();
+
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

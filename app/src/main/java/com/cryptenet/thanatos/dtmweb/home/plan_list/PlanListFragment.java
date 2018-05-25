@@ -92,7 +92,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
         Log.d(TAG, "onProjectListReceiveEvent: login");
         this.projectsList = event.projectsList;
-        adapter.notifyDataSetChanged();
+        adapter.updateList(this.projectsList);
     }
 
     @Override
