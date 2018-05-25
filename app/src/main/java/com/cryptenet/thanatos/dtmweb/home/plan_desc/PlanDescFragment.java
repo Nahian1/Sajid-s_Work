@@ -44,11 +44,9 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_desc, container, false);
         projects = (Projects) getArguments().get("project");
-<<<<<<< HEAD
         titleTV = convertView.findViewById(R.id.titleTV);
         priceTV = convertView.findViewById(R.id.priceTV);
-        shortDetailsTV = convertView.findViewById(R.id.detailsTV);
-=======
+//        shortDetailsTV = convertView.findViewById(R.id.detailsTV);
         titleTV = convertView.findViewById(R.id.textViewTitle);
         priceTV = convertView.findViewById(R.id.textViewPrice);
         shortDetailsTV = convertView.findViewById(R.id.textViewDetails);
@@ -64,7 +62,6 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         demoIV = convertView.findViewById(R.id.projectIV);
         profileIV = convertView.findViewById(R.id.profilepic);
         seeMoreIV = convertView.findViewById(R.id.seeMoreIV);
->>>>>>> 4456a4c4097419e12e47584171593e9a47e744f0
 
 
         return convertView;

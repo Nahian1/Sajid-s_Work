@@ -71,6 +71,8 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
     public void onDataSendSuccessEvent(DataSendSuccessEvent event) {
         if (event.isSuccess)
             navigator.toCodeActivity(this);
+        else
+            showMessage("Invalid Email!");
     }
 
     @Override

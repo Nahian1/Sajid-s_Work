@@ -31,7 +31,7 @@ public class CodeActivityModel
     }
 
     @Override
-    public void makeResetReq(String code) {
-        repository.makeResetReq(code);
+    public void saveResetCode(String code) {
+        repository.saveResetCode(code);
     }
 }

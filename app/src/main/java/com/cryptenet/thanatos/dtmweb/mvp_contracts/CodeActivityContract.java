@@ -11,17 +11,17 @@ import com.cryptenet.thanatos.dtmweb.code.CodeActivity;
 
 public interface CodeActivityContract {
     interface Presenter extends BaseContract.Presenter<CodeActivityContract.View> {
-        void makeResetReq(String code);
+        void saveResetCode(String code);
     }
 
     interface View extends BaseContract.View<CodeActivity> {
     }
 
     interface Model extends BaseContract.Model<CodeActivity> {
-        void makeResetReq(String code);
+        void saveResetCode(String code);
     }
 
     interface Repository extends BaseContract.Repository {
-        void makeResetReq(String code);
+        void saveResetCode(String code);
     }
 }

@@ -54,7 +54,7 @@ public class ForgotPasswordActivityRepository extends BaseRepository
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "onFailure: login");
+                    Log.d(TAG, "onFailure: forgot");
                 }
 
                 @Override
@@ -77,7 +77,7 @@ public class ForgotPasswordActivityRepository extends BaseRepository
     public void saveIdentifierSP(String identifier) {
         preferences
                 .edit()
-                .putString(ConstantProvider.SP_FORGOT_PASSWORD, identifier)
+                .putString(ConstantProvider.SP_FORGOT_PASSWORD_EMAIL, identifier)
                 .apply();
     }
 }

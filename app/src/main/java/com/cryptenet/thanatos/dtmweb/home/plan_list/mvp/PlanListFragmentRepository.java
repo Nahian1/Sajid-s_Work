@@ -13,19 +13,13 @@ import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Projects;
-import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 @PerFragment
 public class PlanListFragmentRepository extends BaseFragRepository
@@ -38,25 +32,25 @@ public class PlanListFragmentRepository extends BaseFragRepository
     }
 
     public void getAllProjects() {
-        Call<AllPlansResponse> req = client.getAllPlans("Bearer " + ConstantProvider.ACCESS_TOKEN_INIT);
-        req.enqueue(new Callback<AllPlansResponse>() {
-            @Override
-            public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
-                AllPlansResponse allPlansResponse = response.body();
-                try {
-                    assert allPlansResponse != null;
-                    setProjects(allPlansResponse.getResults());
-                } catch (NullPointerException ex) {
-                    ex.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<AllPlansResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: AllPlansResponse");
-            }
-        });
+//        Call<AllPlansResponse> req = client.getAllPlans("Bearer " + ConstantProvider.ACCESS_TOKEN_INIT);
+//        req.enqueue(new Callback<AllPlansResponse>() {
+//            @Override
+//            public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
+//                AllPlansResponse allPlansResponse = response.body();
+//                try {
+//                    assert allPlansResponse != null;
+//                    setProjects(allPlansResponse.getResults());
+//                } catch (NullPointerException ex) {
+//                    ex.printStackTrace();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AllPlansResponse> call, Throwable t) {
+//                Log.d(TAG, "onFailure: AllPlansResponse");
+//            }
+//        });
     }
 
     private void setProjects(List<Projects> projectsList) {

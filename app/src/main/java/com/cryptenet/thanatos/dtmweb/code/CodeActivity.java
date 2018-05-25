@@ -16,9 +16,11 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
+import com.cryptenet.thanatos.dtmweb.events.CodeEnteredEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.CodeActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
@@ -68,14 +70,17 @@ public class CodeActivity extends BaseActivity<CodeActivityContract.Presenter>
 
     @Override
     public void onClick(View v) {
-        presenter.makeResetReq(etCode.getText().toString());
+        presenter.saveResetCode(etCode.getText().toString());
         showMessage("Verifying!!!");
-        navigator.toSetPasswordActivity(this);
+//        navigator.toSetPasswordActivity(this);
     }
 
     @Subscribe
-    public void onPwdResetEvent() {
-        navigator.toSetPasswordActivity(this);
+    public void onCodeEnteredEvent(CodeEnteredEvent event) {
+        if (event.isSuccess)
+            navigator.toSetPasswordActivity(this);
+        else
+            showMessage("Wrong code");
     }
 
     @Override
@@ -88,12 +93,12 @@ public class CodeActivity extends BaseActivity<CodeActivityContract.Presenter>
     @Override
     protected void onStart() {
         super.onStart();
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 }

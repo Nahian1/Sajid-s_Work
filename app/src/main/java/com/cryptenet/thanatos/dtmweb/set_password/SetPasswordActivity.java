@@ -9,23 +9,39 @@ package com.cryptenet.thanatos.dtmweb.set_password;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
+import com.cryptenet.thanatos.dtmweb.events.PwdResetEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContract.Presenter>
-        implements SetPasswordActivityContract.View {
+        implements SetPasswordActivityContract.View, View.OnClickListener {
     public static final String TAG = TagProvider.getDebugTag(SetPasswordActivity.class);
 
+    @BindView(R.id.et_new_pwd)
+    EditText etNewPwd;
+    @BindView(R.id.et_confirm_new_pwd)
+    EditText etConfirmNewPwd;
+    @BindView(R.id.btn_done)
+    Button btnDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+        viewUnbinder = ButterKnife.bind(this);
     }
 
     @Override
@@ -36,7 +52,6 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-
     }
 
     @Override
@@ -46,6 +61,38 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
 
     @Override
     public void restoreState(Bundle savedState) {
+    }
 
+    @Override
+    public void onClick(View v) {
+        String pwd = etNewPwd.getText().toString().trim();
+        String cPwd = etConfirmNewPwd.getText().toString().trim();
+
+        if(pwd.equals(cPwd))
+            presenter.sendPwdResetRequest(pwd);
+    }
+
+    @Subscribe
+    public void onPwdResetEvent(PwdResetEvent event) {
+        if (event.isSuccess)
+            showMessage("Reset Done!!");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }

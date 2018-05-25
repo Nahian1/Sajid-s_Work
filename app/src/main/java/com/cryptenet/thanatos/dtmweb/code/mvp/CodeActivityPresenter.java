@@ -23,7 +23,7 @@ public class CodeActivityPresenter
     }
 
     @Override
-    public void makeResetReq(String code) {
-        model.makeResetReq(code);
+    public void saveResetCode(String code) {
+        model.saveResetCode(code);
     }
 }

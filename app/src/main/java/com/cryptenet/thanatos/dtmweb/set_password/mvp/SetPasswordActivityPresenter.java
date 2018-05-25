@@ -20,4 +20,9 @@ public class SetPasswordActivityPresenter extends BasePresenter<SetPasswordActiv
     public SetPasswordActivityPresenter(SetPasswordActivityContract.Model model) {
         super(model);
     }
+
+    @Override
+    public void sendPwdResetRequest(String newPwd) {
+        model.sendPwdResetRequest(newPwd);
+    }
 }

@@ -26,4 +26,9 @@ public class SetPasswordActivityModel extends BaseModel<SetPasswordActivityContr
     public void attachContext(SetPasswordActivity context) {
         this.context = context;
     }
+
+    @Override
+    public void sendPwdResetRequest(String newPwd) {
+        repository.sendPwdResetRequest(newPwd);
+    }
 }

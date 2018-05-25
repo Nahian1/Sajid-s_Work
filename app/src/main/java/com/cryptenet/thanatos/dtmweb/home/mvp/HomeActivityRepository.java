@@ -22,11 +22,11 @@ public class HomeActivityRepository extends BaseRepository
     @Override
     public NavHeader getNavHeaderData() {
         return new NavHeader(
-                settingPreference.getString(ConstantProvider.NAV_PP_URL, null),
-                settingPreference.getString(ConstantProvider.NAV_NAME, null),
-                settingPreference.getString(ConstantProvider.NAV_TYPE, null),
-                settingPreference.getString(ConstantProvider.NAV_ADDRESS, null),
-                settingPreference.getString(ConstantProvider.NAV_DETAILS, null)
+                preferences.getString(ConstantProvider.NAV_PP_URL, null),
+                preferences.getString(ConstantProvider.NAV_NAME, null),
+                preferences.getString(ConstantProvider.NAV_TYPE, null),
+                preferences.getString(ConstantProvider.NAV_ADDRESS, null),
+                preferences.getString(ConstantProvider.NAV_DETAILS, null)
         );
     }
 }
