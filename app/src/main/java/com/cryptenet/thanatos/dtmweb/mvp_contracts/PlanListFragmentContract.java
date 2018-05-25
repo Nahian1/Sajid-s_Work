@@ -13,7 +13,6 @@ public interface PlanListFragmentContract {
     }
 
     interface View extends BaseFragContract.View {
-        void setProjectList();
     }
 
     interface Model extends BaseFragContract.Model {

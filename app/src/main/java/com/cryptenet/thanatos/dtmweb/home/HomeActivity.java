@@ -132,17 +132,17 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_man_project:
-                        addFragment(R.id.frame_container, new InitiatorProjectFragment());
+                        replaceFragment(R.id.frame_container, new InitiatorProjectFragment());
                         break;
                     case R.id.nav_man_request:
-                        addFragment(R.id.frame_container, new RequestDetailFragment());
+                        replaceFragment(R.id.frame_container, new RequestDetailFragment());
                         break;
                     case R.id.nav_language:
                         break;
                     case R.id.nav_conversation:
                         break;
                     case R.id.nav_report:
-                        addFragment(R.id.frame_container, new ReportIssueFragment());
+                        replaceFragment(R.id.frame_container, new ReportIssueFragment());
                         break;
                     case R.id.nav_logout:
                         break;
@@ -153,7 +153,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
                     case R.id.nav_about:
                         break;
                     default:
-                        addFragment(R.id.frame_container, new PlanListFragment());
+                        replaceFragment(R.id.frame_container, new PlanListFragment());
                         break;
                 }
 
@@ -190,7 +190,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         bundle.putParcelable("project", event.project);
         fragment.setArguments(bundle);
-        addFragment(R.id.frame_container, fragment);
+        replaceFragment(R.id.frame_container, fragment);
     }
 
     @Override

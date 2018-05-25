@@ -79,6 +79,12 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     }
 
+    @Subscribe
+    public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
+        this.projectsList = event.projectsList;
+        adapter.updateList(this.projectsList);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -86,13 +92,6 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         presenter.attachView(this);
 
         presenter.getProjectList();
-    }
-
-    @Subscribe
-    public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
-        Log.d(TAG, "onProjectListReceiveEvent: login");
-        this.projectsList = event.projectsList;
-        adapter.updateList(this.projectsList);
     }
 
     @Override
@@ -113,10 +112,5 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
-    }
-
-    @Override
-    public void setProjectList() {
-
     }
 }

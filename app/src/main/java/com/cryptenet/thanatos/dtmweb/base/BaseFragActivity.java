@@ -45,4 +45,12 @@ public abstract class BaseFragActivity<P extends BaseContract.Presenter> extends
                 .add(containerViewId, fragment)
                 .commit();
     }
+
+    protected final void replaceFragment(@IdRes int containerViewId, Fragment fragment) {
+        fragmentManager
+                .beginTransaction()
+                .addToBackStack(null)
+                .replace(containerViewId, fragment)
+                .commit();
+    }
 }

@@ -19,7 +19,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
+import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 
 import java.util.List;
 
@@ -27,14 +31,21 @@ import java.util.List;
  * Created by Mobile App on 2/9/2018.
  */
 
-public class ProjectAdapter extends ArrayAdapter<Project> {
+public class ProjectAdapter extends ArrayAdapter<Projects> {
     private Context context;
-    private List<Project> projects;
+    private List<Projects> projects;
     private int count = 0;
-    public ProjectAdapter(@NonNull Context context, List<Project> projects) {
+    public ProjectAdapter(@NonNull Context context, List<Projects> projects) {
         super(context, R.layout.initiator_project_list_row, projects);
         this.context = context;
         this.projects = projects;
+    }
+
+    public void updateList(List<Projects> projs){
+        this.projects.clear();
+        this.projects.addAll(projs);
+        this.notifyDataSetChanged();
+
     }
 
     @NonNull
@@ -49,9 +60,9 @@ public class ProjectAdapter extends ArrayAdapter<Project> {
         ImageView editIV = convertView.findViewById(R.id.editIV);
 
         titleTV.setText(projects.get(position).getTitle());
-        priceTV.setText(projects.get(position).getPrice());
-        dateTV.setText(projects.get(position).getDate());
-        if(projects.get(position).getStatus() == 1){
+        priceTV.setText(projects.get(position).getAccessPrice());
+        dateTV.setText(projects.get(position).getCreatedAt());
+        if(projects.get(position).getIsApproved() != null){
             statusTV.setText("Approved");
             statusTV.setBackgroundColor(Color.GREEN);
         }
@@ -59,7 +70,11 @@ public class ProjectAdapter extends ArrayAdapter<Project> {
             statusTV.setText("Pending");
         }
         //statusTV.setText(projects.get(position).getStatus());
-        editIV.setImageResource(projects.get(position).getImage());
+        Glide.with(context)
+                .load(projects.get(position).getCoverThumbnail())
+                .apply(RequestOptions.placeholderOf(R.drawable.ppimg))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(editIV);
         count++;
         Log.e("project", "getView: "+count);
 

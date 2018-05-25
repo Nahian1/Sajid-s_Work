@@ -20,4 +20,10 @@ public class InitiatorProjectFragmentModel extends BaseFragModel<InitiatorProjec
     public InitiatorProjectFragmentModel(InitiatorProjectFragmentContract.Repository repository) {
         super(repository);
     }
+
+
+    @Override
+    public void getMyProjectList() {
+        repository.getMyProjectList();
+    }
 }

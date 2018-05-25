@@ -20,4 +20,9 @@ public class InitiatorProjectFragmentPresenter extends BaseFragPresenter<Initiat
     public InitiatorProjectFragmentPresenter(InitiatorProjectFragmentContract.Model model) {
         super(model);
     }
+
+    @Override
+    public void getMyProjectList() {
+        model.getMyProjectList();
+    }
 }
