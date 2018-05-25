@@ -45,7 +45,7 @@
                 android:src="@drawable/imgdemo"/>
 
             <TextView
-                android:id="@+id/shortDetailsTV"
+                android:id="@+id/detialsT"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                 android:src="@drawable/lineoflist"/>
         </LinearLayout>
         <ImageView
-            android:id="@+id/seemoreImg"
+            android:id="@+id/seeMoreIV"
             android:layout_gravity="center"
             android:onClick="seeMore"
             android:layout_marginTop="40dp"
