@@ -29,13 +29,15 @@
                 android:textColor="#535353"
                  />
             <TextView
+                android:id="@+id/priceTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price: SR: 670 - SR: 780"
                 android:textSize="15sp"
                 android:textColor="#535353"
-                android:id="@+id/textViewPrice" />
+                 />
             <ImageView
+                android:id="@+id/demoIV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
@@ -43,20 +45,20 @@
                 android:src="@drawable/imgdemo"/>
 
             <TextView
+                android:id="@+id/shortDetailsTV"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/damitext"
+                android:text="Project Short Description"
                 android:textSize="13sp"
-                android:textColor="#535353"
-                android:id="@+id/textViewDetails" />
+                android:textColor="#535353" />
 
             <RelativeLayout
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:id="@+id/profilepic"
+                    android:id="@+id/profileIV"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:scaleType="centerCrop"
@@ -65,48 +67,48 @@
                     android:src="@drawable/img_initiator_profile_picture" />
 
                 <TextView
+                    android:id="@+id/nameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="6dp"
-                    android:layout_toEndOf="@+id/profilepic"
+                    android:layout_toEndOf="@+id/profileIV"
                     android:text="Habib Abdullah"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:textColor="#666666"
-                    android:id="@+id/textViewName" />
+                    android:textColor="#666666" />
 
                 <TextView
-                    android:id="@+id/textViewType"
+                    android:id="@+id/typeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/textViewName"
-                    android:layout_below="@+id/textViewName"
+                    android:layout_alignStart="@+id/nameTV"
+                    android:layout_below="@+id/nameTV"
                     android:text="Initiator"
                     android:textSize="12sp"
                     android:textStyle="normal"
                     android:textColor="#535353" />
 
                 <TextView
-                    android:id="@+id/address"
+                    android:id="@+id/addressTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/textViewType"
-                    android:layout_below="@+id/textViewType"
+                    android:layout_alignStart="@+id/typeTV"
+                    android:layout_below="@+id/typeTV"
                     android:text="Riyad, Saudi Arabia"
                     android:textSize="12sp"
                     android:textStyle="normal"
                     android:textColor="#535353"/>
 
                 <TextView
-                    android:id="@+id/details"
+                    android:id="@+id/detailsTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/profilepic"
+                    android:layout_below="@+id/profileIV"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
-                    android:text="@string/dami_text"
+                    android:text="Initiator Details"
                     android:textColor="#535353" />
 
             </RelativeLayout>
@@ -128,7 +130,7 @@
                     android:textColor="#898989" />
 
                 <TextView
-                    android:id="@+id/editTextBankName"
+                    android:id="@+id/bankNameTV"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -161,7 +163,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/NameOfperson"
+                    android:id="@+id/personNameTV"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -193,7 +195,7 @@
                     android:textColor="#898989" />
 
                 <TextView
-                    android:id="@+id/accountNumber"
+                    android:id="@+id/accountNumberTV"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -226,7 +228,7 @@
                     android:textColor="#898989" />
 
                 <TextView
-                    android:id="@+id/price"
+                    android:id="@+id/payPriceTV"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -244,6 +246,7 @@
                 android:src="@drawable/lineoflist"/>
         </LinearLayout>
         <ImageView
+            android:id="@+id/seemoreImg"
             android:layout_gravity="center"
             android:onClick="seeMore"
             android:layout_marginTop="40dp"
