@@ -21,5 +21,7 @@ public class PlanListFragmentModel extends BaseFragModel<PlanListFragmentContrac
         super(repository);
     }
 
-
+    public void getProjectList() {
+        repository.getAllProjects();
+    }
 }

@@ -22,8 +22,6 @@ public class PlanListFragmentPresenter extends BaseFragPresenter<PlanListFragmen
     }
 
     public void getProjectList() {
-        view.setProjectList(
-                model.getProjectList()
-        );
+        model.getProjectList();
     }
 }

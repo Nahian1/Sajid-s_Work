@@ -25,13 +25,17 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
+import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFragment;
+import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.home.request_detail.RequestDetailFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -176,6 +180,16 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         tvNavType.setText(header.getType());
         tvNavAddress.setText(header.getLocation());
         tvNavDetails.setText(header.getDesc());
+    }
+
+    @Subscribe
+    public void onToDetailsFragmentEvent(ToDetailsFragmentEvent event) {
+        PlanDescFragment fragment = new PlanDescFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putParcelable("project", event.project);
+        fragment.setArguments(bundle);
+        addFragment(R.id.frame_container, fragment);
     }
 
     @Override

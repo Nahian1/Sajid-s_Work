@@ -21,20 +21,26 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Presenter>
         implements PlanListFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(PlanListFragment.class);
-
+    private List<Projects> projectsList;
     private ListView projectLV;
     private ProjectAdapter adapter;
 
     public PlanListFragment() {
-        // Required empty public constructor
+        projectsList = new ArrayList<>();
     }
 
     @Override
@@ -42,17 +48,14 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_list, container, false);
-        adapter = new ProjectAdapter(activityContext, ProjectListGenerator.generateProjects());
+        adapter = new ProjectAdapter(activityContext, projectsList);
         projectLV =  convertView.findViewById(R.id.projectListView);
         projectLV.setAdapter(adapter);
 
         projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(activityContext, "position: "+ ProjectListGenerator.generateProjects().get(position), Toast.LENGTH_SHORT).show();
-
-                /*startActivity(new Intent(MainActivity.this,DetailsActivity.class)
-                .putExtra("pos",position));*/
+                EventBus.getDefault().post(new toDetailsFragmentEvent(projectsList.get(position)));
             }
         });
         return convertView;
@@ -83,6 +86,13 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         presenter.getProjectList();
     }
 
+    @Subscribe
+    public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
+        Log.d(TAG, "onProjectListReceiveEvent: login");
+        this.projectsList = event.projectsList;
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -99,5 +109,10 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    public void setProjectList() {
+
     }
 }
