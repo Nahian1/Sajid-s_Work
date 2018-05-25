@@ -29,7 +29,7 @@ public class LoginActivityModel
     }
 
     @Override
-    public boolean requestForLogin(String email, String password, int type) {
-        return repository.validateLogin(email, password, type);
+    public boolean requestForLogin(String email, String password) {
+        return repository.validateLogin(email, password);
     }
 }

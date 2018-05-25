@@ -83,11 +83,11 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-                presenter.requestForLogin(
-                        etEmail.getText().toString().trim(),
-                        etPwd.getText().toString().trim(),
-                        1
-                );
+                navigator.toHomeActivity(this);
+//                presenter.requestForLogin(
+//                        etEmail.getText().toString().trim(),
+//                        etPwd.getText().toString().trim()
+//                );
                 break;
             case R.id.tv_sign_up:
                 navigator.toRegistrationActivity(this);
@@ -100,7 +100,9 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
-        EventBus.builder().
+        Log.d(TAG, "onProjectListReceiveEvent: login");
+        navigator.toHomeActivity(this);
+        EventBus.getDefault().post(new ProjectListReceiveEvent(event.projectsList));
     }
 
     @Override

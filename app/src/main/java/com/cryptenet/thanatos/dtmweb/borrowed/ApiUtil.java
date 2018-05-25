@@ -66,4 +66,22 @@ public class ApiUtil {
             return "IOException";
         }
     }
+
+    public String tryLogin(String payload, String email, String password, String token) {
+        String requestUrl = BASE_URL + "o/token/?format=json";
+        try {
+            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "POST", "");
+
+            multipart.addHeaderField("Content-Type", "application/json");
+
+            multipart.addFormField("username", email);
+            multipart.addFormField("password", password);
+            multipart.addFormField("grant_type", "password");
+
+            return multipart.finish();
+        } catch (IOException ex) {
+            System.out.println(ex);
+            return "IOException";
+        }
+    }
 }

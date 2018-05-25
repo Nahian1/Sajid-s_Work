@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="48dp"
+    android:paddingStart="48dp"
+    android:paddingTop="40dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageView
         android:id="@+id/iv_nav_pp"

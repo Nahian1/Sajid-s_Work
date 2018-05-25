@@ -25,7 +25,7 @@ public class ConstantProvider {
 
     public static final int RESULT_LOAD_IMG = 101;
 
-    public static final String BASE_URL = "https://fa-sa-801.herokuapp.com/api/v1/";
+    public static final String BASE_URL = "https://fa-sa-801.herokuapp.com/";
 
     public static final String SP_FORGOT_ID = "forgot";
 }

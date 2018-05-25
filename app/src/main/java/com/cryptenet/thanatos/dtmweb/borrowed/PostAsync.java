@@ -12,10 +12,12 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
 
     @Override
     protected String doInBackground(Object[] objects) {
-        ApiUtil util = new ApiUtil("https://fa-sa-801.herokuapp.com/");
+        ApiUtil util;
         String response = null;
 
         if (objects[0].equals("1")) {
+            //registration
+            util = new ApiUtil("https://fa-sa-801.herokuapp.com/api/v1/");
             response = util.createUser(
                         (String) objects[1],
                         (String) objects[2],
@@ -29,9 +31,16 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
                         (String) objects[10],
                         (String) objects[11]
             );
+        } else if (objects[0].equals("2")) {
+            util = new ApiUtil("https://fa-sa-801.herokuapp.com/");
+            response = util.tryLogin(
+                    (String) objects[1],
+                    (String) objects[2],
+                    (String) objects[3],
+                    (String) objects[4]
+            );
         }
 
-        Log.d(TAG, "doInBackground: " + response);
         return response;
     }
 

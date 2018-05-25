@@ -13,6 +13,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 
 import java.io.File;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -23,14 +24,14 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiClient {
-    @GET("country")
+    @GET("api/v1/country")
     Call<CountryResponse> getCountries();
 
-    @GET("city")
+    @GET("api/v1/city")
     Call<CityResponse> getCities(@Query("country") int countryCode);
 
     @FormUrlEncoded
-    @POST("user")
+    @POST("api/v1/user")
     Call<ResponseBody> attemptReg(
             @Field("picture")File picture,
             @Field("user_type") String user_type,
@@ -45,6 +46,10 @@ public interface ApiClient {
             @Field("bank_account_number") String bank_account_number
     );
 
-    @GET("plan/")
+    @GET("api/v1/plan/")
     Call<AllPlansResponse> getAllPlans(@Header("Authorization") String token);
+
+
+    @POST("o/token/")
+    Call<ResponseBody> getLogin(@Header("Authorization") String token, RequestBody body);
 }

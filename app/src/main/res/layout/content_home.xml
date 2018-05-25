@@ -14,8 +14,6 @@
     tools:context=".home.HomeActivity"
     tools:showIn="@layout/activity_home" >
 
-    <include layout="@layout/app_bar_search" />
-
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"

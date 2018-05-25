@@ -1,9 +1,12 @@
 package com.cryptenet.thanatos.dtmweb.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Projects {
+public class Projects implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -46,6 +49,39 @@ public class Projects {
     @SerializedName("created_at")
     @Expose
     private String createdAt;
+    public final static Parcelable.Creator<Projects> CREATOR = new Creator<Projects>() {
+
+
+        @SuppressWarnings({
+                "unchecked"
+        })
+        public Projects createFromParcel(Parcel in) {
+            return new Projects(in);
+        }
+
+        public Projects[] newArray(int size) {
+            return (new Projects[size]);
+        }
+
+    }
+            ;
+
+    protected Projects(Parcel in) {
+        this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.initiator = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.initiatorsName = ((String) in.readValue((String.class.getClassLoader())));
+        this.title = ((String) in.readValue((String.class.getClassLoader())));
+        this.category = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.shortDescription = ((String) in.readValue((String.class.getClassLoader())));
+        this.minimumInvestmentCost = ((String) in.readValue((String.class.getClassLoader())));
+        this.maximumInvestmentCost = ((String) in.readValue((String.class.getClassLoader())));
+        this.accessPrice = ((String) in.readValue((String.class.getClassLoader())));
+        this.cover = ((String) in.readValue((String.class.getClassLoader())));
+        this.coverThumbnail = ((String) in.readValue((String.class.getClassLoader())));
+        this.uploadedFile = ((Object) in.readValue((Object.class.getClassLoader())));
+        this.isApproved = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
+        this.createdAt = ((String) in.readValue((String.class.getClassLoader())));
+    }
 
     /**
      * No args constructor for use in serialization
@@ -201,23 +237,24 @@ public class Projects {
         this.createdAt = createdAt;
     }
 
-    @Override
-    public String toString() {
-        return "Projects{" +
-                "id=" + id +
-                ", initiator=" + initiator +
-                ", initiatorsName='" + initiatorsName + '\'' +
-                ", title='" + title + '\'' +
-                ", category=" + category +
-                ", shortDescription='" + shortDescription + '\'' +
-                ", minimumInvestmentCost='" + minimumInvestmentCost + '\'' +
-                ", maximumInvestmentCost='" + maximumInvestmentCost + '\'' +
-                ", accessPrice='" + accessPrice + '\'' +
-                ", cover='" + cover + '\'' +
-                ", coverThumbnail='" + coverThumbnail + '\'' +
-                ", uploadedFile=" + uploadedFile +
-                ", isApproved=" + isApproved +
-                ", createdAt='" + createdAt + '\'' +
-                '}';
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(id);
+        dest.writeValue(initiator);
+        dest.writeValue(initiatorsName);
+        dest.writeValue(title);
+        dest.writeValue(category);
+        dest.writeValue(shortDescription);
+        dest.writeValue(minimumInvestmentCost);
+        dest.writeValue(maximumInvestmentCost);
+        dest.writeValue(accessPrice);
+        dest.writeValue(cover);
+        dest.writeValue(coverThumbnail);
+        dest.writeValue(uploadedFile);
+        dest.writeValue(isApproved);
+        dest.writeValue(createdAt);
+    }
+
+    public int describeContents() {
+        return  0;
     }
 }

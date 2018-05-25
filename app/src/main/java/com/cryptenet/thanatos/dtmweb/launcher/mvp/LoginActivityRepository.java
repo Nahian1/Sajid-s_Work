@@ -7,13 +7,14 @@
 
 package com.cryptenet.thanatos.dtmweb.launcher.mvp;
 
+import android.util.Base64;
 import android.util.Log;
 
+import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
-import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -22,10 +23,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 @PerActivity
 public class LoginActivityRepository extends BaseRepository
@@ -38,29 +35,60 @@ public class LoginActivityRepository extends BaseRepository
     }
 
     @Override
-    public boolean validateLogin(String email, String password, int type) {
-        String token = (type == 1) ? ConstantProvider.ACCESS_TOKEN_INVE : ConstantProvider.ACCESS_TOKEN_INIT;
-        Call<AllPlansResponse> req2 = client.getAllPlans("Bearer " + token);
+    public boolean validateLogin(String email, String password) {
+        byte[] data =
+                (ConstantProvider.CLIENT_ID +
+                ":" +
+                ConstantProvider.CLIENT_SECRET).getBytes();
 
-        req2.enqueue(new Callback<AllPlansResponse>() {
-            @Override
-            public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
-                AllPlansResponse allPlansResponse = response.body();
-                assert allPlansResponse != null;
-                setProjects(allPlansResponse.getResults());
-            }
+        String s = "Basic " + Base64.encodeToString(
+                        data, Base64.DEFAULT
+        );
 
-            @Override
-            public void onFailure(Call<AllPlansResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: AllPlansResponse");
-            }
-        });
+        String payload = "{\"username\": \"" + email +"\", \"password\": \"" + password + "\", \"granttype\": \"password\"}";
+
+        PostAsync async = new PostAsync();
+        async.execute(
+                "2",
+                payload,
+                email,
+                password,
+                s
+        );
+//        Call<ResponseBody> req = client.getLogin(s, new Login(email, password));
+//        req.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                Log.d(TAG, "onResponse: " + response.toString());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Log.d(TAG, "onFailure: attempt");
+//            }
+//        });
+
+
+//        req2.enqueue(new Callback<AllPlansResponse>() {
+//            @Override
+//            public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
+//                AllPlansResponse allPlansResponse = response.body();
+//                assert allPlansResponse != null;
+//                setProjects(allPlansResponse.getResults());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AllPlansResponse> call, Throwable t) {
+//                Log.d(TAG, "onFailure: AllPlansResponse");
+//            }
+//        });
         return false;
     }
 
     private void setProjects(List<Projects> projectsList) {
         this.projectsList = projectsList;
-
+        for (Projects projects : projectsList)
+            Log.d(TAG, "setProjects: " + projects.getTitle());
         EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsList));
     }
 }
