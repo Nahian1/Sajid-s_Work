@@ -68,10 +68,6 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         return convertView;
     }
 
-    public void addProject(View view) {
-
-    }
-
     @Override
     public void showMessage(String message) {
         Toast.makeText(activityContext, message, Toast.LENGTH_LONG).show();
@@ -85,6 +81,10 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
     @Override
     public void restoreState(Bundle savedState) {
+
+    }
+
+    private void addProject(View view) {
 
     }
 

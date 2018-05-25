@@ -45,7 +45,7 @@
                 android:src="@drawable/imgdemo"/>
 
             <TextView
-                android:id="@+id/detialsT"
+                android:id="@+id/shortDetailsTV"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

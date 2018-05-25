@@ -46,7 +46,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         projects = (Projects) getArguments().get("project");
         titleTV = convertView.findViewById(R.id.titleTV);
         priceTV = convertView.findViewById(R.id.priceTV);
-        shortDetailsTV = convertView.findViewById(R.id.detailsT);
+        shortDetailsTV = convertView.findViewById(R.id.detailsTV);
 
 
         return convertView;
