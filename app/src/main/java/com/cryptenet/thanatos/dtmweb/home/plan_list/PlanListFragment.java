@@ -10,6 +10,7 @@ package com.cryptenet.thanatos.dtmweb.home.plan_list;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -55,7 +57,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EventBus.getDefault().post(new toDetailsFragmentEvent(projectsList.get(position)));
+                EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsList.get(position)));
             }
         });
         return convertView;
@@ -96,13 +98,15 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        EventBus.getDefault().register(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        EventBus.getDefault().register(this);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
     }
 
     @Override

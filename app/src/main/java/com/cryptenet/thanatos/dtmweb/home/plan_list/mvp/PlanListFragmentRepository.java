@@ -38,7 +38,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
     }
 
     public void getAllProjects() {
-        Call<AllPlansResponse> req = client.getAllPlans(ConstantProvider.ACCESS_TOKEN_INIT);
+        Call<AllPlansResponse> req = client.getAllPlans("Bearer " + ConstantProvider.ACCESS_TOKEN_INIT);
         req.enqueue(new Callback<AllPlansResponse>() {
             @Override
             public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
