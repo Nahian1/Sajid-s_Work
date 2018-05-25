@@ -18,7 +18,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
+import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 
 import java.util.List;
 
@@ -26,11 +30,11 @@ import java.util.List;
  * Created by Mobile App on 2/9/2018.
  */
 
-public class ProjectAdapter extends ArrayAdapter<Project> {
+public class ProjectAdapter extends ArrayAdapter<Projects> {
     private Context context;
-    private List<Project> projects;
+    private List<Projects> projects;
     private int count = 0;
-    public ProjectAdapter(@NonNull Context context, List<Project> projects) {
+    public ProjectAdapter(@NonNull Context context, List<Projects> projects) {
         super(context, R.layout.plan_list_row, projects);
         this.context = context;
         this.projects = projects;
@@ -48,12 +52,16 @@ public class ProjectAdapter extends ArrayAdapter<Project> {
         TextView priceTV = convertView.findViewById(R.id.priceTV);
         ImageView seemoreIV = convertView.findViewById(R.id.seemoreImg);
 
-        projectIV.setImageResource(projects.get(position).getImage1());
-        nameTV.setText(projects.get(position).getName());
-        dateTV.setText(projects.get(position).getDate());
+        Glide.with(context)
+                .load(projects.get(position).getCoverThumbnail())
+                .apply(RequestOptions.placeholderOf(R.drawable.ppimg))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(projectIV);
+        nameTV.setText(projects.get(position).getInitiatorsName());
+        dateTV.setText(projects.get(position).getCreatedAt());
         titleTV.setText(projects.get(position).getTitle());
-        priceTV.setText(projects.get(position).getPrice());
-        seemoreIV.setImageResource(projects.get(position).getImage2());
+        priceTV.setText(projects.get(position).getAccessPrice());
+        seemoreIV.setImageResource(R.drawable.seemore);
         count++;
         Log.e("student", "getView: "+count);
 

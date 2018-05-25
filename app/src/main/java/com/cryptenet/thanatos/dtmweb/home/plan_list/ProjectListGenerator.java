@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.home.plan_list;
 
 import com.cryptenet.thanatos.dtmweb.R;
+import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,9 @@ import java.util.List;
 
 public final class ProjectListGenerator {
 
-    public static List<Project> generateProjects(){
-        List<Project> projects = new ArrayList<>();
+    public static List<Projects> generateProjects(){
+        List<Projects> projects = new ArrayList<>();
+       /* projects.add(new Projects(id,initiator,));
         projects.add(new Project("Name","Date","Title","Price",R.drawable.ppimg,R.drawable.seemore));
         projects.add(new Project("Name","Date","Title","Price",R.drawable.ppimg,R.drawable.seemore));
         projects.add(new Project("Name","Date","Title","Price",R.drawable.ppimg,R.drawable.seemore));
@@ -36,8 +38,7 @@ public final class ProjectListGenerator {
         projects.add(new Project("Name","Date","Title","Price",R.drawable.ppimg,R.drawable.seemore));
         projects.add(new Project("Name","Date","Title","Price",R.drawable.ppimg,R.drawable.seemore));
         projects.add(new Project("Name","Date","Title","Price",R.drawable.ppimg,R.drawable.seemore));
-        projects.add(new Project("Name","Date","Title","Price",R.drawable.ppimg,R.drawable.seemore));
-        projects.add(new Project("Name","Date","Title","Price",R.drawable.ppimg,R.drawable.seemore));
+        projects.add(new Project("Name","Date","Title","Price",R.drawable.ppimg,R.drawable.seemore));*/
 
         return projects;
     }
