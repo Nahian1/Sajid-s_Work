@@ -8,7 +8,6 @@
 package com.cryptenet.thanatos.dtmweb.home;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -26,7 +25,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
-import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
@@ -35,16 +33,11 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presenter>
-        implements HomeActivityContract.View, View.OnClickListener {
+        implements HomeActivityContract.View {
     public static final String TAG = TagProvider.getDebugTag(HomeActivity.class);
     private View headerView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -58,17 +51,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    @BindView(R.id.menuRight)
-    ImageView menuRight;
-
     ImageView ivNavPp;
     TextView tvNavName;
     TextView tvNavType;
     TextView tvNavAddress;
     TextView tvNavDetails;
     ImageView ivNavEditProfile;
-
-    ImageView ivToolbarHam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +73,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         tvNavDetails = headerView.findViewById(R.id.tv_nav_details);
         ivNavEditProfile = headerView.findViewById(R.id.iv_nav_edit_profile);
 
-        ivToolbarHam = toolbar.findViewById(R.id.menuRight);
-
         setSupportActionBar(toolbar);
 
         //presenter.getNavHeaderData();
@@ -94,7 +80,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         setUpNavigation();
 
         if (savedInstanceState == null) {
-            navigationView.getMenu().getItem(0).setChecked(true);
+            addFragment(R.id.frame_container, new PlanListFragment());
         }
     }
 
@@ -116,16 +102,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @Override
     public void restoreState(Bundle savedState) {
 
-    }
-
-    @Subscribe
-    public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
-        Log.d(TAG, "onProjectListReceiveEvent: home");
-        PlanListFragment planListFragment = new PlanListFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("projects", (ArrayList<? extends Parcelable>) event.projectsList);
-        planListFragment.setArguments(bundle);
-        addFragment(R.id.frame_container, planListFragment);
     }
 
     private void setUpNavigation() {
@@ -152,28 +128,38 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
                 switch (item.getItemId()) {
                     case R.id.nav_man_project:
                         addFragment(R.id.frame_container, new InitiatorProjectFragment());
-                        return true;
+                        break;
                     case R.id.nav_man_request:
                         addFragment(R.id.frame_container, new RequestDetailFragment());
-                        return true;
+                        break;
                     case R.id.nav_language:
-                        return true;
+                        break;
                     case R.id.nav_conversation:
-                        return true;
+                        break;
                     case R.id.nav_report:
                         addFragment(R.id.frame_container, new ReportIssueFragment());
-                        return true;
+                        break;
                     case R.id.nav_logout:
-                        return true;
+                        break;
                     case R.id.nav_tc:
-                        return true;
+                        break;
                     case R.id.nav_rate:
-                        return true;
+                        break;
                     case R.id.nav_about:
-                        return true;
+                        break;
+                    default:
+                        addFragment(R.id.frame_container, new PlanListFragment());
+                        break;
                 }
 
-                return false;
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setChecked(true);
+                }
+                item.setChecked(true);
+
+                return true;
             }
         });
     }
@@ -201,21 +187,10 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.menuRight:
-                drawerLayout.openDrawer();
-                break;
-        }
     }
 }

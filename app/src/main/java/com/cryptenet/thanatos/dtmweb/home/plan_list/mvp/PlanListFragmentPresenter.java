@@ -20,4 +20,10 @@ public class PlanListFragmentPresenter extends BaseFragPresenter<PlanListFragmen
     public PlanListFragmentPresenter(PlanListFragmentContract.Model model) {
         super(model);
     }
+
+    public void getProjectList() {
+        view.setProjectList(
+                model.getProjectList()
+        );
+    }
 }

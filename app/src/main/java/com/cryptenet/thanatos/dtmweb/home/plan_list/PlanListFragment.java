@@ -8,6 +8,8 @@
 package com.cryptenet.thanatos.dtmweb.home.plan_list;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,17 +24,18 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Presenter>
         implements PlanListFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(PlanListFragment.class);
 
+    private ListView projectLV;
+    private ProjectAdapter adapter;
 
     public PlanListFragment() {
         // Required empty public constructor
     }
-
-    private ListView projectLV;
-    private ProjectAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +49,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(activityContext, "position: "+ProjectListGenerator.generateProjects().get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activityContext, "position: "+ ProjectListGenerator.generateProjects().get(position), Toast.LENGTH_SHORT).show();
 
                 /*startActivity(new Intent(MainActivity.this,DetailsActivity.class)
                 .putExtra("pos",position));*/
@@ -69,5 +72,32 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     @Override
     public void restoreState(Bundle savedState) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.attachView(this);
+
+        presenter.getProjectList();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }
