@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2018.
+  ~ Development Courtesy: Cryptenet Ltd.
+  ~ Developer Credit: Alamgir Hossain, Nabil Shawkat
+  ~ This project is under MIT license
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.plan_long_desc.PlanLongDescFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#535353"
+                     />
+                <TextView
+                    android:id="@+id/textViewPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price: SR: 670 - SR: 780"
+                    android:textSize="15sp"
+                    android:textColor="#535353"
+                     />
+                <ImageView
+                    android:id="@+id/demoImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/imgdemo"/>
+
+                <TextView
+                    android:id="@+id/textViewDetails"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Short Description"
+                    android:textSize="13sp"
+                    android:textColor="#535353" />
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/profilepic"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:scaleType="centerCrop"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/img_initiator_profile_picture" />
+
+                    <TextView
+                        android:id="@+id/textViewName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_toEndOf="@+id/profilepic"
+                        android:text="Habib Abdullah"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#666666" />
+
+                    <TextView
+                        android:id="@+id/textViewType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/textViewName"
+                        android:layout_below="@+id/textViewName"
+                        android:text="Initiator"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        android:textColor="#535353" />
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/textViewType"
+                        android:layout_below="@+id/textViewType"
+                        android:text="Riyad, Saudi Arabia"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        android:textColor="#535353"/>
+
+                    <TextView
+                        android:id="@+id/details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profilepic"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="30dp"
+                        android:text="Initiator Deatails"
+                        android:textColor="#535353" />
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/longDesc"
+                    android:textColor="#535353"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:text="Long Description"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

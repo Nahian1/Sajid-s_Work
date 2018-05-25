@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2018.
-  ~  Development Courtesy: Cryptenet Ltd.
-  ~  Developer Credit: Alamgir Hossain, Nabil Shawkat
-  ~  This project is under MIT license
+  ~ Development Courtesy: Cryptenet Ltd.
+  ~ Developer Credit: Alamgir Hossain, Nabil Shawkat
+  ~ This project is under MIT license
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,55 +13,78 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ededed"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".home.plan_desc.PlanDescFragment">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="20dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/layout_pics"
+                    android:layout_toEndOf="@+id/layout_pics"
+                    android:text="Title"
+                    android:textColor="#939393"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:id="@+id/textViewTitle" />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/textViewTitle"
+                    android:text="Price: $670"
+                    android:textColor="#939393"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/price"
+                    android:layout_alignBottom="@+id/price"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/price"
+                    android:text="10 March 2018"
+                    android:textColor="#939393"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/date"
+                    android:layout_alignBottom="@+id/date"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/date"
+                    android:text="Pending"
+                    android:textColor="#939393"
+                    android:textSize="15sp" />
+
+
+            </RelativeLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/lineoflist"/>
             <LinearLayout
+                android:layout_margin="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textViewTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Title"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#535353"/>
-                <TextView
-                    android:id="@+id/textViewPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Price: SR: 670 - SR: 780"
-                    android:textSize="15sp"
-                    android:textColor="#535353"/>
-                <ImageView
-                    android:id="@+id/projectIV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/imgdemo"/>
-
-                <TextView
-                    android:id="@+id/textViewDetails"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Description"
-                    android:textSize="13sp"
-                    android:textColor="#535353"/>
-
                 <RelativeLayout
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
@@ -74,17 +97,16 @@
                         android:src="@drawable/img_initiator_profile_picture" />
 
                     <TextView
-                        android:id="@+id/textViewName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/profilepic"
                         android:text="Habib Abdullah"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#666666"/>
+                        android:textSize="16sp"
+                        android:textColor="#535353"
+                        android:id="@+id/textViewName" />
 
                     <TextView
                         android:id="@+id/textViewType"
@@ -94,7 +116,6 @@
                         android:layout_below="@+id/textViewName"
                         android:text="Initiator"
                         android:textSize="12sp"
-                        android:textStyle="normal"
                         android:textColor="#535353" />
 
                     <TextView
@@ -105,21 +126,13 @@
                         android:layout_below="@+id/textViewType"
                         android:text="Riyad, Saudi Arabia"
                         android:textSize="12sp"
-                        android:textStyle="normal"
                         android:textColor="#535353"/>
 
-                    <TextView
-                        android:id="@+id/details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/profilepic"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="30dp"
-                        android:text="Description"
-                        android:textColor="#535353" />
-
                 </RelativeLayout>
+
+
                 <LinearLayout
+                    android:layout_marginTop="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="2"
@@ -230,19 +243,19 @@
                         android:textAlignment="viewStart"
                         android:paddingTop="10dp"
                         android:layout_weight="1"
-                        android:text="Amount to be Paid for Details"
+                        android:text="Transaction Id"
                         android:textSize="14sp"
                         android:textColor="#898989" />
 
                     <TextView
-                        android:id="@+id/price"
+                        android:id="@+id/transactionId"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/priceDetail"
                         android:background="@android:color/transparent"
                         android:textAlignment="viewStart"
-                        android:hint="SR: 780"
+                        android:hint="121 0121 12 010 151"
                         android:paddingTop="10dp"
                         android:textColor="#898989"
                         android:textSize="14sp" />
@@ -252,14 +265,35 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/lineoflist"/>
             </LinearLayout>
-            <ImageView
-                android:id="@+id/seeMoreIV"
-                android:layout_gravity="center"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
-                android:layout_width="200dp"
+            <LinearLayout
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/seemoredetails"/>
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Note:"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/lineoflist"/>
+                <TextView
+                    android:id="@+id/noteTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Some Notes"/>
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/doneBtn"
+                android:text="Done"
+                android:background="@drawable/btn_shape_g"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_width="200dp"
+                android:layout_height="28dp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
