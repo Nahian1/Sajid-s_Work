@@ -49,6 +49,9 @@ public interface ApiClient {
     @GET("api/v1/plan/")
     Call<AllPlansResponse> getAllPlans(@Header("Authorization") String token);
 
+    @GET("api/v1/plan/my/")
+    Call<AllPlansResponse> getAllMyPlans(@Header("Authorization") String token);
+
     @POST("o/token/")
     Call<ResponseBody> getLogin(@Header("Authorization") String token, RequestBody body);
 }
