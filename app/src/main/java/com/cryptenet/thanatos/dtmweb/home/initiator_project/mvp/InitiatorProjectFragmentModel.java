@@ -21,9 +21,8 @@ public class InitiatorProjectFragmentModel extends BaseFragModel<InitiatorProjec
         super(repository);
     }
 
-
     @Override
-    public void getMyProjectList() {
-        repository.getMyProjectList();
+    public void getMyProjectList(int reqType) {
+        repository.getMyProjectList(reqType);
     }
 }

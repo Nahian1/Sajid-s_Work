@@ -17,8 +17,13 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
+import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +31,9 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         implements LoginActivityContract.View, View.OnClickListener {
-    public static final String TAG = TagProvider.getDebugTag(LoginActivity.class);
+    private static final String TAG = TagProvider.getDebugTag(LoginActivity.class);
+    private User user;
+    private boolean isSuccess;
 
     @BindView(R.id.et_email)
     EditText etEmail;
@@ -79,11 +86,11 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-                navigator.toHomeActivity(this);
-//                presenter.requestForLogin(
-//                        etEmail.getText().toString().trim(),
-//                        etPwd.getText().toString().trim()
-//                );
+//                navigator.toHomeActivity(this);
+                presenter.requestForLogin(
+                        etEmail.getText().toString().trim(),
+                        etPwd.getText().toString().trim()
+                );
                 break;
             case R.id.tv_sign_up:
                 navigator.toRegistrationActivity(this);
@@ -91,6 +98,15 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
             case R.id.tv_forgot_pwd:
                 navigator.toForgotPasswordActivity(this);
                 break;
+        }
+    }
+
+    @Subscribe
+    public void onLogInSuccessEvent(LogInSuccessEvent event) {
+        this.user = event.user;
+        if(event.isSuccess) {
+            presenter.saveUserData(user);
+            navigator.toHomeActivity(this, user);
         }
     }
 
@@ -103,10 +119,12 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     @Override
     protected void onStart() {
         super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
+        EventBus.getDefault().unregister(this);
         super.onStop();
     }
 }

@@ -8,13 +8,9 @@
 package com.cryptenet.thanatos.dtmweb.code.mvp;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
-import com.cryptenet.thanatos.dtmweb.events.PwdResetEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.CodeActivityContract;
-import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
-
-import org.greenrobot.eventbus.EventBus;
 
 @PerActivity
 public class CodeActivityRepository extends BaseRepository
@@ -23,10 +19,10 @@ public class CodeActivityRepository extends BaseRepository
 
     @Override
     public void makeResetReq(String code) {
-        String identifier = settingPreference.getString(ConstantProvider.SP_FORGOT_ID, "null");
+//        String identifier = settingPreference.getString(ConstantProvider.SP_FORGOT_ID, "null");
 
         // make request
         //broadcast if ok
-        EventBus.getDefault().post(new PwdResetEvent());
+//        EventBus.getDefault().post(new PwdResetEvent());
     }
 }

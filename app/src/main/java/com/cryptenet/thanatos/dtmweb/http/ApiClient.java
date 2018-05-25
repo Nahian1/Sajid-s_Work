@@ -20,6 +20,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -52,6 +53,19 @@ public interface ApiClient {
     @GET("api/v1/plan/my/")
     Call<AllPlansResponse> getAllMyPlans(@Header("Authorization") String token);
 
+    @GET("api/v1/plan-access/")
+    Call<AllPlansResponse> getAllReqPlansINT(@Header("Authorization") String token);
+
     @POST("o/token/")
     Call<ResponseBody> getLogin(@Header("Authorization") String token, RequestBody body);
+
+    @POST("/o/token")
+    @FormUrlEncoded
+    @Headers({
+            "Content-Type: application/x-www-form-urlencoded"
+    })
+    Call<ResponseBody> getAccessToken(@Field("grant_type") String grantType,
+                                       @Field("username") String username,
+                                       @Field("password") String password,
+                                       @Header("Authorization") String authorization);
 }

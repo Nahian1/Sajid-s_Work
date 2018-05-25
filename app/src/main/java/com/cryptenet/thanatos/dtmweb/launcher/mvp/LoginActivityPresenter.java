@@ -10,6 +10,7 @@ package com.cryptenet.thanatos.dtmweb.launcher.mvp;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
@@ -25,5 +26,10 @@ public class LoginActivityPresenter
     @Override
     public void requestForLogin(String email, String password) {
         model.requestForLogin(email, password);
+    }
+
+    @Override
+    public void saveUserData(User user) {
+        model.saveUserData(user);
     }
 }

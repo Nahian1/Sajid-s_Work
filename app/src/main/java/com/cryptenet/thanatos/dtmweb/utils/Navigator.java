@@ -9,11 +9,13 @@ package com.cryptenet.thanatos.dtmweb.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 
 import com.cryptenet.thanatos.dtmweb.code.CodeActivity;
 import com.cryptenet.thanatos.dtmweb.forgot_password.ForgotPasswordActivity;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
 
@@ -51,8 +53,11 @@ public class Navigator {
         context.startActivity(intent);
     }
 
-    public void toHomeActivity(Context context) {
+    public void toHomeActivity(Context context, @Nullable User user) {
         Intent intent = new Intent(context, HomeActivity.class);
+        if (user != null) {
+            intent.putExtra("user", user);
+        }
         context.startActivity(intent);
     }
 }

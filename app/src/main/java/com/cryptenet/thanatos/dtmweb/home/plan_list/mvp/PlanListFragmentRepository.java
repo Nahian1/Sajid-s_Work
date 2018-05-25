@@ -43,8 +43,13 @@ public class PlanListFragmentRepository extends BaseFragRepository
             @Override
             public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
                 AllPlansResponse allPlansResponse = response.body();
-                assert allPlansResponse != null;
-                setProjects(allPlansResponse.getResults());
+                try {
+                    assert allPlansResponse != null;
+                    setProjects(allPlansResponse.getResults());
+                } catch (NullPointerException ex) {
+                    ex.printStackTrace();
+                }
+
             }
 
             @Override

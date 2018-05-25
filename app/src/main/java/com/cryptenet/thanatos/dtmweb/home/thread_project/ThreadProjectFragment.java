@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
@@ -25,6 +26,9 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
         implements ThreadProjectFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(ThreadProjectFragment.class);
 
+    private ListView projectLV;
+    private ProjectAdapter adapter;
+
 
     public ThreadProjectFragment() {
         // Required empty public constructor
@@ -35,7 +39,13 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plan_desc, container, false);
+        View convertView = inflater.inflate(R.layout.fragment_plan_desc, container, false);
+        projectLV = convertView.findViewById(R.id.projectListView);
+        adapter = new ProjectAdapter(activityContext, ProjectListGenerator.generateProjects());
+        projectLV.setAdapter(adapter);
+
+
+        return convertView;
     }
 
     @Override

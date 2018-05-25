@@ -16,16 +16,25 @@ public class ConstantProvider {
     public static final String NAV_ADDRESS = "navAddress";
     public static final String NAV_DETAILS = "navDetails";
 
-    public static final String ACCESS_TOKEN_INIT = "5vz8wX9G103AO0fY7eYZ1VeQvNRNa3";
-    public static final String ACCESS_TOKEN_INVE = "rD9ANQ3R6mP6QCMzpzUOqklQ3IuHyV";
-
-    public static final String CLIENT_ID = "B9raJl3FPuZsI2CkVe7YXa7JbKQNI8FlWUnr9eT7";
-    public static final String CLIENT_SECRET =
-            "7RMk1COvTEyn00fI8qPJrZ2XYWUo5wKThjEVayRowPlT73DuUdYURyRltNz77nHQxipaFHaWu8TXXKkbDyR7cTRrDC9bijKFBD6NPTm8Iwu8EQ6zmTpnxOemW8cWuayO";
+    public static final String ACCESS_TOKEN_BASIC = "Basic cDk3SWdtUHVsMUFjblBKMGVjNXE0VGVIMHYzRDQ4Rlg4Y3BJODdCeDpNMGFMVExGdjZlUFpReHhtdmdoU0JMbUp4WEd3VVEwTE1iczJYTmNEbElMQmlDZVJhUnBTY0dydVZuNlpDalJOaFo5bEpYb0o5RWxBUlNiMTFqY2VEaGVUZVNadmk5ajRzVWdhenlQVFBPekJmajN3d2U0cmM5VXVGdVNSeDJRQw==";
+    public static final String ACCESS_TOKEN_INIT = "PwhgGBdhO9zx6KqRvGjb0nyDEtRCX9";
+    public static final String ACCESS_TOKEN_INVE = "ngJ7NKzSROUxxCu9QooWx4VK4eWMNd";
 
     public static final int RESULT_LOAD_IMG = 101;
 
     public static final String BASE_URL = "https://fa-sa-801.herokuapp.com/";
 
-    public static final String SP_FORGOT_ID = "forgot";
+    public static final String SP_ACCESS_TOKEN = "ac_token";
+    public static final String SP_REFRESH_TOKEN = "rs_token";
+    public static final String SP_ID = "u_id";
+    public static final String SP_NAME = "u_name";
+    public static final String SP_EMAIL = "u_email";
+    public static final String SP_ADDRESS = "u_address";
+    public static final String SP_CITY = "u_city";
+    public static final String SP_COUNTRY = "u_country";
+    public static final String SP_PICTURE_URL = "u_picture_url";
+    public static final String SP_BANK_NAME = "u_bank_name";
+    public static final String SP_BANK_ACC_NAME = "u_bank_acc_name";
+    public static final String SP_BANK_ACC_NO = "u_bank_acc_no";
+    public static final String SP_USER_TYPE = "u_type";
 }

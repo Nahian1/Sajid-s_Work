@@ -42,21 +42,23 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     private List<Projects> projectsList;
     private ListView projectLV;
     private ProjectAdapter adapter;
-
+    private int reqType;
 
 
     public InitiatorProjectFragment() {
         projectsList = new ArrayList<>();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_initiator_project, container, false);
+
+        reqType = getArguments().getInt("reqType");
+
         projectLV = convertView.findViewById(R.id.projectListView);
-        adapter = new ProjectAdapter(activityContext, projectsList);
+        adapter = new ProjectAdapter(activityContext, projectsList, reqType);
         projectLV.setAdapter(adapter);
 
         projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,7 +103,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         presenter.attachView(this);
 
-        presenter.getMyProjectList();
+        presenter.getMyProjectList(reqType);
     }
 
     @Override

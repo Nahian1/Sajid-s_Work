@@ -63,7 +63,7 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
 
     @Override
     public void onClick(View v) {
-        presenter.saveIdentifier(etForgot.getText().toString().trim());
+//        presenter.saveIdentifier(etForgot.getText().toString().trim());
 
         navigator.toCodeActivity(this);
     }

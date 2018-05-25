@@ -7,14 +7,28 @@
 
 package com.cryptenet.thanatos.dtmweb.launcher.mvp;
 
-import android.util.Base64;
+import android.util.Log;
 
-import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
+import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 @PerActivity
 public class LoginActivityRepository extends BaseRepository
@@ -26,39 +40,59 @@ public class LoginActivityRepository extends BaseRepository
     }
 
     @Override
-    public boolean validateLogin(String email, String password) {
-        byte[] data =
-                (ConstantProvider.CLIENT_ID +
-                ":" +
-                ConstantProvider.CLIENT_SECRET).getBytes();
+    public void validateLogin(String email, String password) {
+        final boolean result;
+        String head = "application/x-www-form-urlencoded";
+        String oauth = ConstantProvider.ACCESS_TOKEN_BASIC;
+        OkHttpClient client2 = new OkHttpClient();
 
-        String s = "Basic " + Base64.encodeToString(
-                        data, Base64.DEFAULT
-        );
+        RequestBody formBody = new FormBody.Builder()
+                .add("grant_type", "password")
+                .add("username", email)
+                .add("password", password)
+                .build();
 
-        String payload = "{\"username\": \"" + email +"\", \"password\": \"" + password + "\", \"granttype\": \"password\"}";
+        final Request request = new Request.Builder()
+                .url("https://fa-sa-801.herokuapp.com/o/token/")
+                .post(formBody)
+                .addHeader("Content-Type", head)
+                .addHeader("Authorization", oauth)
+                .build();
 
-        PostAsync async = new PostAsync();
-        async.execute(
-                "2",
-                payload,
-                email,
-                password,
-                s
-        );
-//        Call<ResponseBody> req = client.getLogin(s, new Login(email, password));
-//        req.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                Log.d(TAG, "onResponse: " + response.toString());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                Log.d(TAG, "onFailure: attempt");
-//            }
-//        });
+        client2.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure: login");
+            }
 
-        return false;
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                User user = gson.fromJson(response.body().string(), User.class);
+                EventBus.getDefault().post(new LogInSuccessEvent(user, response.body()!=null));
+            }
+
+
+        });
+    }
+
+    @Override
+    public void saveUserToSP(User user) {
+        preferences
+                .edit()
+                .putString(ConstantProvider.SP_ACCESS_TOKEN, user.getAccessToken())
+                .putString(ConstantProvider.SP_REFRESH_TOKEN, user.getRefreshToken())
+                .putInt(ConstantProvider.SP_ID, user.getId())
+                .putString(ConstantProvider.SP_NAME, user.getName())
+                .putString(ConstantProvider.SP_EMAIL, user.getEmail())
+                .putString(ConstantProvider.SP_PICTURE_URL, user.getPicture())
+                .putString(ConstantProvider.SP_ADDRESS, user.getAddress())
+                .putInt(ConstantProvider.SP_CITY, user.getCity())
+                .putInt(ConstantProvider.SP_COUNTRY, user.getCountry())
+                .putString(ConstantProvider.SP_BANK_NAME, user.getBankName())
+                .putString(ConstantProvider.SP_BANK_ACC_NAME, user.getBankAccountName())
+                .putString(ConstantProvider.SP_BANK_ACC_NO, user.getBankAccountNumber())
+                .putString(ConstantProvider.SP_USER_TYPE, user.getRefreshToken())
+                .apply();
     }
 }

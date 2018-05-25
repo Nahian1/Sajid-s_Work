@@ -22,7 +22,7 @@ public class InitiatorProjectFragmentPresenter extends BaseFragPresenter<Initiat
     }
 
     @Override
-    public void getMyProjectList() {
-        model.getMyProjectList();
+    public void getMyProjectList(int reqType) {
+        model.getMyProjectList(reqType);
     }
 }

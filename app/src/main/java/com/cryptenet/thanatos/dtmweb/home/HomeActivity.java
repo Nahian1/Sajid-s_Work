@@ -31,7 +31,6 @@ import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFrag
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
-import com.cryptenet.thanatos.dtmweb.home.request_detail.RequestDetailFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -133,10 +132,18 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_man_project:
-                        replaceFragment(R.id.frame_container, new InitiatorProjectFragment());
+                        InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putInt("reqType", 1);
+                        fragment1.setArguments(bundle1);
+                        replaceFragment(R.id.frame_container, fragment1);
                         break;
                     case R.id.nav_man_request:
-                        replaceFragment(R.id.frame_container, new RequestDetailFragment());
+                        InitiatorProjectFragment fragment2 = new InitiatorProjectFragment();
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putInt("reqType", 2);
+                        fragment2.setArguments(bundle2);
+                        replaceFragment(R.id.frame_container, fragment2);
                         break;
                     case R.id.nav_language:
                         break;

@@ -9,17 +9,17 @@ package com.cryptenet.thanatos.dtmweb.mvp_contracts;
 
 public interface InitiatorProjectFragmentContract {
     interface Presenter extends BaseFragContract.Presenter<InitiatorProjectFragmentContract.View> {
-        void getMyProjectList();
+        void getMyProjectList(int reqType);
     }
 
     interface View extends BaseFragContract.View {
     }
 
     interface Model extends BaseFragContract.Model {
-        void getMyProjectList();
+        void getMyProjectList(int reqType);
     }
 
     interface Repository extends BaseFragContract.Repository {
-        void getMyProjectList();
+        void getMyProjectList(int reqType);
     }
 }

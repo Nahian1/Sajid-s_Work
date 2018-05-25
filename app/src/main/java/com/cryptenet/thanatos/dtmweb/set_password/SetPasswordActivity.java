@@ -25,7 +25,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

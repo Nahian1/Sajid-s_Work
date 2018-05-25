@@ -19,9 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 
@@ -35,10 +32,13 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
     private Context context;
     private List<Projects> projects;
     private int count = 0;
-    public ProjectAdapter(@NonNull Context context, List<Projects> projects) {
+    private int reqType;
+
+    public ProjectAdapter(@NonNull Context context, List<Projects> projects, int reqType) {
         super(context, R.layout.initiator_project_list_row, projects);
         this.context = context;
         this.projects = projects;
+        this.reqType = reqType;
     }
 
     public void updateList(List<Projects> projs){
@@ -70,11 +70,8 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
             statusTV.setText("Pending");
         }
         //statusTV.setText(projects.get(position).getStatus());
-        Glide.with(context)
-                .load(projects.get(position).getCoverThumbnail())
-                .apply(RequestOptions.placeholderOf(R.drawable.ppimg))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(editIV);
+        if (reqType != 1)
+            editIV.setVisibility(View.GONE);
         count++;
         Log.e("project", "getView: "+count);
 

@@ -11,6 +11,7 @@ import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
@@ -29,7 +30,12 @@ public class LoginActivityModel
     }
 
     @Override
-    public boolean requestForLogin(String email, String password) {
-        return repository.validateLogin(email, password);
+    public void requestForLogin(String email, String password) {
+        repository.validateLogin(email, password);
+    }
+
+    @Override
+    public void saveUserData(User user) {
+        repository.saveUserToSP(user);
     }
 }

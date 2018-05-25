@@ -40,6 +40,6 @@ public abstract class BasePresenter<V extends BaseContract.View, M extends BaseC
 
     @Override
     public void restoreState(Bundle savedState) {
-        view.restoreState(model.restoreState(savedState));
+//        view.restoreState(model.restoreState(savedState));
     }
 }

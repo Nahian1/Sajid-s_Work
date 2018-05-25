@@ -72,7 +72,7 @@ public class ApiUtil {
         try {
             MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "POST", "");
 
-            multipart.addHeaderField("Content-Type", "application/json");
+            multipart.addHeaderField("Content-Type", "application/x-www-form-urlencoded");
 
             multipart.addFormField("username", email);
             multipart.addFormField("password", password);

@@ -38,21 +38,39 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
     }
 
     @Override
-    public void getMyProjectList() {
-        Call<AllPlansResponse> req = client.getAllMyPlans("Bearer " + ConstantProvider.ACCESS_TOKEN_INIT);
-        req.enqueue(new Callback<AllPlansResponse>() {
-            @Override
-            public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
-                AllPlansResponse allPlansResponse = response.body();
-                assert allPlansResponse != null;
-                setProjects(allPlansResponse.getResults());
-            }
+    public void getMyProjectList(int reqType) {
 
-            @Override
-            public void onFailure(Call<AllPlansResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: AllPlansResponse");
-            }
-        });
+        if (reqType == 1) {
+            Call<AllPlansResponse> req = client.getAllMyPlans("Bearer " + ConstantProvider.ACCESS_TOKEN_INIT);
+            req.enqueue(new Callback<AllPlansResponse>() {
+                @Override
+                public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
+                    AllPlansResponse allPlansResponse = response.body();
+                    assert allPlansResponse != null;
+                    setProjects(allPlansResponse.getResults());
+                }
+
+                @Override
+                public void onFailure(Call<AllPlansResponse> call, Throwable t) {
+                    Log.d(TAG, "onFailure: AllPlansResponse");
+                }
+            });
+        } else {
+            Call<AllPlansResponse> req = client.getAllReqPlansINT("Bearer " + ConstantProvider.ACCESS_TOKEN_INIT);
+            req.enqueue(new Callback<AllPlansResponse>() {
+                @Override
+                public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
+                    AllPlansResponse allPlansResponse = response.body();
+                    assert allPlansResponse != null;
+                    setProjects(allPlansResponse.getResults());
+                }
+
+                @Override
+                public void onFailure(Call<AllPlansResponse> call, Throwable t) {
+                    Log.d(TAG, "onFailure: AllReqPlansResponse");
+                }
+            });
+        }
     }
 
     private void setProjects(List<Projects> projectsList) {

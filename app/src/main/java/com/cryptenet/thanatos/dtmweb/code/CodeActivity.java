@@ -19,7 +19,6 @@ import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.CodeActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
@@ -71,6 +70,7 @@ public class CodeActivity extends BaseActivity<CodeActivityContract.Presenter>
     public void onClick(View v) {
         presenter.makeResetReq(etCode.getText().toString());
         showMessage("Verifying!!!");
+        navigator.toSetPasswordActivity(this);
     }
 
     @Subscribe
@@ -88,12 +88,12 @@ public class CodeActivity extends BaseActivity<CodeActivityContract.Presenter>
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 }
