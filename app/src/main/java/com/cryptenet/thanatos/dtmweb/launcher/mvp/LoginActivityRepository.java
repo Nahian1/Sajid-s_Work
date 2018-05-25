@@ -41,10 +41,9 @@ public class LoginActivityRepository extends BaseRepository
 
     @Override
     public void validateLogin(String email, String password) {
-        final boolean result;
         String head = "application/x-www-form-urlencoded";
         String oauth = ConstantProvider.ACCESS_TOKEN_BASIC;
-        OkHttpClient client2 = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient();
 
         RequestBody formBody = new FormBody.Builder()
                 .add("grant_type", "password")
@@ -53,13 +52,13 @@ public class LoginActivityRepository extends BaseRepository
                 .build();
 
         final Request request = new Request.Builder()
-                .url("https://fa-sa-801.herokuapp.com/o/token/")
+                .url(ConstantProvider.BASE_URL + "o/token/")
                 .post(formBody)
                 .addHeader("Content-Type", head)
                 .addHeader("Authorization", oauth)
                 .build();
 
-        client2.newCall(request).enqueue(new Callback() {
+        client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure: login");

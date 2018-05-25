@@ -9,8 +9,12 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
+import com.cryptenet.thanatos.dtmweb.events.DataSendSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,15 +60,34 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
     }
 
     @Override
+    public void onClick(View v) {
+        presenter.sendIdentifier(etForgot.getText().toString().trim());
+        presenter.saveIdentifier(etForgot.getText().toString().trim());
+
+        navigator.toCodeActivity(this);
+    }
+
+    @Subscribe
+    public void onDataSendSuccessEvent(DataSendSuccessEvent event) {
+        if (event.isSuccess)
+            navigator.toCodeActivity(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
     }
 
     @Override
-    public void onClick(View v) {
-//        presenter.saveIdentifier(etForgot.getText().toString().trim());
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
-        navigator.toCodeActivity(this);
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }

@@ -11,6 +11,7 @@ import com.cryptenet.thanatos.dtmweb.forgot_password.ForgotPasswordActivity;
 
 public interface ForgotActivityContract {
     interface Presenter extends BaseContract.Presenter<ForgotActivityContract.View> {
+        void sendIdentifier(String identifier);
         void saveIdentifier(String identifier);
     }
 
@@ -18,10 +19,12 @@ public interface ForgotActivityContract {
     }
 
     interface Model extends BaseContract.Model<ForgotPasswordActivity> {
+        void sendIdentifier(String identifier);
         void saveIdentifier(String identifier);
     }
 
     interface Repository extends BaseContract.Repository {
-        void saveIdentifier(String identifier);
+        void sendIdentifier(String identifier);
+        void saveIdentifierSP(String identifier);
     }
 }

@@ -22,6 +22,11 @@ public class ForgotPasswordActivityPresenter extends BasePresenter<ForgotActivit
     }
 
     @Override
+    public void sendIdentifier(String identifier) {
+        model.sendIdentifier(identifier);
+    }
+
+    @Override
     public void saveIdentifier(String identifier) {
         model.saveIdentifier(identifier);
     }

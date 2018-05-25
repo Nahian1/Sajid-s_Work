@@ -28,7 +28,12 @@ public class ForgotPasswordActivityModel extends BaseModel<ForgotActivityContrac
                 }
 
         @Override
+        public void sendIdentifier(String identifier) {
+                repository.sendIdentifier(identifier);
+        }
+
+        @Override
         public void saveIdentifier(String identifier) {
-            repository.saveIdentifier(identifier);
+            repository.saveIdentifierSP(identifier);
         }
 }
