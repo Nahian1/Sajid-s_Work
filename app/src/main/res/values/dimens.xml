@@ -8,6 +8,7 @@
     <dimen name="margin_horizontal_32">32dp</dimen>
     <dimen name="margin_horizontal_40">40dp</dimen>
     <dimen name="margin_horizontal_48">48dp</dimen>
+    <dimen name="margin_horizontal_56">56dp</dimen>
 
     <dimen name="margin_vertical_8">8dp</dimen>
     <dimen name="margin_vertical_16">16dp</dimen>
@@ -15,4 +16,5 @@
     <dimen name="margin_vertical_32">32dp</dimen>
     <dimen name="margin_vertical_40">40dp</dimen>
     <dimen name="margin_vertical_48">48dp</dimen>
+    <dimen name="margin_vertical_56">56dp</dimen>
 </resources>

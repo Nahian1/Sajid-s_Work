@@ -33,7 +33,6 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         implements LoginActivityContract.View, View.OnClickListener {
     private static final String TAG = TagProvider.getDebugTag(LoginActivity.class);
     private User user;
-    private boolean isSuccess;
 
     @BindView(R.id.et_email)
     EditText etEmail;
@@ -86,11 +85,18 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-//                navigator.toHomeActivity(this);
-                presenter.requestForLogin(
-                        etEmail.getText().toString().trim(),
-                        etPwd.getText().toString().trim()
-                );
+                if ((etEmail.getText().toString().trim()) !=null && (etEmail.getText().toString().trim()).isEmpty()) {
+                    if ((etPwd.getText().toString().trim()) != null && (etPwd.getText().toString().trim()).isEmpty()) {
+                        presenter.requestForLogin(
+                                etEmail.getText().toString().trim(),
+                                etPwd.getText().toString().trim()
+                        );
+                    } else {
+                        showMessage("Password can not be empty");
+                    }
+                } else {
+                    showMessage("Email can not be empty");
+                }
                 break;
             case R.id.tv_sign_up:
                 navigator.toRegistrationActivity(this);
@@ -105,6 +111,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
         this.user = event.user;
         if(event.isSuccess) {
+            showMessage("Loading data...");
             presenter.saveUserData(user);
             navigator.toHomeActivity(this, user);
         }

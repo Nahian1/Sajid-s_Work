@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.registration.mvp;
 
+import android.util.Log;
+
 import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
@@ -14,14 +16,25 @@ import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
+import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
+import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @PerActivity
 public class RegistrationActivityRepository extends BaseRepository
@@ -37,43 +50,72 @@ public class RegistrationActivityRepository extends BaseRepository
 
     @Override
     public void getAllCountries() {
-//        Call<CountryResponse> countryResponseCall = client.getCountries();
-//
-//        countryResponseCall.enqueue(new Callback<CountryResponse>() {
-//            @Override
-//            public void onResponse(Call<CountryResponse> call, Response<CountryResponse> response) {
-//                CountryResponse countryResponse = response.body();
-//                setCountries(countryResponse.getResults());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<CountryResponse> call, Throwable t) {
-//                Log.d(TAG, "onFailure: ");
-//            }
-//        });
+        String head = "application/json";
+
+        OkHttpClient client = new OkHttpClient();
+
+        final Request request = new Request.Builder()
+                .url(ConstantProvider.BASE_URL + "api/v1/country/")
+                .get()
+                .addHeader("Content-Type", head)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure: country");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    Gson gson = new Gson();
+                    CountryResponse countryResponse = gson.fromJson(response.body().string(), CountryResponse.class);
+                    Log.d(TAG, "onResponse: " + countryResponse.toString());
+                    setCountries(countryResponse.getResults());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
     public void getLimitedCities(int countryCode) {
-//        Call<CityResponse> cityResponseCall = client.getCities(countryCode);
-//
-//        cityResponseCall.enqueue(new Callback<CityResponse>() {
-//            @Override
-//            public void onResponse(Call<CityResponse> call, Response<CityResponse> response) {
-//                CityResponse cityResponse = response.body();
-//                setCities(cityResponse.getResults());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<CityResponse> call, Throwable t) {
-//                Log.d(TAG, "onFailure: ");
-//            }
-//        });
+        String head = "application/json";
+
+        OkHttpClient client = new OkHttpClient();
+
+        final Request request = new Request.Builder()
+                .url(ConstantProvider.BASE_URL + "api/v1/city/?country=" + countryCode)
+                .get()
+                .addHeader("Content-Type", head)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure: city");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    Gson gson = new Gson();
+                    CityResponse cityResponse = gson.fromJson(response.body().string(), CityResponse.class);
+                    Log.d(TAG, "onResponse: " + cityResponse.toString());
+                    setCities(cityResponse.getResults());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
     public boolean attemptReg(final RegistrationInput regData) {
         PostAsync async = new PostAsync();
+
         async.execute(
                 "1",
                 regData.getName(),
@@ -88,34 +130,6 @@ public class RegistrationActivityRepository extends BaseRepository
                 regData.getBankAccountNumber(),
                 regData.getUserType()
         );
-
-
-//        Call<okhttp3.ResponseBody> req = client.attemptReg(
-//                regData.getPicture(),
-//                regData.getUserType(),
-//                regData.getName(),
-//                regData.getEmail(),
-//                regData.getPassword(),
-//                regData.getAddress(),
-//                regData.getCountry().toString(),
-//                regData.getCity().toString(),
-//                regData.getBankName(),
-//                regData.getBankAccountName(),
-//                regData.getBankAccountNumber()
-//        );
-//
-//        req.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                Log.d(TAG, "onResponse: " + response.toString());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                Log.d(TAG, "onFailure: reg");
-//                t.printStackTrace();
-//            }
-//        });
 
         return false;
     }

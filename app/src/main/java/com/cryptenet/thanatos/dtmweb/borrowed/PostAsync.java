@@ -3,7 +3,12 @@ package com.cryptenet.thanatos.dtmweb.borrowed;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
+import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -31,6 +36,9 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
                         (String) objects[10],
                         (String) objects[11]
             );
+            Gson gson = new Gson();
+            RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
+            EventBus.getDefault().post(new RegistrationSuccessEvent(registrationResponse));
         } else if (objects[0].equals("2")) {
             util = new ApiUtil("https://fa-sa-801.herokuapp.com/");
             response = util.tryLogin(

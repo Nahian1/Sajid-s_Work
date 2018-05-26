@@ -25,6 +25,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
 import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
+import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
@@ -34,6 +35,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -204,7 +206,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCountryFetchEvent(CountryFetchEvent event) {
         this.countries = event.countries;
         sCountries.clear();
@@ -213,7 +215,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         spinCountryAdapter.notifyDataSetChanged();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCityFetchEvent(CityFetchEvent event) {
         this.cities = event.cities;
         sCities.clear();
@@ -222,23 +224,11 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         spinCityAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        presenter.attachView(this);
-        presenter.getAllCountries();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRegistrationSuccessEvent(RegistrationSuccessEvent event) {
+        showMessage("Registered");
+        navigator.toLoginActivity(this);
+        finish();
     }
 
     @Override
@@ -265,5 +255,24 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         if (parent.getId() == R.id.spin_country) {
             presenter.getLimitedCities(1);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+        presenter.getAllCountries();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }
