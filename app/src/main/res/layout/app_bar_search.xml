@@ -18,6 +18,16 @@
         android:layout_height="?attr/actionBarSize"
         android:background="#38598f"
         app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <ImageView
+            android:id="@+id/menuRight"
+            android:layout_width="30dp"
+            android:background="@android:color/transparent"
+            android:layout_height="25dp"
+            android:scaleType="fitXY"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/menuicon" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -29,13 +39,13 @@
                 android:enabled="false"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/input_outline"
-                android:hint="Search any project"
+                android:hint="@string/search_bar"
                 android:id="@+id/editTextSearch" />
 
             <ImageView
                 android:id="@+id/searchIcom"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_alignEnd="@+id/editTextSearch"
                 android:layout_alignRight="@+id/editTextSearch"
                 android:layout_centerVertical="true"

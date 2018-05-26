@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.launcher.mvp;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
@@ -50,7 +52,7 @@ public class LoginActivityRepository extends BaseRepository
                 .add("username", email)
                 .add("password", password)
                 .build();
-
+        Log.d(TAG, "validateLogin: " + formBody.toString());
         final Request request = new Request.Builder()
                 .url(ConstantProvider.BASE_URL + "o/token/")
                 .post(formBody)
@@ -62,6 +64,7 @@ public class LoginActivityRepository extends BaseRepository
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure: login");
+                e.printStackTrace();
             }
 
             @Override
@@ -76,8 +79,8 @@ public class LoginActivityRepository extends BaseRepository
     }
 
     @Override
-    public void saveUserToSP(User user) {
-        preferences
+    public void saveUserToSP(User user, Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext())
                 .edit()
                 .putString(ConstantProvider.SP_ACCESS_TOKEN, user.getAccessToken())
                 .putString(ConstantProvider.SP_REFRESH_TOKEN, user.getRefreshToken())

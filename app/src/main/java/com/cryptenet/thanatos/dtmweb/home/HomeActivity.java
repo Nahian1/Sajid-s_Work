@@ -8,14 +8,11 @@
 package com.cryptenet.thanatos.dtmweb.home;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,12 +37,12 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presenter>
         implements HomeActivityContract.View {
     public static final String TAG = TagProvider.getDebugTag(HomeActivity.class);
     private View headerView;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -55,6 +52,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
+    @BindView(R.id.menuRight)
+    ImageView ivMenuRight;
 
     ImageView ivNavPp;
     TextView tvNavName;
@@ -109,72 +109,61 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
+    @OnClick(R.id.menuRight)
+    public void changeNavMenuState(View view) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+            drawerLayout.openDrawer(GravityCompat.START);
+    }
+
     private void setUpNavigation() {
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.open, R.string.close) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-        };
-
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
         navigationView.inflateMenu(R.menu.menu_nav_investor);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_man_project:
-                        InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putInt("reqType", 1);
-                        fragment1.setArguments(bundle1);
-                        replaceFragment(R.id.frame_container, fragment1);
-                        break;
-                    case R.id.nav_man_request:
-                        InitiatorProjectFragment fragment2 = new InitiatorProjectFragment();
-                        Bundle bundle2 = new Bundle();
-                        bundle2.putInt("reqType", 2);
-                        fragment2.setArguments(bundle2);
-                        replaceFragment(R.id.frame_container, fragment2);
-                        break;
-                    case R.id.nav_language:
-                        break;
-                    case R.id.nav_conversation:
-                        break;
-                    case R.id.nav_report:
-                        replaceFragment(R.id.frame_container, new ReportIssueFragment());
-                        break;
-                    case R.id.nav_logout:
-                        break;
-                    case R.id.nav_tc:
-                        break;
-                    case R.id.nav_rate:
-                        break;
-                    case R.id.nav_about:
-                        break;
-                    default:
-                        replaceFragment(R.id.frame_container, new PlanListFragment());
-                        break;
-                }
-
-                if (item.isChecked()) {
-                    item.setChecked(false);
-                } else {
-                    item.setChecked(true);
-                }
-                item.setChecked(true);
-
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_man_project:
+                    InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putInt("reqType", 1);
+                    fragment1.setArguments(bundle1);
+                    replaceFragment(R.id.frame_container, fragment1);
+                    break;
+                case R.id.nav_man_request:
+                    InitiatorProjectFragment fragment2 = new InitiatorProjectFragment();
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putInt("reqType", 2);
+                    fragment2.setArguments(bundle2);
+                    replaceFragment(R.id.frame_container, fragment2);
+                    break;
+                case R.id.nav_language:
+                    break;
+                case R.id.nav_conversation:
+                    break;
+                case R.id.nav_report:
+                    replaceFragment(R.id.frame_container, new ReportIssueFragment());
+                    break;
+                case R.id.nav_logout:
+                    break;
+                case R.id.nav_tc:
+                    break;
+                case R.id.nav_rate:
+                    break;
+                case R.id.nav_about:
+                    break;
+                default:
+                    replaceFragment(R.id.frame_container, new PlanListFragment());
+                    break;
             }
+
+            if (item.isChecked()) {
+                item.setChecked(false);
+            } else {
+                item.setChecked(true);
+            }
+            item.setChecked(true);
+
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
         });
     }
 

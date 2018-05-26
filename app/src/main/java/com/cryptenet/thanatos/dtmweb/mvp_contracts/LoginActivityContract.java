@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.mvp_contracts;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 
@@ -26,6 +28,6 @@ public interface LoginActivityContract {
 
     interface Repository extends BaseContract.Repository {
         void validateLogin(String email, String password);
-        void saveUserToSP(User user);
+        void saveUserToSP(User user, Context context);
     }
 }

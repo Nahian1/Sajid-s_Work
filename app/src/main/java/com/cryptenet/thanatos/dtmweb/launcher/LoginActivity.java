@@ -24,6 +24,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,8 +86,8 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-                if ((etEmail.getText().toString().trim()) !=null && (etEmail.getText().toString().trim()).isEmpty()) {
-                    if ((etPwd.getText().toString().trim()) != null && (etPwd.getText().toString().trim()).isEmpty()) {
+                if ((etEmail.getText().toString().trim()) !=null && !(etEmail.getText().toString().trim()).isEmpty()) {
+                    if ((etPwd.getText().toString().trim()) != null && !(etPwd.getText().toString().trim()).isEmpty()) {
                         presenter.requestForLogin(
                                 etEmail.getText().toString().trim(),
                                 etPwd.getText().toString().trim()
@@ -107,7 +108,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
         this.user = event.user;
         if(event.isSuccess) {

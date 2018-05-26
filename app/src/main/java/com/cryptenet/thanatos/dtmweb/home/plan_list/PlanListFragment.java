@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -54,12 +53,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         projectLV =  convertView.findViewById(R.id.projectListView);
         projectLV.setAdapter(adapter);
 
-        projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsList.get(position)));
-            }
-        });
+        projectLV.setOnItemClickListener((parent, view, position, id) -> EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsList.get(position))));
         return convertView;
     }
 

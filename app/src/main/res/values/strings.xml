@@ -46,7 +46,7 @@
     <string name="acc_type_initiator">Initiator</string>
 
     <string name="nav_man_request">Manage Requests</string>
-    <string name="nav_language">Language</string>
+    <string name="nav_language">التحول إلى اللغة الإنجليزية</string>
     <string name="nav_conversation">Conversation</string>
     <string name="nav_report">Report An Issue</string>
     <string name="nav_logout">Log Out</string>
@@ -55,9 +55,11 @@
     <string name="nav_about">About</string>
     <string name="nav_man_project">Manage Project</string>
 
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+    <string name="open" translatable="false">Open</string>
+    <string name="close" translatable="false">Close</string>
+
+    <string name="search_bar">Search Any Project</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>
