@@ -34,6 +34,8 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.OnClick;
+
 
 public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragmentContract.Presenter>
         implements InitiatorProjectFragmentContract.View {
@@ -97,6 +99,13 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         Log.d(TAG, "onProjectListReceiveEvent: login");
         this.projectsList = event.projectsList;
         adapter.updateList(this.projectsList);
+    }
+
+    @OnClick(R.id.btnAddPlan)
+    public void btnAddPlan(View view) {
+
+
+
     }
 
     @Override
