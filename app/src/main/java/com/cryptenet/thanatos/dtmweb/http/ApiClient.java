@@ -7,6 +7,7 @@
 
 package com.cryptenet.thanatos.dtmweb.http;
 
+import com.cryptenet.thanatos.dtmweb.pojo.AllCategoriesResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
@@ -25,10 +26,13 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiClient {
-    @GET("api/v1/country")
+    @GET("api/v1/country/")
     Call<CountryResponse> getCountries();
 
-    @GET("api/v1/city")
+    @GET("api/v1/plan-category/")
+    Call<AllCategoriesResponse> getCategories(@Header("Authorization") String token);
+
+    @GET("api/v1/city/")
     Call<CityResponse> getCities(@Query("country") int countryCode);
 
     @FormUrlEncoded

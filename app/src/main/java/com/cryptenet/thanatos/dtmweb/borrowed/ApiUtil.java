@@ -67,6 +67,32 @@ public class ApiUtil {
         }
     }
 
+    public String addPlan(String title, int category, String shortDesc, String longDesc,
+                          int min, int max, int access, File cover, File uploadFile, String accessToken) {
+        String requestUrl = BASE_URL + "api/v1/plan/?format=json";
+
+        try {
+            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "POST", "Bearer " + accessToken);
+
+            multipart.addHeaderField("Content-Type", "application/json");
+
+            multipart.addFormField("title", title);
+            multipart.addFormField("category", String.valueOf(category));
+            multipart.addFormField("short_description", shortDesc);
+            multipart.addFormField("long_description", longDesc);
+            multipart.addFormField("minimum_investment_cost", String.valueOf(min));
+            multipart.addFormField("maximum_investment_cost", String.valueOf(max));
+            multipart.addFormField("access_price", String.valueOf(access));
+            multipart.addFilePart("cover", cover);
+            multipart.addFilePart("uploaded_file", uploadFile);
+
+            return multipart.finish();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "IOException";
+        }
+    }
+
     public String tryLogin(String payload, String email, String password, String token) {
         String requestUrl = BASE_URL + "o/token/?format=json";
         try {

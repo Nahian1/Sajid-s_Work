@@ -29,8 +29,8 @@ public class LoginActivityPresenter
     }
 
     @Override
-    public void saveUserData(User user) {
+    public boolean saveUserData(User user) {
         model.attachContext(view.getActivity());
-        model.saveUserData(user);
+        return model.saveUserData(user);
     }
 }

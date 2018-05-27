@@ -16,11 +16,12 @@ public class ConstantProvider {
     public static final String NAV_ADDRESS = "navAddress";
     public static final String NAV_DETAILS = "navDetails";
 
-    public static final String ACCESS_TOKEN_BASIC = "Basic cDk3SWdtUHVsMUFjblBKMGVjNXE0VGVIMHYzRDQ4Rlg4Y3BJODdCeDpNMGFMVExGdjZlUFpReHhtdmdoU0JMbUp4WEd3VVEwTE1iczJYTmNEbElMQmlDZVJhUnBTY0dydVZuNlpDalJOaFo5bEpYb0o5RWxBUlNiMTFqY2VEaGVUZVNadmk5ajRzVWdhenlQVFBPekJmajN3d2U0cmM5VXVGdVNSeDJRQw==";
+    public static final String ACCESS_TOKEN_BASIC = "Basic cFlYWEdqU3R1NDlRZmxYbDNlUU43SzlpWUNKUHlxMGx2THh3cWxJbTp4SGZDVGc5WEt1ODZFb21TaGg1SzdZZXB2ZXdSUWsyMmJwUkIyY0NhZjNIOGlsdTJxZ3J1TWhEMFU0bm4zYnhzOFVXVjRpbDJMdGtKcVNZblZJZUUwaUpGa3B2VkRYYXczQnI5c29YaktHVmZoRmxQcW4yNWFvRkNKeHdEMUJZdA==";
     public static final String ACCESS_TOKEN_INIT = "PwhgGBdhO9zx6KqRvGjb0nyDEtRCX9";
     public static final String ACCESS_TOKEN_INVE = "ngJ7NKzSROUxxCu9QooWx4VK4eWMNd";
 
     public static final int RESULT_LOAD_IMG = 101;
+    public static final int RESULT_FILE_IMG = 102;
 
     public static final String BASE_URL = "https://fa-sa-801.herokuapp.com/";
 

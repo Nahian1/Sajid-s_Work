@@ -8,30 +8,93 @@
 package com.cryptenet.thanatos.dtmweb.home.edit_project;
 
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
-import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
-import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
+import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.Categories;
+import com.cryptenet.thanatos.dtmweb.pojo.NewPlan;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsD;
+import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
+import com.ipaulpro.afilechooser.utils.FileUtils;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class EditProjectFragment extends BaseFragment<EditProjectFragmentContract.Presenter>
-        implements EditProjectFragmentContract.View {
+        implements EditProjectFragmentContract.View, AdapterView.OnItemSelectedListener {
     public static final String TAG = TagProvider.getDebugTag(EditProjectFragment.class);
-    private Projects project;
+    @BindView(R.id.spinner_project_category)
+    Spinner spinnerProjectCategory;
 
+    Unbinder unbinder;
+    @BindView(R.id.editTextName)
+    EditText editTextName;
+    @BindView(R.id.editTextPriceMaximum)
+    EditText editTextPriceMaximum;
+    @BindView(R.id.editTextPriceMinimum)
+    EditText editTextPriceMinimum;
+    @BindView(R.id.editTextShortDescription)
+    EditText editTextShortDescription;
+    @BindView(R.id.editTextLongDescription)
+    EditText editTextLongDescription;
+    @BindView(R.id.editTextAccessPrice)
+    EditText editTextAccessPrice;
+    @BindView(R.id.buttonUploadFile)
+    LinearLayout buttonUploadFile;
+    @BindView(R.id.imageviewCover)
+    ImageView imageviewCover;
+
+    private ProjectsD project;
+    private List<Categories> list;
+    private List<String> categoriesList;
+    private ArrayAdapter<String> spinCatAdapter;
+    private int categoryCode;
+    private File imageFile, planFile;
 
     public EditProjectFragment() {
         // Required empty public constructor
@@ -44,8 +107,33 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_project, container, false);
 
-        project = new Gson().fromJson(getArguments().getString("project"),Projects.class);;
+        unbinder = ButterKnife.bind(this, view);
 
+
+//        FragmentEditProjectBinding binding = DataBindingUtil.inflate(inflater,
+//                R.layout.fragment_edit_project, container, false);
+
+        project = new Gson().fromJson(getArguments().getString("project"), ProjectsD.class);
+
+        editTextName.setText(project.getInitiatorsName());
+        editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
+        editTextPriceMinimum.setText(project.getMinimumInvestmentCost());
+        editTextShortDescription.setText(project.getShortDescription());
+        editTextLongDescription.setText(project.getLongDescription());
+        editTextAccessPrice.setText(project.getAccessPrice());
+
+
+        list = new ArrayList<>();
+        categoriesList = new ArrayList<>();
+        categoriesList.add("Categories");
+
+        spinCatAdapter = new ArrayAdapter<>(activityContext,
+                R.layout.node_spin_edit_project, categoriesList);
+        spinCatAdapter.setDropDownViewResource(R.layout.node_spin_edit_project);
+        spinnerProjectCategory.setAdapter(spinCatAdapter);
+
+        spinnerProjectCategory.setOnItemSelectedListener(this);
+//        return binding.getRoot();
 
         return view;
     }
@@ -63,6 +151,154 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @Override
     public void restoreState(Bundle savedState) {
+
+    }
+
+    @OnClick(R.id.btn_done)
+    public void updatePlan(View view) {
+
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+
+                        NewPlan plan = new NewPlan(
+                                editTextName.getText().toString().trim(),
+                                categoryCode,
+                                editTextShortDescription.getText().toString().trim(),
+                                editTextLongDescription.getText().toString().trim(),
+                                (int) Double.parseDouble(editTextPriceMinimum.getText().toString().trim()),
+                                (int) Double.parseDouble(editTextPriceMaximum.getText().toString().trim()),
+                                (int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()),
+                                imageFile,
+                                planFile
+                        );
+                        presenter.saveNewPlan(plan, activityContext);
+
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        // check for permanent denial of permission
+                        if (response.isPermanentlyDenied()) {
+                            // navigate user to app settings
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+
+
+    }
+
+    @OnClick(R.id.imageviewCover)
+    public void getCoverImage(View view) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
+    }
+
+    @OnClick(R.id.buttonUploadFile)
+    public void buttonUploadFile(View view) {
+        // Create the ACTION_GET_CONTENT Intent
+        Intent getContentIntent = FileUtils.createGetContentIntent();
+
+        Intent intent = Intent.createChooser(getContentIntent, "Select a file");
+        startActivityForResult(intent, ConstantProvider.RESULT_FILE_IMG);
+    }
+
+    @Subscribe
+    public void toCategoriesReceiveEvent(CategoriesReceiveEvent event) {
+        this.categoriesList.clear();
+        this.list.clear();
+        this.list.addAll(event.categoriesList);
+
+        for (Categories categories : event.categoriesList)
+            this.categoriesList.add(categories.getName());
+
+        spinCatAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        String realPath = null;
+        Bitmap selectedImage;
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == ConstantProvider.RESULT_LOAD_IMG) {
+                try {
+                    final Uri imageUri = data.getData();
+                    realPath = ImageFilePath.getPath(activityContext, data.getData());
+                    assert imageUri != null;
+                    final InputStream imageStream = activityContext.getContentResolver().openInputStream(imageUri);
+                    selectedImage = BitmapFactory.decodeStream(imageStream);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                imageFile = new File(realPath);
+
+            }else   if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
+
+                final Uri uri = data.getData();
+
+                // Get the File path from the Uri
+                String path = FileUtils.getPath(activityContext, uri);
+
+                // Alternatively, use FileUtils.getFile(Context, Uri)
+                if (path != null && FileUtils.isLocal(path)) {
+                    planFile = new File(path);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+        presenter.getAllCategories(activityContext);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//        this.categoryCode = list.get(position).getId();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }

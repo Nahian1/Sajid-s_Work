@@ -35,7 +35,7 @@ public class LoginActivityModel
     }
 
     @Override
-    public void saveUserData(User user) {
-        repository.saveUserToSP(user, context);
+    public boolean saveUserData(User user) {
+        return repository.saveUserToSP(user, context);
     }
 }

@@ -65,13 +65,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pending"
-                android:padding="4dp"
+                android:paddingTop=".5dp"
+                android:paddingBottom=".5dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:textSize="12sp"
                 android:layout_alignBaseline="@+id/dateTV"
                 android:layout_toEndOf="@+id/dateTV"
                 android:layout_marginStart="20dp"
                 android:textColor="#ffff"
-                android:background="#FFA500"/>
+                android:background="@drawable/tv_shape_pnd"/>
 
         </RelativeLayout>
 

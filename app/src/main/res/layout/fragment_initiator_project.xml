@@ -19,6 +19,7 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/btnAddPlan"
             android:onClick="addProject"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"

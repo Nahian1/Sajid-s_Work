@@ -36,6 +36,7 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
                         (String) objects[10],
                         (String) objects[11]
             );
+            Log.d(TAG, "doInBackground: " + response);
             Gson gson = new Gson();
             RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
             EventBus.getDefault().post(new RegistrationSuccessEvent(registrationResponse));
@@ -46,6 +47,21 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
                     (String) objects[2],
                     (String) objects[3],
                     (String) objects[4]
+            );
+        } else if (objects[0].equals("3")) {
+            util = new ApiUtil("https://fa-sa-801.herokuapp.com/");
+
+            response = util.addPlan(
+                    (String) objects[1],
+                    (int) objects[2],
+                    (String) objects[3],
+                    (String) objects[4],
+                    (int) objects[5],
+                    (int) objects[6],
+                    (int) objects[7],
+                    (File) objects[8],
+                    (File) objects[9],
+                    (String) objects[10]
             );
         }
 

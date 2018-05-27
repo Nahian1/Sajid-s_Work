@@ -77,8 +77,8 @@ public class LoginActivityRepository extends BaseRepository
     }
 
     @Override
-    public void saveUserToSP(User user, Context context) {
-        PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext())
+    public boolean saveUserToSP(User user, Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext())
                 .edit()
                 .putString(ConstantProvider.SP_ACCESS_TOKEN, user.getAccessToken())
                 .putString(ConstantProvider.SP_REFRESH_TOKEN, user.getRefreshToken())
@@ -94,6 +94,6 @@ public class LoginActivityRepository extends BaseRepository
                 .putString(ConstantProvider.SP_BANK_ACC_NO, user.getBankAccountNumber())
                 .putString(ConstantProvider.SP_USER_TYPE, user.getRefreshToken())
                 .commit();
-        Log.d(TAG, "saveUserToSP: " + user.getAccessToken());
+//        Log.d(TAG, "saveUserToSP: " + user.getAccessToken());
     }
 }

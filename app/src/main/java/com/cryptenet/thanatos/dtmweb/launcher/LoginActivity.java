@@ -21,6 +21,7 @@ import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,6 +29,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.fabric.sdk.android.services.concurrency.AsyncTask;
 
 
 public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
@@ -86,18 +88,20 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-                if ((etEmail.getText().toString().trim()) !=null && !(etEmail.getText().toString().trim()).isEmpty()) {
-                    if ((etPwd.getText().toString().trim()) != null && !(etPwd.getText().toString().trim()).isEmpty()) {
-                        presenter.requestForLogin(
-                                etEmail.getText().toString().trim(),
-                                etPwd.getText().toString().trim()
-                        );
-                    } else {
-                        showMessage("Password can not be empty");
-                    }
-                } else {
-                    showMessage("Email can not be empty");
-                }
+                presenter.requestForLogin("sh@fikra.com","123456");
+
+//                if ((etEmail.getText().toString().trim()) !=null && !(etEmail.getText().toString().trim()).isEmpty()) {
+//                    if ((etPwd.getText().toString().trim()) != null && !(etPwd.getText().toString().trim()).isEmpty()) {
+//                        presenter.requestForLogin(
+//                                etEmail.getText().toString().trim(),
+//                                etPwd.getText().toString().trim()
+//                        );
+//                    } else {
+//                        showMessage("Password can not be empty");
+//                    }
+//                } else {
+//                    showMessage("Email can not be empty");
+//                }
                 break;
             case R.id.tv_sign_up:
                 navigator.toRegistrationActivity(this);
@@ -111,11 +115,25 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
+
         if(event.isSuccess) {
-            showMessage("Loading data...");
-//            presenter.saveUserData(user);
-            navigator.toHomeActivity(this, event.string);
+
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+
+//                    showMessage("Loading data...");
+                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
+
+                        navigator.toHomeActivity(getApplicationContext(), event.string);
+
+                    }
+
+                }
+            });
         }
+
+
     }
 
     @Override

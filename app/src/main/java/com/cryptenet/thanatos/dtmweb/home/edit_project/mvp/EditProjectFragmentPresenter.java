@@ -7,17 +7,30 @@
 
 package com.cryptenet.thanatos.dtmweb.home.edit_project.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragPresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.NewPlan;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerFragment
 public class EditProjectFragmentPresenter extends BaseFragPresenter<EditProjectFragmentContract.View, EditProjectFragmentContract.Model>
         implements EditProjectFragmentContract.Presenter {
-private static final String TAG = TagProvider.getDebugTag(EditProjectFragmentPresenter.class);
+        private static final String TAG = TagProvider.getDebugTag(EditProjectFragmentPresenter.class);
 
-public EditProjectFragmentPresenter(EditProjectFragmentContract.Model model) {
+        public EditProjectFragmentPresenter(EditProjectFragmentContract.Model model) {
         super(model);
+        }
+
+        @Override
+        public void getAllCategories(Context context) {
+                model.getAllCategories(context);
+        }
+
+        @Override
+        public void saveNewPlan(NewPlan plan, Context context) {
+                model.saveNewPlan(plan, context);
         }
 }

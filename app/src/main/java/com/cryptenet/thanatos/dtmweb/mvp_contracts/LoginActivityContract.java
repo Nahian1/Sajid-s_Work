@@ -15,7 +15,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.User;
 public interface LoginActivityContract {
     interface Presenter extends BaseContract.Presenter<LoginActivityContract.View> {
         void requestForLogin(String email, String password);
-        void saveUserData(User user);
+        boolean saveUserData(User user);
     }
 
     interface View extends BaseContract.View<LoginActivity> {
@@ -23,11 +23,11 @@ public interface LoginActivityContract {
 
     interface Model extends BaseContract.Model<LoginActivity> {
         void requestForLogin(String email, String password);
-        void saveUserData(User user);
+        boolean saveUserData(User user);
     }
 
     interface Repository extends BaseContract.Repository {
         void validateLogin(String email, String password);
-        void saveUserToSP(User user, Context context);
+        boolean saveUserToSP(User user, Context context);
     }
 }
