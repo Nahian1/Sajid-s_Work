@@ -93,7 +93,10 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
             @Override
             public void onClick(View v) {
 
-                EventBus.getDefault().post(new ToEditPlanEvent(projects.get(position)));
+                Projects pro = projects.get(position);
+                pro.setEditMode(true);
+
+                EventBus.getDefault().post(new ToEditPlanEvent(pro));
             }
         });
 

@@ -24,6 +24,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -34,7 +35,9 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragmentContract.Presenter>
@@ -45,6 +48,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     private ListView projectLV;
     private ProjectAdapter adapter;
     private int reqType;
+    private Unbinder unbinder;
 
 
     public InitiatorProjectFragment() {
@@ -57,7 +61,12 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_initiator_project, container, false);
 
+        unbinder = ButterKnife.bind(this, convertView);
+
         reqType = getArguments().getInt("reqType");
+
+        if (reqType==2)
+            convertView.findViewById(R.id.btnAddPlan).setVisibility(View.GONE);
 
         projectLV = convertView.findViewById(R.id.projectListView);
         adapter = new ProjectAdapter(activityContext, projectsList, reqType);
@@ -104,7 +113,10 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     @OnClick(R.id.btnAddPlan)
     public void btnAddPlan(View view) {
 
+        Projects pro = new Projects();
+        pro.setEditMode(false);
 
+        EventBus.getDefault().post(new ToEditPlanEvent(pro));
 
     }
 
@@ -135,5 +147,11 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

@@ -33,8 +33,9 @@ public class Navigator {
         context.startActivity(intent);
     }
 
-    public void toRegistrationActivity(Context context) {
+    public void toRegistrationActivity(Context context, boolean isEdit) {
         Intent intent = new Intent(context, RegistrationActivity.class);
+        intent.putExtra("isEdit",isEdit);
         context.startActivity(intent);
     }
 
