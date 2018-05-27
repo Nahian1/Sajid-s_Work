@@ -65,6 +65,9 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         reqType = getArguments().getInt("reqType");
 
+        if (reqType==2)
+            convertView.findViewById(R.id.btnAddPlan).setVisibility(View.GONE);
+
         projectLV = convertView.findViewById(R.id.projectListView);
         adapter = new ProjectAdapter(activityContext, projectsList, reqType);
         projectLV.setAdapter(adapter);

@@ -85,7 +85,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         //presenter.getNavHeaderData();
 
-        setUpNavigation();
+//        setUpNavigation();
         Intent intent = getIntent();
         String s = intent.getStringExtra("user");
         User user = null;
@@ -144,6 +144,19 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
+    @OnClick(R.id.request)
+    public void onManageRequest(View view) {
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("reqType", 2);
+        fragment1.setArguments(bundle1);
+        replaceFragment(R.id.frame_container, fragment1);
+
+    }
+
     @OnClick(R.id.iv_nav_edit_profile)
     public void editProfile(View view) {
 
@@ -153,57 +166,57 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
-    private void setUpNavigation() {
-//        navigationView.inflateMenu(R.menu.menu_nav_investor);
-
-
-        navigationView.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.project:
-                    InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putInt("reqType", 1);
-                    fragment1.setArguments(bundle1);
-                    replaceFragment(R.id.frame_container, fragment1);
-                    break;
-                case R.id.nav_man_request:
-                    InitiatorProjectFragment fragment2 = new InitiatorProjectFragment();
-                    Bundle bundle2 = new Bundle();
-                    bundle2.putInt("reqType", 2);
-                    fragment2.setArguments(bundle2);
-                    replaceFragment(R.id.frame_container, fragment2);
-                    break;
-                case R.id.nav_language:
-                    break;
-                case R.id.nav_conversation:
-                    break;
-                case R.id.nav_report:
-                    replaceFragment(R.id.frame_container, new ReportIssueFragment());
-                    break;
-                case R.id.nav_logout:
-                    break;
-                case R.id.nav_tc:
-                    break;
-                case R.id.nav_rate:
-                    break;
-                case R.id.nav_about:
-                    break;
-                default:
-                    replaceFragment(R.id.frame_container, new PlanListFragment());
-                    break;
-            }
-
-            if (item.isChecked()) {
-                item.setChecked(false);
-            } else {
-                item.setChecked(true);
-            }
-            item.setChecked(true);
-
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return true;
-        });
-    }
+//    private void setUpNavigation() {
+////        navigationView.inflateMenu(R.menu.menu_nav_investor);
+//
+//
+//        navigationView.setNavigationItemSelectedListener(item -> {
+//            switch (item.getItemId()) {
+//                case R.id.project:
+//                    InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
+//                    Bundle bundle1 = new Bundle();
+//                    bundle1.putInt("reqType", 1);
+//                    fragment1.setArguments(bundle1);
+//                    replaceFragment(R.id.frame_container, fragment1);
+//                    break;
+//                case R.id.nav_man_request:
+//                    InitiatorProjectFragment fragment2 = new InitiatorProjectFragment();
+//                    Bundle bundle2 = new Bundle();
+//                    bundle2.putInt("reqType", 2);
+//                    fragment2.setArguments(bundle2);
+//                    replaceFragment(R.id.frame_container, fragment2);
+//                    break;
+//                case R.id.nav_language:
+//                    break;
+//                case R.id.nav_conversation:
+//                    break;
+//                case R.id.nav_report:
+//                    replaceFragment(R.id.frame_container, new ReportIssueFragment());
+//                    break;
+//                case R.id.nav_logout:
+//                    break;
+//                case R.id.nav_tc:
+//                    break;
+//                case R.id.nav_rate:
+//                    break;
+//                case R.id.nav_about:
+//                    break;
+//                default:
+//                    replaceFragment(R.id.frame_container, new PlanListFragment());
+//                    break;
+//            }
+//
+//            if (item.isChecked()) {
+//                item.setChecked(false);
+//            } else {
+//                item.setChecked(true);
+//            }
+//            item.setChecked(true);
+//
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//            return true;
+//        });
+//    }
 
     @Override
     public void getNavHeaderData(NavHeader header) {
