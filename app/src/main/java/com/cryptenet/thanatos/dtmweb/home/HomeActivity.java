@@ -157,12 +157,25 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
+    @OnClick(R.id.conversation)
+    public void onConversation(View view) {
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("reqType", 2);
+        fragment1.setArguments(bundle1);
+        replaceFragment(R.id.frame_container, fragment1);
+
+    }
+
     @OnClick(R.id.iv_nav_edit_profile)
     public void editProfile(View view) {
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        navigator.toRegistrationActivity(this,true);
+        navigator.toRegistrationActivity(this, true);
 
     }
 

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/viewProject"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewProject"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:gravity="center_vertical"
+    android:weightSum="100">
 
     <LinearLayout
         android:id="@+id/layout_pics"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:layout_weight="30"
         android:orientation="vertical">
 
         <ImageView
@@ -22,9 +25,12 @@
             android:id="@+id/nameTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLength="14"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="5dp"
+            android:singleLine="true"
             android:text="Habib Abdullah"
             android:textColor="#8c8c8c"
             android:textSize="16sp" />
@@ -39,38 +45,48 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/titleTV"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/layout_pics"
-        android:layout_marginTop="6dp"
-        android:layout_toEndOf="@+id/layout_pics"
-        android:text="SOMETHING"
-        android:textColor="#8c8c8c"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_weight="70"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/priceTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/titleTV"
-        android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/layout_pics"
-        android:text="Price: SR 670-SR 750"
-        android:textColor="#8c8c8c"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/titleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/layout_pics"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@+id/layout_pics"
+            android:text="SOMETHING"
+            android:textColor="#8c8c8c"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/seemoreImg"
-        android:layout_width="120dp"
-        android:layout_height="20dp"
-        android:layout_alignStart="@+id/priceTV"
-        android:layout_below="@+id/priceTV"
-        android:layout_marginTop="8dp"
-        android:textSize="8sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:background="@drawable/btn_shape_b"
-        android:text="@string/see_more"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/priceTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleTV"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/layout_pics"
+            android:text="Price: SR 670-SR 750"
+            android:textColor="#8c8c8c"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/seemoreImg"
+            android:layout_width="120dp"
+            android:layout_height="20dp"
+            android:layout_alignStart="@+id/priceTV"
+            android:layout_below="@+id/priceTV"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_shape_b"
+            android:text="@string/see_more"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="8sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
