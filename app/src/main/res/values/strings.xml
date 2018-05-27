@@ -59,6 +59,16 @@
     <string name="see_more">See More</string>
     <string name="add_plan">+ Add Plan</string>
 
+    <string name="category">Project Category</string>
+    <string name="project_title">Project Title</string>
+    <string name="max_price">Project Price Maximum</string>
+    <string name="min_price">Project Price Minimum</string>
+    <string name="short_desc">Project Shot Description</string>
+    <string name="long_desc">Project Detailed Description</string>
+    <string name="access_price">Project Access Request Price</string>
+    <string name="upload_file">Upload files</string>
+    <string name="upload_cover">Upload Project Cover</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

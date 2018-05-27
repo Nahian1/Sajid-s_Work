@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DTMWEB.iml" filepath="$PROJECT_DIR$/DTMWEB.iml" />
       <module fileurl="file://H:/Android Test Projects/dtmweb-p1/DTMWEB.iml" filepath="H:/Android Test Projects/dtmweb-p1/DTMWEB.iml" />
       <module fileurl="file://$PROJECT_DIR$/aFileChooser/aFileChooser.iml" filepath="$PROJECT_DIR$/aFileChooser/aFileChooser.iml" />
       <module fileurl="file://H:/Android Test Projects/dtmweb-p1/aFileChooser/aFileChooser.iml" filepath="H:/Android Test Projects/dtmweb-p1/aFileChooser/aFileChooser.iml" />

@@ -47,4 +47,14 @@
     <string name="search_bar">ابحث عن أي مشروع</string>
     <string name="nav_language">Switch To English</string>
     <string name="see_more">شاهد المزيد</string>
+    <string name="add_plan">أضف خطة</string>
+    <string name="category">فئة المشروع</string>
+    <string name="project_title">اسم المشروع</string>
+    <string name="min_price">السعر الأدنى للمشروع</string>
+    <string name="max_price">السعر الأعلى للمشروع</string>
+    <string name="short_desc">وصف قصير للمشروع</string>
+    <string name="long_desc">وصف مفصل للمشروع</string>
+    <string name="access_price">سعر الطلب للوصول للمشروع</string>
+    <string name="upload_file">تحميل ملفات</string>
+    <string name="upload_cover">تحميل غطاء المشروع</string>
 </resources>
