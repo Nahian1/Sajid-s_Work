@@ -7,9 +7,6 @@
     <string name="title_activity_set_password" translatable="false">SetPasswordActivity</string>
     <string name="title_activity_home" translatable="false">HomeActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-
-
     <string name="cd_iv_logo" translatable="false">Logo</string>
 
     <string name="hint_et_name">Name</string>
@@ -60,6 +57,7 @@
 
     <string name="search_bar">Search Any Project</string>
     <string name="see_more">See More</string>
+    <string name="add_plan">+ Add Plan</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
