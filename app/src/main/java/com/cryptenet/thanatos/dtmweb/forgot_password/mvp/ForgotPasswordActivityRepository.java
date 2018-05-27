@@ -49,6 +49,7 @@ public class ForgotPasswordActivityRepository extends BaseRepository
                     .url(ConstantProvider.BASE_URL + "api/v1/account/forgot-password/")
                     .post(formBody)
                     .addHeader("Content-Type", head)
+                    .addHeader("Authorization", oauth)
                     .build();
 
             client.newCall(request).enqueue(new Callback() {

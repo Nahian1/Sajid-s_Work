@@ -296,13 +296,13 @@
                 android:src="@drawable/lineoflist" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/seeMoreIV"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="40dp"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/seemoredetails" />
+        <!--<ImageView-->
+            <!--android:id="@+id/seeMoreIV"-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginBottom="40dp"-->
+            <!--android:layout_marginTop="40dp"-->
+            <!--android:src="@drawable/seemoredetails" />-->
     </ScrollView>
 </LinearLayout>

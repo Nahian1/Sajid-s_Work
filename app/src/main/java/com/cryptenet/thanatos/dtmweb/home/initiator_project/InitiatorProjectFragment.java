@@ -103,7 +103,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         presenter.attachView(this);
 
-        presenter.getMyProjectList(reqType);
+        presenter.getMyProjectList(reqType,activityContext);
     }
 
     @Override

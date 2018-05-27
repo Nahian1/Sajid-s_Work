@@ -53,8 +53,9 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         adapter = new ProjectAdapter(activityContext, projectsList);
         projectLV =  convertView.findViewById(R.id.projectListView);
         projectLV.setAdapter(adapter);
-        getArguments().getString("token");
         projectLV.setOnItemClickListener((parent, view, position, id) -> EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsList.get(position))));
+
+        token = getArguments().getString("token");
         return convertView;
     }
 

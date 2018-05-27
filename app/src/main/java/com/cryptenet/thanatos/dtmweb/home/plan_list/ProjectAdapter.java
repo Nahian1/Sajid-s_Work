@@ -42,7 +42,7 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
 
     public void updateList(List<Projects> projs){
         this.projects.clear();
-        if (projs == null)
+        if (projs != null)
             this.projects.addAll(projs);
         this.notifyDataSetChanged();
     }
@@ -57,18 +57,19 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
         TextView dateTV = convertView.findViewById(R.id.dateTV);
         TextView titleTV = convertView.findViewById(R.id.titleTV);
         TextView priceTV = convertView.findViewById(R.id.priceTV);
-        ImageView seemoreIV = convertView.findViewById(R.id.seemoreImg);
+//        ImageView seemoreIV = convertView.findViewById(R.id.seemoreImg);
 
         Glide.with(context)
                 .load(projects.get(position).getCoverThumbnail())
                 .apply(RequestOptions.placeholderOf(R.drawable.ppimg))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(projectIV);
+
         nameTV.setText(projects.get(position).getInitiatorsName());
         dateTV.setText(projects.get(position).getCreatedAt());
         titleTV.setText(projects.get(position).getTitle());
         priceTV.setText(projects.get(position).getAccessPrice());
-        seemoreIV.setImageResource(R.drawable.seemore);
+//        seemoreIV.setImageResource(R.drawable.seemore);
         count++;
         Log.e("student", "getView: "+count);
 

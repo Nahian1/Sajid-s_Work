@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.initiator_project.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
@@ -22,7 +24,7 @@ public class InitiatorProjectFragmentModel extends BaseFragModel<InitiatorProjec
     }
 
     @Override
-    public void getMyProjectList(int reqType) {
-        repository.getMyProjectList(reqType);
+    public void getMyProjectList(int reqType, Context context) {
+        repository.getMyProjectList(reqType,context);
     }
 }

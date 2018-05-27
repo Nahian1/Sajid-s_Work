@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.http.ApiClient;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
@@ -26,11 +27,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 @PerFragment
 public class PlanListFragmentRepository extends BaseFragRepository
@@ -47,54 +48,57 @@ public class PlanListFragmentRepository extends BaseFragRepository
         String head = "application/json";
         String oauth = token;
                 //PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
-        Log.d(TAG, "getAllProjects: " + token);
-        if (oauth != null) {
-            OkHttpClient client = new OkHttpClient();
-
-            final Request request = new Request.Builder()
-                    .url(ConstantProvider.BASE_URL + "api/v1/plan/")
-                    .get()
-                    .addHeader("Content-Type", head)
-                    .build();
-            Log.d(TAG, "getAllProjects: " + request.header("Authentication"));
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "onFailure: plan list");
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    try {
-                        Gson gson = new Gson();
-                        AllPlansResponse allPlansResponse = gson.fromJson(response.body().string(), AllPlansResponse.class);
-                        EventBus.getDefault().post(new ProjectListReceiveEvent(allPlansResponse.getResults()));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            });
-        }
-//        Call<AllPlansResponse> req = client.getAllPlans("Bearer " + ConstantProvider.ACCESS_TOKEN_INIT);
-//        req.enqueue(new Callback<AllPlansResponse>() {
-//            @Override
-//            public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
-//                AllPlansResponse allPlansResponse = response.body();
-//                try {
-//                    assert allPlansResponse != null;
-//                    setProjects(allPlansResponse.getResults());
-//                } catch (NullPointerException ex) {
-//                    ex.printStackTrace();
+//        Log.d(TAG, "getAllProjects: " + token);
+//        if (oauth != null) {
+//
+//
+//            OkHttpClient client = new OkHttpClient();
+//
+//            final Request request = new Request.Builder()
+//                    .url(ConstantProvider.BASE_URL + "api/v1/plan/")
+//                    .get()
+//                    .addHeader("Content-Type", head)
+//                    .build();
+//            Log.d(TAG, "getAllProjects: " + request.header("Authentication"));
+//            client.newCall(request).enqueue(new Callback() {
+//                @Override
+//                public void onFailure(Call call, IOException e) {
+//                    Log.d(TAG, "onFailure: plan list");
 //                }
 //
-//            }
+//                @Override
+//                public void onResponse(Call call, Response response) throws IOException {
+//                    try {
+//                        Log.d(TAG, "onResponse: " + response.body().string());
+//                        Gson gson = new Gson();
+//                        AllPlansResponse allPlansResponse = gson.fromJson(response.body().string(), AllPlansResponse.class);
+//                        EventBus.getDefault().post(new ProjectListReceiveEvent(allPlansResponse.getResults()));
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
 //
-//            @Override
-//            public void onFailure(Call<AllPlansResponse> call, Throwable t) {
-//                Log.d(TAG, "onFailure: AllPlansResponse");
-//            }
-//        });
+//                }
+//            });
+//        }
+        Call<AllPlansResponse> req = apiClient.getAllPlans("Bearer " + token);
+        req.enqueue(new Callback<AllPlansResponse>() {
+            @Override
+            public void onResponse(Call<AllPlansResponse> call, retrofit2.Response<AllPlansResponse> response) {
+
+                AllPlansResponse allPlansResponse = response.body();
+                try {
+                    assert allPlansResponse != null;
+                    setProjects(allPlansResponse.getResults());
+                } catch (NullPointerException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllPlansResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setProjects(List<Projects> projectsList) {

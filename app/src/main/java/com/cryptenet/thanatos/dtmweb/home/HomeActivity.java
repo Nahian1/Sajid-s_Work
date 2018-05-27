@@ -94,11 +94,10 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         if (savedInstanceState == null) {
             PlanListFragment fragment = new PlanListFragment();
             Bundle bundle = new Bundle();
-            if (user != null) {
-                bundle.putString("token", user.getAccessToken());
-            }
+            bundle.putString("token", user.getAccessToken());
+            Log.d(TAG, "sending tk: " + user.getAccessToken());
             fragment.setArguments(bundle);
-            addFragment(R.id.frame_container, new PlanListFragment());
+            addFragment(R.id.frame_container, fragment);
         }
     }
 
@@ -130,11 +129,26 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             drawerLayout.openDrawer(GravityCompat.START);
     }
 
+    @OnClick(R.id.project)
+    public void onManageProject(View view) {
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("reqType", 1);
+        fragment1.setArguments(bundle1);
+        replaceFragment(R.id.frame_container, fragment1);
+
+    }
+
     private void setUpNavigation() {
-        navigationView.inflateMenu(R.menu.menu_nav_investor);
+//        navigationView.inflateMenu(R.menu.menu_nav_investor);
+
+
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                case R.id.nav_man_project:
+                case R.id.project:
                     InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
                     Bundle bundle1 = new Bundle();
                     bundle1.putInt("reqType", 1);

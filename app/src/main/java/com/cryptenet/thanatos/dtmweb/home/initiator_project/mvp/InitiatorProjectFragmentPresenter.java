@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.initiator_project.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragPresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
@@ -22,7 +24,7 @@ public class InitiatorProjectFragmentPresenter extends BaseFragPresenter<Initiat
     }
 
     @Override
-    public void getMyProjectList(int reqType) {
-        model.getMyProjectList(reqType);
+    public void getMyProjectList(int reqType, Context context) {
+        model.getMyProjectList(reqType,context);
     }
 }
