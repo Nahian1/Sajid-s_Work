@@ -20,7 +20,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
+import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -74,6 +78,14 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
             editIV.setVisibility(View.GONE);
         count++;
         Log.e("project", "getView: "+count);
+
+        editIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EventBus.getDefault().post(new ToEditPlanEvent(projects.get(position)));
+            }
+        });
 
         return convertView;
 

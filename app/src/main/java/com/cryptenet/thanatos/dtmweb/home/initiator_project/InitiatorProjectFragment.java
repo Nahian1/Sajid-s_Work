@@ -67,6 +67,8 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
                 EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsList.get(position)));
             }
         });
+
+
         return convertView;
     }
 

@@ -22,6 +22,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.gson.Gson;
 
 
 public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Presenter>
@@ -43,7 +44,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_desc, container, false);
-        projects = (Projects) getArguments().get("project");
+        projects = new Gson().fromJson(getArguments().getString("project"),Projects.class);
         titleTV = convertView.findViewById(R.id.titleTV);
         priceTV = convertView.findViewById(R.id.priceTV);
 //        shortDetailsTV = convertView.findViewById(R.id.detailsTV);
@@ -61,7 +62,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 
         demoIV = convertView.findViewById(R.id.projectIV);
         profileIV = convertView.findViewById(R.id.profilepic);
-        seeMoreIV = convertView.findViewById(R.id.seeMoreIV);
+//        seeMoreIV = convertView.findViewById(R.id.seeMoreIV);
 
 
         return convertView;
