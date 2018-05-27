@@ -24,7 +24,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Mobile App on 2/9/2018.
@@ -66,7 +69,15 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
                 .into(projectIV);
 
         nameTV.setText(projects.get(position).getInitiatorsName());
-        dateTV.setText(projects.get(position).getCreatedAt());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+        try {
+            dateTV.setText(dateFormat.format(dateFormat.parse(projects.get(position).getCreatedAt())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         titleTV.setText(projects.get(position).getTitle());
         priceTV.setText(projects.get(position).getAccessPrice());
 //        seemoreIV.setImageResource(R.drawable.seemore);

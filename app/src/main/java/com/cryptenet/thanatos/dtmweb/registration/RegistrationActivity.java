@@ -7,11 +7,14 @@
 
 package com.cryptenet.thanatos.dtmweb.registration;
 
+import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +24,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
@@ -29,6 +35,7 @@ import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -57,6 +64,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     private List<City> cities;
     private List<String> sCountries, sCities;
     private ArrayAdapter<String> spinAccTypeAdapter, spinCountryAdapter, spinCityAdapter;
+    private boolean isEdit;
 
     @BindView(R.id.iv_pp)
     ImageView ivPp;
@@ -101,7 +109,33 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
         viewUnbinder = ButterKnife.bind(this);
 
+        isEdit = getIntent().getBooleanExtra("isEdit",false);
+
         init();
+
+        if (isEdit) {
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL,null);
+
+            if (imageUrl!=null) {
+                Glide.with(this)
+                        .load(imageUrl)
+                        .apply(RequestOptions.placeholderOf(R.drawable.ic_nav_profile_picture))
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(ivPp);
+
+            }
+
+            etNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_NAME,null));
+            etEmailReg.setText(sharedPreferences.getString(ConstantProvider.SP_EMAIL,null));
+            etAddress.setText(sharedPreferences.getString(ConstantProvider.SP_ADDRESS,null));
+            etBankNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_NAME,null));
+            etBankAccNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NAME,null));
+            etBankAccNumberReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NO,null));
+
+        }
+
     }
 
     private void init() {
@@ -134,6 +168,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         spinAccType.setOnItemSelectedListener(this);
         spinCountry.setOnItemSelectedListener(this);
         spinCity.setOnItemSelectedListener(this);
+
     }
 
     @Override

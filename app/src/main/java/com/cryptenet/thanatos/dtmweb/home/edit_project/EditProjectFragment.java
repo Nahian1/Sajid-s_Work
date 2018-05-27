@@ -35,7 +35,7 @@ import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
 import com.cryptenet.thanatos.dtmweb.pojo.NewPlan;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsD;
+import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -89,7 +89,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     @BindView(R.id.imageviewCover)
     ImageView imageviewCover;
 
-    private ProjectsD project;
+    private Projects project;
     private List<Categories> list;
     private List<String> categoriesList;
     private ArrayAdapter<String> spinCatAdapter;
@@ -113,15 +113,18 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 //        FragmentEditProjectBinding binding = DataBindingUtil.inflate(inflater,
 //                R.layout.fragment_edit_project, container, false);
 
-        project = new Gson().fromJson(getArguments().getString("project"), ProjectsD.class);
+        project = new Gson().fromJson(getArguments().getString("project"), Projects.class);
 
-        editTextName.setText(project.getInitiatorsName());
-        editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
-        editTextPriceMinimum.setText(project.getMinimumInvestmentCost());
-        editTextShortDescription.setText(project.getShortDescription());
-        editTextLongDescription.setText(project.getLongDescription());
-        editTextAccessPrice.setText(project.getAccessPrice());
+        if (project.isEditMode()){
 
+            editTextName.setText(project.getInitiatorsName());
+            editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
+            editTextPriceMinimum.setText(project.getMinimumInvestmentCost());
+            editTextShortDescription.setText(project.getShortDescription());
+            editTextLongDescription.setText(project.getLongDescription());
+            editTextAccessPrice.setText(project.getAccessPrice());
+
+        }
 
         list = new ArrayList<>();
         categoriesList = new ArrayList<>();

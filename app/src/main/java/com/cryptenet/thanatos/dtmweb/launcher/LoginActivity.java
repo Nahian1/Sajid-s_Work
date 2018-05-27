@@ -104,7 +104,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 //                }
                 break;
             case R.id.tv_sign_up:
-                navigator.toRegistrationActivity(this);
+                navigator.toRegistrationActivity(this,false);
                 break;
             case R.id.tv_forgot_pwd:
                 navigator.toForgotPasswordActivity(this);

@@ -1,3 +1,4 @@
+
 package com.cryptenet.thanatos.dtmweb.pojo;
 
 import android.os.Parcel;
@@ -6,7 +7,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Projects implements Parcelable {
+public class Projects implements Parcelable
+{
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -25,35 +28,47 @@ public class Projects implements Parcelable {
     @SerializedName("short_description")
     @Expose
     private String shortDescription;
+    @SerializedName("long_description")
+    @Expose
+    private String longDescription;
     @SerializedName("minimum_investment_cost")
     @Expose
     private String minimumInvestmentCost;
     @SerializedName("maximum_investment_cost")
     @Expose
     private String maximumInvestmentCost;
+    @SerializedName("initiator_address")
+    @Expose
+    private String initiatorAddress;
+    @SerializedName("initiator_image")
+    @Expose
+    private String initiatorImage;
     @SerializedName("access_price")
     @Expose
     private String accessPrice;
     @SerializedName("cover")
     @Expose
     private String cover;
-    @SerializedName("cover_thumbnail")
-    @Expose
-    private String coverThumbnail;
     @SerializedName("uploaded_file")
     @Expose
-    private Object uploadedFile;
-    @SerializedName("is_approved")
-    @Expose
-    private Boolean isApproved;
+    private String uploadedFile;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
-    public final static Parcelable.Creator<Projects> CREATOR = new Creator<Projects>() {
+    @SerializedName("cover_thumbnail")
+    @Expose
+    private String coverThumbnail;
+    @SerializedName("is_approved")
+    @Expose
+    private Boolean isApproved;
+
+    private boolean isEditMode;
+
+    public final static Creator<Projects> CREATOR = new Creator<Projects>() {
 
 
         @SuppressWarnings({
-                "unchecked"
+            "unchecked"
         })
         public Projects createFromParcel(Parcel in) {
             return new Projects(in);
@@ -64,7 +79,7 @@ public class Projects implements Parcelable {
         }
 
     }
-            ;
+    ;
 
     protected Projects(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -73,41 +88,47 @@ public class Projects implements Parcelable {
         this.title = ((String) in.readValue((String.class.getClassLoader())));
         this.category = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.shortDescription = ((String) in.readValue((String.class.getClassLoader())));
+        this.longDescription = ((String) in.readValue((String.class.getClassLoader())));
         this.minimumInvestmentCost = ((String) in.readValue((String.class.getClassLoader())));
         this.maximumInvestmentCost = ((String) in.readValue((String.class.getClassLoader())));
+        this.initiatorAddress = ((String) in.readValue((String.class.getClassLoader())));
+        this.initiatorImage = ((String) in.readValue((String.class.getClassLoader())));
         this.accessPrice = ((String) in.readValue((String.class.getClassLoader())));
         this.cover = ((String) in.readValue((String.class.getClassLoader())));
-        this.coverThumbnail = ((String) in.readValue((String.class.getClassLoader())));
-        this.uploadedFile = ((Object) in.readValue((Object.class.getClassLoader())));
-        this.isApproved = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
+        this.uploadedFile = ((String) in.readValue((String.class.getClassLoader())));
         this.createdAt = ((String) in.readValue((String.class.getClassLoader())));
+        this.coverThumbnail = ((String) in.readValue((String.class.getClassLoader())));
+        this.isApproved = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
     }
 
     /**
      * No args constructor for use in serialization
-     *
+     * 
      */
     public Projects() {
     }
 
     /**
-     *
+     * 
      * @param uploadedFile
      * @param accessPrice
      * @param id
+     * @param cover
      * @param title
      * @param category
-     * @param cover
      * @param maximumInvestmentCost
      * @param coverThumbnail
      * @param initiator
      * @param shortDescription
      * @param createdAt
+     * @param longDescription
+     * @param initiatorImage
      * @param isApproved
      * @param initiatorsName
      * @param minimumInvestmentCost
+     * @param initiatorAddress
      */
-    public Projects(Integer id, Integer initiator, String initiatorsName, String title, Integer category, String shortDescription, String minimumInvestmentCost, String maximumInvestmentCost, String accessPrice, String cover, String coverThumbnail, Object uploadedFile, Boolean isApproved, String createdAt) {
+    public Projects(Integer id, Integer initiator, String initiatorsName, String title, Integer category, String shortDescription, String longDescription, String minimumInvestmentCost, String maximumInvestmentCost, String initiatorAddress, String initiatorImage, String accessPrice, String cover, String uploadedFile, String createdAt, String coverThumbnail, Boolean isApproved) {
         super();
         this.id = id;
         this.initiator = initiator;
@@ -115,14 +136,25 @@ public class Projects implements Parcelable {
         this.title = title;
         this.category = category;
         this.shortDescription = shortDescription;
+        this.longDescription = longDescription;
         this.minimumInvestmentCost = minimumInvestmentCost;
         this.maximumInvestmentCost = maximumInvestmentCost;
+        this.initiatorAddress = initiatorAddress;
+        this.initiatorImage = initiatorImage;
         this.accessPrice = accessPrice;
         this.cover = cover;
-        this.coverThumbnail = coverThumbnail;
         this.uploadedFile = uploadedFile;
-        this.isApproved = isApproved;
         this.createdAt = createdAt;
+        this.coverThumbnail = coverThumbnail;
+        this.isApproved = isApproved;
+    }
+
+    public boolean isEditMode() {
+        return isEditMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        isEditMode = editMode;
     }
 
     public Integer getId() {
@@ -173,6 +205,14 @@ public class Projects implements Parcelable {
         this.shortDescription = shortDescription;
     }
 
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
+    }
+
     public String getMinimumInvestmentCost() {
         return minimumInvestmentCost;
     }
@@ -187,6 +227,22 @@ public class Projects implements Parcelable {
 
     public void setMaximumInvestmentCost(String maximumInvestmentCost) {
         this.maximumInvestmentCost = maximumInvestmentCost;
+    }
+
+    public String getInitiatorAddress() {
+        return initiatorAddress;
+    }
+
+    public void setInitiatorAddress(String initiatorAddress) {
+        this.initiatorAddress = initiatorAddress;
+    }
+
+    public String getInitiatorImage() {
+        return initiatorImage;
+    }
+
+    public void setInitiatorImage(String initiatorImage) {
+        this.initiatorImage = initiatorImage;
     }
 
     public String getAccessPrice() {
@@ -205,28 +261,12 @@ public class Projects implements Parcelable {
         this.cover = cover;
     }
 
-    public String getCoverThumbnail() {
-        return coverThumbnail;
-    }
-
-    public void setCoverThumbnail(String coverThumbnail) {
-        this.coverThumbnail = coverThumbnail;
-    }
-
-    public Object getUploadedFile() {
+    public String getUploadedFile() {
         return uploadedFile;
     }
 
-    public void setUploadedFile(Object uploadedFile) {
+    public void setUploadedFile(String uploadedFile) {
         this.uploadedFile = uploadedFile;
-    }
-
-    public Boolean getIsApproved() {
-        return isApproved;
-    }
-
-    public void setIsApproved(Boolean isApproved) {
-        this.isApproved = isApproved;
     }
 
     public String getCreatedAt() {
@@ -237,6 +277,22 @@ public class Projects implements Parcelable {
         this.createdAt = createdAt;
     }
 
+    public String getCoverThumbnail() {
+        return coverThumbnail;
+    }
+
+    public void setCoverThumbnail(String coverThumbnail) {
+        this.coverThumbnail = coverThumbnail;
+    }
+
+    public Boolean getIsApproved() {
+        return isApproved;
+    }
+
+    public void setIsApproved(Boolean isApproved) {
+        this.isApproved = isApproved;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
         dest.writeValue(initiator);
@@ -244,17 +300,21 @@ public class Projects implements Parcelable {
         dest.writeValue(title);
         dest.writeValue(category);
         dest.writeValue(shortDescription);
+        dest.writeValue(longDescription);
         dest.writeValue(minimumInvestmentCost);
         dest.writeValue(maximumInvestmentCost);
+        dest.writeValue(initiatorAddress);
+        dest.writeValue(initiatorImage);
         dest.writeValue(accessPrice);
         dest.writeValue(cover);
-        dest.writeValue(coverThumbnail);
         dest.writeValue(uploadedFile);
-        dest.writeValue(isApproved);
         dest.writeValue(createdAt);
+        dest.writeValue(coverThumbnail);
+        dest.writeValue(isApproved);
     }
 
     public int describeContents() {
         return  0;
     }
+
 }

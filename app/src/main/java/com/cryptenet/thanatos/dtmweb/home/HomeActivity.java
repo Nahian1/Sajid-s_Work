@@ -144,6 +144,15 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
+    @OnClick(R.id.iv_nav_edit_profile)
+    public void editProfile(View view) {
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        navigator.toRegistrationActivity(this,true);
+
+    }
+
     private void setUpNavigation() {
 //        navigationView.inflateMenu(R.menu.menu_nav_investor);
 
