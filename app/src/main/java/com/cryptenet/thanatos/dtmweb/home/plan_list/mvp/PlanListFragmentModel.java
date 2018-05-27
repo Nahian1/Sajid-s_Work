@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.plan_list.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
@@ -21,7 +23,7 @@ public class PlanListFragmentModel extends BaseFragModel<PlanListFragmentContrac
         super(repository);
     }
 
-    public void getProjectList() {
-        repository.getAllProjects();
+    public void getProjectList(Context context, String token) {
+        repository.getAllProjects(context, token);
     }
 }

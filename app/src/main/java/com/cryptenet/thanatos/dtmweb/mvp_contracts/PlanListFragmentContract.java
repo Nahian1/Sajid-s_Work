@@ -7,19 +7,21 @@
 
 package com.cryptenet.thanatos.dtmweb.mvp_contracts;
 
+import android.content.Context;
+
 public interface PlanListFragmentContract {
     interface Presenter extends BaseFragContract.Presenter<PlanListFragmentContract.View> {
-        void getProjectList();
+        void getProjectList(Context context, String token);
     }
 
     interface View extends BaseFragContract.View {
     }
 
     interface Model extends BaseFragContract.Model {
-        void getProjectList();
+        void getProjectList(Context context, String token);
     }
 
     interface Repository extends BaseFragContract.Repository {
-        void getAllProjects();
+        void getAllProjects(Context context, String token);
     }
 }

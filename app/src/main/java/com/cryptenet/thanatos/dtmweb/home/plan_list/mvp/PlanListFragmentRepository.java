@@ -7,12 +7,14 @@
 
 package com.cryptenet.thanatos.dtmweb.home.plan_list.mvp;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Projects;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -40,10 +42,12 @@ public class PlanListFragmentRepository extends BaseFragRepository
         this.projectsList = new ArrayList<>();
     }
 
-    public void getAllProjects() {
+    @Override
+    public void getAllProjects(Context context, String token) {
         String head = "application/json";
-        String oauth = preferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null);
-
+        String oauth = token;
+                //PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
+        Log.d(TAG, "getAllProjects: " + token);
         if (oauth != null) {
             OkHttpClient client = new OkHttpClient();
 
@@ -52,7 +56,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
                     .get()
                     .addHeader("Content-Type", head)
                     .build();
-
+            Log.d(TAG, "getAllProjects: " + request.header("Authentication"));
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -62,7 +66,9 @@ public class PlanListFragmentRepository extends BaseFragRepository
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     try {
-                        Gson gson ;
+                        Gson gson = new Gson();
+                        AllPlansResponse allPlansResponse = gson.fromJson(response.body().string(), AllPlansResponse.class);
+                        EventBus.getDefault().post(new ProjectListReceiveEvent(allPlansResponse.getResults()));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

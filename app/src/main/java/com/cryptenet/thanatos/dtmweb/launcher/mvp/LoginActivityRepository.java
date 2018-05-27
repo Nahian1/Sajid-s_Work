@@ -95,6 +95,7 @@ public class LoginActivityRepository extends BaseRepository
                 .putString(ConstantProvider.SP_BANK_ACC_NAME, user.getBankAccountName())
                 .putString(ConstantProvider.SP_BANK_ACC_NO, user.getBankAccountNumber())
                 .putString(ConstantProvider.SP_USER_TYPE, user.getRefreshToken())
-                .apply();
+                .commit();
+        Log.d(TAG, "saveUserToSP: " + user.getAccessToken());
     }
 }

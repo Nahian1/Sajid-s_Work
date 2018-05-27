@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c) 2018.
-  ~  Development Courtesy: Cryptenet Ltd.
-  ~  Developer Credit: Alamgir Hossain, Nabil Shawkat
-  ~  This project is under MIT license
-  -->
 
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,8 +26,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            android:background="#99335285"
-            app:headerLayout="@layout/nav_header"
-            app:itemTextColor="@android:color/white"/>
+            android:background="#99335285" >
+            <include
+                layout="@layout/nav_header" />
+        </android.support.design.widget.NavigationView>
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

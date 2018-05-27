@@ -7,6 +7,7 @@
 
 package com.cryptenet.thanatos.dtmweb.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -30,6 +31,7 @@ import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -42,7 +44,6 @@ import butterknife.OnClick;
 public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presenter>
         implements HomeActivityContract.View {
     public static final String TAG = TagProvider.getDebugTag(HomeActivity.class);
-    private View headerView;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -70,21 +71,26 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         viewUnbinder = ButterKnife.bind(this);
 
-        headerView = navigationView.getHeaderView(0);
-        ivNavPp = headerView.findViewById(R.id.iv_nav_pp);
-        tvNavName = headerView.findViewById(R.id.tv_nav_name);
-        tvNavType = headerView.findViewById(R.id.tv_nav_type);
-        tvNavAddress = headerView.findViewById(R.id.tv_nav_address);
-        tvNavDetails = headerView.findViewById(R.id.tv_nav_details);
-        ivNavEditProfile = headerView.findViewById(R.id.iv_nav_edit_profile);
+        ivNavPp = findViewById(R.id.iv_nav_pp);
+        tvNavName = findViewById(R.id.tv_nav_name);
+        tvNavType = findViewById(R.id.tv_nav_type);
+        tvNavAddress = findViewById(R.id.tv_nav_address);
+        ivNavEditProfile = findViewById(R.id.iv_nav_edit_profile);
 
         setSupportActionBar(toolbar);
 
         //presenter.getNavHeaderData();
 
         setUpNavigation();
-
+        Intent intent = getIntent();
+        User user = intent.getParcelableExtra("user");
         if (savedInstanceState == null) {
+            PlanListFragment fragment = new PlanListFragment();
+            Bundle bundle = new Bundle();
+            if (user != null) {
+                bundle.putString("token", user.getAccessToken());
+            }
+            fragment.setArguments(bundle);
             addFragment(R.id.frame_container, new PlanListFragment());
         }
     }

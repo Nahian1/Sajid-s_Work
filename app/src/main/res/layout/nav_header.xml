@@ -1,70 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:paddingTop="30dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView
-        android:id="@+id/iv_nav_pp"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_nav_profile_picture" />
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_vertical_16"
+        android:paddingLeft="@dimen/margin_horizontal_16"
+        android:paddingRight="@dimen/margin_horizontal_16"
+        android:paddingTop="@dimen/margin_vertical_16"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:id="@+id/tv_nav_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="7dp"
-        android:layout_toEndOf="@+id/iv_nav_pp"
-        android:text="Habib Abdullah"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white" />
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_nav_profile_picture"
+                    android:id="@+id/iv_nav_pp" />
 
-    <TextView
-        android:id="@+id/tv_nav_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tv_nav_name"
-        android:layout_below="@+id/tv_nav_name"
-        android:textStyle="normal"
-        android:text="Initiator"
-        android:textSize="12sp"
-        android:textColor="@android:color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_toEndOf="@+id/iv_nav_pp"
+                    android:text="Habib Abdullah"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/tv_nav_name" />
 
-    <TextView
-        android:id="@+id/tv_nav_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tv_nav_type"
-        android:layout_below="@+id/tv_nav_type"
-        android:text="Riyad, Saudi Arabia"
-        android:textStyle="normal"
-        android:textSize="12sp"
-        android:textColor="@android:color/white" />
+                <TextView
+                    android:id="@+id/tv_nav_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/tv_nav_name"
+                    android:layout_below="@+id/tv_nav_name"
+                    android:textStyle="normal"
+                    android:text="Initiator"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white" />
 
-    <ImageView
-        android:id="@+id/iv_nav_edit_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/tv_nav_name"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/ic_edit" />
+                <TextView
+                    android:id="@+id/tv_nav_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/tv_nav_type"
+                    android:layout_below="@+id/tv_nav_type"
+                    android:text="Riyad, Saudi Arabia"
+                    android:textStyle="normal"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white" />
 
-    <TextView
-        android:id="@+id/tv_nav_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_nav_pp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
-        android:textColor="@android:color/white" />
+                <ImageView
+                    android:id="@+id/iv_nav_edit_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/tv_nav_name"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_edit" />
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_nav_pp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@android:color/white" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:tint="#FFFFFF"
+                    android:src="@drawable/ic_man_project"/>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                    android:text="@string/nav_man_project"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_man_request"/>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                    android:text="@string/nav_man_request"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_language"/>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                    android:text="@string/nav_conversation"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/conversation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_conversation"/>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                    android:text="@string/nav_conversation"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/logOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_logout"/>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                    android:text="@string/nav_logout"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/line"/>
+            <TextView
+                android:id="@+id/terms"
+                android:layout_marginLeft="35dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:text="@string/nav_tc"/>
+            <TextView
+                android:id="@+id/rateUs"
+                android:layout_marginLeft="35dp"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:text="@string/nav_rate"/>
+            <TextView
+                android:id="@+id/about"
+                android:layout_marginLeft="35dp"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:text="@string/nav_about"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

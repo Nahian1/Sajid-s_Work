@@ -39,6 +39,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     private List<Projects> projectsList;
     private ListView projectLV;
     private ProjectAdapter adapter;
+    private String token;
 
     public PlanListFragment() {
         projectsList = new ArrayList<>();
@@ -52,7 +53,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         adapter = new ProjectAdapter(activityContext, projectsList);
         projectLV =  convertView.findViewById(R.id.projectListView);
         projectLV.setAdapter(adapter);
-
+        getArguments().getString("token");
         projectLV.setOnItemClickListener((parent, view, position, id) -> EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsList.get(position))));
         return convertView;
     }
@@ -76,6 +77,8 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
         this.projectsList = event.projectsList;
+        for (Projects projects : projectsList)
+            Log.d(TAG, "onProjectListReceiveEvent: " + projects.getTitle());
         adapter.updateList(this.projectsList);
     }
 
@@ -85,7 +88,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
         presenter.attachView(this);
 
-        presenter.getProjectList();
+        presenter.getProjectList(activityContext, token);
     }
 
     @Override

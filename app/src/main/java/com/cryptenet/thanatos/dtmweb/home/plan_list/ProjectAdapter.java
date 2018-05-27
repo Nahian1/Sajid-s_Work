@@ -42,9 +42,9 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
 
     public void updateList(List<Projects> projs){
         this.projects.clear();
-        this.projects.addAll(projs);
+        if (projs == null)
+            this.projects.addAll(projs);
         this.notifyDataSetChanged();
-
     }
 
     @NonNull

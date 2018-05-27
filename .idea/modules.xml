@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DTMWEB.iml" filepath="$PROJECT_DIR$/DTMWEB.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dtmweb-p1.iml" filepath="$PROJECT_DIR$/dtmweb-p1.iml" />
     </modules>
   </component>
 </project>

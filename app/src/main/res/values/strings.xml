@@ -59,6 +59,7 @@
     <string name="close" translatable="false">Close</string>
 
     <string name="search_bar">Search Any Project</string>
+    <string name="see_more">See More</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
