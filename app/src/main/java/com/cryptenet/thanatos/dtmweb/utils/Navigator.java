@@ -53,10 +53,10 @@ public class Navigator {
         context.startActivity(intent);
     }
 
-    public void toHomeActivity(Context context, @Nullable User user) {
+    public void toHomeActivity(Context context, @Nullable String string) {
         Intent intent = new Intent(context, HomeActivity.class);
-        if (user != null) {
-            intent.putExtra("user", user);
+        if (string != null) {
+            intent.putExtra("user", string);
         }
         context.startActivity(intent);
     }

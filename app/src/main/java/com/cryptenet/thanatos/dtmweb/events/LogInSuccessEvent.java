@@ -7,14 +7,13 @@
 
 package com.cryptenet.thanatos.dtmweb.events;
 
-import com.cryptenet.thanatos.dtmweb.pojo.User;
 
 public class LogInSuccessEvent {
-    public final User user;
+    public final String string;
     public final boolean isSuccess;
 
-    public LogInSuccessEvent(User user, boolean isSuccess) {
-        this.user = user;
+    public LogInSuccessEvent(String string, boolean isSuccess) {
+        this.string = string;
         this.isSuccess = isSuccess;
     }
 }

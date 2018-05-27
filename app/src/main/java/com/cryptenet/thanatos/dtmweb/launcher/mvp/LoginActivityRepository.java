@@ -69,9 +69,7 @@ public class LoginActivityRepository extends BaseRepository
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Gson gson = new Gson();
-                User user = gson.fromJson(response.body().string(), User.class);
-                EventBus.getDefault().post(new LogInSuccessEvent(user, response.body()!=null));
+                EventBus.getDefault().post(new LogInSuccessEvent(response.body().string(), response.body()!=null));
             }
 
 

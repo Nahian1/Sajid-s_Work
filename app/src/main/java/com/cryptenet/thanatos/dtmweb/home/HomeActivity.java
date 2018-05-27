@@ -33,6 +33,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,6 +41,7 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presenter>
         implements HomeActivityContract.View {
@@ -57,7 +59,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.menuRight)
     ImageView ivMenuRight;
 
-    ImageView ivNavPp;
+    CircleImageView ivNavPp;
     TextView tvNavName;
     TextView tvNavType;
     TextView tvNavAddress;
@@ -83,7 +85,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         setUpNavigation();
         Intent intent = getIntent();
-        User user = intent.getParcelableExtra("user");
+        String s = intent.getStringExtra("user");
+        User user = null;
+        if (s != null) {
+            Gson gson = new Gson();
+            user = gson.fromJson(s, User.class);
+        }
         if (savedInstanceState == null) {
             PlanListFragment fragment = new PlanListFragment();
             Bundle bundle = new Bundle();

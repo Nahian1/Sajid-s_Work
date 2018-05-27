@@ -110,11 +110,11 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
-        this.user = event.user;
+//        this.user = event.string;
         if(event.isSuccess) {
             showMessage("Loading data...");
-            presenter.saveUserData(user);
-            navigator.toHomeActivity(this, user);
+//            presenter.saveUserData(user);
+            navigator.toHomeActivity(this, event.string);
         }
     }
 
