@@ -63,6 +63,12 @@ public interface ApiClient {
     @GET("api/v1/plan/my/")
     Call<AllPlansResponse> getAllMyPlans(@Header("Authorization") String token);
 
+    @GET("/api/v1/plan-access/")
+    Call<AllPlansResponse> getAllMyReqInv(@Header("Authorization") String token);
+
+    @GET("/api/v1/plan-access/?is_approved=True")
+    Call<AllPlansResponse> getAllMyReqInvApr(@Header("Authorization") String token);
+
     @GET("api/v1/plan-access/")
     Call<AllPlansResponse> getAllReqPlansINT(@Header("Authorization") String token);
 

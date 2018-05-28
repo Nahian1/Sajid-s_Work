@@ -9,6 +9,7 @@ package com.cryptenet.thanatos.dtmweb.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,12 +29,14 @@ import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.home.edit_project.EditProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFragment;
+import com.cryptenet.thanatos.dtmweb.home.investor_project.InvestorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
@@ -136,16 +139,36 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
+        if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null).equals("Initiator")) {
+            InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
+            Bundle bundle1 = new Bundle();
+            bundle1.putInt("reqType", 1);
+            fragment1.setArguments(bundle1);
+            replaceFragment(R.id.frame_container, fragment1);
+        } else {
+            InvestorProjectFragment fragment1 = new InvestorProjectFragment();
+            Bundle bundle1 = new Bundle();
+            bundle1.putInt("reqType", 1);
+            fragment1.setArguments(bundle1);
+            replaceFragment(R.id.frame_container, fragment1);
+        }
+    }
+
+    @OnClick(R.id.request)
+    public void onManageRequest(View view) {
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
         InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
         Bundle bundle1 = new Bundle();
-        bundle1.putInt("reqType", 1);
+        bundle1.putInt("reqType", 2);
         fragment1.setArguments(bundle1);
         replaceFragment(R.id.frame_container, fragment1);
 
     }
 
-    @OnClick(R.id.request)
-    public void onManageRequest(View view) {
+    @OnClick(R.id.conversation)
+    public void onConversation(View view) {
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
@@ -162,7 +185,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        navigator.toRegistrationActivity(this,true);
+        navigator.toRegistrationActivity(this, true);
 
     }
 

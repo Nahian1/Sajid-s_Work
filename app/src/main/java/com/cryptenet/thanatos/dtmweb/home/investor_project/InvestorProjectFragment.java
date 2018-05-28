@@ -8,26 +8,47 @@
 package com.cryptenet.thanatos.dtmweb.home.investor_project;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.home.initiator_project.ProjectAdapter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmentContract.Presenter>
         implements InvestorProjectFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(InvestorProjectFragment.class);
-
+    private List<ProjectsRsp> projectsRspList;
+    private ListView projectLV;
+    private ProjectAdapter adapter;
+    private int reqType;
+    private Unbinder unbinder;
 
     public InvestorProjectFragment() {
-        // Required empty public constructor
+        projectsRspList = new ArrayList<>();
     }
 
 
@@ -35,7 +56,21 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_investor_project, container, false);
+        View convertView = inflater.inflate(R.layout.fragment_investor_project, container, false);
+
+        unbinder = ButterKnife.bind(this, convertView);
+
+        projectLV = convertView.findViewById(R.id.projectListView);
+        adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
+        projectLV.setAdapter(adapter);
+
+        projectLV.setOnItemClickListener((parent, view, position, id) ->
+                EventBus.getDefault().post(
+                        new ToDetailsFragmentEvent(
+                                projectsRspList.get(position).getId(),
+                                (projectsRspList.get(position).getIsApproved()) ? 1 : 2)));
+
+        return convertView;
     }
 
     @Override
@@ -52,5 +87,48 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
     @Override
     public void restoreState(Bundle savedState) {
 
+    }
+
+    @Subscribe
+    public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
+        Log.d(TAG, "onProjectListReceiveEvent: login");
+        this.projectsRspList = event.projectsRspList;
+        adapter.updateList(this.projectsRspList);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.attachView(this);
+
+        presenter.getMyProjectList(reqType,activityContext);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        unbinder.unbind();
+
+        super.onDestroy();
     }
 }

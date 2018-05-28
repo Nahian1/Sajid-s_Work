@@ -138,7 +138,8 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         unbinder.unbind();
+
+        super.onDestroy();
     }
 }

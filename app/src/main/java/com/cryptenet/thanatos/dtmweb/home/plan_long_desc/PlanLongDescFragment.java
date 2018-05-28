@@ -54,6 +54,7 @@ public class PlanLongDescFragment extends BaseFragment<PlanLongDescFragmentContr
         addressTV = convertView.findViewById(R.id.address);
         detailsTV = convertView.findViewById(R.id.details);
         longDescTV = convertView.findViewById(R.id.textLongDesc);
+//        longDescTV = convertView.findViewById(R.id.longDesc);
 
         demoIV = convertView.findViewById(R.id.demoImg);
         profileIV = convertView.findViewById(R.id.profilepic);
