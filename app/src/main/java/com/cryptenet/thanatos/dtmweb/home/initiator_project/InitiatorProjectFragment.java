@@ -113,7 +113,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         presenter.attachView(this);
 
-        presenter.getMyProjectList(reqType,activityContext);
+        presenter.getMyProjectList(reqType, activityContext);
     }
 
     @Override
@@ -139,7 +139,6 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     @Override
     public void onDestroy() {
         unbinder.unbind();
-
         super.onDestroy();
     }
 }

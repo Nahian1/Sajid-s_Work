@@ -80,8 +80,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
 
     @Subscribe
     public void onPwdResetEvent(PwdResetEvent event) {
-        boolean isSuccess = event.isSuccess;
-        if (isSuccess) {
+        if (event.isSuccess) {
             showMessage("Reset Done!!");
             navigator.toLoginActivity(this);
             finish();

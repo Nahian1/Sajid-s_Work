@@ -12,13 +12,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
-import com.cryptenet.thanatos.dtmweb.events.PwdResetEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -62,10 +59,10 @@ public class SetPasswordActivityRepository extends BaseRepository
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 try {
-                    if (response.code() == 200)
-                        EventBus.getDefault().post(new PwdResetEvent(true));
-                    else
-                        Log.d(TAG, "onResponse: " + response.code());
+//                    if (response.code() == 200)
+//                        EventBus.getDefault().post(new PwdResetEvent(true));
+//                    else
+//                        Log.d(TAG, "onResponse: " + response.code());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

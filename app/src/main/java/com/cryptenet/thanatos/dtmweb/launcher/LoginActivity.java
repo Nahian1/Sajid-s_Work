@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-                presenter.requestForLogin("michaelperez@collier.com","asdasd123");
+                presenter.requestForLogin("creynolds@montgomery.com","asdasd123");
 
 //                if ((etEmail.getText().toString().trim()) !=null && !(etEmail.getText().toString().trim()).isEmpty()) {
 //                    if ((etPwd.getText().toString().trim()) != null && !(etPwd.getText().toString().trim()).isEmpty()) {

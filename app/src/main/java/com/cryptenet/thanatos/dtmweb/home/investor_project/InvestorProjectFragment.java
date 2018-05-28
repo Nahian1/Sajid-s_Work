@@ -23,7 +23,6 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
-import com.cryptenet.thanatos.dtmweb.home.initiator_project.ProjectAdapter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -60,8 +59,10 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
 
         unbinder = ButterKnife.bind(this, convertView);
 
+        reqType = getArguments().getInt("reqType");
+
         projectLV = convertView.findViewById(R.id.projectListView);
-        adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
+        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList() , reqType);
         projectLV.setAdapter(adapter);
 
         projectLV.setOnItemClickListener((parent, view, position, id) ->
@@ -102,7 +103,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
 
         presenter.attachView(this);
 
-        presenter.getMyProjectList(reqType,activityContext);
+//        presenter.getMyProjectList(reqType,activityContext);
     }
 
     @Override

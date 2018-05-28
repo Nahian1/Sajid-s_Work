@@ -58,7 +58,7 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
                 }
             });
         } else {
-            Call<AllPlansResponse> req = apiClient.getAllReqPlansINT("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
+            Call<AllPlansResponse> req = apiClient.getAllMyReqInvApr("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
             req.enqueue(new Callback<AllPlansResponse>() {
                 @Override
                 public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
