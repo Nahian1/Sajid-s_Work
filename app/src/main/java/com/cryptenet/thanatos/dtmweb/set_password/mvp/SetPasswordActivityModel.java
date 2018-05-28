@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.set_password.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
@@ -28,7 +30,7 @@ public class SetPasswordActivityModel extends BaseModel<SetPasswordActivityContr
     }
 
     @Override
-    public void sendPwdResetRequest(String newPwd) {
-        repository.sendPwdResetRequest(newPwd);
+    public void sendPwdResetRequest(String newPwd, Context context) {
+        repository.sendPwdResetRequest(newPwd, context);
     }
 }

@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.forgot_password.mvp;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
@@ -36,47 +38,43 @@ public class ForgotPasswordActivityRepository extends BaseRepository
     @Override
     public void sendIdentifier(String identifier) {
         String head = "application/json";
-        String oauth = preferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 
-        if (oauth != null) {
-            OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient();
 
-            RequestBody formBody = new FormBody.Builder()
-                    .add("email", identifier)
-                    .build();
+        RequestBody formBody = new FormBody.Builder()
+                .add("email", identifier)
+                .build();
 
-            final Request request = new Request.Builder()
-                    .url(ConstantProvider.BASE_URL + "api/v1/account/forgot-password/")
-                    .post(formBody)
-                    .addHeader("Content-Type", head)
-                    .addHeader("Authorization", oauth)
-                    .build();
+        final Request request = new Request.Builder()
+                .url(ConstantProvider.BASE_URL + "api/v1/account/forgot-password/")
+                .post(formBody)
+                .addHeader("Content-Type", head)
+                .build();
 
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "onFailure: forgot");
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure: forgot");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    if (response.code() == 200)
+                        EventBus.getDefault().post(new DataSendSuccessEvent(true));
+                    else
+                        Log.d(TAG, "onResponse: " + response.code());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            }
+        });
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    try {
-                        if (response.code() == 200)
-                            EventBus.getDefault().post(new DataSendSuccessEvent(true));
-                        else
-                            Log.d(TAG, "onResponse: " + response.code());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            });
-        }
     }
 
     @Override
-    public void saveIdentifierSP(String identifier) {
-        preferences
+    public void saveIdentifierSP(String identifier, Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(ConstantProvider.SP_FORGOT_PASSWORD_EMAIL, identifier)
                 .apply();

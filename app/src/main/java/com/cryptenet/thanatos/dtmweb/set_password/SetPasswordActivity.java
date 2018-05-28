@@ -25,9 +25,10 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContract.Presenter>
-        implements SetPasswordActivityContract.View, View.OnClickListener {
+        implements SetPasswordActivityContract.View {
     public static final String TAG = TagProvider.getDebugTag(SetPasswordActivity.class);
 
     @BindView(R.id.et_new_pwd)
@@ -63,19 +64,28 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
     public void restoreState(Bundle savedState) {
     }
 
-    @Override
+    @OnClick(R.id.btn_done)
     public void onClick(View v) {
         String pwd = etNewPwd.getText().toString().trim();
         String cPwd = etConfirmNewPwd.getText().toString().trim();
 
-        if(pwd.equals(cPwd))
-            presenter.sendPwdResetRequest(pwd);
+        if (!pwd.isEmpty() && !cPwd.isEmpty()) {
+            if (pwd.equals(cPwd))
+                presenter.sendPwdResetRequest(pwd, this);
+            else
+                showMessage("Filed values do not match");
+        } else
+            showMessage("Please fill both fields");
     }
 
     @Subscribe
     public void onPwdResetEvent(PwdResetEvent event) {
-        if (event.isSuccess)
+        boolean isSuccess = event.isSuccess;
+        if (isSuccess) {
             showMessage("Reset Done!!");
+            navigator.toLoginActivity(this);
+            finish();
+        }
     }
 
     @Override

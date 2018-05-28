@@ -61,10 +61,15 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
 
     @Override
     public void onClick(View v) {
-        presenter.sendIdentifier(etForgot.getText().toString().trim());
-        presenter.saveIdentifier(etForgot.getText().toString().trim());
+        String mail = etForgot.getText().toString().trim();
 
-        navigator.toCodeActivity(this);
+        if (!mail.isEmpty()) {
+            presenter.saveIdentifier(mail, this);
+            presenter.sendIdentifier(mail);
+
+            navigator.toCodeActivity(this);
+        } else
+            showMessage("Field can not be empty");
     }
 
     @Subscribe
