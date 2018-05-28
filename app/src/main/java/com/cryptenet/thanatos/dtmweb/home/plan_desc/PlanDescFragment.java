@@ -22,11 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.ShowPlanDetailsEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
@@ -35,10 +33,6 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +82,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     TextView amountToBePaid;
 
     private int projectId, type;
+    private ProjectsDetailed projectsDetailed;
 
     public PlanDescFragment() {
         // Required empty public constructor
@@ -117,12 +112,15 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 
         } else {
 
+            EventBus.getDefault().post(new PlanDetailsRequestEvent(projectsDetailed));
         }
     }
 
     @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void toShowPlanDetailsEvent(ShowPlanDetailsEvent event) {
+
+        projectsDetailed = event.detailed;
 
         textTitle.setText(event.detailed.getTitle());
 
@@ -135,6 +133,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         textBankName.setText(event.detailed.getBankName());
         amountToBePaid.setText(event.detailed.getAccessPrice());
 
+        //commented out for later use
 //        Glide.with(activityContext)
 //                .load(event.detailed.getCover())
 //                .apply(RequestOptions.placeholderOf(R.drawable.imgdemo))
@@ -147,22 +146,22 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 //                .transition(DrawableTransitionOptions.withCrossFade())
 //                .into(profileIV);
 
-        if (type == 1) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-            try {
-                textDatePrice.setText(dateFormat.format(dateFormat.parse(event.detailed.getCreatedAt())));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            layoutBankSection.setVisibility(View.GONE);
-            textLongDesc.setVisibility(View.VISIBLE);
-            textLongDesc.setText(event.detailed.getLongDescription());
-
-            textViewFile.setVisibility(View.VISIBLE);
-        } else {
-            textDatePrice.setText("Price: " + event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
-        }
+//        if (type == 1) {
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+//            try {
+//                textDatePrice.setText(dateFormat.format(dateFormat.parse(event.detailed.getCreatedAt())));
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//
+//            layoutBankSection.setVisibility(View.GONE);
+//            textLongDesc.setVisibility(View.VISIBLE);
+//            textLongDesc.setText(event.detailed.getLongDescription());
+//
+//            textViewFile.setVisibility(View.VISIBLE);
+//        } else {
+        textDatePrice.setText("Price: " + event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
+//        }
 
         if (type != 3) {
             icInitConversation.setVisibility(View.VISIBLE);
@@ -225,11 +224,11 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 
         presenter.attachView(this);
 
-        if (type == 1) { //long
-            presenter.getLongDetails(activityContext, projectId);
-        } else { //short
-            presenter.getShortDetails(activityContext, projectId);
-        }
+//        if (type == 1) { //long
+//            presenter.getLongDetails(activityContext, projectId);
+//        } else { //short
+        presenter.getShortDetails(activityContext, projectId);
+//        }
     }
 
     @Override

@@ -25,9 +25,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
+import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.home.edit_project.EditProjectFragment;
+import com.cryptenet.thanatos.dtmweb.home.form.FormFragment;
 import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.investor_project.InvestorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
@@ -269,6 +271,16 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         bundle.putInt("project_id", event.projectId);
         bundle.putInt("type", event.layoutType);
+        fragment.setArguments(bundle);
+        replaceFragment(R.id.frame_container, fragment);
+    }
+
+    @Subscribe
+    public void onPlanDetailsRequestEvent(PlanDetailsRequestEvent event) {
+        FormFragment fragment = new FormFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putString("project_details", new Gson().toJson(event.detailed));
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
     }
