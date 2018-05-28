@@ -16,4 +16,9 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 public class ReportIssueFragmentRepository extends BaseFragRepository
         implements ReportIssueFragmentContract.Repository {
     private static String TAG = TagProvider.getDebugTag(ReportIssueFragmentRepository.class);
+
+    @Override
+    public void getAllIssues() {
+
+    }
 }

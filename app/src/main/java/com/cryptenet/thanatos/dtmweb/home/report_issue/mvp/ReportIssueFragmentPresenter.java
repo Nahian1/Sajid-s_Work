@@ -20,4 +20,9 @@ public class ReportIssueFragmentPresenter extends BaseFragPresenter<ReportIssueF
     public ReportIssueFragmentPresenter(ReportIssueFragmentContract.Model model) {
         super(model);
     }
+
+    @Override
+    public void getAllIssues() {
+        model.getAllIssues();
+    }
 }

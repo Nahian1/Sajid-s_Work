@@ -32,7 +32,6 @@ import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFrag
 import com.cryptenet.thanatos.dtmweb.home.investor_project.InvestorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
-import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
@@ -159,11 +158,19 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
-        Bundle bundle1 = new Bundle();
-        bundle1.putInt("reqType", 2);
-        fragment1.setArguments(bundle1);
-        replaceFragment(R.id.frame_container, fragment1);
+        if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null).equals("Initiator")) {
+            InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
+            Bundle bundle1 = new Bundle();
+            bundle1.putInt("reqType", 2);
+            fragment1.setArguments(bundle1);
+            replaceFragment(R.id.frame_container, fragment1);
+        } else {
+            InvestorProjectFragment fragment1 = new InvestorProjectFragment();
+            Bundle bundle1 = new Bundle();
+            bundle1.putInt("reqType", 2);
+            fragment1.setArguments(bundle1);
+            replaceFragment(R.id.frame_container, fragment1);
+        }
 
     }
 

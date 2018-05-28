@@ -169,4 +169,13 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
     public void restoreState(Bundle savedState) {
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.attachView(this);
+
+        presenter.getAllIssues();
+    }
 }

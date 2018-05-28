@@ -76,14 +76,19 @@ public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
             e.printStackTrace();
         }
 
-        if(projects.get(position).getIsApproved()){
-            statusTV.setText("Approved");
-            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
+        if (reqType == 1) {
+            statusTV.setVisibility(View.INVISIBLE);
+        } else {
+            if(projects.get(position).getIsApproved()){
+                statusTV.setText("Approved");
+                statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
+            }
+            else{
+                statusTV.setText("Pending");
+                statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
+            }
         }
-        else{
-            statusTV.setText("Pending");
-            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
-        }
+
         //statusTV.setText(projects.get(position).getStatus());
         if (reqType != 1)
             editIV.setVisibility(View.GONE);

@@ -7,6 +7,9 @@
 
 package com.cryptenet.thanatos.dtmweb.code.mvp;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.events.CodeEnteredEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
@@ -22,8 +25,8 @@ public class CodeActivityRepository extends BaseRepository
     private static String TAG = TagProvider.getDebugTag(CodeActivityRepository.class);
 
     @Override
-    public void saveResetCode(String code) {
-        preferences
+    public void saveResetCode(String code, Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putInt(ConstantProvider.SP_FORGOT_PASSWORD_CODE, Integer.parseInt(code))
                 .apply();

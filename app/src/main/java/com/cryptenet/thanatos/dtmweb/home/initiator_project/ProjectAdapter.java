@@ -19,19 +19,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-
-/**
- * Created by Mobile App on 2/9/2018.
- */
 
 public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
     private Context context;
@@ -82,18 +75,13 @@ public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
             statusTV.setText("Pending");
             statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
         }
+
         //statusTV.setText(projects.get(position).getStatus());
         if (reqType != 1)
             editIV.setVisibility(View.GONE);
+
         count++;
         Log.e("project", "getView: "+count);
-
-        editIV.setOnClickListener(v -> {
-            ProjectsRsp pro = projects.get(position);
-            pro.setEditMode(true);
-
-            EventBus.getDefault().post(new ToEditPlanEvent(pro));
-        });
 
         return convertView;
 

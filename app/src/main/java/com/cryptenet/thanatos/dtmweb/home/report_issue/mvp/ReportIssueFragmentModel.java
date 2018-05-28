@@ -20,4 +20,9 @@ public class ReportIssueFragmentModel extends BaseFragModel<ReportIssueFragmentC
     public ReportIssueFragmentModel(ReportIssueFragmentContract.Repository repository) {
         super(repository);
     }
+
+    @Override
+    public void getAllIssues() {
+        repository.getAllIssues();
+    }
 }

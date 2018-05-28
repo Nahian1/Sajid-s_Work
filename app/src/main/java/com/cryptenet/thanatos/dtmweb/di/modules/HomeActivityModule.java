@@ -18,7 +18,6 @@ import com.cryptenet.thanatos.dtmweb.di.sub_components.InvestorProjectFragmentSu
 import com.cryptenet.thanatos.dtmweb.di.sub_components.OtherReportFragmentSubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.PlanDescFragmentSubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.PlanListFragmentSubComponent;
-import com.cryptenet.thanatos.dtmweb.di.sub_components.PlanLongDescFragmentSubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.ReportIssueFragmentSubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.RequestDetailFragmentSubComponent;
 import com.cryptenet.thanatos.dtmweb.di.sub_components.ThreadListFragmentSubComponent;
@@ -43,7 +42,6 @@ import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
-import com.cryptenet.thanatos.dtmweb.home.plan_long_desc.PlanLongDescFragment;
 
 import dagger.Binds;
 import dagger.Module;
@@ -67,8 +65,7 @@ import dagger.multibindings.IntoMap;
                 InitiatorProjectFragmentSubComponent.class,
                 RequestDetailFragmentSubComponent.class,
                 ThreadProjectFragmentSubComponent.class,
-                ThreadMsgFragmentSubComponent.class,
-                PlanLongDescFragmentSubComponent.class
+                ThreadMsgFragmentSubComponent.class
         }
 )
 public abstract class HomeActivityModule {
@@ -171,10 +168,4 @@ public abstract class HomeActivityModule {
     @FragmentKey(ThreadMsgFragment.class)
     abstract AndroidInjector.Factory<? extends Fragment>
     ThreadMsgFragmentInjectorFactory(ThreadMsgFragmentSubComponent.Builder builder);
-
-    @Binds
-    @IntoMap
-    @FragmentKey(PlanLongDescFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment>
-    PlanLongDescFragmentInjectorFactory(PlanLongDescFragmentSubComponent.Builder builder);
 }

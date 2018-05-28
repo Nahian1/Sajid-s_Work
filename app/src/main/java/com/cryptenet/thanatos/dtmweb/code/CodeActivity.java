@@ -70,9 +70,15 @@ public class CodeActivity extends BaseActivity<CodeActivityContract.Presenter>
 
     @Override
     public void onClick(View v) {
-        presenter.saveResetCode(etCode.getText().toString());
-        showMessage("Verifying!!!");
-//        navigator.toSetPasswordActivity(this);
+        String code = etCode.getText().toString();
+
+        if (!code.isEmpty()) {
+            presenter.saveResetCode(code, this);
+
+            navigator.toSetPasswordActivity(this);
+        } else {
+            showMessage("Field can not be empty");
+        }
     }
 
     @Subscribe

@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.forgot_password.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.forgot_password.ForgotPasswordActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
@@ -33,7 +35,7 @@ public class ForgotPasswordActivityModel extends BaseModel<ForgotActivityContrac
         }
 
         @Override
-        public void saveIdentifier(String identifier) {
-            repository.saveIdentifierSP(identifier);
+        public void saveIdentifier(String identifier, Context context) {
+            repository.saveIdentifierSP(identifier, context);
         }
 }
