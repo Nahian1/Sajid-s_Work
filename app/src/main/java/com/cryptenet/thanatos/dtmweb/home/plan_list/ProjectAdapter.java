@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,17 +33,17 @@ import java.util.Locale;
  * Created by Mobile App on 2/9/2018.
  */
 
-public class ProjectAdapter extends ArrayAdapter<Projects> {
+public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
     private Context context;
-    private List<Projects> projects;
+    private List<ProjectsRsp> projects;
     private int count = 0;
-    public ProjectAdapter(@NonNull Context context, List<Projects> projects) {
+    public ProjectAdapter(@NonNull Context context, List<ProjectsRsp> projects) {
         super(context, R.layout.plan_list_row, projects);
         this.context = context;
         this.projects = projects;
     }
 
-    public void updateList(List<Projects> projs){
+    public void updateList(List<ProjectsRsp> projs){
         this.projects.clear();
         if (projs != null)
             this.projects.addAll(projs);

@@ -22,7 +22,7 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
 
         if (objects[0].equals("1")) {
             //registration
-            util = new ApiUtil("https://fa-sa-801.herokuapp.com/api/v1/");
+            util = new ApiUtil("https://fa-sa-801-dev.herokuapp.com/");
             response = util.createUser(
                         (String) objects[1],
                         (String) objects[2],
@@ -40,16 +40,8 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
             Gson gson = new Gson();
             RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
             EventBus.getDefault().post(new RegistrationSuccessEvent(registrationResponse));
-        } else if (objects[0].equals("2")) {
-            util = new ApiUtil("https://fa-sa-801.herokuapp.com/");
-            response = util.tryLogin(
-                    (String) objects[1],
-                    (String) objects[2],
-                    (String) objects[3],
-                    (String) objects[4]
-            );
         } else if (objects[0].equals("3")) {
-            util = new ApiUtil("https://fa-sa-801.herokuapp.com/");
+            util = new ApiUtil("https://fa-sa-801-dev.herokuapp.com/");
 
             response = util.addPlan(
                     (String) objects[1],
@@ -62,6 +54,22 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
                     (File) objects[8],
                     (File) objects[9],
                     (String) objects[10]
+            );
+        } else if (objects[0].equals("4")) {
+            util = new ApiUtil("https://fa-sa-801-dev.herokuapp.com/");
+
+            response = util.editPlan(
+                    (String) objects[1],
+                    (int) objects[2],
+                    (String) objects[3],
+                    (String) objects[4],
+                    (int) objects[5],
+                    (int) objects[6],
+                    (int) objects[7],
+                    (File) objects[8],
+                    (File) objects[9],
+                    (String) objects[10],
+                    (int) objects[11]
             );
         }
 

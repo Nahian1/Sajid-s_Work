@@ -20,14 +20,14 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanLongDescFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 
 public class PlanLongDescFragment extends BaseFragment<PlanLongDescFragmentContract.Presenter>
         implements PlanLongDescFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(PlanLongDescFragment.class);
-    private Projects projects;
+    private ProjectsRsp projectsRsp;
     private TextView titleTV, priceTV, shortDetailsTV, nameTV, typeTV, addressTV, detailsTV, longDescTV;
     private ImageView demoIV,profileIV;
 
@@ -44,16 +44,16 @@ public class PlanLongDescFragment extends BaseFragment<PlanLongDescFragmentContr
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_long_desc, container, false);
 
-        projects = (Projects) getArguments().get("project");
+        projectsRsp = (ProjectsRsp) getArguments().get("project");
 
         titleTV = convertView.findViewById(R.id.textViewTitle);
-        priceTV = convertView.findViewById(R.id.textViewPrice);
-        shortDetailsTV = convertView.findViewById(R.id.textViewDetails);
+//        priceTV = convertView.findViewById(R.id.textViewPrice);
+//        shortDetailsTV = convertView.findViewById(R.id.textViewDetails);
         nameTV = convertView.findViewById(R.id.textViewName);
         typeTV = convertView.findViewById(R.id.textViewType);
         addressTV = convertView.findViewById(R.id.address);
         detailsTV = convertView.findViewById(R.id.details);
-        longDescTV = convertView.findViewById(R.id.longDesc);
+        longDescTV = convertView.findViewById(R.id.textLongDesc);
 
         demoIV = convertView.findViewById(R.id.demoImg);
         profileIV = convertView.findViewById(R.id.profilepic);

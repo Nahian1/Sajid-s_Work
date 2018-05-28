@@ -8,11 +8,12 @@
 package com.cryptenet.thanatos.dtmweb.home.edit_project.mvp;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.NewPlan;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerFragment
@@ -30,7 +31,7 @@ public class EditProjectFragmentModel extends BaseFragModel<EditProjectFragmentC
     }
 
     @Override
-    public void saveNewPlan(NewPlan plan, Context context) {
-        repository.saveNewPlan(plan, context);
+    public void saveUpdatePlan(ProjectsRq plan, Context context, int id) {
+        repository.saveUpdatePlan(plan, context, id);
     }
 }

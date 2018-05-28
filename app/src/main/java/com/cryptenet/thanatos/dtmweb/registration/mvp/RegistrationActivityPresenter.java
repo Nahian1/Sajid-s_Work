@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.registration.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
@@ -43,5 +45,11 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
     @Override
     public void getLimitedCities(int countryCode) {
         model.getLimitedCities(countryCode);
+    }
+
+    @Override
+    public void checkLoginState(Context context) {
+        if (model.checkLoginState(context))
+            view.moveToSignIn();
     }
 }

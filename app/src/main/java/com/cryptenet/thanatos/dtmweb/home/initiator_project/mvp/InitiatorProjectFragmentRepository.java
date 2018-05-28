@@ -16,7 +16,7 @@ import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -33,10 +33,10 @@ import retrofit2.Response;
 public class InitiatorProjectFragmentRepository extends BaseFragRepository
         implements InitiatorProjectFragmentContract.Repository {
     private static String TAG = TagProvider.getDebugTag(InitiatorProjectFragmentRepository.class);
-    private List<Projects> projectsList;
+    private List<ProjectsRsp> projectsRspList;
 
     public InitiatorProjectFragmentRepository() {
-        this.projectsList = new ArrayList<>();
+        this.projectsRspList = new ArrayList<>();
     }
 
     @Override
@@ -76,10 +76,10 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
         }
     }
 
-    private void setProjects(List<Projects> projectsList) {
-        this.projectsList = projectsList;
-        for (Projects projects : projectsList)
-            Log.d(TAG, "setProjects: " + projects.getTitle());
-        EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsList));
+    private void setProjects(List<ProjectsRsp> projectsRspList) {
+        this.projectsRspList = projectsRspList;
+        for (ProjectsRsp projectsRsp : projectsRspList)
+            Log.d(TAG, "setProjects: " + projectsRsp.getTitle());
+        EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsRspList));
     }
 }

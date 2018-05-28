@@ -12,6 +12,7 @@ import android.content.Context;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragPresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerFragment
@@ -25,5 +26,10 @@ public class PlanListFragmentPresenter extends BaseFragPresenter<PlanListFragmen
 
     public void getProjectList(Context context, String token) {
         model.getProjectList(context, token);
+    }
+
+    @Override
+    public void checkUserType(ProjectsRsp projectsRsp, Context context) {
+        int response = model.checkUserType(context);
     }
 }

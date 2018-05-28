@@ -26,4 +26,9 @@ public class PlanListFragmentModel extends BaseFragModel<PlanListFragmentContrac
     public void getProjectList(Context context, String token) {
         repository.getAllProjects(context, token);
     }
+
+    @Override
+    public int checkUserType(Context context) {
+        return repository.checkUserType(context);
+    }
 }

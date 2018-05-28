@@ -16,14 +16,13 @@ public class ConstantProvider {
     public static final String NAV_ADDRESS = "navAddress";
     public static final String NAV_DETAILS = "navDetails";
 
-    public static final String ACCESS_TOKEN_BASIC = "Basic cFlYWEdqU3R1NDlRZmxYbDNlUU43SzlpWUNKUHlxMGx2THh3cWxJbTp4SGZDVGc5WEt1ODZFb21TaGg1SzdZZXB2ZXdSUWsyMmJwUkIyY0NhZjNIOGlsdTJxZ3J1TWhEMFU0bm4zYnhzOFVXVjRpbDJMdGtKcVNZblZJZUUwaUpGa3B2VkRYYXczQnI5c29YaktHVmZoRmxQcW4yNWFvRkNKeHdEMUJZdA==";
-    public static final String ACCESS_TOKEN_INIT = "PwhgGBdhO9zx6KqRvGjb0nyDEtRCX9";
-    public static final String ACCESS_TOKEN_INVE = "ngJ7NKzSROUxxCu9QooWx4VK4eWMNd";
+    public static final String CLIENT_KEY = "xcziSPz2aLcKc5Egm1janzwGBS5jcNvi68BA88GP:VHSlol14f1AKcaXcdefMzsNA9kMKyngVPrSD5FxdxcQzukBzH8axcQRts4NUMdztZ035bSI4RGgzSRUsm4N7h7e106T9SfnijBvSgmRizIyPrXzKetePl5HpO49XQ3LK";
+    public static final String ACCESS_BASIC = "eGN6aVNQejJhTGNLYzVFZ20xamFuendHQlM1amNOdmk2OEJBODhHUDpWSFNsb2wxNGYxQUtjYVhjZGVmTXpzTkE5a01LeW5nVlByU0Q1RnhkeGNRenVrQnpIOGF4Y1FSdHM0TlVNZHp0WjAzNWJTSTRSR2d6U1JVc200TjdoN2UxMDZUOVNmbmlqQnZTZ21SaXpJeVByWHpLZXRlUGw1SHBPNDlYUTNMSw==";
 
     public static final int RESULT_LOAD_IMG = 101;
     public static final int RESULT_FILE_IMG = 102;
 
-    public static final String BASE_URL = "https://fa-sa-801.herokuapp.com/";
+    public static final String BASE_URL = "https://fa-sa-801-dev.herokuapp.com/";
 
     public static final String SP_ACCESS_TOKEN = "ac_token";
     public static final String SP_REFRESH_TOKEN = "rs_token";

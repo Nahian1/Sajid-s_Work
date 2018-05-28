@@ -19,8 +19,6 @@
         android:background="#38598f"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
-
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -40,13 +38,14 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textSize="13sp"
-                android:enabled="false"
+                android:singleLine="true"
                 android:layout_toRightOf="@id/menuRight"
                 android:layout_toEndOf="@id/menuRight"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="8dp"
+                android:focusableInTouchMode="true"
                 android:background="@drawable/input_outline"
                 android:hint="@string/search_bar"
                 android:id="@+id/editTextSearch" />

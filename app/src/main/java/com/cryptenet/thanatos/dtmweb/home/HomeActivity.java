@@ -237,7 +237,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         PlanDescFragment fragment = new PlanDescFragment();
         Bundle bundle = new Bundle();
 
-        bundle.putString("project", new Gson().toJson(event.project));
+        bundle.putInt("project_id", event.projectId);
+        bundle.putInt("type", event.layoutType);
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
     }

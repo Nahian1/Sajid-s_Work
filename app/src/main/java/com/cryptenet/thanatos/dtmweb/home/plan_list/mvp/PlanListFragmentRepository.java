@@ -8,28 +8,23 @@
 package com.cryptenet.thanatos.dtmweb.home.plan_list.mvp;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
-import com.cryptenet.thanatos.dtmweb.http.ApiClient;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
-import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -37,10 +32,10 @@ import retrofit2.Callback;
 public class PlanListFragmentRepository extends BaseFragRepository
         implements PlanListFragmentContract.Repository {
     private static String TAG = TagProvider.getDebugTag(PlanListFragmentRepository.class);
-    private List<Projects> projectsList;
+    private List<ProjectsRsp> projectsRspList;
 
     public PlanListFragmentRepository() {
-        this.projectsList = new ArrayList<>();
+        this.projectsRspList = new ArrayList<>();
     }
 
     @Override
@@ -101,10 +96,20 @@ public class PlanListFragmentRepository extends BaseFragRepository
         });
     }
 
-    private void setProjects(List<Projects> projectsList) {
-        this.projectsList = projectsList;
-        for (Projects projects : projectsList)
-            Log.d(TAG, "setProjects: " + projects.getTitle());
-        EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsList));
+    @Override
+    public int checkUserType(Context context) {
+        String user = PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_USER_TYPE, null);
+
+        if (user.equals("Initiator"))
+            return 1;
+        else
+            return 2;
+    }
+
+    private void setProjects(List<ProjectsRsp> projectsRspList) {
+        this.projectsRspList = projectsRspList;
+        for (ProjectsRsp projectsRsp : projectsRspList)
+            Log.d(TAG, "setProjects: " + projectsRsp.getTitle());
+        EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsRspList));
     }
 }

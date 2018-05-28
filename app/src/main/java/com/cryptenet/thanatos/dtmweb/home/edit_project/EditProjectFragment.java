@@ -34,8 +34,8 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
-import com.cryptenet.thanatos.dtmweb.pojo.NewPlan;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -89,7 +89,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     @BindView(R.id.imageviewCover)
     ImageView imageviewCover;
 
-    private Projects project;
+    private ProjectsRsp project;
     private List<Categories> list;
     private List<String> categoriesList;
     private ArrayAdapter<String> spinCatAdapter;
@@ -113,7 +113,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 //        FragmentEditProjectBinding binding = DataBindingUtil.inflate(inflater,
 //                R.layout.fragment_edit_project, container, false);
 
-        project = new Gson().fromJson(getArguments().getString("project"), Projects.class);
+        project = new Gson().fromJson(getArguments().getString("project"), ProjectsRsp.class);
 
         if (project.isEditMode()){
 
@@ -158,27 +158,25 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     }
 
     @OnClick(R.id.btn_done)
-    public void updatePlan(View view) {
-
+    public void savePlan(View view) {
         Dexter.withActivity(getActivity())
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
+                        ProjectsRq projectsRq = new ProjectsRq();
+                        projectsRq.setTitle(editTextName.getText().toString().trim());
+                        projectsRq.setCategory(categoryCode);
+                        projectsRq.setShortDescription(editTextShortDescription.getText().toString().trim());
+                        projectsRq.setLongDescription(editTextLongDescription.getText().toString().trim());
+                        projectsRq.setMinimumInvestmentCost((int) Double.parseDouble(editTextPriceMinimum.getText().toString().trim()));
+                        projectsRq.setMinimumInvestmentCost((int) Double.parseDouble(editTextPriceMaximum.getText().toString().trim()));
+                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
+                        projectsRq.setCover(imageFile);
+                        projectsRq.setUploadedFile(planFile);
+                        projectsRq.setNew(true);
 
-                        NewPlan plan = new NewPlan(
-                                editTextName.getText().toString().trim(),
-                                categoryCode,
-                                editTextShortDescription.getText().toString().trim(),
-                                editTextLongDescription.getText().toString().trim(),
-                                (int) Double.parseDouble(editTextPriceMinimum.getText().toString().trim()),
-                                (int) Double.parseDouble(editTextPriceMaximum.getText().toString().trim()),
-                                (int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()),
-                                imageFile,
-                                planFile
-                        );
-                        presenter.saveNewPlan(plan, activityContext);
-
+                        presenter.saveUpdatePlan(projectsRq, activityContext, -1);
                     }
 
                     @Override
@@ -194,8 +192,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                         token.continuePermissionRequest();
                     }
                 }).check();
-
-
     }
 
     @OnClick(R.id.imageviewCover)
@@ -297,7 +293,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        this.categoryCode = list.get(position).getId();
+        this.categoryCode = list.get(position).getId();
     }
 
     @Override

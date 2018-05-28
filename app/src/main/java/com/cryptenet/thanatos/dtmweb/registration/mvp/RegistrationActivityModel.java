@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.registration.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
@@ -50,5 +52,10 @@ public class RegistrationActivityModel extends BaseModel<RegistrationActivityCon
                 );
 
                 return repository.attemptReg(input);
+        }
+
+        @Override
+        public boolean checkLoginState(Context context) {
+                return repository.checkLoginState(context);
         }
 }

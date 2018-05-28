@@ -9,6 +9,7 @@ package com.cryptenet.thanatos.dtmweb.launcher.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
@@ -44,7 +45,13 @@ public class LoginActivityRepository extends BaseRepository
     @Override
     public void validateLogin(String email, String password) {
         String head = "application/x-www-form-urlencoded";
-        String oauth = ConstantProvider.ACCESS_TOKEN_BASIC;
+
+//        String raw = ConstantProvider.CLIENT_ID.trim() + ":".trim() + ConstantProvider.CLIENT_SECRET.trim();
+//        Log.d(TAG, "validateLogin: " + raw);
+//        String key = Base64.encodeToString(ConstantProvider.CLIENT_KEY.getBytes(), Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING);
+//        Log.d(TAG, "validateLogin: " + key);
+
+
         OkHttpClient client = new OkHttpClient();
 
         RequestBody formBody = new FormBody.Builder()
@@ -57,7 +64,7 @@ public class LoginActivityRepository extends BaseRepository
                 .url(ConstantProvider.BASE_URL + "o/token/")
                 .post(formBody)
                 .addHeader("Content-Type", head)
-                .addHeader("Authorization", oauth)
+                .addHeader("Authorization", "Basic " + ConstantProvider.ACCESS_BASIC)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {

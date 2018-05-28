@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.plan_desc.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
@@ -19,5 +21,15 @@ public class PlanDescFragmentModel extends BaseFragModel<PlanDescFragmentContrac
 
     public PlanDescFragmentModel(PlanDescFragmentContract.Repository repository) {
         super(repository);
+    }
+
+    @Override
+    public void getLongDetails(Context context, int id) {
+        repository.getLongDetails(context, id);
+    }
+
+    @Override
+    public void getShortDetails(Context context, int id) {
+        repository.getShortDetails(context, id);
     }
 }

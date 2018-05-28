@@ -168,7 +168,6 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         spinAccType.setOnItemSelectedListener(this);
         spinCountry.setOnItemSelectedListener(this);
         spinCity.setOnItemSelectedListener(this);
-
     }
 
     @Override
@@ -191,15 +190,21 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     }
 
+    @Override
+    public void moveToSignIn() {
+        navigator.toLoginActivity(this);
+        finish();
+    }
+
     @OnClick(R.id.iv_pp)
-    public void getPp() {
+    public void getPp(View view) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
     }
 
     @OnClick(R.id.btn_sign_in_reg)
-    public void requestRegistration() {
+    public void requestRegistration(View view) {
         presenter.carryRegData(
                 imageFile,
                 accType,
@@ -214,6 +219,11 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                 etBankAccNameReg.getText().toString().trim(),
                 etBankAccNumberReg.getText().toString().trim()
         );
+    }
+
+    @OnClick(R.id.tv_sign_in)
+    public void toSignIn(View view) {
+        presenter.checkLoginState(this);
     }
 
     @Override

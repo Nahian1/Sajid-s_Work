@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-                presenter.requestForLogin("sh@fikra.com","123456");
+                presenter.requestForLogin("michaelperez@collier.com","asdasd123");
 
 //                if ((etEmail.getText().toString().trim()) !=null && !(etEmail.getText().toString().trim()).isEmpty()) {
 //                    if ((etPwd.getText().toString().trim()) != null && !(etPwd.getText().toString().trim()).isEmpty()) {
@@ -117,23 +117,13 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 //        this.user = event.string;
 
         if(event.isSuccess) {
-
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-
+            AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
-                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
-
-                        navigator.toHomeActivity(getApplicationContext(), event.string);
-
-                    }
-
+                if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
+                    navigator.toHomeActivity(getApplicationContext(), event.string);
                 }
             });
         }
-
-
     }
 
     @Override

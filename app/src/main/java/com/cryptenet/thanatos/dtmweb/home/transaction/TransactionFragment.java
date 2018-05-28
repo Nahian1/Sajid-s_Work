@@ -35,7 +35,7 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plan_desc, container, false);
+        return inflater.inflate(R.layout.fragment_transaction_detail, container, false);
     }
 
     @Override

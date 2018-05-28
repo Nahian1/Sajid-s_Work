@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.registration.mvp;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
@@ -133,7 +135,14 @@ public class RegistrationActivityRepository extends BaseRepository
 
         return false;
     }
-    
+
+    @Override
+    public boolean checkLoginState(Context context) {
+        return (PreferenceManager
+                        .getDefaultSharedPreferences(context)
+                        .getString(ConstantProvider.SP_ACCESS_TOKEN, null)) != null;
+    }
+
     private void setCountries(List<Country> countries) {
         this.countries = countries;
         EventBus.getDefault().post(new CountryFetchEvent(this.countries));

@@ -7,12 +7,12 @@
 
 package com.cryptenet.thanatos.dtmweb.events;
 
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 
 public class ToEditPlanEvent {
-    public Projects project;
+    public ProjectsRsp project;
 
-    public ToEditPlanEvent(Projects project) {
+    public ToEditPlanEvent(ProjectsRsp project) {
         this.project = project;
     }
 }

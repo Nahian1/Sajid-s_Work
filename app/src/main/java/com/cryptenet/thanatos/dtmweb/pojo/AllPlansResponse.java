@@ -17,7 +17,7 @@ public class AllPlansResponse {
     private Object previous;
     @SerializedName("results")
     @Expose
-    private List<Projects> results = null;
+    private List<ProjectsRsp> results = null;
 
     /**
      * No args constructor for use in serialization
@@ -33,7 +33,7 @@ public class AllPlansResponse {
      * @param count
      * @param next
      */
-    public AllPlansResponse(Integer count, String next, Object previous, List<Projects> results) {
+    public AllPlansResponse(Integer count, String next, Object previous, List<ProjectsRsp> results) {
         super();
         this.count = count;
         this.next = next;
@@ -65,11 +65,11 @@ public class AllPlansResponse {
         this.previous = previous;
     }
 
-    public List<Projects> getResults() {
+    public List<ProjectsRsp> getResults() {
         return results;
     }
 
-    public void setResults(List<Projects> results) {
+    public void setResults(List<ProjectsRsp> results) {
         this.results = results;
     }
 

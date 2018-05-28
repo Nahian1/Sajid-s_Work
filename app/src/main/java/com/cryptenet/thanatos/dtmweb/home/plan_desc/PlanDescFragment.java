@@ -8,6 +8,9 @@
 package com.cryptenet.thanatos.dtmweb.home.plan_desc;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,22 +20,62 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.ShowPlanDetailsEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
-import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Presenter>
         implements PlanDescFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(PlanDescFragment.class);
-    private Projects projects;
+    @BindView(R.id.textTitle)
+    TextView textTitle;
+    @BindView(R.id.textDatePrice)
+    TextView textDatePrice;
+    @BindView(R.id.demoImg)
+    ImageView demoImg;
+    @BindView(R.id.profilepic)
+    CircleImageView profilepic;
+    @BindView(R.id.textViewName)
+    TextView textViewName;
+    @BindView(R.id.textViewType)
+    TextView textViewType;
+    @BindView(R.id.address)
+    TextView address;
+    @BindView(R.id.textShortDesc)
+    TextView textShortDesc;
+    @BindView(R.id.textLongDesc)
+    TextView textLongDesc;
+    Unbinder unbinder;
+    @BindView(R.id.ic_init_conversation)
+    ImageView icInitConversation;
+    @BindView(R.id.textViewFile)
+    TextView textViewFile;
+
+    private ProjectsDetailed projectsDetailed;
     private TextView titleTV, priceTV, shortDetailsTV, nameTV, typeTV, addressTV, detailsTV, bankNameTV,
             personNameTV, accountNumberTV, payPriceTV;
-    private ImageView demoIV,profileIV,seeMoreIV;
-
+    private ImageView demoIV, profileIV, seeMoreIV;
+    private int projectId, type;
 
     public PlanDescFragment() {
         // Required empty public constructor
@@ -44,32 +87,61 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_desc, container, false);
-        projects = new Gson().fromJson(getArguments().getString("project"),Projects.class);
-        titleTV = convertView.findViewById(R.id.titleTV);
-        priceTV = convertView.findViewById(R.id.priceTV);
-//        shortDetailsTV = convertView.findViewById(R.id.detailsTV);
-        titleTV = convertView.findViewById(R.id.textViewTitle);
-        priceTV = convertView.findViewById(R.id.textViewPrice);
-        shortDetailsTV = convertView.findViewById(R.id.textViewDetails);
-        nameTV = convertView.findViewById(R.id.textViewName);
-        typeTV = convertView.findViewById(R.id.textViewType);
-        addressTV = convertView.findViewById(R.id.address);
-        detailsTV = convertView.findViewById(R.id.details);
-        bankNameTV = convertView.findViewById(R.id.editTextBankName);
-        personNameTV = convertView.findViewById(R.id.NameOfperson);
-        accountNumberTV = convertView.findViewById(R.id.accountNumber);
-        payPriceTV = convertView.findViewById(R.id.price);
 
-        demoIV = convertView.findViewById(R.id.projectIV);
-        profileIV = convertView.findViewById(R.id.profilepic);
-//        seeMoreIV = convertView.findViewById(R.id.seeMoreIV);
+        projectId = getArguments().getInt("project_id");
+        type = getArguments().getInt("type");
 
-
+        unbinder = ButterKnife.bind(this, convertView);
         return convertView;
     }
 
-    public void requestforDetails(){
+    public void requestforDetails() {
+    }
 
+    @Subscribe
+    public void toShowPlanDetailsEvent(ShowPlanDetailsEvent event) {
+        if (type == 1) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+            try {
+                textDatePrice.setText(dateFormat.format(dateFormat.parse(event.detailed.getCreatedAt())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            textLongDesc.setVisibility(View.VISIBLE);
+            textLongDesc.setText(event.detailed.getLongDescription());
+
+            textViewFile.setVisibility(View.VISIBLE);
+        } else {
+            textDatePrice.setText(event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
+        }
+
+        if (type != 3) {
+            icInitConversation.setVisibility(View.VISIBLE);
+        }
+
+        textTitle.setText(event.detailed.getTitle());
+
+        Glide.with(activityContext)
+                .load(event.detailed.getCover())
+                .apply(RequestOptions.placeholderOf(R.drawable.imgdemo))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(demoImg);
+
+        Glide.with(activityContext)
+                .load(event.detailed.getInitiatorImage())
+                .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(profileIV);
+
+        textViewName.setText(event.detailed.getInitiatorsName());
+        address.setText(event.detailed.getInitiatorAddress());
+        textShortDesc.setText(event.detailed.getShortDescription());
+
+        textTitle.setText(event.detailed.getTitle());
+        textTitle.setText(event.detailed.getTitle());
+        textTitle.setText(event.detailed.getTitle());
+        textTitle.setText(event.detailed.getTitle());
     }
 
     @Override
@@ -86,5 +158,57 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     @Override
     public void restoreState(Bundle savedState) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick({R.id.ic_init_conversation, R.id.textViewFile})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ic_init_conversation:
+                break;
+            case R.id.textViewFile:
+                break;
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.attachView(this);
+
+        if (type == 1) { //long
+            presenter.getLongDetails(activityContext, projectId);
+        } else { //short
+            presenter.getShortDetails(activityContext, projectId);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        presenter.detachView();
+
+        super.onStop();
     }
 }

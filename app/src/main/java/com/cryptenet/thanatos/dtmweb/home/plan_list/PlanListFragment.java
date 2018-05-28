@@ -24,7 +24,8 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,13 +37,13 @@ import java.util.List;
 public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Presenter>
         implements PlanListFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(PlanListFragment.class);
-    private List<Projects> projectsList;
+    private List<ProjectsRsp> projectsRspList;
     private ListView projectLV;
     private ProjectAdapter adapter;
     private String token;
 
     public PlanListFragment() {
-        projectsList = new ArrayList<>();
+        projectsRspList = new ArrayList<>();
     }
 
     @Override
@@ -50,10 +51,11 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_list, container, false);
-        adapter = new ProjectAdapter(activityContext, projectsList);
+        adapter = new ProjectAdapter(activityContext, projectsRspList);
         projectLV =  convertView.findViewById(R.id.projectListView);
         projectLV.setAdapter(adapter);
-        projectLV.setOnItemClickListener((parent, view, position, id) -> EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsList.get(position))));
+        projectLV.setOnItemClickListener((parent, view, position, id) ->
+            presenter.checkUserType(projectsRspList.get(position), activityContext));
 
         token = getArguments().getString("token");
         return convertView;
@@ -62,7 +64,6 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     @Override
     public void showMessage(String message) {
         Toast.makeText(activityContext, message, Toast.LENGTH_LONG).show();
-
     }
 
     @Override
@@ -75,12 +76,23 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     }
 
+    @Override
+    public void toDetailsView(ProjectsRsp projectsRsp, int type) {
+        if (type == 1 && projectsRsp.getIsApproved())
+            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 1));
+        else if (type ==1 && !projectsRsp.getIsApproved()) {
+            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 2));
+        } else {
+            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 3));
+        }
+    }
+
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
-        this.projectsList = event.projectsList;
-        for (Projects projects : projectsList)
-            Log.d(TAG, "onProjectListReceiveEvent: " + projects.getTitle());
-        adapter.updateList(this.projectsList);
+        this.projectsRspList = event.projectsRspList;
+        for (ProjectsRsp projectsRsp : projectsRspList)
+            Log.d(TAG, "onProjectListReceiveEvent: " + projectsRsp.getTitle());
+        adapter.updateList(this.projectsRspList);
     }
 
     @Override

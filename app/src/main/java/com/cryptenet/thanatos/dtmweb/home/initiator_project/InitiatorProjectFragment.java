@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,7 +25,7 @@ import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +43,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         implements InitiatorProjectFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(InitiatorProjectFragment.class);
 
-    private List<Projects> projectsList;
+    private List<ProjectsRsp> projectsRspList;
     private ListView projectLV;
     private ProjectAdapter adapter;
     private int reqType;
@@ -52,7 +51,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
 
     public InitiatorProjectFragment() {
-        projectsList = new ArrayList<>();
+        projectsRspList = new ArrayList<>();
     }
 
     @Override
@@ -69,16 +68,10 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
             convertView.findViewById(R.id.btnAddPlan).setVisibility(View.GONE);
 
         projectLV = convertView.findViewById(R.id.projectListView);
-        adapter = new ProjectAdapter(activityContext, projectsList, reqType);
+        adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
         projectLV.setAdapter(adapter);
 
-        projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsList.get(position)));
-            }
-        });
-
+        projectLV.setOnItemClickListener((parent, view, position, id) -> EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getId(), 3)));
 
         return convertView;
     }
@@ -99,25 +92,19 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
     }
 
-    private void addProject(View view) {
-
-    }
-
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
         Log.d(TAG, "onProjectListReceiveEvent: login");
-        this.projectsList = event.projectsList;
-        adapter.updateList(this.projectsList);
+        this.projectsRspList = event.projectsRspList;
+        adapter.updateList(this.projectsRspList);
     }
 
     @OnClick(R.id.btnAddPlan)
     public void btnAddPlan(View view) {
-
-        Projects pro = new Projects();
+        ProjectsRsp pro = new ProjectsRsp();
         pro.setEditMode(false);
 
         EventBus.getDefault().post(new ToEditPlanEvent(pro));
-
     }
 
     @Override

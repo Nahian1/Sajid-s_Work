@@ -7,13 +7,155 @@
 
 package com.cryptenet.thanatos.dtmweb.home.plan_desc.mvp;
 
+import android.content.Context;
+import android.os.CpuUsageInfo;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
+import com.cryptenet.thanatos.dtmweb.events.ShowPlanDetailsEvent;
+import com.cryptenet.thanatos.dtmweb.home.request_detail.Project;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDLResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDSResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 @PerFragment
 public class PlanDescFragmentRepository extends BaseFragRepository
         implements PlanDescFragmentContract.Repository {
     private static String TAG = TagProvider.getDebugTag(PlanDescFragmentRepository.class);
+
+    @Override
+    public void getLongDetails(Context context, int id) {
+        String head = "application/json";
+
+        OkHttpClient client = new OkHttpClient();
+
+        final Request request = new Request.Builder()
+                .url(ConstantProvider.BASE_URL + "api/v1/plan/" + id + "/details")
+                .get()
+                .addHeader("Content-Type", head)
+                .addHeader("Authorization", "Bearer " + PreferenceManager
+                        .getDefaultSharedPreferences(context)
+                        .getString(ConstantProvider.SP_ACCESS_TOKEN, null))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                ProjectsDLResponse detailed = gson.fromJson(response.body().string(), ProjectsDLResponse.class);
+                Log.d(TAG, "onResponse: " + detailed.toString());
+
+                ProjectsDetailed detailed1 = new ProjectsDetailed();
+                detailed1.setId(detailed.getId());
+                detailed1.setCategoryName(detailed.getCategoryName());
+                detailed1.setCover(detailed.getCover());
+                detailed1.setTitle(detailed.getTitle());
+                detailed1.setCategory(detailed.getCategory());
+                detailed1.setMaximumInvestmentCost(detailed.getMaximumInvestmentCost());
+                detailed1.setMinimumInvestmentCost(detailed.getMinimumInvestmentCost());
+                detailed1.setShortDescription(detailed.getShortDescription());
+                detailed1.setLongDescription(detailed.getLongDescription());
+                detailed1.setInitiator(detailed.getInitiator());
+                detailed1.setInitiatorImage(detailed.getInitiatorImage());
+                detailed1.setInitiatorsName(detailed.getInitiatorsName());
+                detailed1.setInitiatorAddress(detailed.getInitiatorAddress());
+                detailed1.setUploadedFile(detailed.getUploadedFile());
+                detailed1.setAccessPrice(detailed.getAccessPrice());
+                detailed1.setCreatedAt(detailed.getCreatedAt());
+                detailed1.setIsApproved(detailed.getIsApproved());
+
+                EventBus.getDefault().post(new ShowPlanDetailsEvent(detailed1));
+            }
+        });
+
+//        Call<ResponseBody> detailedCall = apiClient.getLongDesc(
+//                "Bearer " + PreferenceManager
+//                        .getDefaultSharedPreferences(context)
+//                        .getString(ConstantProvider.SP_ACCESS_TOKEN, null),
+//                id
+//        );
+//
+//        detailedCall.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                ProjectsDetailed detailed = new ProjectsDetailed();
+//                response.body();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//            }
+//        });
+    }
+
+    @Override
+    public void getShortDetails(Context context, int id) {
+        String head = "application/json";
+
+        OkHttpClient client = new OkHttpClient();
+
+        final Request request = new Request.Builder()
+                .url(ConstantProvider.BASE_URL + "api/v1/plan/" + id + "/")
+                .get()
+                .addHeader("Content-Type", head)
+                .addHeader("Authorization", "Bearer " + PreferenceManager
+                        .getDefaultSharedPreferences(context)
+                        .getString(ConstantProvider.SP_ACCESS_TOKEN, null))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                ProjectsDSResponse detailed = gson.fromJson(response.body().string(), ProjectsDSResponse.class);
+                Log.d(TAG, "onResponse: " + detailed.toString());
+
+                ProjectsDetailed detailed1 = new ProjectsDetailed();
+                detailed1.setId(detailed.getId());
+                detailed1.setCategoryName(detailed.getCategoryName());
+                detailed1.setCover(detailed.getCover());
+                detailed1.setTitle(detailed.getTitle());
+                detailed1.setCategory(detailed.getCategory());
+                detailed1.setMaximumInvestmentCost(detailed.getMaximumInvestmentCost());
+                detailed1.setMinimumInvestmentCost(detailed.getMinimumInvestmentCost());
+                detailed1.setShortDescription(detailed.getShortDescription());
+                detailed1.setInitiator(detailed.getInitiator());
+                detailed1.setInitiatorsName(detailed.getInitiatorsName());
+                detailed1.setUploadedFile(detailed.getUploadedFile());
+                detailed1.setAccessPrice(detailed.getAccessPrice());
+                detailed1.setCreatedAt(detailed.getCreatedAt());
+                detailed1.setIsApproved(detailed.getIsApproved());
+
+                EventBus.getDefault().post(new ShowPlanDetailsEvent(detailed1));
+            }
+        });
+    }
 }

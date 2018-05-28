@@ -1,10 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2018.
-  ~ Development Courtesy: Cryptenet Ltd.
-  ~ Developer Credit: Alamgir Hossain, Nabil Shawkat
-  ~ This project is under MIT license
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,7 +20,7 @@
                 android:id="@+id/textTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price: SR: 670 - SR: 780"
+                android:text="Title"
                 android:textColor="#535353"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -55,7 +49,7 @@
                 android:layout_marginBottom="25dp"
                 android:layout_marginTop="30dp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profilepic"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
@@ -99,6 +93,14 @@
                     android:textSize="12sp"
                     android:textStyle="normal" />
 
+                <ImageView
+                    android:id="@+id/ic_init_conversation"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_chat" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -111,21 +113,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_toLeftOf="@+id/ic_init_conversation"
-                    android:layout_toStartOf="@+id/ic_init_conversation"
                     android:text="Short Description"
                     android:textColor="#535353"
                     android:textSize="13sp" />
-
-                <ImageView
-                    android:id="@+id/ic_init_conversation"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_chat" />
 
             </RelativeLayout>
 

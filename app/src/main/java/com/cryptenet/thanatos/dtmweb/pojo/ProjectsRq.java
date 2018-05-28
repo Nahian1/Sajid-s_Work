@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 
-public class NewPlan {
+public class ProjectsRq {
 
     @SerializedName("title")
     @Expose
@@ -38,7 +38,9 @@ public class NewPlan {
     @Expose
     private File uploadedFile;
 
-    public NewPlan() {
+    private boolean isNew;
+
+    public ProjectsRq() {
     }
 
     /**
@@ -53,7 +55,7 @@ public class NewPlan {
      * @param accessPrice
      * @param minimumInvestmentCost
      */
-    public NewPlan(String title, int category, String shortDescription, String longDescription, int minimumInvestmentCost, int maximumInvestmentCost, int accessPrice, File cover, File uploadedFile) {
+    public ProjectsRq(String title, int category, String shortDescription, String longDescription, int minimumInvestmentCost, int maximumInvestmentCost, int accessPrice, File cover, File uploadedFile) {
         super();
         this.title = title;
         this.category = category;
@@ -64,6 +66,14 @@ public class NewPlan {
         this.accessPrice = accessPrice;
         this.cover = cover;
         this.uploadedFile = uploadedFile;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
     }
 
     public String getTitle() {

@@ -3,13 +3,11 @@ package com.cryptenet.thanatos.dtmweb.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
+import android.os.Parcelable.Creator;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Projects implements Parcelable
-{
-
+public class ProjectsDetailed implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -61,27 +59,27 @@ public class Projects implements Parcelable
     @SerializedName("is_approved")
     @Expose
     private Boolean isApproved;
-
-    private boolean isEditMode;
-
-    public final static Creator<Projects> CREATOR = new Creator<Projects>() {
+    @SerializedName("category_name")
+    @Expose
+    private String categoryName;
+    public final static Creator<ProjectsDetailed> CREATOR = new Creator<ProjectsDetailed>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public Projects createFromParcel(Parcel in) {
-            return new Projects(in);
+        public ProjectsDetailed createFromParcel(Parcel in) {
+            return new ProjectsDetailed(in);
         }
 
-        public Projects[] newArray(int size) {
-            return (new Projects[size]);
+        public ProjectsDetailed[] newArray(int size) {
+            return (new ProjectsDetailed[size]);
         }
 
     }
     ;
 
-    protected Projects(Parcel in) {
+    protected ProjectsDetailed(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.initiator = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.initiatorsName = ((String) in.readValue((String.class.getClassLoader())));
@@ -99,13 +97,14 @@ public class Projects implements Parcelable
         this.createdAt = ((String) in.readValue((String.class.getClassLoader())));
         this.coverThumbnail = ((String) in.readValue((String.class.getClassLoader())));
         this.isApproved = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
+        this.categoryName = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public Projects() {
+    public ProjectsDetailed() {
     }
 
     /**
@@ -113,6 +112,7 @@ public class Projects implements Parcelable
      * @param uploadedFile
      * @param accessPrice
      * @param id
+     * @param categoryName
      * @param cover
      * @param title
      * @param category
@@ -128,7 +128,7 @@ public class Projects implements Parcelable
      * @param minimumInvestmentCost
      * @param initiatorAddress
      */
-    public Projects(Integer id, Integer initiator, String initiatorsName, String title, Integer category, String shortDescription, String longDescription, String minimumInvestmentCost, String maximumInvestmentCost, String initiatorAddress, String initiatorImage, String accessPrice, String cover, String uploadedFile, String createdAt, String coverThumbnail, Boolean isApproved) {
+    public ProjectsDetailed(Integer id, Integer initiator, String initiatorsName, String title, Integer category, String shortDescription, String longDescription, String minimumInvestmentCost, String maximumInvestmentCost, String initiatorAddress, String initiatorImage, String accessPrice, String cover, String uploadedFile, String createdAt, String coverThumbnail, Boolean isApproved, String categoryName) {
         super();
         this.id = id;
         this.initiator = initiator;
@@ -147,14 +147,7 @@ public class Projects implements Parcelable
         this.createdAt = createdAt;
         this.coverThumbnail = coverThumbnail;
         this.isApproved = isApproved;
-    }
-
-    public boolean isEditMode() {
-        return isEditMode;
-    }
-
-    public void setEditMode(boolean editMode) {
-        isEditMode = editMode;
+        this.categoryName = categoryName;
     }
 
     public Integer getId() {
@@ -293,6 +286,14 @@ public class Projects implements Parcelable
         this.isApproved = isApproved;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
         dest.writeValue(initiator);
@@ -311,6 +312,31 @@ public class Projects implements Parcelable
         dest.writeValue(createdAt);
         dest.writeValue(coverThumbnail);
         dest.writeValue(isApproved);
+        dest.writeValue(categoryName);
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectsDetailed{" +
+                "id=" + id +
+                ", initiator=" + initiator +
+                ", initiatorsName='" + initiatorsName + '\'' +
+                ", title='" + title + '\'' +
+                ", category=" + category +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", longDescription='" + longDescription + '\'' +
+                ", minimumInvestmentCost='" + minimumInvestmentCost + '\'' +
+                ", maximumInvestmentCost='" + maximumInvestmentCost + '\'' +
+                ", initiatorAddress='" + initiatorAddress + '\'' +
+                ", initiatorImage='" + initiatorImage + '\'' +
+                ", accessPrice='" + accessPrice + '\'' +
+                ", cover='" + cover + '\'' +
+                ", uploadedFile='" + uploadedFile + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", coverThumbnail='" + coverThumbnail + '\'' +
+                ", isApproved=" + isApproved +
+                ", categoryName='" + categoryName + '\'' +
+                '}';
     }
 
     public int describeContents() {

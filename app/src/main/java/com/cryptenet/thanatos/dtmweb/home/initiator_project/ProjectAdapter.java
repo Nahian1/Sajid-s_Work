@@ -8,7 +8,6 @@
 package com.cryptenet.thanatos.dtmweb.home.initiator_project;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -20,9 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
-import com.cryptenet.thanatos.dtmweb.pojo.Projects;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -35,20 +33,20 @@ import java.util.Locale;
  * Created by Mobile App on 2/9/2018.
  */
 
-public class ProjectAdapter extends ArrayAdapter<Projects> {
+public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
     private Context context;
-    private List<Projects> projects;
+    private List<ProjectsRsp> projects;
     private int count = 0;
     private int reqType;
 
-    public ProjectAdapter(@NonNull Context context, List<Projects> projects, int reqType) {
+    public ProjectAdapter(@NonNull Context context, List<ProjectsRsp> projects, int reqType) {
         super(context, R.layout.initiator_project_list_row, projects);
         this.context = context;
         this.projects = projects;
         this.reqType = reqType;
     }
 
-    public void updateList(List<Projects> projs){
+    public void updateList(List<ProjectsRsp> projs){
         this.projects.clear();
         this.projects.addAll(projs);
         this.notifyDataSetChanged();
@@ -76,12 +74,13 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
             e.printStackTrace();
         }
 
-        if(projects.get(position).getIsApproved() != null){
+        if(projects.get(position).getIsApproved()){
             statusTV.setText("Approved");
-            statusTV.setBackgroundColor(Color.GREEN);
+            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
         }
         else{
             statusTV.setText("Pending");
+            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
         }
         //statusTV.setText(projects.get(position).getStatus());
         if (reqType != 1)
@@ -89,15 +88,11 @@ public class ProjectAdapter extends ArrayAdapter<Projects> {
         count++;
         Log.e("project", "getView: "+count);
 
-        editIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        editIV.setOnClickListener(v -> {
+            ProjectsRsp pro = projects.get(position);
+            pro.setEditMode(true);
 
-                Projects pro = projects.get(position);
-                pro.setEditMode(true);
-
-                EventBus.getDefault().post(new ToEditPlanEvent(pro));
-            }
+            EventBus.getDefault().post(new ToEditPlanEvent(pro));
         });
 
         return convertView;

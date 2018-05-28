@@ -1,19 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2018.
-  ~  Development Courtesy: Cryptenet Ltd.
-  ~  Developer Credit: Alamgir Hossain, Nabil Shawkat
-  ~  This project is under MIT license
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ededed"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".home.plan_desc.PlanDescFragment">
+    tools:context=".home.plan_long_desc.PlanLongDescFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,88 +11,50 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_vertical_16"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/imgdemo" />
 
             <TextView
-                android:id="@+id/shortDetailsTV"
+                android:id="@+id/textTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Project Short Description"
-                android:textColor="#535353"
-                android:textSize="13sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-            <ImageView
-                android:id="@+id/profileIV"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_initiator_profile_picture" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/textViewTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="Title"
                 android:textColor="#535353"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textViewPrice"
+                android:id="@+id/textDatePrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="Price: SR: 670 - SR: 780"
                 android:textColor="#535353"
                 android:textSize="15sp" />
 
-            <ImageView
-                android:id="@+id/projectIV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/imgdemo" />
 
-            <TextView
-                android:id="@+id/textViewDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Description"
-                android:textColor="#535353"
-                android:textSize="13sp" />
+            <ImageView
+                android:id="@+id/demoImg"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/imgdemo" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="30dp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profilepic"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:scaleType="centerCrop"
                     android:src="@drawable/img_initiator_profile_picture" />
 
                 <TextView
@@ -140,169 +92,54 @@
                     android:textSize="12sp"
                     android:textStyle="normal" />
 
-                <TextView
-                    android:id="@+id/details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/profilepic"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Description"
-                    android:textColor="#535353" />
+                <ImageView
+                    android:id="@+id/ic_init_conversation"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_chat" />
 
             </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/bankname"
-                    android:layout_width="0dp"
+                    android:id="@+id/textShortDesc"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:layout_weight="1"
-                    android:paddingTop="12dp"
-                    android:text="Bank Name"
-                    android:textAlignment="viewStart"
-                    android:textColor="#898989"
-                    android:textSize="14sp" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:text="Short Description"
+                    android:textColor="#535353"
+                    android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/editTextBankName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:paddingTop="10dp"
-                    android:text="Example Bank Limited"
-                    android:textAlignment="viewStart"
-                    android:textColor="#898989"
-                    android:textSize="14sp" />
-            </LinearLayout>
+            </RelativeLayout>
 
-            <ImageView
+            <TextView
+                android:id="@+id/textViewFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/view_file"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/textLongDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/lineoflist" />
+                android:text="description"
+                android:textSize="15sp"
+                android:visibility="gone"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/personName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingTop="10dp"
-                    android:text="Bank Account Name"
-                    android:textAlignment="viewStart"
-                    android:textColor="#898989"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/NameOfperson"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:paddingTop="10dp"
-                    android:text="Khalid Bin Walid"
-                    android:textColor="#898989"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/lineoflist" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/account"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:layout_weight="1"
-                    android:paddingTop="10dp"
-                    android:text="Bank Account Number"
-                    android:textAlignment="viewStart"
-                    android:textColor="#898989"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/accountNumber"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:paddingTop="10dp"
-                    android:text="100.110.123456"
-                    android:textAlignment="viewStart"
-                    android:textColor="#898989"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/lineoflist" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/priceDetail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:layout_weight="1"
-                    android:paddingTop="10dp"
-                    android:text="Amount to be Paid for Details"
-                    android:textAlignment="viewStart"
-                    android:textColor="#898989"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/priceDetail"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:hint="SR: 780"
-                    android:paddingTop="10dp"
-                    android:textAlignment="viewStart"
-                    android:textColor="#898989"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/lineoflist" />
         </LinearLayout>
-
-        <!--<ImageView-->
-            <!--android:id="@+id/seeMoreIV"-->
-            <!--android:layout_width="200dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginBottom="40dp"-->
-            <!--android:layout_marginTop="40dp"-->
-            <!--android:src="@drawable/seemoredetails" />-->
     </ScrollView>
+
 </LinearLayout>
