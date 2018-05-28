@@ -21,9 +21,9 @@ public class IssueResponse implements Parcelable
     @SerializedName("previous")
     @Expose
     private Object previous;
-    @SerializedName("issueChildren")
+    @SerializedName("issueParents")
     @Expose
-    private List<IssueChild> issueChildren = null;
+    private List<IssueParent> issueParents = null;
     public final static Creator<IssueResponse> CREATOR = new Creator<IssueResponse>() {
 
 
@@ -45,7 +45,7 @@ public class IssueResponse implements Parcelable
         this.count = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.next = ((Object) in.readValue((Object.class.getClassLoader())));
         this.previous = ((Object) in.readValue((Object.class.getClassLoader())));
-        in.readList(this.issueChildren, (IssueChild.class.getClassLoader()));
+        in.readList(this.issueParents, (IssueParent.class.getClassLoader()));
     }
 
     /**
@@ -57,17 +57,17 @@ public class IssueResponse implements Parcelable
 
     /**
      * 
-     * @param issueChildren
+     * @param issueParents
      * @param previous
      * @param count
      * @param next
      */
-    public IssueResponse(Integer count, Object next, Object previous, List<IssueChild> issueChildren) {
+    public IssueResponse(Integer count, Object next, Object previous, List<IssueParent> issueParents) {
         super();
         this.count = count;
         this.next = next;
         this.previous = previous;
-        this.issueChildren = issueChildren;
+        this.issueParents = issueParents;
     }
 
     public Integer getCount() {
@@ -94,19 +94,29 @@ public class IssueResponse implements Parcelable
         this.previous = previous;
     }
 
-    public List<IssueChild> getIssueChildren() {
-        return issueChildren;
+    public List<IssueParent> getIssueParents() {
+        return issueParents;
     }
 
-    public void setIssueChildren(List<IssueChild> issueChildren) {
-        this.issueChildren = issueChildren;
+    public void setIssueParents(List<IssueParent> issueParents) {
+        this.issueParents = issueParents;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(count);
         dest.writeValue(next);
         dest.writeValue(previous);
-        dest.writeList(issueChildren);
+        dest.writeList(issueParents);
+    }
+
+    @Override
+    public String toString() {
+        return "IssueResponse{" +
+                "count=" + count +
+                ", next=" + next +
+                ", previous=" + previous +
+                ", issueParents=" + issueParents +
+                '}';
     }
 
     public int describeContents() {

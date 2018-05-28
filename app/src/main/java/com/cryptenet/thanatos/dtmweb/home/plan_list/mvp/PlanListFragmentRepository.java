@@ -67,7 +67,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
 //                        Log.d(TAG, "onResponse: " + response.body().string());
 //                        Gson gson = new Gson();
 //                        AllPlansResponse allPlansResponse = gson.fromJson(response.body().string(), AllPlansResponse.class);
-//                        EventBus.getDefault().post(new ProjectListReceiveEvent(allPlansResponse.getIssueChildren()));
+//                        EventBus.getDefault().post(new ProjectListReceiveEvent(allPlansResponse.getIssueParents()));
 //                    } catch (Exception e) {
 //                        e.printStackTrace();
 //                    }

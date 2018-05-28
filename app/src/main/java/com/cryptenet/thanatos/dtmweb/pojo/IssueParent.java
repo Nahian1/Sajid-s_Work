@@ -9,9 +9,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class IssueChild implements Parcelable
+public class IssueParent implements Parcelable
 {
-
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -21,24 +20,24 @@ public class IssueChild implements Parcelable
     @SerializedName("topics")
     @Expose
     private List<Topic> topics = null;
-    public final static Creator<IssueChild> CREATOR = new Creator<IssueChild>() {
+    public final static Creator<IssueParent> CREATOR = new Creator<IssueParent>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public IssueChild createFromParcel(Parcel in) {
-            return new IssueChild(in);
+        public IssueParent createFromParcel(Parcel in) {
+            return new IssueParent(in);
         }
 
-        public IssueChild[] newArray(int size) {
-            return (new IssueChild[size]);
+        public IssueParent[] newArray(int size) {
+            return (new IssueParent[size]);
         }
 
     }
     ;
 
-    protected IssueChild(Parcel in) {
+    protected IssueParent(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.name = ((String) in.readValue((String.class.getClassLoader())));
         in.readList(this.topics, (com.cryptenet.thanatos.dtmweb.pojo.Topic.class.getClassLoader()));
@@ -48,7 +47,7 @@ public class IssueChild implements Parcelable
      * No args constructor for use in serialization
      * 
      */
-    public IssueChild() {
+    public IssueParent() {
     }
 
     /**
@@ -57,7 +56,7 @@ public class IssueChild implements Parcelable
      * @param topics
      * @param name
      */
-    public IssueChild(Integer id, String name, List<Topic> topics) {
+    public IssueParent(Integer id, String name, List<Topic> topics) {
         super();
         this.id = id;
         this.name = name;
@@ -92,6 +91,15 @@ public class IssueChild implements Parcelable
         dest.writeValue(id);
         dest.writeValue(name);
         dest.writeList(topics);
+    }
+
+    @Override
+    public String toString() {
+        return "IssueParent{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", topics=" + topics +
+                '}';
     }
 
     public int describeContents() {

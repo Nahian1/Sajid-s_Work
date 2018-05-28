@@ -8,6 +8,9 @@
 package com.cryptenet.thanatos.dtmweb.home.report_issue;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +21,12 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.IssueListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ReportIssueFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,12 +177,38 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
 
     }
 
+    @Subscribe
+    public void onIssueListReceiveEvent(IssueListReceiveEvent event) {
+//        event.issueParents;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
 
         presenter.attachView(this);
 
-        presenter.getAllIssues();
+        presenter.getAllIssues(activityContext);
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
 }
