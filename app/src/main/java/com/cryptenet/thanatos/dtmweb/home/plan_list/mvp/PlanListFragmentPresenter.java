@@ -30,6 +30,7 @@ public class PlanListFragmentPresenter extends BaseFragPresenter<PlanListFragmen
 
     @Override
     public void checkUserType(ProjectsRsp projectsRsp, Context context) {
-        int response = model.checkUserType(context);
+
+        view.toDetailsView(projectsRsp, model.checkUserType(context));
     }
 }

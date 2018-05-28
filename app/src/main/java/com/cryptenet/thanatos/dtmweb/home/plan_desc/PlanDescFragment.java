@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.home.plan_desc;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,11 +73,20 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     ImageView icInitConversation;
     @BindView(R.id.textViewFile)
     TextView textViewFile;
+    @BindView(R.id.layoutBankSection)
+    LinearLayout layoutBankSection;
 
-    private ProjectsDetailed projectsDetailed;
-    private TextView titleTV, priceTV, shortDetailsTV, nameTV, typeTV, addressTV, detailsTV, bankNameTV,
-            personNameTV, accountNumberTV, payPriceTV;
-    private ImageView demoIV, profileIV, seeMoreIV;
+    //    @BindView(R.id.profilepic)
+//    ImageView profileIV;
+    @BindView(R.id.textBankAccName)
+    TextView textBankAccName;
+    @BindView(R.id.textBankAccNo)
+    TextView textBankAccNo;
+    @BindView(R.id.textBankName)
+    TextView textBankName;
+    @BindView(R.id.amountToBePaid)
+    TextView amountToBePaid;
+
     private int projectId, type;
 
     public PlanDescFragment() {
@@ -92,14 +104,49 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         type = getArguments().getInt("type");
 
         unbinder = ButterKnife.bind(this, convertView);
+
         return convertView;
     }
 
-    public void requestforDetails() {
+    @OnClick(R.id.buttonRequestDetails)
+    public void buttonRequestDetails() {
+
+        if (type == 3) {
+
+            showMessage("Log in as Investor!");
+
+        } else {
+
+        }
     }
 
-    @Subscribe
+    @SuppressLint("SetTextI18n")
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void toShowPlanDetailsEvent(ShowPlanDetailsEvent event) {
+
+        textTitle.setText(event.detailed.getTitle());
+
+        textViewName.setText(event.detailed.getInitiatorsName());
+        address.setText(event.detailed.getInitiatorAddress());
+        textShortDesc.setText(event.detailed.getShortDescription());
+
+        textBankAccName.setText(event.detailed.getBankAccountName());
+        textBankAccNo.setText(event.detailed.getBankAccountNumber());
+        textBankName.setText(event.detailed.getBankName());
+        amountToBePaid.setText(event.detailed.getAccessPrice());
+
+//        Glide.with(activityContext)
+//                .load(event.detailed.getCover())
+//                .apply(RequestOptions.placeholderOf(R.drawable.imgdemo))
+//                .transition(DrawableTransitionOptions.withCrossFade())
+//                .into(demoImg);
+//
+//        Glide.with(activityContext)
+//                .load(event.detailed.getInitiatorImage())
+//                .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
+//                .transition(DrawableTransitionOptions.withCrossFade())
+//                .into(profileIV);
+
         if (type == 1) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
             try {
@@ -108,40 +155,20 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
                 e.printStackTrace();
             }
 
+            layoutBankSection.setVisibility(View.GONE);
             textLongDesc.setVisibility(View.VISIBLE);
             textLongDesc.setText(event.detailed.getLongDescription());
 
             textViewFile.setVisibility(View.VISIBLE);
         } else {
-            textDatePrice.setText(event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
+            textDatePrice.setText("Price: " + event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
         }
 
         if (type != 3) {
             icInitConversation.setVisibility(View.VISIBLE);
         }
 
-        textTitle.setText(event.detailed.getTitle());
 
-        Glide.with(activityContext)
-                .load(event.detailed.getCover())
-                .apply(RequestOptions.placeholderOf(R.drawable.imgdemo))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(demoImg);
-
-        Glide.with(activityContext)
-                .load(event.detailed.getInitiatorImage())
-                .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(profileIV);
-
-        textViewName.setText(event.detailed.getInitiatorsName());
-        address.setText(event.detailed.getInitiatorAddress());
-        textShortDesc.setText(event.detailed.getShortDescription());
-
-        textTitle.setText(event.detailed.getTitle());
-        textTitle.setText(event.detailed.getTitle());
-        textTitle.setText(event.detailed.getTitle());
-        textTitle.setText(event.detailed.getTitle());
     }
 
     @Override

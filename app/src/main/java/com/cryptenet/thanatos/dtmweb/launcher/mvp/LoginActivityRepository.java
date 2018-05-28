@@ -76,7 +76,7 @@ public class LoginActivityRepository extends BaseRepository
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                EventBus.getDefault().post(new LogInSuccessEvent(response.body().string(), response.body()!=null));
+                EventBus.getDefault().post(new LogInSuccessEvent(response.body().string(), response.body() != null));
             }
 
 
@@ -99,7 +99,7 @@ public class LoginActivityRepository extends BaseRepository
                 .putString(ConstantProvider.SP_BANK_NAME, user.getBankName())
                 .putString(ConstantProvider.SP_BANK_ACC_NAME, user.getBankAccountName())
                 .putString(ConstantProvider.SP_BANK_ACC_NO, user.getBankAccountNumber())
-                .putString(ConstantProvider.SP_USER_TYPE, user.getRefreshToken())
+                .putString(ConstantProvider.SP_USER_TYPE, user.getUserType())
                 .commit();
 //        Log.d(TAG, "saveUserToSP: " + user.getAccessToken());
     }

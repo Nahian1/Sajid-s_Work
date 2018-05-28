@@ -98,26 +98,181 @@
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:visibility="gone"
-                    android:src="@drawable/ic_chat" />
+                    android:src="@drawable/ic_chat"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/textShortDesc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="Short Description"
+                android:textColor="#535353"
+                android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/textShortDesc"
+            <LinearLayout
+                android:id="@+id/layoutBankSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:orientation="vertical">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="Short Description"
-                    android:textColor="#535353"
-                    android:textSize="13sp" />
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/bankname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:text="Bank Name"
+                        android:textAlignment="viewStart"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textBankName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:text="Example Bank Limited"
+                        android:textAlignment="viewStart"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/lineoflist" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/personName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="10dp"
+                        android:text="Bank Account Name"
+                        android:textAlignment="viewStart"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textBankAccName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:paddingTop="10dp"
+                        android:text="Khalid Bin Walid"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/lineoflist" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/account"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:paddingTop="10dp"
+                        android:text="Bank Account Number"
+                        android:textAlignment="viewStart"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textBankAccNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:paddingTop="10dp"
+                        android:text="100.110.123456"
+                        android:textAlignment="viewStart"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/lineoflist" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/priceDetail"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:paddingTop="10dp"
+                        android:text="Amount to be paid for details"
+                        android:textAlignment="viewStart"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/amountToBePaid"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:paddingTop="10dp"
+                        android:text="SAR100"
+                        android:textAlignment="viewStart"
+                        android:textColor="#535353"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/lineoflist" />
+
+                <Button
+                    android:id="@+id/buttonRequestDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/btn_shape_b"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="Request for details"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textViewFile"
@@ -129,7 +284,7 @@
                 android:textAllCaps="false"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textLongDesc"
@@ -137,7 +292,7 @@
                 android:layout_height="wrap_content"
                 android:text="description"
                 android:textSize="15sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

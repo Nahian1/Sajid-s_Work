@@ -4,6 +4,7 @@ package com.cryptenet.thanatos.dtmweb.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -62,11 +63,16 @@ public class ProjectsDetailed implements Parcelable {
     @SerializedName("category_name")
     @Expose
     private String categoryName;
+
+    private String bankAccountName;
+    private String bankAccountNumber;
+    private String bankName;
+
     public final static Creator<ProjectsDetailed> CREATOR = new Creator<ProjectsDetailed>() {
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public ProjectsDetailed createFromParcel(Parcel in) {
             return new ProjectsDetailed(in);
@@ -76,8 +82,7 @@ public class ProjectsDetailed implements Parcelable {
             return (new ProjectsDetailed[size]);
         }
 
-    }
-    ;
+    };
 
     protected ProjectsDetailed(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -102,13 +107,11 @@ public class ProjectsDetailed implements Parcelable {
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public ProjectsDetailed() {
     }
 
     /**
-     * 
      * @param uploadedFile
      * @param accessPrice
      * @param id
@@ -148,6 +151,30 @@ public class ProjectsDetailed implements Parcelable {
         this.coverThumbnail = coverThumbnail;
         this.isApproved = isApproved;
         this.categoryName = categoryName;
+    }
+
+    public String getBankAccountName() {
+        return bankAccountName;
+    }
+
+    public void setBankAccountName(String bankAccountName) {
+        this.bankAccountName = bankAccountName;
+    }
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
 
     public Integer getId() {
@@ -340,7 +367,7 @@ public class ProjectsDetailed implements Parcelable {
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

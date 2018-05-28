@@ -293,4 +293,11 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+
+    }
 }

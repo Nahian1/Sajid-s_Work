@@ -20,6 +20,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDLResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDSResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -134,6 +135,8 @@ public class PlanDescFragmentRepository extends BaseFragRepository
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+
+
                 Gson gson = new Gson();
                 ProjectsDSResponse detailed = gson.fromJson(response.body().string(), ProjectsDSResponse.class);
                 Log.d(TAG, "onResponse: " + detailed.toString());
@@ -154,7 +157,36 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                 detailed1.setCreatedAt(detailed.getCreatedAt());
                 detailed1.setIsApproved(detailed.getIsApproved());
 
-                EventBus.getDefault().post(new ShowPlanDetailsEvent(detailed1));
+                Request request = new Request.Builder()
+                        .url(ConstantProvider.BASE_URL + "api/v1/user/" + detailed.getInitiator() + "/")
+                        .get()
+                        .addHeader("Content-Type", head)
+                        .addHeader("Authorization", "Bearer " + PreferenceManager
+                                .getDefaultSharedPreferences(context)
+                                .getString(ConstantProvider.SP_ACCESS_TOKEN, null))
+                        .build();
+
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        Gson gson = new Gson();
+                        User user = gson.fromJson(response.body().string(), User.class);
+
+                        detailed1.setBankName(user.getBankName());
+                        detailed1.setBankAccountName(user.getBankAccountName());
+                        detailed1.setBankAccountNumber(user.getBankAccountNumber());
+                        detailed1.setInitiatorAddress(user.getAddress());
+
+                        EventBus.getDefault().post(new ShowPlanDetailsEvent(detailed1));
+
+                    }
+                });
+
             }
         });
     }
