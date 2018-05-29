@@ -20,6 +20,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
@@ -88,6 +89,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
+
                 presenter.requestForLogin("creynolds@montgomery.com","asdasd123");
 
 //                if ((etEmail.getText().toString().trim()) !=null && !(etEmail.getText().toString().trim()).isEmpty()) {

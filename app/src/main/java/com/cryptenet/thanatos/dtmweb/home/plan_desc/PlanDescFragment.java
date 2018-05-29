@@ -184,6 +184,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     @Override
     public void restoreState(Bundle savedState) {
 
+
     }
 
     @Override

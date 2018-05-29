@@ -7,7 +7,6 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ededed"
@@ -20,7 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -32,8 +31,6 @@
                     android:id="@+id/textViewTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/layout_pics"
-                    android:layout_toEndOf="@+id/layout_pics"
                     android:text="Title"
                     android:textColor="#939393"
                     android:textSize="18sp"
@@ -76,12 +73,10 @@
 
             </RelativeLayout>
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/lineoflist" />
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -152,16 +147,19 @@
                         android:layout_marginTop="1dp"
                         android:background="@android:color/transparent"
                         android:hint="Bank Name"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
                         android:paddingTop="12dp"
                         android:textAlignment="viewStart"
                         android:textColor="#898989"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lineoflist" />
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -176,16 +174,19 @@
                         android:layout_marginTop="1dp"
                         android:background="@android:color/transparent"
                         android:hint="Bank Account Name"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
                         android:paddingTop="12dp"
                         android:textAlignment="viewStart"
                         android:textColor="#898989"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lineoflist" />
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -200,16 +201,20 @@
                         android:layout_marginTop="1dp"
                         android:background="@android:color/transparent"
                         android:hint="Bank Account Number"
+                        android:inputType="number"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
                         android:paddingTop="12dp"
                         android:textAlignment="viewStart"
                         android:textColor="#898989"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lineoflist" />
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -224,16 +229,20 @@
                         android:layout_marginTop="1dp"
                         android:background="@android:color/transparent"
                         android:hint="Transaction Id"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
                         android:paddingTop="12dp"
                         android:textAlignment="viewStart"
                         android:textColor="#898989"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lineoflist" />
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -244,7 +253,7 @@
 
                 <EditText
                     android:id="@+id/add_report"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="99dp"
                     android:background="@drawable/background_text"
                     android:gravity="top"
@@ -252,6 +261,7 @@
                     android:inputType="textMultiLine"
                     android:lines="20"
                     android:minLines="5"
+                    android:padding="10dp"
                     android:scrollbars="vertical"
                     android:textSize="15sp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -261,6 +271,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -268,10 +279,12 @@
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
                         android:layout_weight="1"
-                        android:text="Cancel" />
+                        android:background="@drawable/background_text"
+                        android:text="Cancel"
+                        android:textColor="#404040" />
 
                     <Button
                         android:id="@+id/submitBtn"
@@ -279,9 +292,11 @@
                         android:layout_height="35dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
-                        android:text="Submit" />
+                        android:background="@drawable/btn_shape_b"
+                        android:text="Submit"
+                        android:textColor="@color/colorPrimaryDark" />
                 </LinearLayout>
 
             </LinearLayout>

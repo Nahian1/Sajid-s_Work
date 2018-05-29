@@ -28,15 +28,18 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
+import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.home.edit_project.EditProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.form.FormFragment;
 import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.investor_project.InvestorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
+import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
+import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -276,6 +279,17 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     }
 
     @Subscribe
+    public void onTransactionSuccessEvent(TransactionSuccessEvent event) {
+        TransactionFragment fragment = new TransactionFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putString(JsonKeys.TRANSACTION_DETAILS, new Gson().toJson(event.transaction));
+
+        fragment.setArguments(bundle);
+        replaceFragment(R.id.frame_container, fragment);
+    }
+
+    @Subscribe
     public void onPlanDetailsRequestEvent(PlanDetailsRequestEvent event) {
         FormFragment fragment = new FormFragment();
         Bundle bundle = new Bundle();
@@ -315,8 +329,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
+        super.onBackPressed();
 
     }
 }
