@@ -90,8 +90,11 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
             case R.id.btn_sign_in:
                 presenter.requestForLogin("creynolds@montgomery.com","asdasd123");
 
-//                if ((etEmail.getText().toString().trim()) !=null && !(etEmail.getText().toString().trim()).isEmpty()) {
-//                    if ((etPwd.getText().toString().trim()) != null && !(etPwd.getText().toString().trim()).isEmpty()) {
+//                String email = etEmail.getText().toString().trim();
+//                String password = etPwd.getText().toString().trim();
+//
+//                if (!email.isEmpty()) {
+//                    if (!password.isEmpty()) {
 //                        presenter.requestForLogin(
 //                                etEmail.getText().toString().trim(),
 //                                etPwd.getText().toString().trim()
@@ -120,7 +123,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
             AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
                 if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
-                    navigator.toHomeActivity(getApplicationContext(), event.string);
+                    navigator.toHomeActivity(LoginActivity.this, event.string);
                 }
             });
         }

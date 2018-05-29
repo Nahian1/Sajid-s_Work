@@ -9,7 +9,6 @@ package com.cryptenet.thanatos.dtmweb.launcher.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Base64;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
@@ -19,7 +18,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
-import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -85,7 +83,7 @@ public class LoginActivityRepository extends BaseRepository
 
     @Override
     public boolean saveUserToSP(User user, Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext())
+        return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(ConstantProvider.SP_ACCESS_TOKEN, user.getAccessToken())
                 .putString(ConstantProvider.SP_REFRESH_TOKEN, user.getRefreshToken())

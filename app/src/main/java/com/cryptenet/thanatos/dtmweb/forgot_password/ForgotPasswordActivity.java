@@ -62,7 +62,6 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
     @Override
     public void onClick(View v) {
         String mail = etForgot.getText().toString().trim();
-
         if (!mail.isEmpty()) {
             presenter.saveIdentifier(mail, this);
             presenter.sendIdentifier(mail);

@@ -8,6 +8,9 @@
 package com.cryptenet.thanatos.dtmweb.registration.mvp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -22,13 +25,21 @@ import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
+import com.cryptenet.thanatos.dtmweb.registration.ContentDownloader;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,6 +143,24 @@ public class RegistrationActivityRepository extends BaseRepository
                 regData.getBankAccountNumber(),
                 regData.getUserType()
         );
+//        PostAsync22 async = new PostAsync22();
+//
+//        async.execute(
+//                regData.getPicture(),
+//                regData.getName(),
+//                regData.getEmail(),
+//                regData.getPassword(),
+//                regData.getAddress(),
+//                regData.getCountry().toString(),
+//                regData.getCity().toString(),
+//                regData.getBankName(),
+//                regData.getBankAccountName(),
+//                regData.getBankAccountNumber(),
+//                regData.getUserType()
+//        );
+//
+//
+//
 
         return false;
     }
@@ -151,5 +180,55 @@ public class RegistrationActivityRepository extends BaseRepository
     private void setCities(List<City> cities) {
         this.cities = cities;
         EventBus.getDefault().post(new CityFetchEvent(this.cities));
+    }
+}
+
+class PostAsync22 extends AsyncTask<Object, Void, String> {
+
+    @Override
+    protected String doInBackground(Object... objects) {
+        String content = "";
+        String url = ConstantProvider.BASE_URL + "api/v1/user/";
+
+        File imgFile = (File) objects[0];
+        Bitmap imgBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+        if (imgBitmap != null) {
+            Log.d("TAG", "doInBackground: " + imgFile.getAbsolutePath());
+
+            try {
+                MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+                entity.addPart("name", new StringBody((String) objects[1]));
+                entity.addPart("email", new StringBody((String) objects[2]));
+                entity.addPart("password", new StringBody((String) objects[3]));
+                entity.addPart("address", new StringBody((String) objects[4]));
+                entity.addPart("country", new StringBody((String) objects[5]));
+                entity.addPart("city", new StringBody((String) objects[6]));
+                entity.addPart("bank_name", new StringBody((String) objects[7]));
+                entity.addPart("bank_account_name", new StringBody((String) objects[8]));
+                entity.addPart("bank_account_number", new StringBody((String) objects[9]));
+                entity.addPart("user_type", new StringBody((String) objects[10]));
+
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                imgBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                byte[] data = bos.toByteArray();
+                ByteArrayBody bab = new ByteArrayBody(data, "profilePic.png");
+                entity.addPart("picture", bab);
+
+                content = ContentDownloader.getHttpPostContent(url, entity);
+                Log.d("TAG", "doInBackground: " + content);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        } else
+            Log.e("TAG", "Image not found :(");
+
+        return content;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
     }
 }
