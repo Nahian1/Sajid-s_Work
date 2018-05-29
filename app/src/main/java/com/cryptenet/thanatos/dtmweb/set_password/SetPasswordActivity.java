@@ -22,6 +22,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,7 +79,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
             showMessage("Please fill both fields");
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPwdResetEvent(PwdResetEvent event) {
         if (event.isSuccess) {
             showMessage("Reset Done!!");

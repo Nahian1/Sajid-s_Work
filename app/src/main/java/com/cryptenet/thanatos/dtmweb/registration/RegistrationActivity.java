@@ -7,7 +7,7 @@
 
 package com.cryptenet.thanatos.dtmweb.registration;
 
-import android.app.backup.SharedPreferencesBackupHelper;
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -35,10 +35,15 @@ import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
-import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -198,26 +203,63 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @OnClick(R.id.iv_pp)
     public void getPp(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                        photoPickerIntent.setType("image/*");
+
+                        startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        if (response.isPermanentlyDenied()) {
+                            // navigate user to app settings
+                            showMessage("must grant permission");
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
     }
 
     @OnClick(R.id.btn_sign_in_reg)
     public void requestRegistration(View view) {
+//        presenter.carryRegData(
+//                imageFile,
+//                accType,
+//                etNameReg.getText().toString().trim(),
+//                etEmailReg.getText().toString().trim(),
+//                etPwdReg.getText().toString().trim(),
+//                etConfirmPwd.getText().toString().trim(),
+//                etAddress.getText().toString().trim(),
+//                countryCode,
+//                cityCode,
+//                etBankNameReg.getText().toString().trim(),
+//                etBankAccNameReg.getText().toString().trim(),
+//                etBankAccNumberReg.getText().toString().trim()
+//        );
+
         presenter.carryRegData(
                 imageFile,
-                accType,
-                etNameReg.getText().toString().trim(),
-                etEmailReg.getText().toString().trim(),
-                etPwdReg.getText().toString().trim(),
-                etConfirmPwd.getText().toString().trim(),
-                etAddress.getText().toString().trim(),
-                countryCode,
-                cityCode,
-                etBankNameReg.getText().toString().trim(),
-                etBankAccNameReg.getText().toString().trim(),
-                etBankAccNumberReg.getText().toString().trim()
+                "Initiator",
+                "alam",
+                "azzam@gmail.com",
+                "asdasd123",
+                "asdasd123",
+                "home",
+                1,
+                64,
+                "bank",
+                "alam",
+                "1234567890"
+
         );
     }
 

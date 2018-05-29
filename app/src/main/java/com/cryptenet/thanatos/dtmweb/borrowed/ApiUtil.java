@@ -1,5 +1,7 @@
 package com.cryptenet.thanatos.dtmweb.borrowed;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -34,11 +36,25 @@ public class ApiUtil {
             multipart.addFormField("address", address);
             return multipart.finish();
         } catch (IOException ex) {
+            Log.d("createUser Error => ", ex.getMessage(), ex);
+
             ex.printStackTrace();
             return "IOException";
         }
     }
-
+//private void showMsg(String msg, String logLevel){
+//        if(BuildConfig.DEBUG){
+//            if ("DEBUG".equals(logLevel)){
+//
+//            } else if ("DEBUG".equals(logLevel)){
+//
+//            } else if ("WARN".equals(logLevel)){
+//
+//            } else if ("INFO".equals(logLevel)){
+//
+//            }
+//        }
+//}
     public String editUser(String id, String name, String email,
                            File picture,
                            String address, String country, String city, String bankName,

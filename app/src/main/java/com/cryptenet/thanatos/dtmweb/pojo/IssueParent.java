@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class IssueResponse implements Parcelable
+public class IssueParent implements Parcelable
 {
 
     @SerializedName("count")
@@ -24,24 +24,24 @@ public class IssueResponse implements Parcelable
     @SerializedName("issueChildren")
     @Expose
     private List<IssueChild> issueChildren = null;
-    public final static Creator<IssueResponse> CREATOR = new Creator<IssueResponse>() {
+    public final static Creator<IssueParent> CREATOR = new Creator<IssueParent>() {
 
 
         @SuppressWarnings({
             "unchecked"
         })
-        public IssueResponse createFromParcel(Parcel in) {
-            return new IssueResponse(in);
+        public IssueParent createFromParcel(Parcel in) {
+            return new IssueParent(in);
         }
 
-        public IssueResponse[] newArray(int size) {
-            return (new IssueResponse[size]);
+        public IssueParent[] newArray(int size) {
+            return (new IssueParent[size]);
         }
 
     }
     ;
 
-    protected IssueResponse(Parcel in) {
+    protected IssueParent(Parcel in) {
         this.count = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.next = ((Object) in.readValue((Object.class.getClassLoader())));
         this.previous = ((Object) in.readValue((Object.class.getClassLoader())));
@@ -52,7 +52,7 @@ public class IssueResponse implements Parcelable
      * No args constructor for use in serialization
      * 
      */
-    public IssueResponse() {
+    public IssueParent() {
     }
 
     /**
@@ -62,7 +62,7 @@ public class IssueResponse implements Parcelable
      * @param count
      * @param next
      */
-    public IssueResponse(Integer count, Object next, Object previous, List<IssueChild> issueChildren) {
+    public IssueParent(Integer count, Object next, Object previous, List<IssueChild> issueChildren) {
         super();
         this.count = count;
         this.next = next;
