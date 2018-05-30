@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.form.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.FormFragmentContract;
@@ -23,8 +25,8 @@ public class FormFragmentModel extends BaseFragModel<FormFragmentContract.Reposi
     }
 
     @Override
-    public void submitTransactionData(Transaction transaction) {
+    public void submitTransactionData(Transaction transaction, Context context) {
 
-        repository.submitTransactionData(transaction);
+        repository.submitTransactionData(transaction, context);
     }
 }

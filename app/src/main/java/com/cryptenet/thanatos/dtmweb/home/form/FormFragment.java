@@ -153,7 +153,7 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
                     transaction.setNote(note);
                     transaction.setProjectsDetailed(details); //adding project details
 
-                    presenter.submitTransactionData(transaction);
+                    presenter.submitTransactionData(transaction, activityContext);
 
                 } else {
 

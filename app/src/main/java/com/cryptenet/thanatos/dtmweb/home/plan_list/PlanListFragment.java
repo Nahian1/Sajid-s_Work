@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -77,9 +76,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     @Override
     public void toDetailsView(ProjectsRsp projectsRsp, int type) {
-        if (type == 1 && projectsRsp.getIsApproved())
-            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 1));
-        else if (type == 1 && !projectsRsp.getIsApproved()) {
+        if (type == 1) {
             EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 2));
         } else {
             EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 3));
