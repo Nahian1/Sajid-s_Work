@@ -120,7 +120,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
             AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
                 if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
-                    navigator.toHomeActivity(getApplicationContext(), event.string);
+                    navigator.toHomeActivity(LoginActivity.this, event.string);
                 }
             });
         }

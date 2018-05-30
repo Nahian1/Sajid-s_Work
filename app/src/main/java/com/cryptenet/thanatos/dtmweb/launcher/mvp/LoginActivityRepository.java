@@ -85,7 +85,7 @@ public class LoginActivityRepository extends BaseRepository
 
     @Override
     public boolean saveUserToSP(User user, Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext())
+        return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(ConstantProvider.SP_ACCESS_TOKEN, user.getAccessToken())
                 .putString(ConstantProvider.SP_REFRESH_TOKEN, user.getRefreshToken())
