@@ -43,6 +43,7 @@ public class FormFragmentRepository extends BaseFragRepository
         OkHttpClient client = new OkHttpClient();
 
         RequestBody formBody = new FormBody.Builder()
+                .add("plan", null)
                 .add("bankName", transaction.getBankName())
                 .add("bankAccName", transaction.getBankAccountName())
                 .add("bankAccNo", transaction.getBankAccountNumber())
