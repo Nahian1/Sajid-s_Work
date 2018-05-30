@@ -9,6 +9,12 @@ public class ApiUtil {
     String BASE_URL;
     String charset = "UTF-8";
 
+    //registration code == 1
+    //edit profile code == 2
+    //create plan code == 3
+    //edit plan code == 4
+
+
     public ApiUtil(String BASEURL) {
         this.BASE_URL = BASEURL;
     }
@@ -78,7 +84,7 @@ public class ApiUtil {
         String requestUrl = BASE_URL + "api/v1/plan/?format=json";
 
         try {
-            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "POST", "Bearer " + accessToken);
+            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "POST", accessToken);
 
             multipart.addHeaderField("Content-Type", "application/json");
 
@@ -104,7 +110,7 @@ public class ApiUtil {
         String requestUrl = BASE_URL + "/api/v1/plan/" + id + "/?format=json";
 
         try {
-            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "PUT", "Bearer " + accessToken);
+            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "PUT", accessToken);
 
             multipart.addHeaderField("Content-Type", "application/json");
 
