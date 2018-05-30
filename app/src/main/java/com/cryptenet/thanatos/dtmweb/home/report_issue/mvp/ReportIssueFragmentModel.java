@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.report_issue.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ReportIssueFragmentContract;
@@ -22,7 +24,7 @@ public class ReportIssueFragmentModel extends BaseFragModel<ReportIssueFragmentC
     }
 
     @Override
-    public void getAllIssues() {
-        repository.getAllIssues();
+    public void getAllIssues(Context context) {
+        repository.getAllIssues(context);
     }
 }

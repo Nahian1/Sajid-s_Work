@@ -40,7 +40,41 @@ public class PlanListFragmentRepository extends BaseFragRepository
 
     @Override
     public void getAllProjects(Context context, String token) {
-
+        String head = "application/json";
+        String oauth = token;
+                //PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
+//        Log.d(TAG, "getAllProjects: " + token);
+//        if (oauth != null) {
+//
+//
+//            OkHttpClient client = new OkHttpClient();
+//
+//            final Request request = new Request.Builder()
+//                    .url(ConstantProvider.BASE_URL + "api/v1/plan/")
+//                    .get()
+//                    .addHeader("Content-Type", head)
+//                    .build();
+//            Log.d(TAG, "getAllProjects: " + request.header("Authentication"));
+//            client.newCall(request).enqueue(new Callback() {
+//                @Override
+//                public void onFailure(Call call, IOException e) {
+//                    Log.d(TAG, "onFailure: plan list");
+//                }
+//
+//                @Override
+//                public void onResponse(Call call, Response response) throws IOException {
+//                    try {
+//                        Log.d(TAG, "onResponse: " + response.body().string());
+//                        Gson gson = new Gson();
+//                        AllPlansResponse allPlansResponse = gson.fromJson(response.body().string(), AllPlansResponse.class);
+//                        EventBus.getDefault().post(new ProjectListReceiveEvent(allPlansResponse.getIssueParents()));
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            });
+//        }
         Call<AllPlansResponse> req = apiClient.getAllPlans("Bearer " + token);
         req.enqueue(new Callback<AllPlansResponse>() {
             @Override

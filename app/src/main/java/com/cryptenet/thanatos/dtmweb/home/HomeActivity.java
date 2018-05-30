@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import com.cryptenet.thanatos.dtmweb.home.investor_project.InvestorProjectFragme
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
+import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
@@ -68,6 +70,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.menuRight)
     ImageView ivMenuRight;
 
+    @BindView(R.id.report)
+    LinearLayout report;
+
     CircleImageView ivNavPp;
     TextView tvNavName;
     TextView tvNavType;
@@ -81,6 +86,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         setContentView(R.layout.activity_home);
 
         viewUnbinder = ButterKnife.bind(this);
+
+        if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null).equals("Initiator"))
+            report.setVisibility(View.GONE);
 
         ivNavPp = findViewById(R.id.iv_nav_pp);
         tvNavName = findViewById(R.id.tv_nav_name);
@@ -190,6 +198,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         fragment1.setArguments(bundle1);
         replaceFragment(R.id.frame_container, fragment1);
 
+    }
+
+    @OnClick(R.id.report)
+    public void onReport(View view) {
+        drawerLayout.closeDrawer(GravityCompat.START);
+        replaceFragment(R.id.frame_container, new ReportIssueFragment());
     }
 
     @OnClick(R.id.iv_nav_edit_profile)

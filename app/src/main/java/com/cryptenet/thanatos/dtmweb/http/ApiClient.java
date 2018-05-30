@@ -9,27 +9,11 @@ package com.cryptenet.thanatos.dtmweb.http;
 
 import com.cryptenet.thanatos.dtmweb.pojo.AllCategoriesResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
-import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
-import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDSResponse;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
+import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
 
-import java.io.File;
-
-import javax.inject.Named;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiClient {
 //    @GET("api/v1/country/")
@@ -71,6 +55,9 @@ public interface ApiClient {
 
     @GET("api/v1/plan-access/")
     Call<AllPlansResponse> getAllReqPlansINT(@Header("Authorization") String token);
+
+    @GET("/api/v1/issue/categories/")
+    Call<IssueResponse> getAllIssues(@Header("Authorization") String token);
 
 //    @GET("GET /api/v1/plan/{id}")
 //    Call<ProjectsDSResponse> getShortDesc(@Header("Authorization") String token, @Path("id") int id);

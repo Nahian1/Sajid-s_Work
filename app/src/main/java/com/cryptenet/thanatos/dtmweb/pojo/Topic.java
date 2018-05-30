@@ -77,6 +77,14 @@ public class Topic implements Parcelable
         dest.writeValue(name);
     }
 
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public int describeContents() {
         return  0;
     }
