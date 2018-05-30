@@ -41,7 +41,7 @@ public abstract class BaseFragActivity<P extends BaseContract.Presenter> extends
     protected final void addFragment(@IdRes int containerViewId, Fragment fragment) {
         fragmentManager
                 .beginTransaction()
-                .addToBackStack(null)
+//                .addToBackStack(null) //commented out by Asif
                 .add(containerViewId, fragment)
                 .commit();
     }

@@ -110,24 +110,31 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         presenter.getProjectList(activityContext, token);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
-    }
+    //commented out by Asif
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+//            EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+//            EventBus.getDefault().register(this);
+//    }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
-        EventBus.getDefault().unregister(this);
         super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
 }
