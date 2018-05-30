@@ -25,17 +25,16 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
         implements ThreadListFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(ThreadListFragment.class);
 
-
     public ThreadListFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_thread_list, container, false);
+        View convertView = inflater.inflate(R.layout.fragment_thread_list, container, false);
+
+        return convertView;
     }
 
     @Override
@@ -51,5 +50,12 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
     @Override
     public void restoreState(Bundle savedState) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.attachView(this);
     }
 }

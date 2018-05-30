@@ -31,4 +31,9 @@ public class PlanListFragmentModel extends BaseFragModel<PlanListFragmentContrac
     public int checkUserType(Context context) {
         return repository.checkUserType(context);
     }
+
+    @Override
+    public void searchMyPlans(Context context, String token, String searchTerm) {
+        repository.searchMyPlans(context, token, searchTerm);
+    }
 }

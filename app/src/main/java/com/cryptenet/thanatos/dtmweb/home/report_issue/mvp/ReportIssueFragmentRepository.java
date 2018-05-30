@@ -42,7 +42,7 @@ public class ReportIssueFragmentRepository extends BaseFragRepository
             public void onResponse(Call<IssueResponse> call, Response<IssueResponse> response) {
                 IssueResponse issueResponse = response.body();
                 assert issueResponse != null;
-                setAllIssues(issueResponse.getIssueParents());
+                setAllIssues(issueResponse.getResults());
             }
 
             @Override

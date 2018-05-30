@@ -33,4 +33,9 @@ public class PlanListFragmentPresenter extends BaseFragPresenter<PlanListFragmen
 
         view.toDetailsView(projectsRsp, model.checkUserType(context));
     }
+
+    @Override
+    public void searchMyPlans(Context context, String token, String searchTerm) {
+        model.searchMyPlans(context, token, searchTerm);
+    }
 }

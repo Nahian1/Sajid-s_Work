@@ -16,54 +16,48 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
+import com.cryptenet.thanatos.dtmweb.pojo.IssueParent;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class ELVAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<String> parent;
-    private HashMap<String, List<String>> child;
+    private List<IssueParent> issueParents;
 
-    public ELVAdapter(Context context, List<String> listParentData,
-                                 HashMap<String, List<String>> listChildData) {
+    public ELVAdapter(Context context, List<IssueParent> issueParents) {
         this.context = context;
-        this.parent = listParentData;
-        this.child = listChildData;
+        this.issueParents = issueParents;
     }
 
     @Override
     public int getGroupCount() {
-
-        return this.parent.size();
+        return this.issueParents.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.child.get(this.parent.get(groupPosition)).size();
+        return this.issueParents.get(groupPosition).getTopics().size();
 
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-
-        return this.parent.get(groupPosition);
+        return this.issueParents.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.child.get(this.parent.get(groupPosition)).get(childPosition);
+        return this.issueParents.get(groupPosition).getTopics().get(childPosition);
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-
-        return groupPosition;
+        return this.issueParents.get(groupPosition).getId();
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
+        return this.issueParents.get(groupPosition).getTopics().get(childPosition).getId();
     }
 
     @Override
@@ -73,13 +67,13 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String parentTitle = (String) getGroup(groupPosition);
+        String parentTitle = issueParents.get(groupPosition).getName();
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.node_elv_parent, parent, false);
         }
-        TextView header_text = (TextView) convertView.findViewById(R.id.tv_elv_parent);
+        TextView header_text = convertView.findViewById(R.id.tv_elv_parent);
 
         header_text.setText(parentTitle);
 
@@ -100,7 +94,7 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String childText = (String) getChild(groupPosition, childPosition);
+        final String childText = issueParents.get(groupPosition).getTopics().get(childPosition).getName();
 
         // Inflating child layout and setting textview
         if (convertView == null) {
@@ -118,5 +112,14 @@ public class ELVAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public void updateList(List<IssueParent> issueParents) {
+        this.issueParents.clear();
+
+        if (issueParents != null)
+            this.issueParents = issueParents;
+
+        this.notifyDataSetChanged();
     }
 }

@@ -15,6 +15,7 @@ public interface PlanListFragmentContract {
     interface Presenter extends BaseFragContract.Presenter<PlanListFragmentContract.View> {
         void getProjectList(Context context, String token);
         void checkUserType(ProjectsRsp projectsRsp, Context context);
+        void searchMyPlans(Context context, String token, String searchTerm);
     }
 
     interface View extends BaseFragContract.View {
@@ -24,10 +25,12 @@ public interface PlanListFragmentContract {
     interface Model extends BaseFragContract.Model {
         void getProjectList(Context context, String token);
         int checkUserType(Context context);
+        void searchMyPlans(Context context, String token, String searchTerm);
     }
 
     interface Repository extends BaseFragContract.Repository {
         void getAllProjects(Context context, String token);
         int checkUserType(Context context);
+        void searchMyPlans(Context context, String token, String searchTerm);
     }
 }

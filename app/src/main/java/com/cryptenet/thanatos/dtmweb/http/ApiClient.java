@@ -14,6 +14,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Query;
 
 public interface ApiClient {
 //    @GET("api/v1/country/")
@@ -46,6 +47,9 @@ public interface ApiClient {
 
     @GET("api/v1/plan/my/")
     Call<AllPlansResponse> getAllMyPlans(@Header("Authorization") String token);
+
+    @GET("api/v1/plan/my/")
+    Call<AllPlansResponse> getAllMyPlansSearch(@Header("Authorization") String token, @Query("search") String searchTerm);
 
     @GET("/api/v1/plan-access/")
     Call<AllPlansResponse> getAllMyReqInv(@Header("Authorization") String token);

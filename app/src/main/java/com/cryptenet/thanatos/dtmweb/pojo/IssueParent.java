@@ -94,6 +94,15 @@ public class IssueParent implements Parcelable
         dest.writeList(topics);
     }
 
+    @Override
+    public String toString() {
+        return "IssueParent{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", topics=" + topics +
+                '}';
+    }
+
     public int describeContents() {
         return  0;
     }

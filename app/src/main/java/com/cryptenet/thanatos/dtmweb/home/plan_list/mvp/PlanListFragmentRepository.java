@@ -27,6 +27,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 @PerFragment
 public class PlanListFragmentRepository extends BaseFragRepository
@@ -41,7 +42,6 @@ public class PlanListFragmentRepository extends BaseFragRepository
     @Override
     public void getAllProjects(Context context, String token) {
         String head = "application/json";
-        String oauth = token;
                 //PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 //        Log.d(TAG, "getAllProjects: " + token);
 //        if (oauth != null) {
@@ -92,6 +92,23 @@ public class PlanListFragmentRepository extends BaseFragRepository
             @Override
             public void onFailure(Call<AllPlansResponse> call, Throwable t) {
 
+            }
+        });
+    }
+
+    @Override
+    public void searchMyPlans(Context context, String token, String searchTerm) {
+        Call<AllPlansResponse> req = apiClient.getAllMyPlansSearch("Bearer " + token, searchTerm);
+
+        req.enqueue(new Callback<AllPlansResponse>() {
+            @Override
+            public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
+                //you got your search result
+            }
+
+            @Override
+            public void onFailure(Call<AllPlansResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: " +"search failed");
             }
         });
     }

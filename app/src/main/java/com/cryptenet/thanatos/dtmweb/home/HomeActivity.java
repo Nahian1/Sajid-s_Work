@@ -26,7 +26,9 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
+import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
+import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
@@ -34,9 +36,11 @@ import com.cryptenet.thanatos.dtmweb.home.edit_project.EditProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.form.FormFragment;
 import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.investor_project.InvestorProjectFragment;
+import com.cryptenet.thanatos.dtmweb.home.other_report.OtherReportFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
+import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
@@ -212,12 +216,11 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        InitiatorProjectFragment fragment1 = new InitiatorProjectFragment();
+        ThreadListFragment fragment1 = new ThreadListFragment();
         Bundle bundle1 = new Bundle();
-        bundle1.putInt("reqType", 2);
+        bundle1.putInt("reqType", PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null) == "Investor" ? 1 : 2);
         fragment1.setArguments(bundle1);
         replaceFragment(R.id.frame_container, fragment1);
-
     }
 
     @OnClick(R.id.report)
@@ -290,6 +293,21 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         replaceFragment(R.id.frame_container, fragment);
     }
 
+    @Subscribe
+    public void onIssueTopicChosenEvent(IssueTopicChosenEvent event) {
+        OtherReportFragment fragment = new OtherReportFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("issue_code", event.issueCode);
+        fragment.setArguments(bundle);
+        replaceFragment(R.id.frame_container, fragment);
+    }
+
+    @Subscribe
+    public void onReturnToHomeEvent(ReturnToHomeEvent event) {
+        replaceFragment(R.id.frame_container, new PlanListFragment());
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -312,9 +330,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @Override
     public void onBackPressed() {
-
         super.onBackPressed();
-
     }
 
     @OnClick(R.id.iv_nav_edit_profile)

@@ -27,4 +27,5 @@ public class ReportIssueFragmentPresenter extends BaseFragPresenter<ReportIssueF
     public void getAllIssues(Context context) {
         model.getAllIssues(context);
     }
+
 }

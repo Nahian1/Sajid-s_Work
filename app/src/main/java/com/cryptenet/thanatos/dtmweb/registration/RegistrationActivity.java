@@ -244,14 +244,23 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @OnClick(R.id.btn_sign_in_reg)
     public void requestRegistration(View view) {
-        String name = etNameReg.getText().toString().trim();
-        String email = etEmailReg.getText().toString().trim();
-        String pwd = etPwdReg.getText().toString().trim();
-        String cPwd = etConfirmPwd.getText().toString().trim();
-        String address = etAddress.getText().toString().trim();
-        String bankName = etBankNameReg.getText().toString().trim();
-        String bankAccName = etBankAccNameReg.getText().toString().trim();
-        String bankAccNum = etBankAccNumberReg.getText().toString().trim();
+//        String name = etNameReg.getText().toString().trim();
+//        String email = etEmailReg.getText().toString().trim();
+//        String pwd = etPwdReg.getText().toString().trim();
+//        String cPwd = etConfirmPwd.getText().toString().trim();
+//        String address = etAddress.getText().toString().trim();
+//        String bankName = etBankNameReg.getText().toString().trim();
+//        String bankAccName = etBankAccNameReg.getText().toString().trim();
+//        String bankAccNum = etBankAccNumberReg.getText().toString().trim();
+
+        String name = "Britly";
+        String email = "britly@gmail.com";
+        String pwd = "asdasd123";
+        String cPwd = "asdasd123";
+        String address = "home";
+        String bankName = "bank";
+        String bankAccName = "Britly";
+        String bankAccNum = "123456789";
 
 
         if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()

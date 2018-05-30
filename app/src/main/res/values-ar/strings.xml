@@ -60,4 +60,6 @@
     <string name="hint_et_note">ملاحظة</string>
     <string name="view_file">استعراض الملف</string>
     <string name="update_profile">تحديث</string>
+    <string name="btn_cancel">الغاء</string>
+    <string name="hint_et_issue">اخبرنا عن مشكلتك</string>
 </resources>
