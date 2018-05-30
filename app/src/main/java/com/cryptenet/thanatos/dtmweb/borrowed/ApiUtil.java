@@ -42,21 +42,9 @@ public class ApiUtil {
             return "IOException";
         }
     }
-//private void showMsg(String msg, String logLevel){
-//        if(BuildConfig.DEBUG){
-//            if ("DEBUG".equals(logLevel)){
-//
-//            } else if ("DEBUG".equals(logLevel)){
-//
-//            } else if ("WARN".equals(logLevel)){
-//
-//            } else if ("INFO".equals(logLevel)){
-//
-//            }
-//        }
-//}
+
     public String editUser(String id, String name, String email,
-                           File picture,
+                           File picture, String userType, String pwd,
                            String address, String country, String city, String bankName,
                            String bankAccountName, String bankAccountNumber, String accessToken) {
         String requestUrl = BASE_URL + "api/v1/user/" + id + "/?format=json";
@@ -74,6 +62,8 @@ public class ApiUtil {
             multipart.addFormField("bank_account_name", bankAccountName);
             multipart.addFormField("bank_account_number", bankAccountNumber);
             multipart.addFormField("address", address);
+            multipart.addFormField("user_type", userType);
+            multipart.addFormField("password", pwd);
 
             return multipart.finish();
 
