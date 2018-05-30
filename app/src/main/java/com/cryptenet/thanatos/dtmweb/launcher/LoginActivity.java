@@ -89,7 +89,8 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         switch (v.getId()) {
             case R.id.btn_sign_in:
 
-                presenter.requestForLogin("azzam@gmail.com","asdasd123");
+                presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
+//                presenter.requestForLogin("azzam@gmail.com","asdasd123");
 
 //                String email = etEmail.getText().toString().trim();
 //                String password = etPwd.getText().toString().trim();
@@ -108,7 +109,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 //                }
                 break;
             case R.id.tv_sign_up:
-                navigator.toRegistrationActivity(this,false);
+                navigator.toRegistrationActivity(this, false);
                 break;
             case R.id.tv_forgot_pwd:
                 navigator.toForgotPasswordActivity(this);
@@ -120,11 +121,11 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
 
-        if(event.isSuccess) {
+        if (event.isSuccess) {
             AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
-                try{
-                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
+                try {
+                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))) {
                         navigator.toHomeActivity(LoginActivity.this, event.string);
                     }
                 } catch (Exception e) {

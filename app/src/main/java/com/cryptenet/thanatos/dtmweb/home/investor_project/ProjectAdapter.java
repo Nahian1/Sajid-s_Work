@@ -15,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,31 +37,72 @@ import java.util.Locale;
  * Created by Mobile App on 2/9/2018.
  */
 
-public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
+public class ProjectAdapter extends BaseAdapter implements Filterable {
     private Context context;
     private List<ProjectsRsp> projects;
+    private List<ProjectsRsp> filteredList;
     private int count = 0;
     private int reqType;
+    private InvestorProjectFilter investorProjectFilter;
 
     public ProjectAdapter(@NonNull Context context, List<ProjectsRsp> projects, int reqType) {
-        super(context, R.layout.initiator_project_list_row, projects);
+//        super(context, R.layout.initiator_project_list_row, projects);
         this.context = context;
         this.projects = projects;
+        this.filteredList = projects;
         this.reqType = reqType;
+
+        getFilter();
+
     }
 
-    public void updateList(List<ProjectsRsp> projs){
+    public void updateList(List<ProjectsRsp> projs) {
         this.projects.clear();
+        this.filteredList.clear();
         this.projects.addAll(projs);
+        this.filteredList.addAll(projs);
         this.notifyDataSetChanged();
-
     }
+
+
+    /**
+     * Get size of user list
+     *
+     * @return userList size
+     */
+    @Override
+    public int getCount() {
+        return filteredList.size();
+    }
+
+    /**
+     * Get specific item from user list
+     *
+     * @param i item index
+     * @return list item
+     */
+    @Override
+    public Object getItem(int i) {
+        return filteredList.get(i);
+    }
+
+    /**
+     * Get user list item id
+     *
+     * @param i item index
+     * @return current item id
+     */
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.initiator_project_list_row,parent,false);
+        convertView = inflater.inflate(R.layout.initiator_project_list_row, parent, false);
         TextView titleTV = convertView.findViewById(R.id.titleTV);
         TextView priceTV = convertView.findViewById(R.id.priceTV);
         TextView dateTV = convertView.findViewById(R.id.dateTV);
@@ -66,12 +111,12 @@ public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
 
         editIV.setVisibility(View.GONE);
 
-        titleTV.setText(projects.get(position).getTitle());
-        priceTV.setText(projects.get(position).getAccessPrice());
+        titleTV.setText(filteredList.get(position).getTitle());
+        priceTV.setText(filteredList.get(position).getAccessPrice());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         try {
-            dateTV.setText(dateFormat.format(dateFormat.parse(projects.get(position).getCreatedAt())));
+            dateTV.setText(dateFormat.format(dateFormat.parse(filteredList.get(position).getCreatedAt())));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -79,24 +124,23 @@ public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
         if (reqType == 1) {
             statusTV.setVisibility(View.INVISIBLE);
         } else {
-            if(projects.get(position).getIsApproved()){
-                statusTV.setText(context.getResources().getString(R.string.tag_accepted));
+            if (filteredList.get(position).getIsApproved()) {
+                statusTV.setText("Approved");
                 statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
-            }
-            else{
-                statusTV.setText(context.getResources().getString(R.string.tag_pending));
+            } else {
+                statusTV.setText("Pending");
                 statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
             }
         }
 
-        //statusTV.setText(projects.get(position).getStatus());
+        //statusTV.setText(filteredList.get(position).getStatus());
         if (reqType != 1)
             editIV.setVisibility(View.GONE);
         count++;
-        Log.e("project", "getView: "+count);
+        Log.e("project", "getView: " + count);
 
         editIV.setOnClickListener(v -> {
-            ProjectsRsp pro = projects.get(position);
+            ProjectsRsp pro = filteredList.get(position);
             pro.setEditMode(true);
 
             EventBus.getDefault().post(new ToEditPlanEvent(pro));
@@ -104,5 +148,66 @@ public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
 
         return convertView;
 
+    }
+
+    /**
+     * Get custom filter
+     *
+     * @return filter
+     */
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        if (investorProjectFilter == null) {
+            investorProjectFilter = new InvestorProjectFilter();
+        }
+
+        return investorProjectFilter;
+    }
+
+    /**
+     * Custom filter for initiator project list
+     * Filter content in initiator project list according to the search text
+     */
+    private class InvestorProjectFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            FilterResults filterResults = new FilterResults();
+
+            if (constraint != null && constraint.length() > 0) {
+                List<ProjectsRsp> tempList = new ArrayList<>();
+
+                // search content in friend list
+                for (ProjectsRsp project : projects) {
+                    if (project.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        tempList.add(project);
+                    }
+                }
+
+                filterResults.count = tempList.size();
+                filterResults.values = tempList;
+            } else {
+                filterResults.count = projects.size();
+                filterResults.values = projects;
+            }
+
+            return filterResults;
+        }
+
+        /**
+         * Notify about filtered list to ui
+         *
+         * @param constraint text
+         * @param results    filtered result
+         */
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredList = (List<ProjectsRsp>) results.values;
+//            updateList(filteredList);
+            notifyDataSetChanged();
+        }
     }
 }
