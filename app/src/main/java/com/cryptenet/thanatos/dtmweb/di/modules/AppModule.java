@@ -53,7 +53,7 @@ public abstract class AppModule {
     @Provides
     @Singleton
     static SharedPreferences providesSharedPreferences(CryptApplication context) {
-        return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Binds

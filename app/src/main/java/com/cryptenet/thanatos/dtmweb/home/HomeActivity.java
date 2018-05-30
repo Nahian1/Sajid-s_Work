@@ -36,8 +36,8 @@ import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFrag
 import com.cryptenet.thanatos.dtmweb.home.investor_project.InvestorProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
-import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
+import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
@@ -73,11 +73,31 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.report)
     LinearLayout report;
 
+    @BindView(R.id.project)
+    LinearLayout project;
+    @BindView(R.id.request)
+    LinearLayout request;
+    @BindView(R.id.language)
+    LinearLayout language;
+    @BindView(R.id.conversation)
+    LinearLayout conversation;
+    @BindView(R.id.logOut)
+    LinearLayout logOut;
+    @BindView(R.id.terms)
+    TextView terms;
+    @BindView(R.id.rateUs)
+    TextView rateUs;
+    @BindView(R.id.about)
+    TextView about;
+    @BindView(R.id.iv_nav_pp)
     CircleImageView ivNavPp;
+    @BindView(R.id.tv_nav_name)
     TextView tvNavName;
+    @BindView(R.id.tv_nav_type)
     TextView tvNavType;
+    @BindView(R.id.tv_nav_address)
     TextView tvNavAddress;
-    TextView tvNavDetails;
+    @BindView(R.id.iv_nav_edit_profile)
     ImageView ivNavEditProfile;
 
     @Override
@@ -226,7 +246,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         tvNavName.setText(header.getName());
         tvNavType.setText(header.getType());
         tvNavAddress.setText(header.getLocation());
-        tvNavDetails.setText(header.getDesc());
     }
 
     @Subscribe
@@ -275,6 +294,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
+
+        presenter.getNavHeaderData(this);
     }
 
     @Override
@@ -294,5 +315,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         super.onBackPressed();
 
+    }
+
+    @OnClick(R.id.iv_nav_edit_profile)
+    public void onViewClicked() {
     }
 }

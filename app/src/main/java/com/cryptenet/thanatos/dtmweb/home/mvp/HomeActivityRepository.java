@@ -7,6 +7,9 @@
 
 package com.cryptenet.thanatos.dtmweb.home.mvp;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
@@ -20,13 +23,12 @@ public class HomeActivityRepository extends BaseRepository
     private static String TAG = TagProvider.getDebugTag(HomeActivityRepository.class);
 
     @Override
-    public NavHeader getNavHeaderData() {
+    public NavHeader getNavHeaderData(Context context) {
         return new NavHeader(
-                preferences.getString(ConstantProvider.NAV_PP_URL, null),
-                preferences.getString(ConstantProvider.NAV_NAME, null),
-                preferences.getString(ConstantProvider.NAV_TYPE, null),
-                preferences.getString(ConstantProvider.NAV_ADDRESS, null),
-                preferences.getString(ConstantProvider.NAV_DETAILS, null)
+                PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_PICTURE_URL, null),
+                PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_NAME, null),
+                PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_USER_TYPE, null),
+                PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ADDRESS, null)
         );
     }
 }
