@@ -17,7 +17,7 @@
     <string name="hint_et_bank_name">Bank Name</string>
     <string name="hint_et_bank_acc_name">Bank Account Name</string>
     <string name="hint_et_bank_acc_number">Bank Account Number</string>
-    <string name="hint_et_forgot">Email or Phone Number</string>
+    <string name="hint_et_forgot">Email</string>
     <string name="hint_et_new_pwd">New Password</string>
     <string name="hint_et_confirm_new_pwd">Confirm New Password</string>
     <string name="hint_et_code" translatable="false">00 00 00</string>
@@ -75,6 +75,8 @@
     <string name="update_profile">Update</string>
     
     <string name="hint_et_issue">Tell us about the issue …</string>
+    <string name="tag_accepted">Accepted</string>
+    <string name="tag_pending">Pending</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>

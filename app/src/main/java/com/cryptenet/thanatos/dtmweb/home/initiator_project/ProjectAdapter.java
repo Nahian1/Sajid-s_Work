@@ -68,11 +68,11 @@ public class ProjectAdapter extends ArrayAdapter<ProjectsRsp> {
         }
 
         if(projects.get(position).getIsApproved()){
-            statusTV.setText("Approved");
+            statusTV.setText(context.getResources().getString(R.string.tag_accepted));
             statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
         }
         else{
-            statusTV.setText("Pending");
+            statusTV.setText(context.getResources().getString(R.string.tag_accepted));
             statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
         }
 

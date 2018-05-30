@@ -62,7 +62,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
         reqType = getArguments().getInt("reqType");
 
         projectLV = convertView.findViewById(R.id.projectListView);
-        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList() , reqType);
+        adapter = new ProjectAdapter(activityContext, projectsRspList , reqType);
         projectLV.setAdapter(adapter);
 
         projectLV.setOnItemClickListener((parent, view, position, id) ->
@@ -103,7 +103,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
 
         presenter.attachView(this);
 
-//        presenter.getMyProjectList(reqType,activityContext);
+        presenter.getMyProjectList(reqType, activityContext);
     }
 
     @Override

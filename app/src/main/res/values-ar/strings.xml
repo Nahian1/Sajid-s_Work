@@ -62,4 +62,6 @@
     <string name="update_profile">تحديث</string>
     <string name="btn_cancel">الغاء</string>
     <string name="hint_et_issue">اخبرنا عن مشكلتك</string>
+    <string name="tag_accepted">مقبول</string>
+    <string name="tag_pending">قيد الانتظار</string>
 </resources>
