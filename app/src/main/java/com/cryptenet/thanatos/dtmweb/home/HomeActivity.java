@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
 import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
+import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
@@ -103,6 +105,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     TextView tvNavAddress;
     @BindView(R.id.iv_nav_edit_profile)
     ImageView ivNavEditProfile;
+    @BindView(R.id.editTextSearch)
+    EditText editTextSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,6 +242,18 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
+    @OnClick(R.id.buttonSearch)
+    public void buttonSearch() {
+
+        String searchTxt = editTextSearch.getText().toString().trim();
+
+        if (!searchTxt.isEmpty())
+            EventBus.getDefault().post(searchTxt);
+        else
+            showMessage("Enter search query!");
+
+    }
+
     @Override
     public void getNavHeaderData(NavHeader header) {
         Glide.with(this)
@@ -333,7 +349,4 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         super.onBackPressed();
     }
 
-    @OnClick(R.id.iv_nav_edit_profile)
-    public void onViewClicked() {
-    }
 }

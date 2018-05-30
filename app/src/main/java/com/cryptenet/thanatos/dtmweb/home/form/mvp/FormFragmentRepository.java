@@ -46,10 +46,11 @@ public class FormFragmentRepository extends BaseFragRepository
         OkHttpClient client = new OkHttpClient();
 
         RequestBody formBody = new FormBody.Builder()
+                .add("projectId", String.valueOf(transaction.getProjectsDetailed().getId())) //id of the project
                 .add("bankName", "")
                 .add("bankAccName", "")
                 .add("bankAccNo", "")
-                .add("transId", "")
+                .add("transId", "") //id of the plan
                 .add("note", "")
                 .build();
 

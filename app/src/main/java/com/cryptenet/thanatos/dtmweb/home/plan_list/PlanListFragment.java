@@ -101,6 +101,13 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     }
 
+    @Subscribe
+    public void onPlanSearchEvent(String searchQuery) {
+
+        presenter.searchMyPlans(activityContext, token, searchQuery);
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();

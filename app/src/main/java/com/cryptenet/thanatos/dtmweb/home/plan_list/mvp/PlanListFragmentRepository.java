@@ -42,7 +42,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
     @Override
     public void getAllProjects(Context context, String token) {
         String head = "application/json";
-                //PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
+        //PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 //        Log.d(TAG, "getAllProjects: " + token);
 //        if (oauth != null) {
 //
@@ -98,19 +98,24 @@ public class PlanListFragmentRepository extends BaseFragRepository
 
     @Override
     public void searchMyPlans(Context context, String token, String searchTerm) {
+
         Call<AllPlansResponse> req = apiClient.getAllMyPlansSearch("Bearer " + token, searchTerm);
 
         req.enqueue(new Callback<AllPlansResponse>() {
             @Override
             public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
                 //you got your search result
+
+                EventBus.getDefault().post(new ProjectListReceiveEvent(response.body().getResults()));
+
             }
 
             @Override
             public void onFailure(Call<AllPlansResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: " +"search failed");
+                Log.d(TAG, "onFailure: " + "search failed");
             }
         });
+
     }
 
     @Override
