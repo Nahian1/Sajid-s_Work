@@ -73,8 +73,7 @@ public class FormFragmentRepository extends BaseFragRepository
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
-                Transaction transaction1 = new Gson().fromJson(response.body().toString(), Transaction.class);
+                Transaction transaction1 = new Gson().fromJson(response.body().string(), Transaction.class);
                 transaction1.setProjectsDetailed(transaction.getProjectsDetailed());
 
                 if (response.isSuccessful())

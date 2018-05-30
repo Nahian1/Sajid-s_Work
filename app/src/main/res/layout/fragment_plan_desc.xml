@@ -5,14 +5,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_horizontal_16">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_vertical_16"
             android:orientation="vertical">
-
 
             <TextView
                 android:id="@+id/textTitle"
@@ -31,7 +29,6 @@
                 android:text="Price: SR: 670 - SR: 780"
                 android:textColor="#535353"
                 android:textSize="15sp" />
-
 
             <ImageView
                 android:id="@+id/demoImg"
@@ -291,8 +288,6 @@
                 android:text="description"
                 android:textSize="15sp"
                 android:visibility="gone" />
-
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>
