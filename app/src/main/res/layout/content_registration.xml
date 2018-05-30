@@ -116,7 +116,7 @@
             android:layout_marginTop="@dimen/margin_vertical_16"
             android:backgroundTint="@android:color/white"
             android:hint="@string/hint_et_email"
-            android:inputType="textPersonName"
+            android:inputType="textEmailAddress"
             android:paddingTop="8dp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"

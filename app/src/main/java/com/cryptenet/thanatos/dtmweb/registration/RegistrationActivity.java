@@ -19,9 +19,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -62,12 +64,13 @@ import butterknife.OnClick;
 public class RegistrationActivity extends BaseActivity<RegistrationActivityContract.Presenter>
         implements RegistrationActivityContract.View, AdapterView.OnItemSelectedListener {
     private static final String TAG = TagProvider.getDebugTag(RegistrationActivity.class);
+
     private File imageFile;
     private String accType;
     private int countryCode, cityCode;
     private List<Country> countries;
     private List<City> cities;
-    private List<String> sCountries, sCities;
+    private List<String> accTypes, sCountries, sCities;
     private ArrayAdapter<String> spinAccTypeAdapter, spinCountryAdapter, spinCityAdapter;
     private boolean isEdit;
 
@@ -107,6 +110,15 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     @BindView(R.id.spin_city)
     Spinner spinCity;
 
+    @BindView(R.id.btn_sign_in_reg)
+    Button btnSignInReg;
+
+    @BindView(R.id.tv_have_acc)
+    TextView tvHaveAcc;
+
+    @BindView(R.id.tv_sign_in)
+    TextView tvSignIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,37 +126,38 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
         viewUnbinder = ButterKnife.bind(this);
 
-        isEdit = getIntent().getBooleanExtra("isEdit",false);
+        isEdit = getIntent().getBooleanExtra("isEdit", false);
 
         init();
 
         if (isEdit) {
-
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            String imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL,null);
+            String imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL, null);
 
-            if (imageUrl!=null) {
+            if (imageUrl != null) {
                 Glide.with(this)
                         .load(imageUrl)
                         .apply(RequestOptions.placeholderOf(R.drawable.ic_nav_profile_picture))
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(ivPp);
-
             }
 
-            etNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_NAME,null));
-            etEmailReg.setText(sharedPreferences.getString(ConstantProvider.SP_EMAIL,null));
-            etAddress.setText(sharedPreferences.getString(ConstantProvider.SP_ADDRESS,null));
-            etBankNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_NAME,null));
-            etBankAccNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NAME,null));
-            etBankAccNumberReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NO,null));
+            etNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_NAME, null));
+            etEmailReg.setText(sharedPreferences.getString(ConstantProvider.SP_EMAIL, null));
+            etAddress.setText(sharedPreferences.getString(ConstantProvider.SP_ADDRESS, null));
+            etBankNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_NAME, null));
+            etBankAccNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NAME, null));
+            etBankAccNumberReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NO, null));
 
+            btnSignInReg.setText(R.string.update_profile);
+            tvHaveAcc.setVisibility(View.GONE);
+            tvSignIn.setVisibility(View.GONE);
         }
 
     }
 
     private void init() {
-        List<String> accTypes = new ArrayList<>();
+        accTypes = new ArrayList<>();
         sCountries = new ArrayList<>();
         sCities = new ArrayList<>();
 
@@ -231,36 +244,39 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @OnClick(R.id.btn_sign_in_reg)
     public void requestRegistration(View view) {
-//        presenter.carryRegData(
-//                imageFile,
-//                accType,
-//                etNameReg.getText().toString().trim(),
-//                etEmailReg.getText().toString().trim(),
-//                etPwdReg.getText().toString().trim(),
-//                etConfirmPwd.getText().toString().trim(),
-//                etAddress.getText().toString().trim(),
-//                countryCode,
-//                cityCode,
-//                etBankNameReg.getText().toString().trim(),
-//                etBankAccNameReg.getText().toString().trim(),
-//                etBankAccNumberReg.getText().toString().trim()
-//        );
+        String name = etNameReg.getText().toString().trim();
+        String email = etEmailReg.getText().toString().trim();
+        String pwd = etPwdReg.getText().toString().trim();
+        String cPwd = etConfirmPwd.getText().toString().trim();
+        String address = etAddress.getText().toString().trim();
+        String bankName = etBankNameReg.getText().toString().trim();
+        String bankAccName = etBankAccNameReg.getText().toString().trim();
+        String bankAccNum = etBankAccNumberReg.getText().toString().trim();
 
-        presenter.carryRegData(
-                imageFile,
-                "Initiator",
-                "alam",
-                "azzam@gmail.com",
-                "asdasd123",
-                "asdasd123",
-                "home",
-                1,
-                64,
-                "bank",
-                "alam",
-                "1234567890"
 
-        );
+        if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
+                && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
+            if (pwd.equals(cPwd)) {
+                presenter.carryRegData(
+                        imageFile,
+                        accType,
+                        name,
+                        email,
+                        pwd,
+                        address,
+                        countryCode,
+                        cityCode,
+                        bankName,
+                        bankAccName,
+                        bankAccNum
+                );
+            } else {
+                showMessage("Password did not match");
+            }
+        } else {
+            showMessage("Please fill all fields");
+        }
+
     }
 
     @OnClick(R.id.tv_sign_in)
@@ -299,6 +315,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         sCountries.clear();
         for (Country country : this.countries)
             sCountries.add(country.getName());
+        countryCode = countries.get(0).getId();
+        presenter.getLimitedCities(countries.get(0).getId());
         spinCountryAdapter.notifyDataSetChanged();
     }
 
@@ -308,6 +326,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         sCities.clear();
         for (City city : this.cities)
             sCities.add(city.getName());
+        cityCode = cities.get(0).getId();
         spinCityAdapter.notifyDataSetChanged();
     }
 
@@ -326,22 +345,19 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                 break;
             case R.id.spin_country:
                 if (countries != null)
-                countryCode = (countries.get(position)).getId();
+                    countryCode = (countries.get(position)).getId();
                 Log.d(TAG, "onItemSelected: " + countryCode);
-                presenter.getLimitedCities(countryCode == 0 ? 1 : countryCode);
+                presenter.getLimitedCities(countryCode);
                 break;
             case R.id.spin_city:
                 if (cities != null)
-                cityCode = cities.get(position).getId();
+                    cityCode = cities.get(position).getId();
                 break;
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        if (parent.getId() == R.id.spin_country) {
-            presenter.getLimitedCities(1);
-        }
     }
 
     @Override

@@ -27,14 +27,11 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
 
     @Override
     public void carryRegData(File imageFile, String accType, String name, String email, String pwd,
-                             String cPwd, String address, int countryCode, int cityCode,
+                             String address, int countryCode, int cityCode,
                              String bankName, String bankAccName, String bankAccNumber) {
         model.attachContext(view.getActivity());
-        if (pwd.equals(cPwd))
-            model.attemptReg(imageFile, accType, name, email, pwd, address, countryCode, cityCode,
-                    bankName, bankAccName, bankAccNumber);
-        else
-            view.showMessage("Password do not match!");
+        model.attemptReg(imageFile, accType, name, email, pwd, address, countryCode, cityCode,
+                bankName, bankAccName, bankAccNumber);
     }
 
     @Override

@@ -8,7 +8,6 @@
 package com.cryptenet.thanatos.dtmweb.mvp_contracts;
 
 import android.content.Context;
-import android.content.res.Configuration;
 
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
@@ -18,8 +17,8 @@ import java.io.File;
 public interface RegistrationActivityContract {
     interface Presenter extends BaseContract.Presenter<RegistrationActivityContract.View> {
         void carryRegData(File imageFile, String accType, String name, String email, String pwd,
-                          String cPwd, String address, int countryCode, int cityCode,
-                          String bankName, String bankAccName, String bankAccNumber);
+                          String address, int countryCode, int cityCode, String bankName,
+                          String bankAccName, String bankAccNumber);
         void getAllCountries();
         void getLimitedCities(int countryCode);
         void checkLoginState(Context context);

@@ -20,7 +20,6 @@ import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
-import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
@@ -124,9 +123,14 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         if(event.isSuccess) {
             AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
-                if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
-                    navigator.toHomeActivity(LoginActivity.this, event.string);
+                try{
+                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
+                        navigator.toHomeActivity(LoginActivity.this, event.string);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             });
         }
     }
