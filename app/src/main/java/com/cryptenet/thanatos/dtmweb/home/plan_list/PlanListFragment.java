@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
@@ -99,12 +100,12 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     }
 
     @Subscribe
-    public void onPlanSearchEvent(String searchQuery) {
+    public void onSearchEvent(SearchEvent event) {
 
-        if (searchQuery.equals("null"))
+        if (event.searchTxt.isEmpty())
             presenter.getProjectList(activityContext, token);
         else
-            presenter.searchMyPlans(activityContext, token, searchQuery);
+            presenter.searchMyPlans(activityContext, token, event.searchTxt);
 
     }
 

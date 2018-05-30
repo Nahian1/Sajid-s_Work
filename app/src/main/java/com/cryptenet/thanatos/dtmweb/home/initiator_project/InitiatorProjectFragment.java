@@ -8,9 +8,6 @@
 package com.cryptenet.thanatos.dtmweb.home.initiator_project;
 
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +19,10 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
+import com.cryptenet.thanatos.dtmweb.home.investor_project.INVPlanGenerator;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -64,10 +63,11 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         reqType = getArguments().getInt("reqType");
 
-        if (reqType==2)
+        if (reqType == 2)
             convertView.findViewById(R.id.btnAddPlan).setVisibility(View.GONE);
 
         projectLV = convertView.findViewById(R.id.projectListView);
+//        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
         adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
         projectLV.setAdapter(adapter);
 
@@ -92,6 +92,14 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
     }
 
+
+    @Subscribe
+    public void onSearchEvent(SearchEvent event) {
+
+        adapter.getFilter().filter(event.searchTxt);
+
+    }
+
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
         Log.d(TAG, "onProjectListReceiveEvent: login");
@@ -111,23 +119,30 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     public void onResume() {
         super.onResume();
 
-        presenter.attachView(this);
+//        presenter.attachView(this);
 
         presenter.getMyProjectList(reqType, activityContext);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+//            EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+//            EventBus.getDefault().register(this);
+//    }
+
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
