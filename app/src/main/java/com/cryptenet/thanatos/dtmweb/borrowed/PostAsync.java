@@ -17,7 +17,7 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
 
     @Override
     protected String doInBackground(Object[] objects) {
-        ApiUtil util = new ApiUtil("https://fa-sa-801-dev.herokuapp.com/");;
+        ApiUtil util = new ApiUtil("https://fa-sa-801-dev.herokuapp.com/");
         String response = null;
 
         if (objects[0].equals("1")) {

@@ -59,7 +59,6 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presenter>
         implements HomeActivityContract.View {
@@ -97,7 +96,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.about)
     TextView about;
     @BindView(R.id.iv_nav_pp)
-    CircleImageView ivNavPp;
+    ImageView ivNavPp;
     @BindView(R.id.tv_nav_name)
     TextView tvNavName;
     @BindView(R.id.tv_nav_type)
@@ -281,6 +280,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
                 .load(header.getPpUrl())
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_nav_profile_picture))
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .apply(RequestOptions.circleCropTransform())
                 .into(ivNavPp);
 
         tvNavName.setText(header.getName());

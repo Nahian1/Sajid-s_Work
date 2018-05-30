@@ -89,7 +89,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         switch (v.getId()) {
             case R.id.btn_sign_in:
 
-                presenter.requestForLogin("azzam@gmail.com","asdasd123");
+                presenter.requestForLogin("qwert@qq.com","asdasd123");
 
 //                String email = etEmail.getText().toString().trim();
 //                String password = etPwd.getText().toString().trim();
