@@ -35,8 +35,7 @@ public class IssueParent implements Parcelable
             return (new IssueParent[size]);
         }
 
-    }
-    ;
+    };
 
     protected IssueParent(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));

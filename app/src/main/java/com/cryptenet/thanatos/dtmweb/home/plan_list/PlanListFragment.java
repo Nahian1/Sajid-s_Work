@@ -104,7 +104,10 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     @Subscribe
     public void onPlanSearchEvent(String searchQuery) {
 
-        presenter.searchMyPlans(activityContext, token, searchQuery);
+        if (searchQuery.equals("null"))
+            presenter.getProjectList(activityContext, token);
+        else
+            presenter.searchMyPlans(activityContext, token, searchQuery);
 
     }
 

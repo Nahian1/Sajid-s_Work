@@ -48,7 +48,7 @@ public interface ApiClient {
     @GET("api/v1/plan/my/")
     Call<AllPlansResponse> getAllMyPlans(@Header("Authorization") String token);
 
-    @GET("api/v1/plan/my/")
+    @GET("api/v1/plan/")
     Call<AllPlansResponse> getAllMyPlansSearch(@Header("Authorization") String token, @Query("search") String searchTerm);
 
     @GET("/api/v1/plan-access/")
