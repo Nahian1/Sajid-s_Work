@@ -12,11 +12,15 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
+import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.FormFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -43,11 +47,11 @@ public class FormFragmentRepository extends BaseFragRepository
         OkHttpClient client = new OkHttpClient();
 
         RequestBody formBody = new FormBody.Builder()
-                .add("plan", null)
-                .add("bankName", transaction.getBankName())
-                .add("bankAccName", transaction.getBankAccountName())
-                .add("bankAccNo", transaction.getBankAccountNumber())
-                .add("transId", transaction.getTransactionId())
+                .add("plan", String.valueOf(transaction.getProjectsDetailed().getId()))
+                .add("bank_name", transaction.getBankName())
+                .add("bank_account_name", transaction.getBankAccountName())
+                .add("bank_account_number", transaction.getBankAccountNumber())
+                .add("transaction_id", transaction.getTransactionId())
                 .add("note", transaction.getNote())
                 .build();
 
@@ -70,10 +74,11 @@ public class FormFragmentRepository extends BaseFragRepository
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
-//                if (response.isSuccessful())
-//                    EventBus.getDefault()
-//                            .post(new TransactionSuccessEvent(new Gson().
-//                                    fromJson(response.body().toString(), Transaction.class)));
+                Transaction transaction1 = new Gson().fromJson(response.body().toString(), Transaction.class);
+                transaction1.setProjectsDetailed(transaction.getProjectsDetailed());
+
+                if (response.isSuccessful())
+                    EventBus.getDefault().post(new TransactionSuccessEvent(transaction1));
             }
         });
     }
