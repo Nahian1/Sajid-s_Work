@@ -34,6 +34,7 @@ import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
+import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
@@ -157,14 +158,14 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+//                EventBus.getDefault().post(new SearchEvent(charSequence.toString().trim()));
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if (editable.toString().isEmpty())
-                    EventBus.getDefault().post("null");
-
+                EventBus.getDefault().post(new SearchEvent(editable.toString().trim()));
             }
         });
     }
@@ -265,17 +266,18 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
-    @OnClick(R.id.buttonSearch)
-    public void buttonSearch() {
-
-        String searchTxt = editTextSearch.getText().toString().trim();
-
-        if (!searchTxt.isEmpty())
-            EventBus.getDefault().post(searchTxt);
-        else
-            showMessage("Enter search query!");
-
-    }
+    //commented out by Asif due to redundancy
+//    @OnClick(R.id.buttonSearch)
+//    public void buttonSearch() {
+//
+//        String searchTxt = editTextSearch.getText().toString().trim();
+//
+//        if (!searchTxt.isEmpty())
+//            EventBus.getDefault().post(searchTxt);
+//        else
+//            showMessage("Enter search query!");
+//
+//    }
 
     @Override
     public void getNavHeaderData(NavHeader header) {

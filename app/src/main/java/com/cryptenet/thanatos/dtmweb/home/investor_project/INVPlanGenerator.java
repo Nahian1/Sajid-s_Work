@@ -12,26 +12,30 @@ public class INVPlanGenerator {
         rsps = new ArrayList<>();
 
         ProjectsRsp rsp = new ProjectsRsp();
-        rsp.setTitle("Bla Bla project");
+        rsp.setTitle("Hello Adele");
         rsp.setAccessPrice("500");
+        rsp.setIsApproved(false);
         rsp.setCreatedAt("2018-05-27T20:07:27.793588Z");
         rsps.add(rsp);
 
         ProjectsRsp rsp2 = new ProjectsRsp();
-        rsp2.setTitle("Bla Bla project");
-        rsp2.setAccessPrice("500");
+        rsp2.setTitle("Chain Smoker");
+        rsp2.setAccessPrice("800");
+        rsp2.setIsApproved(true);
         rsp2.setCreatedAt("2018-05-27T20:07:27.793588Z");
         rsps.add(rsp2);
 
         ProjectsRsp rsp3 = new ProjectsRsp();
-        rsp3.setTitle("Bla Bla project");
-        rsp3.setAccessPrice("500");
+        rsp3.setTitle("Thug Life");
+        rsp3.setAccessPrice("1500");
+        rsp3.setIsApproved(false);
         rsp3.setCreatedAt("2018-05-27T20:07:27.793588Z");
         rsps.add(rsp3);
 
         ProjectsRsp rsp4 = new ProjectsRsp();
-        rsp4.setTitle("Bla Bla project");
-        rsp4.setAccessPrice("500");
+        rsp4.setTitle("San Andreas");
+        rsp4.setAccessPrice("2500");
+        rsp4.setIsApproved(true);
         rsp4.setCreatedAt("2018-05-27T20:07:27.793588Z");
         rsps.add(rsp4);
 
