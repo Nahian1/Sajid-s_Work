@@ -101,7 +101,7 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
 
         editIV.setVisibility(View.GONE);
 
-        if (reqType == 2)
+        if (reqType == 1)
             statusTV.setVisibility(View.GONE);
 
         titleTV.setText(filteredList.get(position).getPlanTitle());

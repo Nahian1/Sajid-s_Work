@@ -67,7 +67,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
         projectLV.setOnItemClickListener((parent, view, position, id) ->
                 EventBus.getDefault().post(
                         new ToDetailsFragmentEvent(
-                                projectsRspList.get(position).getId(),
+                                projectsRspList.get(position).getPlan(),
                                 (projectsRspList.get(position).getIsApproved()) ? 1 : 2)));
 
         return convertView;
