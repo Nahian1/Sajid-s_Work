@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -22,10 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
+import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,13 +36,13 @@ import java.util.Locale;
 
 public class ProjectAdapter extends BaseAdapter implements Filterable {
     private Context context;
-    private List<ProjectsRsp> projects;
-    private List<ProjectsRsp> filteredList;
+    private List<Plans> projects;
+    private List<Plans> filteredList;
     private int count = 0;
     private int reqType;
     private InvestorProjectFilter investorProjectFilter;
 
-    public ProjectAdapter(@NonNull Context context, List<ProjectsRsp> projects, int reqType) {
+    public ProjectAdapter(@NonNull Context context, List<Plans> projects, int reqType) {
 //        super(context, R.layout.initiator_project_list_row, projects);
         this.context = context;
         this.projects = projects;
@@ -56,7 +53,7 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
 
     }
 
-    public void updateList(List<ProjectsRsp> projs) {
+    public void updateList(List<Plans> projs) {
         this.projects.clear();
         this.filteredList.clear();
         this.projects.addAll(projs);
@@ -111,8 +108,8 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
 
         editIV.setVisibility(View.GONE);
 
-        titleTV.setText(filteredList.get(position).getTitle());
-        priceTV.setText(filteredList.get(position).getAccessPrice());
+        titleTV.setText(filteredList.get(position).getPlanTitle());
+        priceTV.setText(String.valueOf(filteredList.get(position).getPlanAccessPrice()));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         try {
@@ -140,10 +137,10 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         Log.e("project", "getView: " + count);
 
         editIV.setOnClickListener(v -> {
-            ProjectsRsp pro = filteredList.get(position);
-            pro.setEditMode(true);
-
-            EventBus.getDefault().post(new ToEditPlanEvent(pro));
+//            ProjectsRsp pro = filteredList.get(position);
+//            pro.setEditMode(true);
+//
+//            EventBus.getDefault().post(new ToEditPlanEvent(pro));
         });
 
         return convertView;
@@ -180,11 +177,11 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
                 List<ProjectsRsp> tempList = new ArrayList<>();
 
                 // search content in friend list
-                for (ProjectsRsp project : projects) {
-                    if (project.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                        tempList.add(project);
-                    }
-                }
+//                for (ProjectsRsp project : projects) {
+//                    if (project.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
+//                        tempList.add(project);
+//                    }
+//        }
 
                 filterResults.count = tempList.size();
                 filterResults.values = tempList;
@@ -205,7 +202,7 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredList = (List<ProjectsRsp>) results.values;
+//            filteredList = (List<ProjectsRsp>) results.values;
 //            updateList(filteredList);
             notifyDataSetChanged();
         }

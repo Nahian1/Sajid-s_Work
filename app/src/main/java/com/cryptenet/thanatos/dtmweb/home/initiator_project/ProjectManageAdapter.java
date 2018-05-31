@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,15 +29,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ProjectAdapter extends BaseAdapter implements Filterable {
+public class ProjectManageAdapter extends BaseAdapter implements Filterable {
     private Context context;
-    private List<ProjectsRsp> projects;
-    private List<ProjectsRsp> filteredList;
+    private List<Plans> projects = new ArrayList<>();
+    private List<Plans> filteredList = new ArrayList<>();
     private int count = 0;
     private int reqType;
     private InitiatorProjectFilter initiatorProjectFilter;
 
-    public ProjectAdapter(@NonNull Context context, List<ProjectsRsp> projects, int reqType) {
+    public ProjectManageAdapter(@NonNull Context context, List<Plans> projects, int reqType) {
 //        super(context, R.layout.initiator_project_list_row, projects);
         this.context = context;
         this.projects = projects;
@@ -47,7 +47,7 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         getFilter();
     }
 
-    public void updateList(List<ProjectsRsp> projs) {
+    public void updateList(List<Plans> projs) {
         this.projects.clear();
         this.filteredList.clear();
         this.projects.addAll(projs);
@@ -99,8 +99,8 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         TextView statusTV = convertView.findViewById(R.id.statusTV);
         ImageView editIV = convertView.findViewById(R.id.editIV);
 
-        titleTV.setText(filteredList.get(position).getTitle());
-        priceTV.setText(String.valueOf(filteredList.get(position).getAccessPrice()));
+        titleTV.setText(filteredList.get(position).getPlanTitle());
+        priceTV.setText(String.valueOf(filteredList.get(position).getPlanAccessPrice()));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         try {
@@ -155,11 +155,11 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
             FilterResults filterResults = new FilterResults();
 
             if (constraint != null && constraint.length() > 0) {
-                List<ProjectsRsp> tempList = new ArrayList<>();
+                List<Plans> tempList = new ArrayList<>();
 
                 // search content in friend list
-                for (ProjectsRsp project : projects) {
-                    if (project.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                for (Plans project : projects) {
+                    if (project.getPlanTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
                         tempList.add(project);
                     }
                 }
@@ -183,7 +183,7 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredList = (List<ProjectsRsp>) results.values;
+            filteredList = (List<Plans>) results.values;
 //            updateList(filteredList);
             notifyDataSetChanged();
         }

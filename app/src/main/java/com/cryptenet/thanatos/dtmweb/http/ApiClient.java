@@ -10,6 +10,7 @@ package com.cryptenet.thanatos.dtmweb.http;
 import com.cryptenet.thanatos.dtmweb.pojo.AllCategoriesResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadInitResponse;
 
 import retrofit2.Call;
@@ -53,19 +54,19 @@ public interface ApiClient {
     Call<AllPlansResponse> getAllMyPlansSearch(@Header("Authorization") String token, @Query("search") String searchTerm);
 
     @GET("/api/v1/plan-access/")
-    Call<AllPlansResponse> getAllMyReqInv(@Header("Authorization") String token);
+    Call<PlanAccessResponse> getAllMyReqInv(@Header("Authorization") String token);
 
     @GET("/api/v1/plan-access/?is_approved=True")
-    Call<AllPlansResponse> getAllMyReqInvApr(@Header("Authorization") String token);
+    Call<PlanAccessResponse> getAllMyReqInvApr(@Header("Authorization") String token);
 
     @GET("api/v1/plan-access/")
-    Call<AllPlansResponse> getAllReqPlansINT(@Header("Authorization") String token);
+    Call<PlanAccessResponse> getAllReqPlansINT(@Header("Authorization") String token);
 
     @GET("/api/v1/issue/categories/")
     Call<IssueResponse> getAllIssues(@Header("Authorization") String token);
 
     @GET("api/v1/message-thread/distinct/")
-    Call<ThreadInitResponse> getThreadlist(@Header("Authorization") String token);
+    Call<ThreadInitResponse> getThreadList(@Header("Authorization") String token);
 
 
 //    @GET("GET /api/v1/plan/{id}")

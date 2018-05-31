@@ -8,9 +8,6 @@
 package com.cryptenet.thanatos.dtmweb.home.investor_project;
 
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,11 +18,11 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
-import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.PlanAccessReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -41,7 +38,7 @@ import butterknife.Unbinder;
 public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmentContract.Presenter>
         implements InvestorProjectFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(InvestorProjectFragment.class);
-    private List<ProjectsRsp> projectsRspList;
+    private List<Plans> projectsRspList;
     private ListView projectLV;
     private ProjectAdapter adapter;
     private int reqType;
@@ -100,9 +97,9 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
     }
 
     @Subscribe
-    public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
+    public void onProjectListReceiveEvent(PlanAccessReceiveEvent event) {
         Log.d(TAG, "onProjectListReceiveEvent: login");
-        this.projectsRspList = event.projectsRspList;
+        this.projectsRspList = event.plansList;
         adapter.updateList(this.projectsRspList);
     }
 

@@ -18,11 +18,13 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -41,9 +43,11 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         implements InitiatorProjectFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(InitiatorProjectFragment.class);
 
-    private List<ProjectsRsp> projectsRspList;
+    private List<ProjectsRsp> projectsRspList = new ArrayList<>();
+    private List<Plans> plansList = new ArrayList<>();
     private ListView projectLV;
     private ProjectAdapter adapter;
+    private ProjectManageAdapter adapter2;
     private int reqType;
     private Unbinder unbinder;
 
@@ -62,16 +66,27 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         reqType = getArguments().getInt("reqType");
 
-        if (reqType == 2)
+        if (reqType ==1) {
+            projectLV = convertView.findViewById(R.id.projectListView);
+//        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
+            adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
+            projectLV.setAdapter(adapter);
+
+            projectLV.setOnItemClickListener((parent, view, position, id) ->
+                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 3)));
+
+        } else {
             convertView.findViewById(R.id.btnAddPlan).setVisibility(View.GONE);
 
-        projectLV = convertView.findViewById(R.id.projectListView);
+            projectLV = convertView.findViewById(R.id.projectListView);
 //        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
-        adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
-        projectLV.setAdapter(adapter);
+            adapter2 = new ProjectManageAdapter(activityContext, plansList, reqType);
+            projectLV.setAdapter(adapter2);
 
-        projectLV.setOnItemClickListener((parent, view, position, id) ->
-                EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 3)));
+            projectLV.setOnItemClickListener((parent, view, position, id) ->
+                    EventBus.getDefault().post(new ToDetailsFragmentEvent(plansList != null && plansList.size() > 0 ? plansList.get(position).getId() : 0, 3)));
+
+        }
 
         return convertView;
     }
@@ -107,6 +122,15 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         adapter.updateList(this.projectsRspList);
     }
 
+    @Subscribe
+    public void onManageProjectReceiveEvent(ManageProjectReceiveEvent event) {
+        Log.d(TAG, "onProjectListReceiveEvent: login");
+//        this.projectsRspList.clear();
+//        this.projectsRspList.addAll(event.projectsRspList);
+        this.plansList = event.projectsRspList;
+        adapter2.updateList(this.plansList);
+    }
+
     @OnClick(R.id.btnAddPlan)
     public void btnAddPlan(View view) {
         ProjectsRsp pro = new ProjectsRsp();
@@ -119,7 +143,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     public void onResume() {
         super.onResume();
 
-//        presenter.attachView(this);
+        presenter.attachView(this);
 
         presenter.getMyProjectList(reqType, activityContext);
     }

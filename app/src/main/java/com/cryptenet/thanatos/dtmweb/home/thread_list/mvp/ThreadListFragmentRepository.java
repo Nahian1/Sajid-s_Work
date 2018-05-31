@@ -30,7 +30,7 @@ public class ThreadListFragmentRepository extends BaseFragRepository
     @Override
     public void getThreadList(Context context) {
 
-        Call<ThreadInitResponse> req = apiClient.getThreadlist("Bearer " +
+        Call<ThreadInitResponse> req = apiClient.getThreadList("Bearer " +
                 PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
 
         req.enqueue(new Callback<ThreadInitResponse>() {
