@@ -5,7 +5,7 @@
  *  This project is under MIT license
  */
 
-package com.cryptenet.thanatos.dtmweb.home.plan_list;
+package com.cryptenet.thanatos.dtmweb.home.thread_list;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -31,14 +31,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
+public class ThreadListAdapter extends ArrayAdapter<ProjectsRsp> {
     private Context context;
     private List<ProjectsRsp> projects;
     private int count = 0;
 //    private ItemClickListener itemClickListener;
 
-    public PlanListAdapter(@NonNull Context context, List<ProjectsRsp> projects) {
-        super(context, R.layout.plan_list_row, projects);
+    public ThreadListAdapter(@NonNull Context context, List<ProjectsRsp> projects) {
+        super(context, R.layout.thread_project_list_row, projects);
         this.context = context;
         this.projects = projects;
 //        itemClickListener = (ItemClickListener) context;

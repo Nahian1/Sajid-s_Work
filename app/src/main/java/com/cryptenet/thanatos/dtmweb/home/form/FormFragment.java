@@ -95,6 +95,7 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
         Glide.with(activityContext)
                 .load(details.getInitiatorImage())
                 .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
+                .apply(RequestOptions.circleCropTransform())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(profilepic);
 

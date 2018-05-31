@@ -10,6 +10,7 @@ package com.cryptenet.thanatos.dtmweb.http;
 import com.cryptenet.thanatos.dtmweb.pojo.AllCategoriesResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.ThreadInitResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -62,6 +63,10 @@ public interface ApiClient {
 
     @GET("/api/v1/issue/categories/")
     Call<IssueResponse> getAllIssues(@Header("Authorization") String token);
+
+    @GET("api/v1/message-thread/distinct/")
+    Call<ThreadInitResponse> getThreadlist(@Header("Authorization") String token);
+
 
 //    @GET("GET /api/v1/plan/{id}")
 //    Call<ProjectsDSResponse> getShortDesc(@Header("Authorization") String token, @Path("id") int id);

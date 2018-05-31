@@ -22,6 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
@@ -38,7 +41,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Presenter>
@@ -51,7 +53,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     @BindView(R.id.demoImg)
     ImageView demoImg;
     @BindView(R.id.profilepic)
-    CircleImageView profilepic;
+    ImageView profilepic;
     @BindView(R.id.textViewName)
     TextView textViewName;
     @BindView(R.id.textViewType)
@@ -70,7 +72,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     @BindView(R.id.layoutBankSection)
     LinearLayout layoutBankSection;
 
-    //    @BindView(R.id.profilepic)
+//    @BindView(R.id.profilepic)
 //    ImageView profileIV;
     @BindView(R.id.textBankAccName)
     TextView textBankAccName;
@@ -134,17 +136,17 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         amountToBePaid.setText(event.detailed.getAccessPrice());
 
         //commented out for later use
-//        Glide.with(activityContext)
-//                .load(event.detailed.getCover())
-//                .apply(RequestOptions.placeholderOf(R.drawable.imgdemo))
-//                .transition(DrawableTransitionOptions.withCrossFade())
-//                .into(demoImg);
-//
-//        Glide.with(activityContext)
-//                .load(event.detailed.getInitiatorImage())
-//                .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
-//                .transition(DrawableTransitionOptions.withCrossFade())
-//                .into(profileIV);
+        Glide.with(activityContext)
+                .load(event.detailed.getCover())
+                .apply(RequestOptions.placeholderOf(R.drawable.imgdemo))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(demoImg);
+
+        Glide.with(activityContext)
+                .load(event.detailed.getInitiatorImage())
+                .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(profilepic);
 
 //        if (type == 1) {
 //            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
@@ -197,6 +199,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ic_init_conversation:
+                presenter.getThreadId(activityContext, projectId);
                 break;
             case R.id.textViewFile:
                 break;
@@ -225,11 +228,11 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 
         presenter.attachView(this);
 
-//        if (type == 1) { //long
-//            presenter.getLongDetails(activityContext, projectId);
-//        } else { //short
+        if (type == 1) { //long
+            presenter.getLongDetails(activityContext, projectId);
+        } else { //short
         presenter.getShortDetails(activityContext, projectId);
-//        }
+        }
     }
 
     @Override

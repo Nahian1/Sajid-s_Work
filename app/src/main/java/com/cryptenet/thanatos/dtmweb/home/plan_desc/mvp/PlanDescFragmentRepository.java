@@ -8,18 +8,18 @@
 package com.cryptenet.thanatos.dtmweb.home.plan_desc.mvp;
 
 import android.content.Context;
-import android.os.CpuUsageInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ShowPlanDetailsEvent;
-import com.cryptenet.thanatos.dtmweb.home.request_detail.Project;
+import com.cryptenet.thanatos.dtmweb.events.ThreadIdReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDLResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDSResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
+import com.cryptenet.thanatos.dtmweb.pojo.ThreadInitResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -31,10 +31,11 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 @PerFragment
 public class PlanDescFragmentRepository extends BaseFragRepository
@@ -187,6 +188,41 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                     }
                 });
 
+            }
+        });
+    }
+
+    @Override
+    public void getThreadId(Context context, int planId) {
+        String head = "application/json";
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("plan", String.valueOf(planId))
+                .build();
+
+        Log.d(TAG, "data: " + formBody.toString());
+
+        final Request request = new Request.Builder()
+                .url(ConstantProvider.BASE_URL + "api/v1/message-thread/")
+                .post(formBody)
+                .addHeader("Content-Type", head)
+                .addHeader("Authorization", "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onFailure: " + "thread id failed");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                ThreadInitResponse initResponse = gson.fromJson(response.body().string(), ThreadInitResponse.class);
+                EventBus.getDefault().post(new ThreadIdReceiveEvent(initResponse));
+                Log.d(TAG, "onResponse: thread" + initResponse.toString());
             }
         });
     }

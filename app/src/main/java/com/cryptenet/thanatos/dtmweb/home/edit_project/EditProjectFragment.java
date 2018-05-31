@@ -34,8 +34,8 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -99,7 +99,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     public EditProjectFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -165,13 +164,13 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         ProjectsRq projectsRq = new ProjectsRq();
-                        projectsRq.setTitle(editTextName.getText().toString().trim());
-                        projectsRq.setCategory(categoryCode);
-                        projectsRq.setShortDescription(editTextShortDescription.getText().toString().trim());
-                        projectsRq.setLongDescription(editTextLongDescription.getText().toString().trim());
-                        projectsRq.setMinimumInvestmentCost((int) Double.parseDouble(editTextPriceMinimum.getText().toString().trim()));
-                        projectsRq.setMinimumInvestmentCost((int) Double.parseDouble(editTextPriceMaximum.getText().toString().trim()));
-                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
+//                        projectsRq.setTitle(editTextName.getText().toString().trim());
+//                        projectsRq.setCategory(categoryCode);
+//                        projectsRq.setShortDescription(editTextShortDescription.getText().toString().trim());
+//                        projectsRq.setLongDescription(editTextLongDescription.getText().toString().trim());
+//                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMinimum.getText().toString().trim()));
+//                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMaximum.getText().toString().trim()));
+//                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
                         projectsRq.setCover(imageFile);
                         projectsRq.setUploadedFile(planFile);
                         projectsRq.setNew(true);
@@ -293,7 +292,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        this.categoryCode = list.get(position).getId();
+        if(list != null && list.size() > 0) {
+            this.categoryCode = list.get(position).getId();
+        }
     }
 
     @Override

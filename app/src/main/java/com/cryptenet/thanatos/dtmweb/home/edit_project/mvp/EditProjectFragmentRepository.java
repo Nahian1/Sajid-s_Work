@@ -11,6 +11,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
@@ -54,8 +55,8 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
     @Override
     public void saveUpdatePlan(ProjectsRq plan, Context context, int id) {
-//        if (plan.isNew()) {
-//            PostAsync async = new PostAsync();
+        if (plan.isNew()) {
+            PostAsync async = new PostAsync();
 //            async.execute(
 //                    "3",
 //                    plan.getTitle(),
@@ -69,23 +70,37 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 //                    plan.getUploadedFile(),
 //                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
 //            );
-//        } else {
-//            PostAsync async = new PostAsync();
-//            async.execute(
-//                    "4",
-//                    plan.getTitle(),
-//                    plan.getCategory(),
-//                    plan.getShortDescription(),
-//                    plan.getLongDescription(),
-//                    plan.getMinimumInvestmentCost(),
-//                    plan.getMaximumInvestmentCost(),
-//                    plan.getAccessPrice(),
-//                    plan.getCover(),
-//                    plan.getUploadedFile(),
-//                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
-//                    id
-//            );
-//        }
+
+            async.execute(
+                    "3",
+                    "ekta project",
+                    65,
+                    "short description",
+                    "long description",
+                    11223,
+                    112233,
+                    7896,
+                    plan.getCover(),
+                    plan.getUploadedFile(),
+                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
+            );
+        } else {
+            PostAsync async = new PostAsync();
+            async.execute(
+                    "4",
+                    plan.getTitle(),
+                    plan.getCategory(),
+                    plan.getShortDescription(),
+                    plan.getLongDescription(),
+                    plan.getMinimumInvestmentCost(),
+                    plan.getMaximumInvestmentCost(),
+                    plan.getAccessPrice(),
+                    plan.getCover(),
+                    plan.getUploadedFile(),
+                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
+                    id
+            );
+        }
     }
 
     private void setCategories(List<Categories> categoriesList) {

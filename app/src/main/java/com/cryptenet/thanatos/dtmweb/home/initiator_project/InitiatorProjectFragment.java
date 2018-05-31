@@ -22,7 +22,6 @@ import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
-import com.cryptenet.thanatos.dtmweb.home.investor_project.INVPlanGenerator;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -71,7 +70,8 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
         projectLV.setAdapter(adapter);
 
-        projectLV.setOnItemClickListener((parent, view, position, id) -> EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getId(), 3)));
+        projectLV.setOnItemClickListener((parent, view, position, id) ->
+                EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 3)));
 
         return convertView;
     }
@@ -95,14 +95,14 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
     @Subscribe
     public void onSearchEvent(SearchEvent event) {
-
         adapter.getFilter().filter(event.searchTxt);
-
     }
 
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
         Log.d(TAG, "onProjectListReceiveEvent: login");
+//        this.projectsRspList.clear();
+//        this.projectsRspList.addAll(event.projectsRspList);
         this.projectsRspList = event.projectsRspList;
         adapter.updateList(this.projectsRspList);
     }

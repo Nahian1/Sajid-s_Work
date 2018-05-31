@@ -33,6 +33,7 @@ import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
+import com.cryptenet.thanatos.dtmweb.events.ThreadIdReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
@@ -45,6 +46,7 @@ import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
+import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
@@ -345,6 +347,15 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @Subscribe
     public void onReturnToHomeEvent(ReturnToHomeEvent event) {
         replaceFragment(R.id.frame_container, new PlanListFragment());
+    }
+
+    @Subscribe
+    public void onThreadIdReceiveEvent(ThreadIdReceiveEvent event) {
+        ThreadMsgFragment fragment = new ThreadMsgFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("thread_init", event.threadInitResponse);
+        fragment.setArguments(bundle);
+        replaceFragment(R.id.frame_container, fragment);
     }
 
     @Override
