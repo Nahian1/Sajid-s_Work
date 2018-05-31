@@ -72,7 +72,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     @BindView(R.id.layoutBankSection)
     LinearLayout layoutBankSection;
 
-//    @BindView(R.id.profilepic)
+    //    @BindView(R.id.profilepic)
 //    ImageView profileIV;
     @BindView(R.id.textBankAccName)
     TextView textBankAccName;
@@ -123,30 +123,35 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     public void toShowPlanDetailsEvent(ShowPlanDetailsEvent event) {
 
         projectsDetailed = event.detailed;
+        if (event.detailed.getId() == null) {
+            return;
+        }
 
-        textTitle.setText(event.detailed.getTitle());
+        if (textTitle != null) textTitle.setText(event.detailed.getTitle());
 
-        textViewName.setText(event.detailed.getInitiatorsName());
-        address.setText(event.detailed.getInitiatorAddress());
-        textShortDesc.setText(event.detailed.getShortDescription());
+        if (textViewName != null) textViewName.setText(event.detailed.getInitiatorsName());
+        if (address != null) address.setText(event.detailed.getInitiatorAddress());
+        if (textShortDesc != null) textShortDesc.setText(event.detailed.getShortDescription());
 
-        textBankAccName.setText(event.detailed.getBankAccountName());
-        textBankAccNo.setText(event.detailed.getBankAccountNumber());
-        textBankName.setText(event.detailed.getBankName());
-        amountToBePaid.setText(event.detailed.getAccessPrice());
+        if (textBankAccName != null) textBankAccName.setText(event.detailed.getBankAccountName());
+        if (textBankAccNo != null) textBankAccNo.setText(event.detailed.getBankAccountNumber());
+        if (textBankName != null) textBankName.setText(event.detailed.getBankName());
+        if (amountToBePaid != null) amountToBePaid.setText(event.detailed.getAccessPrice());
 
         //commented out for later use
-        Glide.with(activityContext)
-                .load(event.detailed.getCover())
-                .apply(RequestOptions.placeholderOf(R.drawable.imgdemo))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(demoImg);
+        if (demoImg != null)
+            Glide.with(activityContext)
+                    .load(event.detailed.getCover())
+                    .apply(RequestOptions.placeholderOf(R.drawable.imgdemo))
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(demoImg);
 
-        Glide.with(activityContext)
-                .load(event.detailed.getInitiatorImage())
-                .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(profilepic);
+        if (profilepic != null)
+            Glide.with(activityContext)
+                    .load(event.detailed.getInitiatorImage())
+                    .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(profilepic);
 
 //        if (type == 1) {
 //            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
@@ -162,7 +167,8 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 //
 //            textViewFile.setVisibility(View.VISIBLE);
 //        } else {
-        textDatePrice.setText("Price: " + event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
+        if (textDatePrice != null)
+            textDatePrice.setText("Price: " + event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
 //        }
 
         if (type != 3) {
@@ -231,7 +237,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         if (type == 1) { //long
             presenter.getLongDetails(activityContext, projectId);
         } else { //short
-        presenter.getShortDetails(activityContext, projectId);
+            presenter.getShortDetails(activityContext, projectId);
         }
     }
 

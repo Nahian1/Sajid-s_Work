@@ -127,6 +127,7 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                         .getDefaultSharedPreferences(context)
                         .getString(ConstantProvider.SP_ACCESS_TOKEN, null))
                 .build();
+        Log.d(TAG, " request : " + request.toString());
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -136,8 +137,6 @@ public class PlanDescFragmentRepository extends BaseFragRepository
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
-
                 Gson gson = new Gson();
                 ProjectsDSResponse detailed = gson.fromJson(response.body().string(), ProjectsDSResponse.class);
                 Log.d(TAG, "onResponse: " + detailed.toString());

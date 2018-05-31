@@ -66,8 +66,9 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         reqType = getArguments().getInt("reqType");
 
+        projectLV = convertView.findViewById(R.id.projectListView);
+
         if (reqType ==1) {
-            projectLV = convertView.findViewById(R.id.projectListView);
 //        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
             adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
             projectLV.setAdapter(adapter);
@@ -77,8 +78,6 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         } else {
             convertView.findViewById(R.id.btnAddPlan).setVisibility(View.GONE);
-
-            projectLV = convertView.findViewById(R.id.projectListView);
 //        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
             adapter2 = new ProjectManageAdapter(activityContext, plansList, reqType);
             projectLV.setAdapter(adapter2);
