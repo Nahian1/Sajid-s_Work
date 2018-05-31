@@ -11,6 +11,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
@@ -32,7 +33,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
     @Override
     public void getAllCategories(Context context) {
-        retrofit2.Call<AllCategoriesResponse> req = apiClient.getCategories("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
+        retrofit2.Call<AllCategoriesResponse> req = apiClient.getCategories("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null));
         req.enqueue(new retrofit2.Callback<AllCategoriesResponse>() {
             @Override
             public void onResponse(retrofit2.Call<AllCategoriesResponse> call, retrofit2.Response<AllCategoriesResponse> response) {
@@ -54,38 +55,38 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
     @Override
     public void saveUpdatePlan(ProjectsRq plan, Context context, int id) {
-//        if (plan.isNew()) {
-//            PostAsync async = new PostAsync();
-//            async.execute(
-//                    "3",
-//                    plan.getTitle(),
-//                    plan.getCategory(),
-//                    plan.getShortDescription(),
-//                    plan.getLongDescription(),
-//                    plan.getMinimumInvestmentCost(),
-//                    plan.getMaximumInvestmentCost(),
-//                    plan.getAccessPrice(),
-//                    plan.getCover(),
-//                    plan.getUploadedFile(),
-//                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
-//            );
-//        } else {
-//            PostAsync async = new PostAsync();
-//            async.execute(
-//                    "4",
-//                    plan.getTitle(),
-//                    plan.getCategory(),
-//                    plan.getShortDescription(),
-//                    plan.getLongDescription(),
-//                    plan.getMinimumInvestmentCost(),
-//                    plan.getMaximumInvestmentCost(),
-//                    plan.getAccessPrice(),
-//                    plan.getCover(),
-//                    plan.getUploadedFile(),
-//                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
-//                    id
-//            );
-//        }
+        if (plan.isNew()) {
+            PostAsync async = new PostAsync();
+            async.execute(
+                    "3",
+                    plan.getTitle(),
+                    plan.getCategory(),
+                    plan.getShortDescription(),
+                    plan.getLongDescription(),
+                    plan.getMinimumInvestmentCost(),
+                    plan.getMaximumInvestmentCost(),
+                    plan.getAccessPrice(),
+                    plan.getCover(),
+                    plan.getUploadedFile(),
+                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
+            );
+        } else {
+            PostAsync async = new PostAsync();
+            async.execute(
+                    "4",
+                    plan.getTitle(),
+                    plan.getCategory(),
+                    plan.getShortDescription(),
+                    plan.getLongDescription(),
+                    plan.getMinimumInvestmentCost(),
+                    plan.getMaximumInvestmentCost(),
+                    plan.getAccessPrice(),
+                    plan.getCover(),
+                    plan.getUploadedFile(),
+                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
+                    id
+            );
+        }
     }
 
     private void setCategories(List<Categories> categoriesList) {

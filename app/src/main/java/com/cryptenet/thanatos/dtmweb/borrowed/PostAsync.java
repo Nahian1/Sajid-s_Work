@@ -3,7 +3,9 @@ package com.cryptenet.thanatos.dtmweb.borrowed;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.cryptenet.thanatos.dtmweb.events.EditPlanSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -17,29 +19,30 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
 
     @Override
     protected String doInBackground(Object[] objects) {
-        ApiUtil util = new ApiUtil("https://fa-sa-801-dev.herokuapp.com/");;
+        ApiUtil util = new ApiUtil("https://fa-sa-801-dev.herokuapp.com/");
         String response = null;
 
         if (objects[0].equals("1")) {
             //registration
 
             response = util.createUser(
-                        (String) objects[1],    //name
-                        (String) objects[2],    //email
-                        (String) objects[3],    //password
-                        (File) objects[4],      //picture (file)
-                        (String) objects[5],    //address
-                        (String) objects[6],    //country
-                        (String) objects[7],    //city
-                        (String) objects[8],    //bank name
-                        (String) objects[9],    //bank account name
-                        (String) objects[10],   //bank account number
-                        (String) objects[11]    //user type
+                    (String) objects[1],    //name
+                    (String) objects[2],    //email
+                    (String) objects[3],    //password
+                    (File) objects[4],      //picture (file)
+                    (String) objects[5],    //address
+                    (String) objects[6],    //country
+                    (String) objects[7],    //city
+                    (String) objects[8],    //bank name
+                    (String) objects[9],    //bank account name
+                    (String) objects[10],   //bank account number
+                    (String) objects[11]    //user type
             );
             Log.d(TAG, "doInBackground: " + response);
             Gson gson = new Gson();
             RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
             EventBus.getDefault().post(new RegistrationSuccessEvent(registrationResponse));
+
         } else if (objects[0].equals("2")) {
             //edit or update user
 
@@ -58,6 +61,11 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
                     (String) objects[12],   //bank account number
                     (String) objects[13]    //accessToken = "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
             );
+
+            Gson gson = new Gson();
+            RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
+            EventBus.getDefault().post(new RegistrationSuccessEvent(registrationResponse));
+
         } else if (objects[0].equals("3")) {
             //add plan
 
@@ -73,6 +81,11 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
                     (File) objects[9],
                     (String) objects[10]
             );
+
+            Gson gson = new Gson();
+            ProjectsRsp projectsRsp = gson.fromJson(response, ProjectsRsp.class);
+            EventBus.getDefault().post(new EditPlanSuccessEvent(projectsRsp));
+
         } else if (objects[0].equals("4")) {
             //edit or update plan
 
@@ -89,6 +102,10 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
                     (String) objects[10],   //accessToken = "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
                     (int) objects[11]       // plan id
             );
+
+            Gson gson = new Gson();
+            ProjectsRsp projectsRsp = gson.fromJson(response, ProjectsRsp.class);
+            EventBus.getDefault().post(new EditPlanSuccessEvent(projectsRsp));
 
         }
         return response;

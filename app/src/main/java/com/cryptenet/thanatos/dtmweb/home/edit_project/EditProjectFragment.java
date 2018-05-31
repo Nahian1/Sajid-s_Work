@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.EditPlanSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
@@ -115,7 +116,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         project = new Gson().fromJson(getArguments().getString("project"), ProjectsRsp.class);
 
-        if (project.isEditMode()){
+        if (project.isEditMode()) {
 
             editTextName.setText(project.getInitiatorsName());
             editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
@@ -222,6 +223,14 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         spinCatAdapter.notifyDataSetChanged();
     }
 
+    @Subscribe
+    public void onEditPlanSuccessEvent(EditPlanSuccessEvent event) {
+
+        showMessage("Sucessfully Added/Updated.");
+
+        getActivity().onBackPressed();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -243,7 +252,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
                 imageFile = new File(realPath);
 
-            }else   if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
+            } else if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
 
                 final Uri uri = data.getData();
 
