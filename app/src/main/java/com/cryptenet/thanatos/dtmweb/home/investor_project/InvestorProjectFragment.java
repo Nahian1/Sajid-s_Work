@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
-import com.cryptenet.thanatos.dtmweb.events.PlanAccessReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
@@ -40,7 +40,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
     public static final String TAG = TagProvider.getDebugTag(InvestorProjectFragment.class);
     private List<Plans> projectsRspList;
     private ListView projectLV;
-    private ProjectAdapter adapter;
+    private ProjectManageAdapter adapter;
     private int reqType;
     private Unbinder unbinder;
 
@@ -61,7 +61,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
 
         projectLV = convertView.findViewById(R.id.projectListView);
 //        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
-        adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
+        adapter = new ProjectManageAdapter(activityContext, projectsRspList, reqType);
         projectLV.setAdapter(adapter);
 
         projectLV.setOnItemClickListener((parent, view, position, id) ->
@@ -97,9 +97,9 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
     }
 
     @Subscribe
-    public void onProjectListReceiveEvent(PlanAccessReceiveEvent event) {
+    public void onManageProjectReceiveEvent(ManageProjectReceiveEvent event) {
         Log.d(TAG, "onProjectListReceiveEvent: login");
-        this.projectsRspList = event.plansList;
+        this.projectsRspList = event.projectsRspList;
         adapter.updateList(this.projectsRspList);
     }
 

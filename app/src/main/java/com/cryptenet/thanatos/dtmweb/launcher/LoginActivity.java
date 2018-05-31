@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.launcher;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,8 @@ import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
@@ -56,6 +59,15 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        String lang = PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, null);
+        if (lang == null) {
+            LocaleHelper.setNewLocale(
+                    this,
+                    PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, "en")
+            );
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(ConstantProvider.LOCALE, "en");
+        }
 
         viewUnbinder = ButterKnife.bind(this);
 

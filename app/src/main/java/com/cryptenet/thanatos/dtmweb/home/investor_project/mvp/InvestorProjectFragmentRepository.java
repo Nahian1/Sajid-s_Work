@@ -12,12 +12,15 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
+import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +41,7 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
 
     @Override
     public void getMyProjectList(int reqType, Context context) {
-        if (reqType == 1) {
+        if (reqType == 2) {
             Call<PlanAccessResponse> req = apiClient.getAllMyReqInv("Bearer " +
                     PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
             req.enqueue(new Callback<PlanAccessResponse>() {
@@ -76,6 +79,6 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
         this.projectsRspList = projectsRspList;
         for (Plans projectsRsp : projectsRspList)
             Log.d(TAG, "setProjects: " + projectsRsp.getPlanTitle());
-//        EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsRspList));
+        EventBus.getDefault().post(new ManageProjectReceiveEvent(this.projectsRspList));
     }
 }

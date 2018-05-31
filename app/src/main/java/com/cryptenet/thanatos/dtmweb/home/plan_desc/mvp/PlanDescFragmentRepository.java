@@ -120,7 +120,7 @@ public class PlanDescFragmentRepository extends BaseFragRepository
         OkHttpClient client = new OkHttpClient();
 
         final Request request = new Request.Builder()
-                .url(ConstantProvider.BASE_URL + "api/v1/plan/" + id + "/")
+                .url(ConstantProvider.BASE_URL + "api/v1/plan/" + id + "/details")
                 .get()
                 .addHeader("Content-Type", head)
                 .addHeader("Authorization", "Bearer " + PreferenceManager

@@ -22,12 +22,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
+                    android:id="@+id/iv_nav_pp"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
+                    android:adjustViewBounds="false"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_nav_profile_picture"
-                    android:id="@+id/iv_nav_pp" />
+                    android:src="@drawable/ic_nav_profile_picture" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,14 +136,15 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_language"/>
+
                 <TextView
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/nav_language"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                    android:text="@string/nav_language"/>
+                    android:textColor="@android:color/white" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/conversation"

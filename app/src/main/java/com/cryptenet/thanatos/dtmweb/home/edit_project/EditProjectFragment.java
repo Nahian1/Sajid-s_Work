@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
@@ -191,9 +192,10 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                         token.continuePermissionRequest();
                     }
                 }).check();
+        EventBus.getDefault().post(new ReturnToHomeEvent());
     }
 
-    @OnClick(R.id.imageviewCover)
+    @OnClick(R.id.buttonUploadImage)
     public void getCoverImage(View view) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");

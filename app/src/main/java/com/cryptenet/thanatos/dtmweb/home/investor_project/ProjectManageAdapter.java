@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,19 +29,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by Mobile App on 2/9/2018.
- */
-
-public class ProjectAdapter extends BaseAdapter implements Filterable {
+public class ProjectManageAdapter extends BaseAdapter implements Filterable {
     private Context context;
-    private List<Plans> projects;
-    private List<Plans> filteredList;
+    private List<Plans> projects = new ArrayList<>();
+    private List<Plans> filteredList = new ArrayList<>();
     private int count = 0;
     private int reqType;
-    private InvestorProjectFilter investorProjectFilter;
+    private InitiatorProjectFilter initiatorProjectFilter;
 
-    public ProjectAdapter(@NonNull Context context, List<Plans> projects, int reqType) {
+    public ProjectManageAdapter(@NonNull Context context, List<Plans> projects, int reqType) {
 //        super(context, R.layout.initiator_project_list_row, projects);
         this.context = context;
         this.projects = projects;
@@ -50,7 +45,6 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         this.reqType = reqType;
 
         getFilter();
-
     }
 
     public void updateList(List<Plans> projs) {
@@ -94,7 +88,6 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         return i;
     }
 
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -108,6 +101,9 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
 
         editIV.setVisibility(View.GONE);
 
+        if (reqType == 2)
+            statusTV.setVisibility(View.GONE);
+
         titleTV.setText(filteredList.get(position).getPlanTitle());
         priceTV.setText(String.valueOf(filteredList.get(position).getPlanAccessPrice()));
 
@@ -118,30 +114,20 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
             e.printStackTrace();
         }
 
-        if (reqType == 1) {
-            statusTV.setVisibility(View.INVISIBLE);
+        if (filteredList.get(position).getIsApproved()) {
+            statusTV.setText("Approved");
+            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
         } else {
-            if (filteredList.get(position).getIsApproved()) {
-                statusTV.setText("Approved");
-                statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
-            } else {
-                statusTV.setText("Pending");
-                statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
-            }
+            statusTV.setText("Pending");
+            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
         }
 
         //statusTV.setText(filteredList.get(position).getStatus());
         if (reqType != 1)
             editIV.setVisibility(View.GONE);
+
         count++;
         Log.e("project", "getView: " + count);
-
-        editIV.setOnClickListener(v -> {
-//            ProjectsRsp pro = filteredList.get(position);
-//            pro.setEditMode(true);
-//
-//            EventBus.getDefault().post(new ToEditPlanEvent(pro));
-        });
 
         return convertView;
 
@@ -155,18 +141,18 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
     @NonNull
     @Override
     public Filter getFilter() {
-        if (investorProjectFilter == null) {
-            investorProjectFilter = new InvestorProjectFilter();
+        if (initiatorProjectFilter == null) {
+            initiatorProjectFilter = new InitiatorProjectFilter();
         }
 
-        return investorProjectFilter;
+        return initiatorProjectFilter;
     }
 
     /**
      * Custom filter for initiator project list
      * Filter content in initiator project list according to the search text
      */
-    private class InvestorProjectFilter extends Filter {
+    private class InitiatorProjectFilter extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -174,14 +160,14 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
             FilterResults filterResults = new FilterResults();
 
             if (constraint != null && constraint.length() > 0) {
-                List<ProjectsRsp> tempList = new ArrayList<>();
+                List<Plans> tempList = new ArrayList<>();
 
                 // search content in friend list
-//                for (ProjectsRsp project : projects) {
-//                    if (project.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
-//                        tempList.add(project);
-//                    }
-//        }
+                for (Plans project : projects) {
+                    if (project.getPlanTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        tempList.add(project);
+                    }
+                }
 
                 filterResults.count = tempList.size();
                 filterResults.values = tempList;
@@ -202,7 +188,7 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-//            filteredList = (List<ProjectsRsp>) results.values;
+            filteredList = (List<Plans>) results.values;
 //            updateList(filteredList);
             notifyDataSetChanged();
         }

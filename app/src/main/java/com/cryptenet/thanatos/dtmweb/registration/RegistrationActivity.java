@@ -286,6 +286,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             showMessage("Please fill all fields");
         }
 
+        if (isEdit) {
+            navigator.toHomeActivity(this, null);
+        }
     }
 
     @OnClick(R.id.tv_sign_in)

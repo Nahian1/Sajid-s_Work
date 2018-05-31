@@ -52,6 +52,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -117,9 +118,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         setContentView(R.layout.activity_home);
 
         viewUnbinder = ButterKnife.bind(this);
-
-        if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null).equals("Initiator"))
-            report.setVisibility(View.GONE);
 
         ivNavPp = findViewById(R.id.iv_nav_pp);
         tvNavName = findViewById(R.id.tv_nav_name);
@@ -197,6 +195,14 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             drawerLayout.openDrawer(GravityCompat.START);
     }
 
+    @OnClick(R.id.language)
+    public void language() {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, null) == "en")
+            LocaleHelper.setNewLocale(this,"ar");
+        else
+            LocaleHelper.setNewLocale(this, "en");
+    }
+
     @OnClick(R.id.project)
     public void onManageProject(View view) {
 
@@ -265,6 +271,11 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
+    @OnClick(R.id.logOut)
+    public void logOut(View view) {
+        presenter.clearUserData(this);
+    }
+
     //commented out by Asif due to redundancy
 //    @OnClick(R.id.buttonSearch)
 //    public void buttonSearch() {
@@ -290,6 +301,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         tvNavName.setText(header.getName());
         tvNavType.setText(header.getType());
         tvNavAddress.setText(header.getLocation());
+    }
+
+    @Override
+    public void userDataCleaned() {
+        navigator.toLoginActivity(this);
+        finish();
     }
 
     @Subscribe

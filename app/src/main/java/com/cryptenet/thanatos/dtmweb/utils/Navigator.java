@@ -15,7 +15,6 @@ import com.cryptenet.thanatos.dtmweb.code.CodeActivity;
 import com.cryptenet.thanatos.dtmweb.forgot_password.ForgotPasswordActivity;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
-import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
 
@@ -30,6 +29,7 @@ public class Navigator {
 
     public void toLoginActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

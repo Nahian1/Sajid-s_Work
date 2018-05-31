@@ -28,4 +28,10 @@ public class HomeActivityPresenter
     public void getNavHeaderData(Context context) {
         view.getNavHeaderData(model.getNavHeaderData(context));
     }
+
+    @Override
+    public void clearUserData(Context context) {
+        if (model.clearUserData(context))
+            view.userDataCleaned();
+    }
 }
