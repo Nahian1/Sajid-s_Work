@@ -341,8 +341,15 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegistrationSuccessEvent(RegistrationSuccessEvent event) {
-        showMessage("Registered");
-        navigator.toLoginActivity(this);
+
+        if (!isEdit) {
+            showMessage("Registered");
+            navigator.toLoginActivity(this);
+
+        } else {
+            showMessage("Info updated.");
+        }
+
         finish();
     }
 

@@ -175,7 +175,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                         projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
                         projectsRq.setCover(imageFile);
                         projectsRq.setUploadedFile(planFile);
-                        projectsRq.setNew(true);
+                        projectsRq.setNew(project.isEditMode());
 
                         presenter.saveUpdatePlan(projectsRq, activityContext, -1);
                     }
@@ -226,7 +226,10 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     @Subscribe
     public void onEditPlanSuccessEvent(EditPlanSuccessEvent event) {
 
-        showMessage("Sucessfully Added/Updated.");
+        if (project.isEditMode())
+            showMessage("Updated.");
+        else
+            showMessage("Added.");
 
         getActivity().onBackPressed();
     }
