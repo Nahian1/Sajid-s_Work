@@ -21,13 +21,24 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
+import org.greenrobot.eventbus.EventBus;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentContract.Presenter>
         implements ThreadProjectFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(ThreadProjectFragment.class);
 
-    private ListView projectLV;
-    private ProjectAdapter adapter;
+    @BindView(R.id.threadProjectListView)
+    ListView projectLV;
+
+    private ThreadProjectAdapter adapter;
+    private int threadId;
+
+    Unbinder unbinder;
 
 
     public ThreadProjectFragment() {
@@ -39,10 +50,14 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View convertView = inflater.inflate(R.layout.fragment_plan_desc, container, false);
-        projectLV = convertView.findViewById(R.id.projectListView);
-        adapter = new ProjectAdapter(activityContext, ProjectListGenerator.generateProjects());
-        projectLV.setAdapter(adapter);
+        View convertView = inflater.inflate(R.layout.fragment_thread_project, container, false);
+
+        unbinder = ButterKnife.bind(this, convertView);
+
+        threadId = getArguments().getInt("thread_id");
+
+//        adapter = new ProjectAdapter(activityContext, ProjectListGenerator.generateProjects());
+//        projectLV.setAdapter(adapter);
 
 
         return convertView;
@@ -62,5 +77,31 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
     @Override
     public void restoreState(Bundle savedState) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+
+        presenter.getInvestorThreads(threadId, activityContext);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

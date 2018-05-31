@@ -22,7 +22,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.events.InitiatorThreadsEvent;
+import com.cryptenet.thanatos.dtmweb.pojo.ThreadIdentity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,20 +32,20 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class ThreadListAdapter extends ArrayAdapter<ProjectsRsp> {
+public class ThreadListAdapter extends ArrayAdapter<ThreadIdentity> {
     private Context context;
-    private List<ProjectsRsp> projects;
+    private List<ThreadIdentity> projects;
     private int count = 0;
 //    private ItemClickListener itemClickListener;
 
-    public ThreadListAdapter(@NonNull Context context, List<ProjectsRsp> projects) {
+    public ThreadListAdapter(@NonNull Context context, List<ThreadIdentity> projects) {
         super(context, R.layout.thread_project_list_row, projects);
         this.context = context;
         this.projects = projects;
 //        itemClickListener = (ItemClickListener) context;
     }
 
-    public void updateList(List<ProjectsRsp> projs) {
+    public void updateList(List<ThreadIdentity> projs) {
         this.projects.clear();
         if (projs != null)
             this.projects.addAll(projs);
@@ -55,32 +56,31 @@ public class ThreadListAdapter extends ArrayAdapter<ProjectsRsp> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.plan_list_row, parent, false);
-        ImageView projectIV = convertView.findViewById(R.id.projectImg);
+        convertView = inflater.inflate(R.layout.thread_project_list_row, parent, false);
+        ImageView projectIV = convertView.findViewById(R.id.demoIV);
+        TextView titleTV = convertView.findViewById(R.id.titleTV);
         TextView nameTV = convertView.findViewById(R.id.nameTV);
         TextView dateTV = convertView.findViewById(R.id.dateTV);
-        TextView titleTV = convertView.findViewById(R.id.titleTV);
-        TextView priceTV = convertView.findViewById(R.id.priceTV);
 
-        convertView.findViewById(R.id.viewProject).setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 //                itemClickListener.onItemClick(position);
 
-                EventBus.getDefault().post(String.valueOf(position));
+                EventBus.getDefault().post(new InitiatorThreadsEvent(projects.get(position).getId()));
 
             }
         });
 //        ImageView seemoreIV = convertView.findViewById(R.id.seemoreImg);
 
         Glide.with(context)
-                .load(projects.get(position).getCoverThumbnail())
+                .load(projects.get(position).getPlanCover())
                 .apply(RequestOptions.placeholderOf(R.drawable.ppimg))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(projectIV);
 
-        nameTV.setText(projects.get(position).getInitiatorsName());
+        nameTV.setText(projects.get(position).getInitiatorName());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
@@ -90,8 +90,7 @@ public class ThreadListAdapter extends ArrayAdapter<ProjectsRsp> {
             e.printStackTrace();
         }
 
-        titleTV.setText(projects.get(position).getTitle());
-        priceTV.setText(projects.get(position).getAccessPrice());
+        titleTV.setText(projects.get(position).getPlanTitle());
         count++;
         Log.e("student", "getView: " + count);
 

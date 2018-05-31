@@ -45,7 +45,7 @@
     <string name="nav_about">عن</string>
     <string name="nav_rate">قيّم التطبيق</string>
     <string name="search_bar">ابحث عن أي مشروع</string>
-    <string name="nav_language">Switch To English</string>
+    <string name="nav_language">التحول إلى اللغة الإنجليزية</string>
     <string name="see_more">شاهد المزيد</string>
     <string name="add_plan">أضف خطة</string>
     <string name="category">فئة المشروع</string>
@@ -64,4 +64,5 @@
     <string name="hint_et_issue">اخبرنا عن مشكلتك</string>
     <string name="tag_accepted">مقبول</string>
     <string name="tag_pending">قيد الانتظار</string>
+    <string name="last_conversation">المحادثة الأخيرة</string>
 </resources>

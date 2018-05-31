@@ -51,6 +51,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_list, container, false);
+
         adapter = new PlanListAdapter(activityContext, projectsRspList);
         projectLV = convertView.findViewById(R.id.projectListPlan);
         projectLV.setAdapter(adapter);

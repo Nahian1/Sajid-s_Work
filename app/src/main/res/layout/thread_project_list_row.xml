@@ -48,7 +48,6 @@
                     android:id="@+id/nameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:text="Name"
                     android:textColor="#939393"
                     android:textSize="15sp" />
@@ -61,7 +60,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Last Conv:"
+                        android:text="@string/last_conversation"
                         android:textColor="#939393"
                         android:textSize="12sp" />
                     <TextView
@@ -69,7 +68,6 @@
                         android:id="@+id/dateTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:text="10 March 2018"
                         android:textColor="#939393"
                         android:textSize="12sp" />

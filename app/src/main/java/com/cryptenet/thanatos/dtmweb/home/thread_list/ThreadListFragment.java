@@ -18,12 +18,16 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
-import com.cryptenet.thanatos.dtmweb.events.ThreadListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.DistinctThreadsReceived;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadListFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.ThreadIdentity;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,12 +37,15 @@ import butterknife.Unbinder;
 public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.Presenter>
         implements ThreadListFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(ThreadListFragment.class);
+    private List<ThreadIdentity> threadIdentities;
+    private ThreadListAdapter adapter;
+
     @BindView(R.id.lv_thread_list)
     ListView lvThreadList;
     Unbinder unbinder;
 
     public ThreadListFragment() {
-        // Required empty public constructor
+        threadIdentities = new ArrayList<>();
     }
 
     @Override
@@ -47,6 +54,13 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
         View convertView = inflater.inflate(R.layout.fragment_thread_list, container, false);
 
         unbinder = ButterKnife.bind(this, convertView);
+
+
+        adapter = new ThreadListAdapter(activityContext, threadIdentities);
+//        lvThreadList = convertView.findViewById(R.id.lv_thread_list);
+        lvThreadList.setAdapter(adapter);
+
+
         return convertView;
     }
 
@@ -66,8 +80,9 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
     }
 
     @Subscribe
-    public void onThreadListReceiveEvent(ThreadListReceiveEvent event) {
-
+    public void onDistinctThreadsReceived(DistinctThreadsReceived event) {
+        this.threadIdentities = event.threadIdentities;
+        adapter.updateList(this.threadIdentities);
     }
 
     @Override

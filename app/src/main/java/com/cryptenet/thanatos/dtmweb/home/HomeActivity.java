@@ -29,6 +29,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
+import com.cryptenet.thanatos.dtmweb.events.InitiatorThreadsEvent;
 import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
@@ -47,6 +48,7 @@ import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
+import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
@@ -316,6 +318,17 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         bundle.putInt("project_id", event.projectId);
         bundle.putInt("type", event.layoutType);
+        fragment.setArguments(bundle);
+        replaceFragment(R.id.frame_container, fragment);
+    }
+
+    @Subscribe
+    public void onInitiatorThreadsEvent(InitiatorThreadsEvent event) {
+        ThreadProjectFragment fragment = new ThreadProjectFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("thread_id", event.threadId);
+
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
     }

@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.thread_project.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadProjectFragmentContract;
@@ -19,5 +21,10 @@ public class ThreadProjectFragmentModel extends BaseFragModel<ThreadProjectFragm
 
     public ThreadProjectFragmentModel(ThreadProjectFragmentContract.Repository repository) {
         super(repository);
+    }
+
+    @Override
+    public void getInvestorThreads(int threadId, Context context) {
+        repository.getInvestorThreads(threadId, context);
     }
 }

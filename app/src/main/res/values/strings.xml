@@ -44,7 +44,7 @@
     <string name="acc_type_initiator">Initiator</string>
 
     <string name="nav_man_request">Manage Requests</string>
-    <string name="nav_language">التحول إلى اللغة الإنجليزية</string>
+    <string name="nav_language">Switch to Arabic</string>
     <string name="nav_conversation">Conversation</string>
     <string name="nav_report">Report An Issue</string>
     <string name="nav_logout">Log Out</string>
@@ -77,6 +77,7 @@
     <string name="hint_et_issue">Tell us about the issue …</string>
     <string name="tag_accepted">Accepted</string>
     <string name="tag_pending">Pending</string>
+    <string name="last_conversation">Last Conversation</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>

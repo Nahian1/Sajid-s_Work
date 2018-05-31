@@ -57,33 +57,33 @@ public class EditProjectFragmentRepository extends BaseFragRepository
     public void saveUpdatePlan(ProjectsRq plan, Context context, int id) {
         if (plan.isNew()) {
             PostAsync async = new PostAsync();
-//            async.execute(
-//                    "3",
-//                    plan.getTitle(),
-//                    plan.getCategory(),
-//                    plan.getShortDescription(),
-//                    plan.getLongDescription(),
-//                    plan.getMinimumInvestmentCost(),
-//                    plan.getMaximumInvestmentCost(),
-//                    plan.getAccessPrice(),
-//                    plan.getCover(),
-//                    plan.getUploadedFile(),
-//                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
-//            );
-
             async.execute(
                     "3",
-                    "ekta project",
-                    65,
-                    "short description",
-                    "long description",
-                    11223,
-                    112233,
-                    7896,
+                    plan.getTitle(),
+                    plan.getCategory(),
+                    plan.getShortDescription(),
+                    plan.getLongDescription(),
+                    plan.getMinimumInvestmentCost(),
+                    plan.getMaximumInvestmentCost(),
+                    plan.getAccessPrice(),
                     plan.getCover(),
                     plan.getUploadedFile(),
-                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
+                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
             );
+
+//            async.execute(
+//                    "3",
+//                    "ekta project",
+//                    65,
+//                    "short description",
+//                    "long description",
+//                    11223,
+//                    112233,
+//                    7896,
+//                    plan.getCover(),
+//                    plan.getUploadedFile(),
+//                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
+//            );
         } else {
             PostAsync async = new PostAsync();
             async.execute(
