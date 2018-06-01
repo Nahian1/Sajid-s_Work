@@ -32,11 +32,10 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
-import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -100,6 +99,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     public EditProjectFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -174,7 +174,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 //                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
                         projectsRq.setCover(imageFile);
                         projectsRq.setUploadedFile(planFile);
-                        projectsRq.setNew(true);
+                        projectsRq.setNew(project.isEditMode());
 
                         presenter.saveUpdatePlan(projectsRq, activityContext, -1);
                     }
@@ -221,6 +221,17 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
             this.categoriesList.add(categories.getName());
 
         spinCatAdapter.notifyDataSetChanged();
+    }
+
+    @Subscribe
+    public void onEditPlanSuccessEvent(EditPlanSuccessEvent event) {
+
+        if (project.isEditMode())
+            showMessage("Updated.");
+        else
+            showMessage("Added.");
+
+        getActivity().onBackPressed();
     }
 
     @Override
