@@ -52,7 +52,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_initiator_profile_picture" />
+                    android:src="@drawable/ic_pp_dummy" />
 
                 <TextView
                     android:id="@+id/textViewName"
