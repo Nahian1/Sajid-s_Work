@@ -295,7 +295,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     public void getNavHeaderData(NavHeader header) {
         Glide.with(this)
                 .load(header.getPpUrl())
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_nav_profile_picture))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .apply(RequestOptions.circleCropTransform())
                 .into(ivNavPp);

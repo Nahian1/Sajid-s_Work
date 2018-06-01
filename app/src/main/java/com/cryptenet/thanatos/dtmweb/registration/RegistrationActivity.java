@@ -137,7 +137,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             if (imageUrl != null) {
                 Glide.with(this)
                         .load(imageUrl)
-                        .apply(RequestOptions.placeholderOf(R.drawable.ic_nav_profile_picture))
+                        .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(ivPp);
             }

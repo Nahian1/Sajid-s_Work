@@ -149,7 +149,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         if (profilepic != null)
             Glide.with(activityContext)
                     .load(event.detailed.getInitiatorImage())
-                    .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(profilepic);
 

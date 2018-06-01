@@ -76,7 +76,7 @@ public class ThreadProjectAdapter extends ArrayAdapter<ThreadIdentity> {
 
         Glide.with(context)
                 .load(projects.get(position).getPlanCover())
-                .apply(RequestOptions.placeholderOf(R.drawable.ppimg))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(projectIV);
 

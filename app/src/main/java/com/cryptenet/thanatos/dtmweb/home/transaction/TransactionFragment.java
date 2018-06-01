@@ -104,7 +104,7 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
 
         Glide.with(activityContext)
                 .load(projectData.getInitiatorImage())
-                .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(profilepic);
 
