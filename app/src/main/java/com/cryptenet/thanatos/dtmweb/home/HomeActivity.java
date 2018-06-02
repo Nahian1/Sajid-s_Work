@@ -33,6 +33,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
 import com.cryptenet.thanatos.dtmweb.events.InitiatorThreadsEvent;
 import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestDetailFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ThreadIdReceiveEvent;
@@ -47,6 +48,7 @@ import com.cryptenet.thanatos.dtmweb.home.other_report.OtherReportFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
+import com.cryptenet.thanatos.dtmweb.home.request_detail.RequestDetailFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
@@ -328,6 +330,18 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             editTextSearch.setVisibility(View.VISIBLE);
             buttonSearch.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Subscribe
+    public void onRequestDetailFragmentEvent(RequestDetailFragmentEvent event) {
+        RequestDetailFragment fragment = new RequestDetailFragment();
+
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("transaction_id", event.transactionId);
+
+        fragment.setArguments(bundle);
+        replaceFragment(R.id.frame_container, fragment);
     }
 
     @Subscribe

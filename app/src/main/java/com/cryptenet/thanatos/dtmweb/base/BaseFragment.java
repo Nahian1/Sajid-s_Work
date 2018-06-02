@@ -25,7 +25,7 @@ public abstract class BaseFragment<P extends BaseFragContract.Presenter> extends
     private static final String TAG = TagProvider.getDebugTag(BaseFragment.class);
 
     @Nullable
-    private Unbinder viewUnbinder;
+    protected Unbinder viewUnbinder;
 
     @Inject
     protected Context activityContext;

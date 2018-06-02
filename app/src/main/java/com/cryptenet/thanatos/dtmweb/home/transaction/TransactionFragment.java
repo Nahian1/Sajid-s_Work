@@ -35,7 +35,6 @@ import com.google.gson.Gson;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 public class TransactionFragment extends BaseFragment<TransactionFragmentContract.Presenter>
@@ -70,10 +69,10 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
     TextView noteTV;
     @BindView(R.id.doneBtn)
     Button doneBtn;
-    Unbinder unbinder;
 
-    Transaction transactionData;
-    ProjectsDetailed projectData;
+    private Transaction transactionData;
+    private ProjectsDetailed projectData;
+    private int transactionId;
 
     public TransactionFragment() {
         // Required empty public constructor
@@ -88,9 +87,10 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transaction_detail, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(true);
+        viewUnbinder = ButterKnife.bind(this, view);
 
-        unbinder = ButterKnife.bind(this, view);
+        transactionId = getArguments().getInt("transaction_id");
+        ((HomeActivity) getActivity()).hideSearchBar(true);
 
         transactionData = new Gson().fromJson(getArguments().getString(JsonKeys.TRANSACTION_DETAILS), Transaction.class);
 
@@ -141,14 +141,15 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void onResume() {
+        super.onResume();
+        presenter.attachView(this);
+
+        presenter.getTransactionDetails(activityContext, transactionId);
     }
 
     @OnClick(R.id.doneBtn)
     public void onViewClicked() {
-
         showMessage("done clicked");
     }
 }

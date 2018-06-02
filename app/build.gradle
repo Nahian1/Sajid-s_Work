@@ -86,8 +86,10 @@ dependencies {
     //firebase
     implementation "com.google.firebase:firebase-core:$firebase"
     implementation "com.google.firebase:firebase-messaging:$firebase_cm"
+
     //crashlytics
     implementation "com.crashlytics.sdk.android:crashlytics:$crashlytic_s"
+
     //twitter answer
     implementation "com.crashlytics.sdk.android:answers:$answers"
 
@@ -100,6 +102,7 @@ dependencies {
 
     //OkHttp3
     implementation "com.squareup.okhttp3:okhttp:$ok_http"
+    implementation "com.squareup.okhttp3:logging-interceptor:${ok_http}"
 
     //circular iv
     implementation "de.hdodenhof:circleimageview:$circle_iv"

@@ -26,10 +26,11 @@ import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class ProjectManageAdapter extends BaseAdapter implements Filterable {
+public class ProjectManageReqAdapter extends BaseAdapter implements Filterable {
     private Context context;
     private List<Plans> projects = new ArrayList<>();
     private List<Plans> filteredList = new ArrayList<>();
@@ -37,7 +38,7 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
     private int reqType;
     private InitiatorProjectFilter initiatorProjectFilter;
 
-    public ProjectManageAdapter(@NonNull Context context, List<Plans> projects, int reqType) {
+    public ProjectManageReqAdapter(@NonNull Context context, List<Plans> projects, int reqType) {
 //        super(context, R.layout.initiator_project_list_row, projects);
         this.context = context;
         this.projects = projects;
@@ -102,9 +103,15 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
         titleTV.setText(filteredList.get(position).getPlanTitle());
         priceTV.setText(String.valueOf(filteredList.get(position).getPlanAccessPrice()));
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        String dateOutputPattern = "dd MMM yyyy";
+
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
+
         try {
-            dateTV.setText(dateFormat.format(dateFormat.parse(filteredList.get(position).getCreatedAt())));
+            Date date = inputDateFormat.parse(filteredList.get(position).getCreatedAt());
+            dateTV.setText(outputDateFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }

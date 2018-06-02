@@ -71,7 +71,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
                 EventBus.getDefault().post(
                         new ToDetailsFragmentEvent(
                                 projectsRspList.get(position).getPlan(),
-                                (projectsRspList.get(position).getIsApproved()) ? 1 : 2)));
+                                (projectsRspList.get(position).getIsApproved()) ? 11 : 10)));
 
         return convertView;
     }
