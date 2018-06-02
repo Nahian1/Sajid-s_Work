@@ -87,10 +87,11 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transaction_detail, container, false);
 
+        ((HomeActivity) getActivity()).hideSearchBar(true);
+
         viewUnbinder = ButterKnife.bind(this, view);
 
         transactionId = getArguments().getInt("transaction_id");
-        ((HomeActivity) getActivity()).hideSearchBar(true);
 
         transactionData = new Gson().fromJson(getArguments().getString(JsonKeys.TRANSACTION_DETAILS), Transaction.class);
 
