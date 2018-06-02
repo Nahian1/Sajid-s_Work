@@ -29,10 +29,12 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
+import com.cryptenet.thanatos.dtmweb.events.InitiatorThreadsEvent;
 import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
+import com.cryptenet.thanatos.dtmweb.events.ThreadIdReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
@@ -45,11 +47,14 @@ import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
+import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
+import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -60,7 +65,6 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presenter>
         implements HomeActivityContract.View {
@@ -98,7 +102,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.about)
     TextView about;
     @BindView(R.id.iv_nav_pp)
-    CircleImageView ivNavPp;
+    ImageView ivNavPp;
     @BindView(R.id.tv_nav_name)
     TextView tvNavName;
     @BindView(R.id.tv_nav_type)
@@ -116,9 +120,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         setContentView(R.layout.activity_home);
 
         viewUnbinder = ButterKnife.bind(this);
-
-        if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null).equals("Initiator"))
-            report.setVisibility(View.GONE);
 
         ivNavPp = findViewById(R.id.iv_nav_pp);
         tvNavName = findViewById(R.id.tv_nav_name);
@@ -196,6 +197,14 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             drawerLayout.openDrawer(GravityCompat.START);
     }
 
+    @OnClick(R.id.language)
+    public void language() {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, null) == "en")
+            LocaleHelper.setNewLocale(this,"ar");
+        else
+            LocaleHelper.setNewLocale(this, "en");
+    }
+
     @OnClick(R.id.project)
     public void onManageProject(View view) {
 
@@ -264,6 +273,11 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
+    @OnClick(R.id.logOut)
+    public void logOut(View view) {
+        presenter.clearUserData(this);
+    }
+
     //commented out by Asif due to redundancy
 //    @OnClick(R.id.buttonSearch)
 //    public void buttonSearch() {
@@ -281,13 +295,20 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     public void getNavHeaderData(NavHeader header) {
         Glide.with(this)
                 .load(header.getPpUrl())
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_nav_profile_picture))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .apply(RequestOptions.circleCropTransform())
                 .into(ivNavPp);
 
         tvNavName.setText(header.getName());
         tvNavType.setText(header.getType());
         tvNavAddress.setText(header.getLocation());
+    }
+
+    @Override
+    public void userDataCleaned() {
+        navigator.toLoginActivity(this);
+        finish();
     }
 
     @Subscribe
@@ -297,6 +318,17 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         bundle.putInt("project_id", event.projectId);
         bundle.putInt("type", event.layoutType);
+        fragment.setArguments(bundle);
+        replaceFragment(R.id.frame_container, fragment);
+    }
+
+    @Subscribe
+    public void onInitiatorThreadsEvent(InitiatorThreadsEvent event) {
+        ThreadProjectFragment fragment = new ThreadProjectFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("thread_id", event.threadId);
+
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
     }
@@ -347,6 +379,15 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @Subscribe
     public void onReturnToHomeEvent(ReturnToHomeEvent event) {
         replaceFragment(R.id.frame_container, new PlanListFragment());
+    }
+
+    @Subscribe
+    public void onThreadIdReceiveEvent(ThreadIdReceiveEvent event) {
+        ThreadMsgFragment fragment = new ThreadMsgFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("thread_init", event.threadInitResponse);
+        fragment.setArguments(bundle);
+        replaceFragment(R.id.frame_container, fragment);
     }
 
     @Override

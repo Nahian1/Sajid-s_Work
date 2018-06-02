@@ -137,7 +137,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             if (imageUrl != null) {
                 Glide.with(this)
                         .load(imageUrl)
-                        .apply(RequestOptions.placeholderOf(R.drawable.ic_nav_profile_picture))
+                        .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(ivPp);
             }
@@ -286,6 +286,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             showMessage("Please fill all fields");
         }
 
+        if (isEdit) {
+            navigator.toHomeActivity(this, null);
+        }
     }
 
     @OnClick(R.id.tv_sign_in)

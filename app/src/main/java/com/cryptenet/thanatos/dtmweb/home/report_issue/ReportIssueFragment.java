@@ -104,10 +104,10 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
             EventBus.getDefault().post(new IssueTopicChosenEvent(
                     issueParents.get(groupPos).getTopics().get(childPos).getId()
             ));
-            Toast.makeText(
-                    activityContext,
-                    "You clicked : " + issueParents.get(groupPos).getTopics().get(childPos).getName(),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(
+//                    activityContext,
+//                    "You clicked : " + issueParents.get(groupPos).getTopics().get(childPos).getName(),
+//                    Toast.LENGTH_SHORT).show();
             return true;
         });
     }

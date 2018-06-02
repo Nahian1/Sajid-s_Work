@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,10 +30,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-
-/**
- * Created by Mobile App on 2/9/2018.
- */
 
 public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
     private Context context;
@@ -81,7 +76,7 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
 
         Glide.with(context)
                 .load(projects.get(position).getCoverThumbnail())
-                .apply(RequestOptions.placeholderOf(R.drawable.ppimg))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(projectIV);
 
@@ -97,7 +92,6 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
 
         titleTV.setText(projects.get(position).getTitle());
         priceTV.setText(projects.get(position).getAccessPrice());
-//        seemoreIV.setImageResource(R.drawable.seemore);
         count++;
         Log.e("student", "getView: " + count);
 

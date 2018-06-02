@@ -33,9 +33,16 @@ public class CryptApplication extends Application implements HasActivityInjector
     DispatchingAndroidInjector<Activity> activityInjector;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.setLocale(base));
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
-        
+
+        LocaleHelper.setLocale(this);
+
         Fabric.with(this, new Crashlytics());
         Fabric.with(this, new Answers());
         id(this);

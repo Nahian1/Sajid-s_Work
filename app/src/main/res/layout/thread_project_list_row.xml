@@ -20,11 +20,13 @@
             android:layout_width="match_parent"
             android:padding="8dp"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/demoIV"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/sq_ppimg" />
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_thumb_plan_cover" />
             <LinearLayout
                 android:id="@+id/right_layout"
                 android:layout_marginLeft="8dp"
@@ -37,16 +39,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Title"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="2dp"
                     android:textColor="#939393"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/nameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:text="Name"
                     android:textColor="#939393"
                     android:textSize="15sp" />
@@ -59,7 +60,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Last Conv:"
+                        android:text="@string/last_conversation"
                         android:textColor="#939393"
                         android:textSize="12sp" />
                     <TextView
@@ -67,7 +68,6 @@
                         android:id="@+id/dateTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:text="10 March 2018"
                         android:textColor="#939393"
                         android:textSize="12sp" />

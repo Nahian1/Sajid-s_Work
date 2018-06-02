@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -50,8 +49,8 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
 
     public void updateList(List<ProjectsRsp> projs) {
         this.projects.clear();
-        this.filteredList.clear();
         this.projects.addAll(projs);
+        this.filteredList.clear();
         this.filteredList.addAll(projs);
         this.notifyDataSetChanged();
     }
@@ -101,7 +100,7 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         ImageView editIV = convertView.findViewById(R.id.editIV);
 
         titleTV.setText(filteredList.get(position).getTitle());
-        priceTV.setText(filteredList.get(position).getAccessPrice());
+        priceTV.setText(String.valueOf(filteredList.get(position).getAccessPrice()));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         try {

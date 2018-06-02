@@ -33,10 +33,11 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.EditPlanSuccessEvent;
+import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -116,7 +117,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         project = new Gson().fromJson(getArguments().getString("project"), ProjectsRsp.class);
 
-        if (project.isEditMode()) {
+        if (project.isEditMode()){
 
             editTextName.setText(project.getInitiatorsName());
             editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
@@ -166,13 +167,13 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         ProjectsRq projectsRq = new ProjectsRq();
-                        projectsRq.setTitle(editTextName.getText().toString().trim());
-                        projectsRq.setCategory(categoryCode);
-                        projectsRq.setShortDescription(editTextShortDescription.getText().toString().trim());
-                        projectsRq.setLongDescription(editTextLongDescription.getText().toString().trim());
-                        projectsRq.setMinimumInvestmentCost((int) Double.parseDouble(editTextPriceMinimum.getText().toString().trim()));
-                        projectsRq.setMinimumInvestmentCost((int) Double.parseDouble(editTextPriceMaximum.getText().toString().trim()));
-                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
+//                        projectsRq.setTitle(editTextName.getText().toString().trim());
+//                        projectsRq.setCategory(categoryCode);
+//                        projectsRq.setShortDescription(editTextShortDescription.getText().toString().trim());
+//                        projectsRq.setLongDescription(editTextLongDescription.getText().toString().trim());
+//                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMinimum.getText().toString().trim()));
+//                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMaximum.getText().toString().trim()));
+//                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
                         projectsRq.setCover(imageFile);
                         projectsRq.setUploadedFile(planFile);
                         projectsRq.setNew(project.isEditMode());
@@ -193,9 +194,10 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                         token.continuePermissionRequest();
                     }
                 }).check();
+        EventBus.getDefault().post(new ReturnToHomeEvent());
     }
 
-    @OnClick(R.id.imageviewCover)
+    @OnClick(R.id.buttonUploadImage)
     public void getCoverImage(View view) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
@@ -255,7 +257,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
                 imageFile = new File(realPath);
 
-            } else if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
+            }else   if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
 
                 final Uri uri = data.getData();
 
@@ -305,7 +307,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        this.categoryCode = list.get(position).getId();
+        if(list != null && list.size() > 0) {
+            this.categoryCode = list.get(position).getId();
+        }
     }
 
     @Override

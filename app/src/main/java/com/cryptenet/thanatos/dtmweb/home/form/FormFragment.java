@@ -86,22 +86,24 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 
         details = new Gson().fromJson(getArguments().getString("project_details"), ProjectsDetailed.class);
 
-        textViewTitle.setText(details.getTitle());
-        price.setText("Price: " +
-                String.format("%.2f", (Double.parseDouble(details.getMinimumInvestmentCost()) - Double.parseDouble(details.getMaximumInvestmentCost()))));
+        if (details != null && details.getId() != null && details.getId() > 0) {
+            textViewTitle.setText(details.getTitle());
+            price.setText("Price: " +
+                    String.format("%.2f", (Double.parseDouble(details.getMinimumInvestmentCost()) - Double.parseDouble(details.getMaximumInvestmentCost()))));
 //        date.setText(details.getTitle());
 //        status.setText(details.getTitle());
 
-        Glide.with(activityContext)
-                .load(details.getInitiatorImage())
-                .apply(RequestOptions.placeholderOf(R.drawable.img_initiator_profile_picture))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(profilepic);
+            Glide.with(activityContext)
+                    .load(details.getInitiatorImage())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                    .apply(RequestOptions.circleCropTransform())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(profilepic);
 
-        textViewName.setText(details.getInitiatorsName());
+            textViewName.setText(details.getInitiatorsName());
 //        textViewType.setText(details.getInitiator());
-        address.setText(details.getInitiatorAddress());
-
+            address.setText(details.getInitiatorAddress());
+        }
         return view;
     }
 

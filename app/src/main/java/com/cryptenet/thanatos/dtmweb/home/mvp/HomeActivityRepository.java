@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.home.mvp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
@@ -30,5 +31,12 @@ public class HomeActivityRepository extends BaseRepository
                 PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_USER_TYPE, null),
                 PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ADDRESS, null)
         );
+    }
+
+    @Override
+    public boolean clearUserData(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String lang = sharedPreferences.getString(ConstantProvider.LOCALE, "en");
+        return PreferenceManager.getDefaultSharedPreferences(context).edit().clear().putString(ConstantProvider.LOCALE, lang).commit();
     }
 }

@@ -34,4 +34,9 @@ public class HomeActivityModel extends BaseModel<HomeActivityContract.Repository
     public NavHeader getNavHeaderData(Context context) {
         return repository.getNavHeaderData(context);
     }
+
+    @Override
+    public boolean clearUserData(Context context) {
+        return repository.clearUserData(context);
+    }
 }

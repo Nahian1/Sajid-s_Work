@@ -18,7 +18,7 @@
         android:paddingStart="@dimen/padding_horizontal"
         android:paddingTop="@dimen/padding_vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/iv_pp"
             android:layout_width="90dp"
             android:layout_height="90dp"
@@ -28,7 +28,8 @@
             android:layout_marginTop="@dimen/margin_vertical_8"
             android:maxHeight="160dp"
             android:maxWidth="160dp"
-            android:src="@drawable/pp"
+            android:elevation="0dp"
+            android:src="@drawable/ic_pp_dummy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

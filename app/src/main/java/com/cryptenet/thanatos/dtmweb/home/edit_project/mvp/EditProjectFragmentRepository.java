@@ -33,7 +33,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
     @Override
     public void getAllCategories(Context context) {
-        retrofit2.Call<AllCategoriesResponse> req = apiClient.getCategories("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null));
+        retrofit2.Call<AllCategoriesResponse> req = apiClient.getCategories("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
         req.enqueue(new retrofit2.Callback<AllCategoriesResponse>() {
             @Override
             public void onResponse(retrofit2.Call<AllCategoriesResponse> call, retrofit2.Response<AllCategoriesResponse> response) {
@@ -70,6 +70,20 @@ public class EditProjectFragmentRepository extends BaseFragRepository
                     plan.getUploadedFile(),
                     PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
             );
+
+//            async.execute(
+//                    "3",
+//                    "ekta project",
+//                    65,
+//                    "short description",
+//                    "long description",
+//                    11223,
+//                    112233,
+//                    7896,
+//                    plan.getCover(),
+//                    plan.getUploadedFile(),
+//                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)
+//            );
         } else {
             PostAsync async = new PostAsync();
             async.execute(
