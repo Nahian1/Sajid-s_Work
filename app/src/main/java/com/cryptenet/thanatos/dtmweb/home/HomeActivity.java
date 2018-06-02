@@ -53,6 +53,7 @@ import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
+import com.cryptenet.thanatos.dtmweb.message.investor_thread.MessageRequestActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
@@ -253,11 +254,15 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        ThreadListFragment fragment1 = new ThreadListFragment();
-        Bundle bundle1 = new Bundle();
-        bundle1.putInt("reqType", PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null) == "Investor" ? 1 : 2);
-        fragment1.setArguments(bundle1);
-        replaceFragment(R.id.frame_container, fragment1);
+
+        Intent intent = new Intent(HomeActivity.this, MessageRequestActivity.class);
+        startActivity(intent);
+
+//        ThreadListFragment fragment1 = new ThreadListFragment();
+//        Bundle bundle1 = new Bundle();
+//        bundle1.putInt("reqType", PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null) == "Investor" ? 1 : 2);
+//        fragment1.setArguments(bundle1);
+//        replaceFragment(R.id.frame_container, fragment1);
     }
 
     @OnClick(R.id.report)
