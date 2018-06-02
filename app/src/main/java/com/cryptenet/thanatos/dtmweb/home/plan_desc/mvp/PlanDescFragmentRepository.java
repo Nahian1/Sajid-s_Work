@@ -139,7 +139,7 @@ public class PlanDescFragmentRepository extends BaseFragRepository
             public void onResponse(Call call, Response response) throws IOException {
                 Gson gson = new Gson();
                 ProjectsDSResponse detailed = gson.fromJson(response.body().string(), ProjectsDSResponse.class);
-                Log.d(TAG, "onResponse: " + detailed.toString());
+//                Log.d(TAG, "onResponse: " + detailed.toString());
 
                 ProjectsDetailed detailed1 = new ProjectsDetailed();
                 detailed1.setId(detailed.getId());
