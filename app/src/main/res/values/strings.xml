@@ -73,7 +73,7 @@
     <string name="hint_et_note">Note</string>
     <string name="view_file">View File</string>
     <string name="update_profile">Update</string>
-    
+
     <string name="hint_et_issue">Tell us about the issue …</string>
     <string name="tag_accepted">Accepted</string>
     <string name="tag_pending">Pending</string>
@@ -81,4 +81,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="title_activity_message_request">MessageRequestActivity</string>
 </resources>
