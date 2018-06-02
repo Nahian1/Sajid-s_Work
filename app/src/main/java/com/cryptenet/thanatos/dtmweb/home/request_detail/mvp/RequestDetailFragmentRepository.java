@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
+import com.cryptenet.thanatos.dtmweb.events.BackToManageRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDataReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract;
@@ -23,7 +24,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
-import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -63,17 +64,15 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
 
         OkHttpClient client = new OkHttpClient();
 
-        RequestBody formBody = new FormBody.Builder()
-                .add("is_approved", "true")
-                .build();
-
-        Log.d(TAG, "data: " + formBody.toString());
-
-        final Request request = new Request.Builder()
-                .url(ConstantProvider.BASE_URL + "api/v1/plan-access/" + transactionId + "/access")
-                .put(formBody)
+        MediaType mediaType = MediaType.parse("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
+        RequestBody body = RequestBody.create(mediaType, "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"is_approved\"\r\n\r\ntrue\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--");
+        Request request = new Request.Builder()
+                .url("http://fa-sa-801-dev.herokuapp.com/api/v1/plan-access/" + transactionId + "/access/")
+                .put(body)
+                .addHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
                 .addHeader("Content-Type", head)
                 .addHeader("Authorization", "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null))
+                .addHeader("Cache-Control", "no-cache")
                 .build();
 
         client.newCall(request).enqueue(new okhttp3.Callback() {
@@ -87,6 +86,10 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
                 assert response.body() != null;
                 Log.d(TAG, "onResponse: " + response.body().string());
+
+                if (response.code() == 200) {
+                    EventBus.getDefault().post(new BackToManageRequestEvent());
+                }
             }
         });
     }
