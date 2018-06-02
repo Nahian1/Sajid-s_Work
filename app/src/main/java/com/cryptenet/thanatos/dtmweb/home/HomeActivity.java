@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.home;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -114,6 +115,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.editTextSearch)
     EditText editTextSearch;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +132,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         setSupportActionBar(toolbar);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         //presenter.getNavHeaderData();
 
 //        setUpNavigation();
@@ -139,11 +144,15 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             Gson gson = new Gson();
             user = gson.fromJson(s, User.class);
         }
+
+        String access_token = sharedPreferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null);
+
+
         if (savedInstanceState == null) {
             PlanListFragment fragment = new PlanListFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("token", user.getAccessToken());
-            Log.d(TAG, "sending tk: " + user.getAccessToken());
+            bundle.putString("token", access_token);
+            Log.d(TAG, "sending tk: " + access_token);
             fragment.setArguments(bundle);
             addFragment(R.id.frame_container, fragment);
         }
@@ -200,7 +209,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @OnClick(R.id.language)
     public void language() {
         if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, null) == "en")
-            LocaleHelper.setNewLocale(this,"ar");
+            LocaleHelper.setNewLocale(this, "ar");
         else
             LocaleHelper.setNewLocale(this, "en");
     }

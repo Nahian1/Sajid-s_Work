@@ -9,13 +9,21 @@ package com.cryptenet.thanatos.dtmweb.http;
 
 import com.cryptenet.thanatos.dtmweb.pojo.AllCategoriesResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiClient {
@@ -77,4 +85,30 @@ public interface ApiClient {
 //
 //    @GET("GET /api/v1/plan/{id}/details")
 //    Call<ResponseBody> getLongDesc(@Header("Authorization") String token, @Path("id") int id);
+
+    @Multipart
+    @POST("api/v1/user/")
+    Call<RegistrationResponse> createNewUser(
+            @Part("name") RequestBody name,
+            @Part("email") RequestBody email,
+            @Part("password") RequestBody password,
+
+            @Part MultipartBody.Part picture,
+
+            @Part("city") RequestBody city,
+            @Part("country") RequestBody country,
+            @Part("bank_name") RequestBody bank_name,
+            @Part("bank_account_name") RequestBody bank_account_name,
+            @Part("bank_account_number") RequestBody bank_account_number,
+            @Part("user_type") RequestBody user_type,
+            @Part("address") RequestBody address
+    );
+
+    @GET("api/v1/country/")
+    Call<CountryResponse> getAllcountries();
+
+    @GET("api/v1/city/")
+    Call<CityResponse> getAllCities(
+            @Query("country") int countryCode
+    );
 }

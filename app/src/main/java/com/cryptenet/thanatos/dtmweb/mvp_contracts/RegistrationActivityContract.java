@@ -16,7 +16,7 @@ import java.io.File;
 
 public interface RegistrationActivityContract {
     interface Presenter extends BaseContract.Presenter<RegistrationActivityContract.View> {
-        void carryRegData(File imageFile, String accType, String name, String email, String pwd,
+        void carryRegData(String reqType,File imageFile, String accType, String name, String email, String pwd,
                           String address, int countryCode, int cityCode, String bankName,
                           String bankAccName, String bankAccNumber);
         void getAllCountries();
@@ -32,7 +32,7 @@ public interface RegistrationActivityContract {
         void getAllCountries();
         void getLimitedCities(int countryCode);
 
-        boolean attemptReg(File imageFile, String accType, String name, String email, String pwd,
+        boolean attemptReg(String reqType,File imageFile, String accType, String name, String email, String pwd,
                            String address, int countryCode, int cityCode, String bankName,
                            String bankAccName, String bankAccNumber);
 
@@ -43,7 +43,7 @@ public interface RegistrationActivityContract {
         void getAllCountries();
         void getLimitedCities(int countryCode);
 
-        boolean attemptReg(RegistrationInput regData);
+        boolean attemptReg(String reqType, RegistrationInput regData);
 
         boolean checkLoginState(Context context);
     }

@@ -6,4 +6,6 @@
 
     <color name="grey">#ffb8b8b8</color>
     <color name="spin_pop">#304E80</color>
+
+    <color name="progress_light">#5d8bd7</color>
 </resources>

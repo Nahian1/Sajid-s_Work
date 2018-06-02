@@ -18,10 +18,12 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
+import com.cryptenet.thanatos.dtmweb.events.LogInFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressBarHandler;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -39,6 +41,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         implements LoginActivityContract.View, View.OnClickListener {
     private static final String TAG = TagProvider.getDebugTag(LoginActivity.class);
     private User user;
+    private ProgressBarHandler progressBarHandler;
 
     @BindView(R.id.et_email)
     EditText etEmail;
@@ -60,13 +63,15 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        progressBarHandler = new ProgressBarHandler(this);
+
         String lang = PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, null);
         if (lang == null) {
             LocaleHelper.setNewLocale(
                     this,
                     PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, "en")
             );
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(ConstantProvider.LOCALE, "en");
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(ConstantProvider.LOCALE, "en").apply();
         }
 
         viewUnbinder = ButterKnife.bind(this);
@@ -110,6 +115,8 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
                 if (!email.isEmpty()) {
                     if (!password.isEmpty()) {
+                        progressBarHandler.showProgress();
+
                         presenter.requestForLogin(
                                 etEmail.getText().toString().trim(),
                                 etPwd.getText().toString().trim()
@@ -122,7 +129,8 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
                 }
                 break;
             case R.id.tv_sign_up:
-                navigator.toRegistrationActivity(this,false);
+                navigator.toRegistrationActivity(this, false);
+                finish();
                 break;
             case R.id.tv_forgot_pwd:
                 navigator.toForgotPasswordActivity(this);
@@ -134,18 +142,27 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
 
-        if(event.isSuccess) {
+        if (event.isSuccess) {
+            progressBarHandler.hideProgress();
             AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
-                try{
-                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
+                try {
+                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))) {
                         navigator.toHomeActivity(LoginActivity.this, event.string);
+                        finish();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             });
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLogInFailureEvent(LogInFailureEvent event) {
+        if (event.isFailure) {
+            progressBarHandler.hideProgress();
         }
     }
 
