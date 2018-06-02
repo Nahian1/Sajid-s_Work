@@ -117,6 +117,9 @@ dependencies {
     //file chooser library
     implementation project(':aFileChooser')
 
+    //crash report
+    implementation 'ch.acra:acra:4.9.1'
+
     //testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

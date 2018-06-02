@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/viewProject"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
             android:layout_height="60dp"
             android:padding="5dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_thumb_plan_cover" />
+            app:srcCompat="@drawable/ic_image_placeholder" />
 
         <TextView
             android:id="@+id/nameTV"
@@ -58,8 +59,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="SOMETHING"
             android:maxLines="2"
+            android:text="SOMETHING"
             android:textColor="#8c8c8c"
             android:textSize="20sp"
             android:textStyle="bold" />

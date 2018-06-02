@@ -76,7 +76,7 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
 
         Glide.with(context)
                 .load(projects.get(position).getCoverThumbnail())
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_image_placeholder))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(projectIV);
 

@@ -34,11 +34,13 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.EditPlanSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -109,6 +111,8 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_project, container, false);
 
+        ((HomeActivity) getActivity()).hideSearchBar(true);
+
         unbinder = ButterKnife.bind(this, view);
 
 
@@ -117,7 +121,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         project = new Gson().fromJson(getArguments().getString("project"), ProjectsRsp.class);
 
-        if (project.isEditMode()){
+        if (project.isEditMode()) {
 
             editTextName.setText(project.getInitiatorsName());
             editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
@@ -161,6 +165,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @OnClick(R.id.btn_done)
     public void savePlan(View view) {
+
+        ViewUtils.hideKeyboard(getActivity());
+
         Dexter.withActivity(getActivity())
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(new PermissionListener() {
@@ -257,7 +264,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
                 imageFile = new File(realPath);
 
-            }else   if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
+            } else if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
 
                 final Uri uri = data.getData();
 
@@ -307,7 +314,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(list != null && list.size() > 0) {
+        if (list != null && list.size() > 0) {
             this.categoryCode = list.get(position).getId();
         }
     }

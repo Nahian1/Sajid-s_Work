@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2018.
   ~ Development Courtesy: Cryptenet Ltd.
   ~ Developer Credit: Alamgir Hossain, Nabil Shawkat
@@ -7,39 +6,43 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:padding="8dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/demoIV"
                 android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_thumb_plan_cover" />
+                app:srcCompat="@drawable/ic_image_placeholder" />
+
             <LinearLayout
                 android:id="@+id/right_layout"
-                android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:layout_toEndOf="@+id/demoIV"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/titleTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Title"
                     android:layout_marginTop="2dp"
+                    android:text="Title"
                     android:textColor="#939393"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -63,11 +66,12 @@
                         android:text="@string/last_conversation"
                         android:textColor="#939393"
                         android:textSize="12sp" />
+
                     <TextView
-                        android:layout_marginLeft="2dp"
                         android:id="@+id/dateTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
                         android:text="10 March 2018"
                         android:textColor="#939393"
                         android:textSize="12sp" />
@@ -78,7 +82,6 @@
         </RelativeLayout>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

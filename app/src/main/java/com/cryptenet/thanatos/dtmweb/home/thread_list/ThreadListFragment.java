@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.DistinctThreadsReceived;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadIdentity;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -52,6 +53,8 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View convertView = inflater.inflate(R.layout.fragment_thread_list, container, false);
+
+        ((HomeActivity) getActivity()).hideSearchBar(true);
 
         unbinder = ButterKnife.bind(this, convertView);
 
