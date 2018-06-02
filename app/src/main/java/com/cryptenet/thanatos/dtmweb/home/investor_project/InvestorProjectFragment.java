@@ -24,6 +24,7 @@ import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -102,6 +103,9 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
     @Subscribe
     public void onManageProjectReceiveEvent(ManageProjectReceiveEvent event) {
         Log.d(TAG, "onProjectListReceiveEvent: login");
+
+        ProgressDialogHelper.hideProgress();
+
         this.projectsRspList = event.projectsRspList;
         adapter.updateList(this.projectsRspList);
     }
@@ -110,24 +114,13 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
     public void onResume() {
         super.onResume();
 
-//        presenter.attachView(this);
+        presenter.attachView(this);
 
-        presenter.getMyProjectList(reqType,activityContext);
+        ProgressDialogHelper.init(getActivity()).showProgress();
+
+        presenter.getMyProjectList(reqType, activityContext);
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-//            EventBus.getDefault().register(this);
-//    }
-//
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-//            EventBus.getDefault().register(this);
-//    }
 
     @Override
     public void onStart() {

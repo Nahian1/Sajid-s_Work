@@ -139,7 +139,8 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
 
         Glide.with(activityContext)
                 .load(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_PICTURE_URL, null))
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
+                .apply(RequestOptions.circleCropTransform())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(profilepic);
 

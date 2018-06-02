@@ -22,6 +22,7 @@ import com.cryptenet.thanatos.dtmweb.events.IssueSubmittedEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.OtherReportFragmentContract;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -92,13 +93,17 @@ public class OtherReportFragment extends BaseFragment<OtherReportFragmentContrac
 
     @Subscribe
     public void onIssueSubmittedEvent(IssueSubmittedEvent event) {
+
+        ProgressDialogHelper.hideProgress();
         if (event.isSubmitted)
-            EventBus.getDefault().post(new ReturnToHomeEvent());
+//            EventBus.getDefault().post(new ReturnToHomeEvent());
+            getActivity().onBackPressed();
     }
 
     @OnClick({R.id.report_submit, R.id.report_cancel})
     public void onViewClicked(View view) {
 
+        ProgressDialogHelper.init(getActivity()).showProgress();
         ViewUtils.hideKeyboard(getActivity());
 
         switch (view.getId()) {

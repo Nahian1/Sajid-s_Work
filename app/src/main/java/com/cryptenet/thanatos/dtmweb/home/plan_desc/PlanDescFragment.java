@@ -157,6 +157,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
                     .load(event.detailed.getInitiatorImage())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
                     .transition(DrawableTransitionOptions.withCrossFade())
+                    .apply(RequestOptions.circleCropTransform())
                     .into(profilepic);
 
         if (type == 11 || type == 21) {

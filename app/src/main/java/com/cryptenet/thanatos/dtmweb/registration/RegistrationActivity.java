@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,6 +39,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -139,6 +141,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                 Glide.with(this)
                         .load(imageUrl)
                         .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                        .apply(RequestOptions.circleCropTransform())
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(ivPp);
             }
@@ -270,19 +273,31 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
                 && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
             if (pwd.equals(cPwd)) {
-                presenter.carryRegData(
-                        imageFile,
-                        accType,
-                        name,
-                        email,
-                        pwd,
-                        address,
-                        countryCode,
-                        cityCode,
-                        bankName,
-                        bankAccName,
-                        bankAccNum
-                );
+
+                if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+
+                    ProgressDialogHelper.init(this).showProgress();
+
+                    presenter.carryRegData(
+                            imageFile,
+                            accType,
+                            name,
+                            email,
+                            pwd,
+                            address,
+                            countryCode,
+                            cityCode,
+                            bankName,
+                            bankAccName,
+                            bankAccNum
+                    );
+
+                } else {
+
+                    showMessage("Invalid email!");
+
+                }
+
             } else {
                 showMessage("Password did not match");
             }
@@ -315,12 +330,20 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                     assert imageUri != null;
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     selectedImage = BitmapFactory.decodeStream(imageStream);
-                    ivPp.setImageBitmap(selectedImage);
+
+                    imageFile = new File(realPath);
+
+                    Glide.with(this)
+                            .load(selectedImage)
+                            .apply(RequestOptions.circleCropTransform())
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .into(ivPp);
+
+//                    ivPp.setImageBitmap(selectedImage);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
 
-                imageFile = new File(realPath);
             }
         }
     }
@@ -348,6 +371,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegistrationSuccessEvent(RegistrationSuccessEvent event) {
+
+        ProgressDialogHelper.hideProgress();
 
         if (!isEdit) {
             showMessage("Registered");

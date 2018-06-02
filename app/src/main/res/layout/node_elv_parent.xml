@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2018.
   ~  Development Courtesy: Cryptenet Ltd.
   ~  Developer Credit: Alamgir Hossain, Nabil Shawkat
   ~  This project is under MIT license
   -->
 
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp">
 
     <TextView
         android:id="@+id/tv_elv_parent"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/grey"
+        android:layout_marginStart="5dp"
         android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/grey"
         android:textSize="15sp" />
 </android.support.constraint.ConstraintLayout>

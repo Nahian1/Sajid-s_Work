@@ -26,6 +26,7 @@ import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ReportIssueFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueParent;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -108,6 +109,8 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
             EventBus.getDefault().post(new IssueTopicChosenEvent(
                     issueParents.get(groupPos).getTopics().get(childPos).getId()
             ));
+
+            getActivity().onBackPressed();
 //            Toast.makeText(
 //                    activityContext,
 //                    "You clicked : " + issueParents.get(groupPos).getTopics().get(childPos).getName(),
@@ -134,6 +137,9 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
 
     @Subscribe
     public void onIssueListReceiveEvent(IssueListReceiveEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
         this.issueParents = event.issueParents;
 
         adapter.updateList(this.issueParents);
@@ -145,6 +151,7 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
 
         presenter.attachView(this);
 
+        ProgressDialogHelper.init(getActivity()).showProgress();
         presenter.getAllIssues(activityContext);
     }
 

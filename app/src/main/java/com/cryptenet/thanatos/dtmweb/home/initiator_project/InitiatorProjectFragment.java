@@ -28,6 +28,7 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -72,7 +73,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         projectLV = convertView.findViewById(R.id.projectListView);
 
-        if (reqType ==1) {
+        if (reqType == 1) {
 //        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
             manageProjectAdapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
             projectLV.setAdapter(manageProjectAdapter);
@@ -112,15 +113,23 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
     @Subscribe
     public void onSearchEvent(SearchEvent event) {
-        manageProjectAdapter.getFilter().filter(event.searchTxt);
-        manageReqAdapter.getFilter().filter(event.searchTxt);
+
+        if (reqType == 1) {
+
+            manageProjectAdapter.getFilter().filter(event.searchTxt);
+
+        } else {
+
+            manageReqAdapter.getFilter().filter(event.searchTxt);
+        }
     }
 
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
         Log.d(TAG, "onProjectListReceiveEvent: login");
-//        this.projectsRspList.clear();
-//        this.projectsRspList.addAll(event.projectsRspList);
+
+        ProgressDialogHelper.hideProgress();
+
         this.projectsRspList = event.projectsRspList;
         manageProjectAdapter.updateList(this.projectsRspList);
     }
@@ -128,8 +137,9 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     @Subscribe
     public void onManageProjectReceiveEvent(ManageProjectReceiveEvent event) {
         Log.d(TAG, "onProjectListReceiveEvent: login");
-//        this.projectsRspList.clear();
-//        this.projectsRspList.addAll(event.projectsRspList);
+
+        ProgressDialogHelper.hideProgress();
+
         this.plansList = event.projectsRspList;
         manageReqAdapter.updateList(this.plansList);
     }
@@ -148,22 +158,10 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         presenter.attachView(this);
 
+        ProgressDialogHelper.init(getActivity()).showProgress();
+
         presenter.getMyProjectList(reqType, activityContext);
     }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-//            EventBus.getDefault().register(this);
-//    }
-//
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-//            EventBus.getDefault().register(this);
-//    }
 
 
     @Override

@@ -21,7 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
+import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -99,6 +102,17 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         TextView dateTV = convertView.findViewById(R.id.dateTV);
         TextView statusTV = convertView.findViewById(R.id.statusTV);
         ImageView editIV = convertView.findViewById(R.id.editIV);
+
+        editIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ProjectsRsp pro = filteredList.get(position);
+                pro.setEditMode(true);
+
+                EventBus.getDefault().post(new ToEditPlanEvent(pro));
+            }
+        });
 
         titleTV.setText(filteredList.get(position).getTitle());
         priceTV.setText(String.valueOf(filteredList.get(position).getAccessPrice()));

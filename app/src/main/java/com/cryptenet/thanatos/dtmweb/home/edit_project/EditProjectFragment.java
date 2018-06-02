@@ -29,6 +29,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
@@ -123,7 +126,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         if (project.isEditMode()) {
 
-            editTextName.setText(project.getInitiatorsName());
+            editTextName.setText(project.getTitle());
             editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
             editTextPriceMinimum.setText(project.getMinimumInvestmentCost());
             editTextShortDescription.setText(project.getShortDescription());
@@ -174,13 +177,13 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         ProjectsRq projectsRq = new ProjectsRq();
-//                        projectsRq.setTitle(editTextName.getText().toString().trim());
-//                        projectsRq.setCategory(categoryCode);
-//                        projectsRq.setShortDescription(editTextShortDescription.getText().toString().trim());
-//                        projectsRq.setLongDescription(editTextLongDescription.getText().toString().trim());
-//                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMinimum.getText().toString().trim()));
-//                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMaximum.getText().toString().trim()));
-//                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
+                        projectsRq.setTitle(editTextName.getText().toString().trim());
+                        projectsRq.setCategory(categoryCode);
+                        projectsRq.setShortDescription(editTextShortDescription.getText().toString().trim());
+                        projectsRq.setLongDescription(editTextLongDescription.getText().toString().trim());
+                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMinimum.getText().toString().trim()));
+                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMaximum.getText().toString().trim()));
+                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
                         projectsRq.setCover(imageFile);
                         projectsRq.setUploadedFile(planFile);
                         projectsRq.setNew(project.isEditMode());
@@ -254,6 +257,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
             if (requestCode == ConstantProvider.RESULT_LOAD_IMG) {
                 try {
                     final Uri imageUri = data.getData();
+                    showMessage(imageUri.getPath() + " added");
                     realPath = ImageFilePath.getPath(activityContext, data.getData());
                     assert imageUri != null;
                     final InputStream imageStream = activityContext.getContentResolver().openInputStream(imageUri);
@@ -274,6 +278,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                 // Alternatively, use FileUtils.getFile(Context, Uri)
                 if (path != null && FileUtils.isLocal(path)) {
                     planFile = new File(path);
+
+                    showMessage(path + " added");
+
                 }
             }
         }

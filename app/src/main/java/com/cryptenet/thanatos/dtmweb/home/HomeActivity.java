@@ -7,8 +7,6 @@
 
 package com.cryptenet.thanatos.dtmweb.home;
 
-import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -55,7 +53,6 @@ import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
-import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
@@ -363,7 +360,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         ProgressDialogHelper.hideProgress();
 
-        super.onBackPressed();
+//        super.onBackPressed();
 
         TransactionFragment fragment = new TransactionFragment();
         Bundle bundle = new Bundle();
@@ -460,4 +457,17 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     }
 
 
+    @OnClick({R.id.terms, R.id.rateUs, R.id.about})
+    public void onViewClicked(View view) {
+
+        showMessage("Coming soon...");
+//        switch (view.getId()) {
+//            case R.id.terms:
+//                break;
+//            case R.id.rateUs:
+//                break;
+//            case R.id.about:
+//                break;
+//        }
+    }
 }
