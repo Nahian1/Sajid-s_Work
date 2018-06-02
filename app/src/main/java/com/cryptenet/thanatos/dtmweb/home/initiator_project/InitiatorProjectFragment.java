@@ -71,7 +71,8 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
         projectLV.setAdapter(adapter);
 
-        projectLV.setOnItemClickListener((parent, view, position, id) -> EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getId(), 3)));
+        projectLV.setOnItemClickListener((parent, view, position, id)
+                -> EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getId(), 3)));
 
         return convertView;
     }
