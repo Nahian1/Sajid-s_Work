@@ -103,26 +103,28 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
 //                presenter.requestForLogin("creynolds@montgomery.com","asdasd123");
 //                presenter.requestForLogin("azam@gmail.com","asdasd123");
-//                presenter.requestForLogin("michaelperez@collier.com","asdasd123");
+                presenter.requestForLogin("michaelperez@collier.com","asdasd123");
 
-                String email = etEmail.getText().toString().trim();
-                String password = etPwd.getText().toString().trim();
+                //commented out for debug purpose
+//                String email = etEmail.getText().toString().trim();
+//                String password = etPwd.getText().toString().trim();
+//
+//                if (!email.isEmpty()) {
+//                    if (!password.isEmpty()) {
+//                        presenter.requestForLogin(
+//                                etEmail.getText().toString().trim(),
+//                                etPwd.getText().toString().trim()
+//                        );
+//                    } else {
+//                        showMessage("Password can not be empty!");
+//                    }
+//                } else {
+//                    showMessage("Email can not be empty!");
+//                }
 
-                if (!email.isEmpty()) {
-                    if (!password.isEmpty()) {
-                        presenter.requestForLogin(
-                                etEmail.getText().toString().trim(),
-                                etPwd.getText().toString().trim()
-                        );
-                    } else {
-                        showMessage("Password can not be empty");
-                    }
-                } else {
-                    showMessage("Email can not be empty");
-                }
                 break;
             case R.id.tv_sign_up:
-                navigator.toRegistrationActivity(this,false);
+                navigator.toRegistrationActivity(this, false);
                 break;
             case R.id.tv_forgot_pwd:
                 navigator.toForgotPasswordActivity(this);
@@ -134,11 +136,11 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
 
-        if(event.isSuccess) {
+        if (event.isSuccess) {
             AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
-                try{
-                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
+                try {
+                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))) {
                         navigator.toHomeActivity(LoginActivity.this, event.string);
                     }
                 } catch (Exception e) {

@@ -78,7 +78,7 @@
             android:layout_width="120dp"
             android:layout_height="20dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/btn_shape_b"
+            android:background="@drawable/btn_shape_blue"
             android:clickable="false"
             android:text="@string/see_more"
             android:textColor="@color/colorPrimaryDark"

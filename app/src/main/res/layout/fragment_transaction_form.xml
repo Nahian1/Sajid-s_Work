@@ -301,7 +301,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_shape_b"
+                        android:background="@drawable/btn_shape_blue"
                         android:text="Submit"
                         android:textColor="@color/colorPrimaryDark" />
                 </LinearLayout>
