@@ -310,6 +310,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
+
+//        super.onBackPressed();
     }
 
     @Subscribe
