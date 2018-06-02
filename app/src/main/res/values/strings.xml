@@ -78,8 +78,14 @@
     <string name="tag_accepted">Accepted</string>
     <string name="tag_pending">Pending</string>
     <string name="last_conversation">Last Conversation</string>
+    <string name="investor_tag_line">I\'m interested to invest your plan</string>
+    <string name="btn_confirm_req">Confirm Request</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
     <string name="title_activity_message_request">MessageRequestActivity</string>
+
+    <string name="toast_crash">App Crashed</string>
+
 </resources>

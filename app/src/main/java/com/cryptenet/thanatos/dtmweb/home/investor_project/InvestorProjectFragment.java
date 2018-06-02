@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.home.investor_project;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
+import com.cryptenet.thanatos.dtmweb.message.investor_thread.MessageRequestActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -55,6 +58,8 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_investor_project, container, false);
 
+        ((HomeActivity) getActivity()).hideSearchBar(false);
+
         unbinder = ButterKnife.bind(this, convertView);
 
         reqType = getArguments().getInt("reqType");
@@ -64,11 +69,20 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
         adapter = new ProjectManageAdapter(activityContext, projectsRspList, reqType);
         projectLV.setAdapter(adapter);
 
-        projectLV.setOnItemClickListener((parent, view, position, id) ->
-                EventBus.getDefault().post(
-                        new ToDetailsFragmentEvent(
-                                projectsRspList.get(position).getPlan(),
-                                (projectsRspList.get(position).getIsApproved()) ? 1 : 2)));
+
+        projectLV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MessageRequestActivity.class);
+                startActivity(intent);
+            }
+        });
+
+//        projectLV.setOnItemClickListener((parent, view, position, id) ->
+//                EventBus.getDefault().post(
+//                        new ToDetailsFragmentEvent(
+//                                projectsRspList.get(position).getPlan(),
+//                                (projectsRspList.get(position).getIsApproved()) ? 11 : 10)));
 
         return convertView;
     }

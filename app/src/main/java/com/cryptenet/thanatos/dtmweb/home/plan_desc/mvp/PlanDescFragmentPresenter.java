@@ -37,4 +37,9 @@ public class PlanDescFragmentPresenter extends BaseFragPresenter<PlanDescFragmen
     public void getThreadId(Context context, int planId) {
         model.getThreadId(context, planId);
     }
+
+    @Override
+    public void getShortDetailsIni(Context context, int id) {
+        model.getShortDetailsIni(context, id);
+    }
 }

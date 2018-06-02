@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.request_detail.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragPresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract;
@@ -19,5 +21,10 @@ public class RequestDetailFragmentPresenter extends BaseFragPresenter<RequestDet
 
     public RequestDetailFragmentPresenter(RequestDetailFragmentContract.Model model) {
         super(model);
+    }
+
+    @Override
+    public void getTransactionDetails(Context context, int transactionId) {
+        model.getTransactionDetails(context, transactionId);
     }
 }

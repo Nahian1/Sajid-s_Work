@@ -65,4 +65,6 @@
     <string name="tag_accepted">مقبول</string>
     <string name="tag_pending">قيد الانتظار</string>
     <string name="last_conversation">المحادثة الأخيرة</string>
+    <string name="investor_tag_line">انا مهتم بالاستثمار في خطتك</string>
+    <string name="btn_confirm_req">تأكيد الطلب</string>
 </resources>

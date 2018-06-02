@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.launcher;
 
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -22,6 +24,7 @@ import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -55,18 +58,30 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     @BindView(R.id.tv_forgot_pwd)
     TextView tvForgotPwd;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        String lang = PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, null);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (preferences.getString(ConstantProvider.SP_NAME, null) != null) {
+
+            navigator.toHomeActivity(this, null);
+
+            finish();
+        }
+
+        String lang = preferences.getString(ConstantProvider.LOCALE, null);
+
         if (lang == null) {
-            LocaleHelper.setNewLocale(
-                    this,
-                    PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, "en")
-            );
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(ConstantProvider.LOCALE, "en");
+
+            LocaleHelper.setNewLocale(this, "en");
+
+            preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
+
         }
 
         viewUnbinder = ButterKnife.bind(this);
@@ -102,13 +117,16 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
             case R.id.btn_sign_in:
 
 
-
-
 //                presenter.requestForLogin("creynolds@montgomery.com","asdasd123");
 //                presenter.requestForLogin("azam@gmail.com","asdasd123");
 //                presenter.requestForLogin("michaelperez@collier.com","asdasd123");
 
+                ViewUtils.hideKeyboard(this);
+
+
+                //for debug only
                 String email = etEmail.getText().toString().trim();
+
                 String password = etPwd.getText().toString().trim();
 
                 if (!email.isEmpty()) {
@@ -118,39 +136,64 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
                                 etPwd.getText().toString().trim()
                         );
                     } else {
-                       // showMessage("Password can not be empty");
+                        // showMessage("Password can not be empty");
                         Toast.makeText(this, "Password can not be empty", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(this, "Email can not be empty", Toast.LENGTH_SHORT).show();
                     //showMessage("Email can not be empty");
+
+                    if (email.equals("1")) {
+
+                        progressDialog = ViewUtils.showProgress(this);
+                        progressDialog.show();
+
+                        presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
+
+                    } else if (email.equals("2")) {
+
+                        presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
+
+                    } else {
+                        showMessage("Give a type!");
+
+                    }
+
                 }
-                break;
-            case R.id.tv_sign_up:
-                navigator.toRegistrationActivity(this,false);
-                break;
-            case R.id.tv_forgot_pwd:
-                navigator.toForgotPasswordActivity(this);
-                break;
+
+                    break;
+                    case R.id.tv_sign_up:
+                        navigator.toRegistrationActivity(this, false);
+                        break;
+                    case R.id.tv_forgot_pwd:
+                        navigator.toForgotPasswordActivity(this);
+                        break;
+                }
+
         }
-    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
 
-        if(event.isSuccess) {
+        progressDialog.dismiss();
+
+        if (event.isSuccess) {
             AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
-                try{
-                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
+                try {
+                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))) {
                         navigator.toHomeActivity(LoginActivity.this, event.string);
+                        finish();
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             });
+
         }
     }
 

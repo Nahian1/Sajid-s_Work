@@ -26,6 +26,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -102,9 +103,15 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         titleTV.setText(filteredList.get(position).getTitle());
         priceTV.setText(String.valueOf(filteredList.get(position).getAccessPrice()));
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        String dateOutputPattern = "dd MMM yyyy";
+
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
+
         try {
-            dateTV.setText(dateFormat.format(dateFormat.parse(filteredList.get(position).getCreatedAt())));
+            Date date = inputDateFormat.parse(filteredList.get(position).getCreatedAt());
+            dateTV.setText(outputDateFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -117,15 +124,10 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
             statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
         }
 
-        //statusTV.setText(filteredList.get(position).getStatus());
-        if (reqType != 1)
-            editIV.setVisibility(View.GONE);
-
         count++;
         Log.e("project", "getView: " + count);
 
         return convertView;
-
     }
 
     /**

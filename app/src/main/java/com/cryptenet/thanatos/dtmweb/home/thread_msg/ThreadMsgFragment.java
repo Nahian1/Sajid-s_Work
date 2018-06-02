@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadMsgFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -34,7 +35,11 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_thread_msg, container, false);
+        View view = inflater.inflate(R.layout.fragment_thread_msg, container, false);
+
+        ((HomeActivity) getActivity()).hideSearchBar(false);
+
+        return view;
     }
 
     @Override
