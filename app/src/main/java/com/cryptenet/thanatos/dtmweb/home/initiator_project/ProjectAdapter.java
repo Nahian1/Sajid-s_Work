@@ -119,8 +119,19 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         }
 
         //statusTV.setText(filteredList.get(position).getStatus());
-        if (reqType != 1)
+        if (reqType == 2) {
+
             editIV.setVisibility(View.GONE);
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+        }
+
 
         count++;
         Log.e("project", "getView: " + count);
