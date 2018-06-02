@@ -289,7 +289,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/background_text"
+                        android:background="@drawable/grey_button_selector"
                         android:text="Cancel"
                         android:textColor="#404040" />
 
@@ -301,7 +301,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginStart="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_shape_b"
+                        android:background="@drawable/blue_button_selector"
                         android:text="Submit"
                         android:textColor="@color/colorPrimaryDark" />
                 </LinearLayout>

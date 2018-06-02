@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
     android:background="@drawable/background"
+    android:scrollbars="none"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".registration.RegistrationActivity"
-    tools:showIn="@layout/activity_registration" >
+    tools:showIn="@layout/activity_registration">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,6 +27,7 @@
             android:layout_marginEnd="@dimen/margin_horizontal_8"
             android:layout_marginStart="@dimen/margin_horizontal_8"
             android:layout_marginTop="@dimen/margin_vertical_8"
+            android:elevation="0dp"
             android:maxHeight="160dp"
             android:maxWidth="160dp"
             android:src="@drawable/ic_pp_dummy"
@@ -36,15 +37,16 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_profile_white" />
 
         <TextView
             android:id="@+id/tv_add_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_vertical_16"
             android:text="@string/tv_add_photo"
             android:textColor="@android:color/white"
-            android:layout_marginTop="@dimen/margin_vertical_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -55,11 +57,11 @@
             android:id="@+id/tv_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_horizontal_8"
+            android:layout_marginRight="@dimen/margin_horizontal_8"
+            android:layout_marginTop="@dimen/margin_vertical_16"
             android:text="@string/spin_label_acc_type"
             android:textColor="@android:color/white"
-            android:layout_marginRight="@dimen/margin_horizontal_8"
-            android:layout_marginEnd="@dimen/margin_horizontal_8"
-            android:layout_marginTop="@dimen/margin_vertical_16"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintRight_toLeftOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/tv_add_photo" />
@@ -77,10 +79,10 @@
 
             <Spinner
                 android:id="@+id/spin_acc_type"
+                style="@style/Widget.AppCompat.DropDownItem.Spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/white"
-                style="@style/Widget.AppCompat.DropDownItem.Spinner"
                 android:popupBackground="@color/spin_pop"
                 android:spinnerMode="dropdown" />
         </LinearLayout>
@@ -144,9 +146,9 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintRight_toLeftOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/et_email_reg" />
 
         <EditText
@@ -163,9 +165,9 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/guideline"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_email_reg" />
 
         <EditText
@@ -194,62 +196,62 @@
             android:id="@+id/spin_country"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_vertical_16"
             android:layout_marginLeft="2dp"
             android:layout_marginStart="2dp"
+            android:layout_marginTop="@dimen/margin_vertical_16"
             android:backgroundTint="@android:color/white"
             android:paddingTop="8dp"
             android:popupBackground="#304E80"
             android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintRight_toLeftOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/et_address" />
 
         <Spinner
             android:id="@+id/spin_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_vertical_16"
             android:layout_marginLeft="2dp"
             android:layout_marginStart="2dp"
+            android:layout_marginTop="@dimen/margin_vertical_16"
             android:backgroundTint="@android:color/white"
             android:paddingTop="8dp"
             android:popupBackground="#304E80"
             android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/guideline"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_address" />
 
         <View
             android:id="@+id/view_style_country"
             android:layout_width="0dp"
             android:layout_height="1.5dp"
-            android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
             android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginStart="12dp"
             android:background="@android:color/white"
             android:paddingTop="8dp"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintRight_toLeftOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/spin_country" />
 
         <View
             android:id="@+id/view_style_city"
             android:layout_width="0dp"
             android:layout_height="1.5dp"
-            android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
+            android:layout_marginStart="12dp"
             android:background="@android:color/white"
             android:paddingTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/guideline"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spin_city" />
 
         <EditText
@@ -288,9 +290,9 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintRight_toLeftOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/et_bank_name_reg" />
 
         <EditText
@@ -307,26 +309,26 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/guideline"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_bank_name_reg" />
 
         <Button
             android:id="@+id/btn_sign_in_reg"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/margin_horizontal_8"
+            android:layout_marginEnd="@dimen/margin_horizontal_56"
             android:layout_marginLeft="@dimen/margin_horizontal_56"
             android:layout_marginRight="@dimen/margin_horizontal_56"
             android:layout_marginStart="@dimen/margin_horizontal_56"
-            android:layout_marginEnd="@dimen/margin_horizontal_56"
             android:layout_marginTop="@dimen/margin_vertical_16"
-            android:layout_marginBottom="@dimen/margin_horizontal_8"
+            android:background="@drawable/white_button_selector"
             android:text="@string/btn_done"
             android:textColor="@android:color/white"
-            android:background="@drawable/btn_shape_w"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_bank_acc_name_reg" />
 
@@ -350,8 +352,8 @@
             android:id="@+id/tv_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_horizontal_56"
             android:layout_marginEnd="@dimen/margin_horizontal_56"
+            android:layout_marginRight="@dimen/margin_horizontal_56"
             android:layout_marginTop="@dimen/margin_vertical_16"
             android:paddingBottom="40dp"
             android:text="@string/tv_sign_in"
@@ -359,14 +361,14 @@
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/btn_sign_in_reg"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_sign_in_reg" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5"/>
+            app:layout_constraintGuide_percent="0.5" />
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -51,6 +52,8 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_thread_project, container, false);
+
+        ((HomeActivity) getActivity()).hideSearchBar(true);
 
         unbinder = ButterKnife.bind(this, convertView);
 

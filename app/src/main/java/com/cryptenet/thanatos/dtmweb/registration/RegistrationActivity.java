@@ -38,7 +38,11 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
+
 import com.cryptenet.thanatos.dtmweb.utils.ProgressBarHandler;
+
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.karumi.dexter.Dexter;
@@ -253,6 +257,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @OnClick(R.id.btn_sign_in_reg)
     public void requestRegistration(View view) {
+
+        ViewUtils.hideKeyboard(this);
+
         String name = etNameReg.getText().toString().trim();
         String email = etEmailReg.getText().toString().trim();
         String pwd = etPwdReg.getText().toString().trim();

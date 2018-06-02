@@ -18,6 +18,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.CodeEnteredEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.CodeActivityContract;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,6 +71,9 @@ public class CodeActivity extends BaseActivity<CodeActivityContract.Presenter>
 
     @Override
     public void onClick(View v) {
+
+        ViewUtils.hideKeyboard(this);
+
         String code = etCode.getText().toString();
 
         if (!code.isEmpty()) {

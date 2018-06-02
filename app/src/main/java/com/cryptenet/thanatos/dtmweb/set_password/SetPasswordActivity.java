@@ -18,6 +18,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.PwdResetEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -67,6 +68,9 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
 
     @OnClick(R.id.btn_done)
     public void onClick(View v) {
+
+        ViewUtils.hideKeyboard(this);
+
         String pwd = etNewPwd.getText().toString().trim();
         String cPwd = etConfirmNewPwd.getText().toString().trim();
 

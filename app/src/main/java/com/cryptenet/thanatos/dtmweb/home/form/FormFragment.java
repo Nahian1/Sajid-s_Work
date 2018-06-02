@@ -23,9 +23,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.FormFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
 import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
@@ -82,6 +84,8 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transaction_form, container, false);
 
+        ((HomeActivity) getActivity()).hideSearchBar(true);
+
         unbinder = ButterKnife.bind(this, view);
 
         details = new Gson().fromJson(getArguments().getString("project_details"), ProjectsDetailed.class);
@@ -95,7 +99,7 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 
             Glide.with(activityContext)
                     .load(details.getInitiatorImage())
-                    .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_grey))
                     .apply(RequestOptions.circleCropTransform())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(profilepic);
@@ -124,6 +128,13 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.attachView(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -131,6 +142,9 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 
     @OnClick({R.id.cancelBtn, R.id.submitBtn})
     public void onViewClicked(View view) {
+
+        ViewUtils.hideKeyboard(getActivity());
+
         switch (view.getId()) {
             case R.id.cancelBtn:
 
@@ -147,12 +161,20 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 
                 if (!bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNo.isEmpty() && !transId.isEmpty()) {
 
+//                    Transaction transaction = new Transaction();
+//                    transaction.setBankName(bankName);
+//                    transaction.setBankAccountName(bankAccName);
+//                    transaction.setBankAccountNumber(bankAccNo);
+//                    transaction.setTransactionId(transId);
+//                    transaction.setNote(note);
+//                    transaction.setProjectsDetailed(details); //adding project details
+
                     Transaction transaction = new Transaction();
-                    transaction.setBankName(bankName);
-                    transaction.setBankAccountName(bankAccName);
-                    transaction.setBankAccountNumber(bankAccNo);
-                    transaction.setTransactionId(transId);
-                    transaction.setNote(note);
+                    transaction.setBankName("Bank");
+                    transaction.setBankAccountName("My name");
+                    transaction.setBankAccountNumber("1324657987");
+                    transaction.setTransactionId("313546313");
+                    transaction.setNote("note");
                     transaction.setProjectsDetailed(details); //adding project details
 
                     presenter.submitTransactionData(transaction, activityContext);
@@ -174,7 +196,7 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 //        Transaction transaction = event.transaction;
 //        transaction.setProjectsDetailed(details);
 //
-//        EventBus.getDefault().post(new ToTransactionFragmentEvent(transaction));
+//        EventBus.getDefault().post(new TransactionDataReceiveEvent(transaction));
 //
 //    }
 }

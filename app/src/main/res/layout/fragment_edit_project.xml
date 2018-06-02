@@ -227,7 +227,7 @@
                 android:layout_below="@+id/priceTV"
                 android:textSize="15sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:background="@drawable/btn_shape_b"
+                android:background="@drawable/blue_button_selector"
                 android:text="@string/btn_done"/>
         </LinearLayout>
     </ScrollView>

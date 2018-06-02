@@ -23,6 +23,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.IssueListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ReportIssueFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueParent;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -53,6 +54,9 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_report_issue, container, false);
+
+        ((HomeActivity) getActivity()).hideSearchBar(true);
+
         expandableListView = convertView.findViewById(R.id.elv_report);
         expandableListView.setGroupIndicator(null);
 

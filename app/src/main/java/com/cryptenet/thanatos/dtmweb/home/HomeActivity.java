@@ -7,6 +7,7 @@
 
 package com.cryptenet.thanatos.dtmweb.home;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
 import com.cryptenet.thanatos.dtmweb.events.InitiatorThreadsEvent;
 import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestDetailFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ThreadIdReceiveEvent;
@@ -47,10 +49,12 @@ import com.cryptenet.thanatos.dtmweb.home.other_report.OtherReportFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
+import com.cryptenet.thanatos.dtmweb.home.request_detail.RequestDetailFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
+import com.cryptenet.thanatos.dtmweb.message.investor_thread.MessageRequestActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
@@ -114,6 +118,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     ImageView ivNavEditProfile;
     @BindView(R.id.editTextSearch)
     EditText editTextSearch;
+    @BindView(R.id.buttonSearch)
+    ImageView buttonSearch;
 
     private SharedPreferences sharedPreferences;
 
@@ -124,12 +130,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         viewUnbinder = ButterKnife.bind(this);
 
-        ivNavPp = findViewById(R.id.iv_nav_pp);
-        tvNavName = findViewById(R.id.tv_nav_name);
-        tvNavType = findViewById(R.id.tv_nav_type);
-        tvNavAddress = findViewById(R.id.tv_nav_address);
-        ivNavEditProfile = findViewById(R.id.iv_nav_edit_profile);
-
         setSupportActionBar(toolbar);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -137,6 +137,22 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         //presenter.getNavHeaderData();
 
 //        setUpNavigation();
+
+
+//        Intent intent = getIntent();
+//        String s = intent.getStringExtra("user");
+//        User user = null;
+//        if (s != null) {
+//            Gson gson = new Gson();
+//            user = gson.fromJson(s, User.class);
+//        }
+
+//        if (savedInstanceState == null) {
+        PlanListFragment fragment = new PlanListFragment();
+
+        addFragment(R.id.frame_container, fragment);
+//        }
+
         Intent intent = getIntent();
         String s = intent.getStringExtra("user");
         User user = null;
@@ -149,13 +165,14 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
 
         if (savedInstanceState == null) {
-            PlanListFragment fragment = new PlanListFragment();
+            PlanListFragment fragmentPlancList = new PlanListFragment();
             Bundle bundle = new Bundle();
             bundle.putString("token", access_token);
             Log.d(TAG, "sending tk: " + access_token);
-            fragment.setArguments(bundle);
-            addFragment(R.id.frame_container, fragment);
+            fragmentPlancList.setArguments(bundle);
+            addFragment(R.id.frame_container, fragmentPlancList);
         }
+
 
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -217,6 +234,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @OnClick(R.id.project)
     public void onManageProject(View view) {
 
+        hideSearchBar(false);
+
         drawerLayout.closeDrawer(GravityCompat.START);
 
         if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null).equals("Initiator")) {
@@ -236,6 +255,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @OnClick(R.id.request)
     public void onManageRequest(View view) {
+
+        hideSearchBar(false);
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
@@ -260,15 +281,21 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        ThreadListFragment fragment1 = new ThreadListFragment();
-        Bundle bundle1 = new Bundle();
-        bundle1.putInt("reqType", PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null) == "Investor" ? 1 : 2);
-        fragment1.setArguments(bundle1);
-        replaceFragment(R.id.frame_container, fragment1);
+
+        Intent intent = new Intent(HomeActivity.this, MessageRequestActivity.class);
+        startActivity(intent);
+
+//        ThreadListFragment fragment1 = new ThreadListFragment();
+//        Bundle bundle1 = new Bundle();
+//        bundle1.putInt("reqType", PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null) == "Investor" ? 1 : 2);
+//        fragment1.setArguments(bundle1);
+//        replaceFragment(R.id.frame_container, fragment1);
     }
 
     @OnClick(R.id.report)
     public void onReport(View view) {
+
+
         drawerLayout.closeDrawer(GravityCompat.START);
         replaceFragment(R.id.frame_container, new ReportIssueFragment());
     }
@@ -287,24 +314,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         presenter.clearUserData(this);
     }
 
-    //commented out by Asif due to redundancy
-//    @OnClick(R.id.buttonSearch)
-//    public void buttonSearch() {
-//
-//        String searchTxt = editTextSearch.getText().toString().trim();
-//
-//        if (!searchTxt.isEmpty())
-//            EventBus.getDefault().post(searchTxt);
-//        else
-//            showMessage("Enter search query!");
-//
-//    }
 
     @Override
     public void getNavHeaderData(NavHeader header) {
         Glide.with(this)
                 .load(header.getPpUrl())
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_white))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .apply(RequestOptions.circleCropTransform())
                 .into(ivNavPp);
@@ -322,11 +337,41 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @Subscribe
     public void onToDetailsFragmentEvent(ToDetailsFragmentEvent event) {
+
         PlanDescFragment fragment = new PlanDescFragment();
         Bundle bundle = new Bundle();
 
         bundle.putInt("project_id", event.projectId);
         bundle.putInt("type", event.layoutType);
+        fragment.setArguments(bundle);
+        replaceFragment(R.id.frame_container, fragment);
+
+
+    }
+
+
+    public void hideSearchBar(boolean shouldHideSearchBar) {
+
+        if (shouldHideSearchBar) {
+
+            editTextSearch.setVisibility(View.GONE);
+            buttonSearch.setVisibility(View.GONE);
+
+        } else {
+
+            editTextSearch.setVisibility(View.VISIBLE);
+            buttonSearch.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Subscribe
+    public void onRequestDetailFragmentEvent(RequestDetailFragmentEvent event) {
+        RequestDetailFragment fragment = new RequestDetailFragment();
+
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("transaction_id", event.transactionId);
+
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
     }
@@ -340,6 +385,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
+
+
     }
 
     @Subscribe
@@ -351,6 +398,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
+
+
+//        super.onBackPressed();
     }
 
     @Subscribe
@@ -361,6 +411,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putString("project_details", new Gson().toJson(event.detailed));
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
+
+
     }
 
     @Subscribe
@@ -371,6 +423,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putString("project", new Gson().toJson(event.project));
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
+
+
     }
 
     @Subscribe
@@ -381,11 +435,16 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putInt("issue_code", event.issueCode);
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
+
+
     }
 
     @Subscribe
     public void onReturnToHomeEvent(ReturnToHomeEvent event) {
         replaceFragment(R.id.frame_container, new PlanListFragment());
+
+        hideSearchBar(false);
+
     }
 
     @Subscribe
@@ -395,6 +454,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putParcelable("thread_init", event.threadInitResponse);
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
+
+
     }
 
     @Override
@@ -419,7 +480,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
     }
+
 
 }

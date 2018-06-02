@@ -15,15 +15,23 @@ import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
+
 
 import okhttp3.MultipartBody;
+
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+
 import retrofit2.http.Query;
 
 public interface ApiClient {
@@ -78,6 +86,22 @@ public interface ApiClient {
 
     @GET("/api/v1/message-thread/")
     Call<ThreadDistinctResponse> getThreadInv(@Header("Authorization") String token, @Query("plan") int planId);
+
+    @GET("/api/v1/plan-access/{id}")
+    Call<TransactionDetails> getTransactionDetails(@Header("Authorization") String token, @Path("id") int transactionId);
+
+//    @FormUrlEncoded
+//    @POST("/api/v1/plan-access/")
+//    Call<TransactionDetails> submitTransaction(
+//            @Header("Authorization") String token,
+//            @FieldMap Map<String, String> map
+//    );
+
+    @POST("/api/v1/plan-access/")
+    Call<TransactionDetails> submitTransaction(
+            @Header("Authorization") String token,
+            RequestBody formBody
+    );
 
 
 //    @GET("GET /api/v1/plan/{id}")

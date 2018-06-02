@@ -2,10 +2,15 @@
 <resources>
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#304e80</color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorAccent">#666666</color>
 
-    <color name="grey">#ffb8b8b8</color>
     <color name="spin_pop">#304E80</color>
 
+    <color name="white">#ffffff</color>
+    <color name="blue">#38598F</color>
+    <color name="grey">#666666</color>
+
+
     <color name="progress_light">#5d8bd7</color>
+
 </resources>

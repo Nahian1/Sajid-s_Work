@@ -76,7 +76,7 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
 
         Glide.with(context)
                 .load(projects.get(position).getCoverThumbnail())
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_image_placeholder))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(projectIV);
 
@@ -84,11 +84,11 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
-        try {
-            dateTV.setText(dateFormat.format(dateFormat.parse(projects.get(position).getCreatedAt())));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            dateTV.setText(dateFormat.format(dateFormat.parse(projects.get(position).getCreatedAt())));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
         titleTV.setText(projects.get(position).getTitle());
         priceTV.setText(projects.get(position).getAccessPrice());
