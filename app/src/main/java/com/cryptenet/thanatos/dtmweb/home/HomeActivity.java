@@ -7,8 +7,6 @@
 
 package com.cryptenet.thanatos.dtmweb.home;
 
-import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -55,7 +53,6 @@ import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
-import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
@@ -321,12 +318,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     public void hideSearchBar(boolean shouldHideSearchBar) {
 
         if (shouldHideSearchBar) {
-
             editTextSearch.setVisibility(View.GONE);
             buttonSearch.setVisibility(View.GONE);
-
         } else {
-
             editTextSearch.setVisibility(View.VISIBLE);
             buttonSearch.setVisibility(View.VISIBLE);
         }

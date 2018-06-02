@@ -27,4 +27,9 @@ public class RequestDetailFragmentPresenter extends BaseFragPresenter<RequestDet
     public void getTransactionDetails(Context context, int transactionId) {
         model.getTransactionDetails(context, transactionId);
     }
+
+    @Override
+    public void confirmRequest(Context context, int transactionId) {
+        model.confirmRequest(context, transactionId);
+    }
 }

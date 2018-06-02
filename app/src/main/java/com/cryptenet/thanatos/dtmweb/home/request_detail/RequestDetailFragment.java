@@ -150,7 +150,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
 
     @OnClick(R.id.btn_confirm)
     public void onRequestConfirmed(View view) {
-//        presenter.confirmRequest(transId);
+        presenter.confirmRequest(activityContext, transId);
     }
 
     @Override
