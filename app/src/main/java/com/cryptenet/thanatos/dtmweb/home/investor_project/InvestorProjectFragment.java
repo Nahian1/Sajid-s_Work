@@ -23,7 +23,6 @@ import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
-import com.cryptenet.thanatos.dtmweb.message.investor_thread.MessageRequestActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -70,19 +69,19 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
         projectLV.setAdapter(adapter);
 
 
-        projectLV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MessageRequestActivity.class);
-                startActivity(intent);
-            }
-        });
+//        projectLV.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), MessageRequestActivity.class);
+//                  startActivity(intent);
+//            }
+//        });
 
-//        projectLV.setOnItemClickListener((parent, view, position, id) ->
-//                EventBus.getDefault().post(
-//                        new ToDetailsFragmentEvent(
-//                                projectsRspList.get(position).getPlan(),
-//                                (projectsRspList.get(position).getIsApproved()) ? 11 : 10)));
+        projectLV.setOnItemClickListener((parent, view, position, id) ->
+                EventBus.getDefault().post(
+                        new ToDetailsFragmentEvent(
+                                projectsRspList.get(position).getPlan(),
+                                (projectsRspList.get(position).getIsApproved()) ? 11 : 10)));
 
         return convertView;
     }
