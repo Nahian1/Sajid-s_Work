@@ -119,41 +119,41 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
                 ViewUtils.hideKeyboard(this);
 
                 //for debug only
-                String email = etEmail.getText().toString().trim();
-
-                if (email.equals("1")) {
-
-                    progressDialog = ViewUtils.showProgress(this);
-                    progressDialog.show();
-
-                    presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
-
-                } else if (email.equals("2")) {
-
-                    presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
-
-                } else {
-                    showMessage("Give a type!");
-                }
+//                String email = etEmail.getText().toString().trim();
+//
+//                if (email.equals("1")) {
+//
+//                    progressDialog = ViewUtils.showProgress(this);
+//                    progressDialog.show();
+//
+//                    presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
+//
+//                } else if (email.equals("2")) {
+//
+//                    presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
+//
+//                } else {
+//                    showMessage("Give a type!");
+//                }
 
 //                presenter.requestForLogin("azam@gmail.com","asdasd123");
 
                 //original code commented out for debug purpose
-//                String email = etEmail.getText().toString().trim();
-//                String password = etPwd.getText().toString().trim();
-//
-//                if (!email.isEmpty()) {
-//                    if (!password.isEmpty()) {
-//                        presenter.requestForLogin(
-//                                etEmail.getText().toString().trim(),
-//                                etPwd.getText().toString().trim()
-//                        );
-//                    } else {
-//                        showMessage("Password can not be empty!");
-//                    }
-//                } else {
-//                    showMessage("Email can not be empty!");
-//                }
+                String email = etEmail.getText().toString().trim();
+                String password = etPwd.getText().toString().trim();
+
+                if (!email.isEmpty()) {
+                    if (!password.isEmpty()) {
+                        presenter.requestForLogin(
+                                etEmail.getText().toString().trim(),
+                                etPwd.getText().toString().trim()
+                        );
+                    } else {
+                        showMessage("Password can not be empty!");
+                    }
+                } else {
+                    showMessage("Email can not be empty!");
+                }
 
                 break;
             case R.id.tv_sign_up:
@@ -169,7 +169,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
 
-        progressDialog.dismiss();
+//        progressDialog.dismiss();
 
         if (event.isSuccess) {
             AsyncTask.execute(() -> {
