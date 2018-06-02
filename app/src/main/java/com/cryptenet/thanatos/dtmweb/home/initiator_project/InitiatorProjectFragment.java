@@ -20,6 +20,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestDetailFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
@@ -46,8 +47,8 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     private List<ProjectsRsp> projectsRspList = new ArrayList<>();
     private List<Plans> plansList = new ArrayList<>();
     private ListView projectLV;
-    private ProjectAdapter adapter;
-    private ProjectManageAdapter adapter2;
+    private ProjectAdapter manageProjectAdapter;
+    private ProjectManageReqAdapter manageReqAdapter;
     private int reqType;
     private Unbinder unbinder;
 
@@ -70,21 +71,20 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         if (reqType ==1) {
 //        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
-            adapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
-            projectLV.setAdapter(adapter);
+            manageProjectAdapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
+            projectLV.setAdapter(manageProjectAdapter);
 
             projectLV.setOnItemClickListener((parent, view, position, id) ->
-                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 3)));
+                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 21)));
 
         } else {
             convertView.findViewById(R.id.btnAddPlan).setVisibility(View.GONE);
 //        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
-            adapter2 = new ProjectManageAdapter(activityContext, plansList, reqType);
-            projectLV.setAdapter(adapter2);
+            manageReqAdapter = new ProjectManageReqAdapter(activityContext, plansList, reqType);
+            projectLV.setAdapter(manageReqAdapter);
 
             projectLV.setOnItemClickListener((parent, view, position, id) ->
-                    EventBus.getDefault().post(new ToDetailsFragmentEvent(plansList != null && plansList.size() > 0 ? plansList.get(position).getId() : 0, 3)));
-
+                    EventBus.getDefault().post(new RequestDetailFragmentEvent(plansList.get(position).getId())));
         }
 
         return convertView;
@@ -109,7 +109,8 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
     @Subscribe
     public void onSearchEvent(SearchEvent event) {
-        adapter.getFilter().filter(event.searchTxt);
+        manageProjectAdapter.getFilter().filter(event.searchTxt);
+        manageReqAdapter.getFilter().filter(event.searchTxt);
     }
 
     @Subscribe
@@ -118,7 +119,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 //        this.projectsRspList.clear();
 //        this.projectsRspList.addAll(event.projectsRspList);
         this.projectsRspList = event.projectsRspList;
-        adapter.updateList(this.projectsRspList);
+        manageProjectAdapter.updateList(this.projectsRspList);
     }
 
     @Subscribe
@@ -127,7 +128,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 //        this.projectsRspList.clear();
 //        this.projectsRspList.addAll(event.projectsRspList);
         this.plansList = event.projectsRspList;
-        adapter2.updateList(this.plansList);
+        manageReqAdapter.updateList(this.plansList);
     }
 
     @OnClick(R.id.btnAddPlan)

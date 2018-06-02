@@ -79,9 +79,9 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     @Override
     public void toDetailsView(ProjectsRsp projectsRsp, int type) {
         if (type == 1) {
-            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 2));
+            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 10));
         } else {
-            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 3));
+            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 20));
         }
     }
 
@@ -95,7 +95,6 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     @Subscribe
     public void onItemClickEvent(String clickPosition) {
-
         presenter.checkUserType(projectsRspList.get(Integer.parseInt(clickPosition)), activityContext);
 
     }

@@ -37,10 +37,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Presenter>
@@ -64,7 +68,6 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     TextView textShortDesc;
     @BindView(R.id.textLongDesc)
     TextView textLongDesc;
-    Unbinder unbinder;
     @BindView(R.id.ic_init_conversation)
     ImageView icInitConversation;
     @BindView(R.id.textViewFile)
@@ -100,7 +103,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         projectId = getArguments().getInt("project_id");
         type = getArguments().getInt("type");
 
-        unbinder = ButterKnife.bind(this, convertView);
+        viewUnbinder = ButterKnife.bind(this, convertView);
 
         return convertView;
     }
@@ -108,20 +111,16 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     @OnClick(R.id.buttonRequestDetails)
     public void buttonRequestDetails() {
 
-        if (type == 3) {
-
+        if (type >= 20) {
             showMessage("Log in as Investor!");
-
         } else {
-
             EventBus.getDefault().post(new PlanDetailsRequestEvent(projectsDetailed));
         }
     }
 
     @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void toShowPlanDetailsEvent(ShowPlanDetailsEvent event) {
-
+    public void onShowPlanDetailsEvent(ShowPlanDetailsEvent event) {
         projectsDetailed = event.detailed;
         if (event.detailed.getId() == null) {
             return;
@@ -153,25 +152,29 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(profilepic);
 
-//        if (type == 1) {
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-//            try {
-//                textDatePrice.setText(dateFormat.format(dateFormat.parse(event.detailed.getCreatedAt())));
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//
-//            layoutBankSection.setVisibility(View.GONE);
-//            textLongDesc.setVisibility(View.VISIBLE);
-//            textLongDesc.setText(event.detailed.getLongDescription());
-//
-//            textViewFile.setVisibility(View.VISIBLE);
-//        } else {
-        if (textDatePrice != null)
-            textDatePrice.setText("Price: " + event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
-//        }
+        if (type == 11 || type == 21) {
+            String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+            String dateOutputPattern = "dd MMM yyyy";
 
-        if (type != 3) {
+            SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
+            SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
+
+            try {
+                Date date = inputDateFormat.parse(event.detailed.getCreatedAt());
+                textDatePrice.setText(outputDateFormat.format(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            layoutBankSection.setVisibility(View.GONE);
+            textLongDesc.setVisibility(View.VISIBLE);
+            textLongDesc.setText(event.detailed.getLongDescription());
+            textViewFile.setVisibility(View.VISIBLE);
+        } else if (textDatePrice != null) {
+            textDatePrice.setText("Price: " + event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
+        }
+
+        if (type < 20) {
             icInitConversation.setVisibility(View.VISIBLE);
         }
 
@@ -193,12 +196,6 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     public void restoreState(Bundle savedState) {
 
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick({R.id.ic_init_conversation, R.id.textViewFile})
@@ -234,11 +231,17 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 
         presenter.attachView(this);
 
-        if (type == 1) { //long
-            presenter.getLongDetails(activityContext, projectId);
-        } else { //short
+        if (type ==10 || type == 20) {
             presenter.getShortDetails(activityContext, projectId);
+        } else if (type == 11 || type == 21) {
+            presenter.getLongDetails(activityContext, projectId);
         }
+
+//        if (type == 1) { //long
+//            presenter.getLongDetails(activityContext, projectId);
+//        } else { //short
+//            presenter.getShortDetails(activityContext, projectId);
+//        }
     }
 
     @Override

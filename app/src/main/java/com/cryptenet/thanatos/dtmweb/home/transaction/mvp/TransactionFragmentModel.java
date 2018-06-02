@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.transaction.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.TransactionFragmentContract;
@@ -19,5 +21,10 @@ public class TransactionFragmentModel extends BaseFragModel<TransactionFragmentC
 
     public TransactionFragmentModel(TransactionFragmentContract.Repository repository) {
         super(repository);
+    }
+
+    @Override
+    public void getTransactionDetails(Context context, int transactionId) {
+        repository.getTransactionDetails(context, transactionId);
     }
 }

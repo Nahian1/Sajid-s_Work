@@ -37,4 +37,9 @@ public class PlanDescFragmentModel extends BaseFragModel<PlanDescFragmentContrac
     public void getThreadId(Context context, int planId) {
         repository.getThreadId(context, planId);
     }
+
+    @Override
+    public void getShortDetailsIni(Context context, int id) {
+        repository.getShortDetailsIni(context, id);
+    }
 }

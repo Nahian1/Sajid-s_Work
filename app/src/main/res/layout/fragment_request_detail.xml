@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/textViewTitle"
-                    android:text="Price: $670"
+                    android:text="Price: "
                     android:textColor="#939393"
                     android:textSize="15sp" />
 
@@ -273,14 +273,16 @@
                     android:text="Some Notes"/>
             </LinearLayout>
 
-
-            <ImageView
-                android:id="@+id/confirmIV"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+            <Button
+                android:id="@+id/btn_confirm"
                 android:layout_width="200dp"
-                android:layout_height="70dp"
-                android:src="@drawable/confirm"/>
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/btn_shape_blue"
+                android:text="@string/btn_confirm_req"
+                android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

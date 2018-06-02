@@ -23,10 +23,10 @@
 
             <ImageView
                 android:id="@+id/demoIV"
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_thumb_plan_cover" />
+                android:src="@drawable/ic_pp_dummy" />
             <LinearLayout
                 android:id="@+id/right_layout"
                 android:layout_marginLeft="8dp"
@@ -45,33 +45,13 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/nameTV"
+                    android:id="@+id/tagLineTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/investor_tag_line"
                     android:textColor="#939393"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/last_conversation"
-                        android:textColor="#939393"
-                        android:textSize="12sp" />
-                    <TextView
-                        android:layout_marginLeft="2dp"
-                        android:id="@+id/dateTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10 March 2018"
-                        android:textColor="#939393"
-                        android:textSize="12sp" />
-                </LinearLayout>
             </LinearLayout>
 
 

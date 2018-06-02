@@ -124,6 +124,13 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.attachView(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -147,12 +154,20 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 
                 if (!bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNo.isEmpty() && !transId.isEmpty()) {
 
+//                    Transaction transaction = new Transaction();
+//                    transaction.setBankName(bankName);
+//                    transaction.setBankAccountName(bankAccName);
+//                    transaction.setBankAccountNumber(bankAccNo);
+//                    transaction.setTransactionId(transId);
+//                    transaction.setNote(note);
+//                    transaction.setProjectsDetailed(details); //adding project details
+
                     Transaction transaction = new Transaction();
-                    transaction.setBankName(bankName);
-                    transaction.setBankAccountName(bankAccName);
-                    transaction.setBankAccountNumber(bankAccNo);
-                    transaction.setTransactionId(transId);
-                    transaction.setNote(note);
+                    transaction.setBankName("Bank");
+                    transaction.setBankAccountName("My name");
+                    transaction.setBankAccountNumber("1324657987");
+                    transaction.setTransactionId("313546313");
+                    transaction.setNote("note");
                     transaction.setProjectsDetailed(details); //adding project details
 
                     presenter.submitTransactionData(transaction, activityContext);
@@ -174,7 +189,7 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 //        Transaction transaction = event.transaction;
 //        transaction.setProjectsDetailed(details);
 //
-//        EventBus.getDefault().post(new ToTransactionFragmentEvent(transaction));
+//        EventBus.getDefault().post(new TransactionDataReceiveEvent(transaction));
 //
 //    }
 }
