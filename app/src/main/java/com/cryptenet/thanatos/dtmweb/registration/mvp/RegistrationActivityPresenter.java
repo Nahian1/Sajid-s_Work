@@ -26,11 +26,11 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
     }
 
     @Override
-    public void carryRegData(File imageFile, String accType, String name, String email, String pwd,
+    public void carryRegData(String reqType, File imageFile, String accType, String name, String email, String pwd,
                              String address, int countryCode, int cityCode,
                              String bankName, String bankAccName, String bankAccNumber) {
         model.attachContext(view.getActivity());
-        model.attemptReg(imageFile, accType, name, email, pwd, address, countryCode, cityCode,
+        model.attemptReg(reqType, imageFile, accType, name, email, pwd, address, countryCode, cityCode,
                 bankName, bankAccName, bankAccNumber);
     }
 

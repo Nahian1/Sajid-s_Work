@@ -38,7 +38,11 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
+
+import com.cryptenet.thanatos.dtmweb.utils.ProgressBarHandler;
+
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.karumi.dexter.Dexter;
@@ -61,6 +65,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegistrationActivity extends BaseActivity<RegistrationActivityContract.Presenter>
         implements RegistrationActivityContract.View, AdapterView.OnItemSelectedListener {
@@ -75,8 +80,10 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     private ArrayAdapter<String> spinAccTypeAdapter, spinCountryAdapter, spinCityAdapter;
     private boolean isEdit;
 
+    private ProgressBarHandler progressBarHandler;
+
     @BindView(R.id.iv_pp)
-    ImageView ivPp;
+    CircleImageView ivPp;
 
     @BindView(R.id.et_name_reg)
     EditText etNameReg;
@@ -126,6 +133,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         setContentView(R.layout.activity_registration);
 
         viewUnbinder = ButterKnife.bind(this);
+
+        progressBarHandler = new ProgressBarHandler(this);
 
         isEdit = getIntent().getBooleanExtra("isEdit", false);
 
@@ -270,7 +279,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
                 && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
             if (pwd.equals(cPwd)) {
-                presenter.carryRegData(
+                progressBarHandler.showProgress();
+
+                presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER,
                         imageFile,
                         accType,
                         name,
@@ -297,7 +308,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @OnClick(R.id.tv_sign_in)
     public void toSignIn(View view) {
-        presenter.checkLoginState(this);
+        //presenter.checkLoginState(this);
+        navigator.toLoginActivity(this);
+        finish();
     }
 
     @Override
@@ -342,12 +355,17 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         sCities.clear();
         for (City city : this.cities)
             sCities.add(city.getName());
-        cityCode = cities.get(0).getId();
-        spinCityAdapter.notifyDataSetChanged();
+        if (cities.size() > 0) {
+            cityCode = cities.get(0).getId();
+            spinCityAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegistrationSuccessEvent(RegistrationSuccessEvent event) {
+        if (progressBarHandler != null)
+            progressBarHandler.hideProgress();
 
         if (!isEdit) {
             showMessage("Registered");

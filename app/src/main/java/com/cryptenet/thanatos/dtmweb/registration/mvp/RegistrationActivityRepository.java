@@ -15,6 +15,8 @@ import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
 import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
+import com.cryptenet.thanatos.dtmweb.http.ApiClient;
+import com.cryptenet.thanatos.dtmweb.http.RetrofitServiceFactory;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
@@ -45,6 +47,8 @@ public class RegistrationActivityRepository extends BaseRepository
     private List<Country> countries;
     private List<City> cities;
 
+    private ApiClient mApiClient = RetrofitServiceFactory.createRetrofitService();
+
     public RegistrationActivityRepository() {
         countries = new ArrayList<>();
         cities = new ArrayList<>();
@@ -52,74 +56,55 @@ public class RegistrationActivityRepository extends BaseRepository
 
     @Override
     public void getAllCountries() {
-        String head = "application/json";
 
-        OkHttpClient client = new OkHttpClient();
-
-        final Request request = new Request.Builder()
-                .url(ConstantProvider.BASE_URL + "api/v1/country/")
-                .get()
-                .addHeader("Content-Type", head)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        //mApiClient = RetrofitServiceFactory.createRetrofitService();
+        mApiClient.getAllcountries().enqueue(new retrofit2.Callback<CountryResponse>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: country");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(retrofit2.Call<CountryResponse> call, retrofit2.Response<CountryResponse> response) {
                 try {
-                    Gson gson = new Gson();
-                    CountryResponse countryResponse = gson.fromJson(response.body().string(), CountryResponse.class);
-                    Log.d(TAG, "onResponse: " + countryResponse.toString());
-                    setCountries(countryResponse.getResults());
+                    Log.d(TAG, "onResponse: " + response.body().getResults());
+                    setCountries(response.body().getResults());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<CountryResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: country");
             }
         });
     }
 
     @Override
     public void getLimitedCities(int countryCode) {
-        String head = "application/json";
 
-        OkHttpClient client = new OkHttpClient();
-
-        final Request request = new Request.Builder()
-                .url(ConstantProvider.BASE_URL + "api/v1/city/?country=" + countryCode)
-                .get()
-                .addHeader("Content-Type", head)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        mApiClient.getAllCities(countryCode).enqueue(new retrofit2.Callback<CityResponse>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: city");
-            }
+            public void onResponse(retrofit2.Call<CityResponse> call, retrofit2.Response<CityResponse> response) {
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
                 try {
-                    Gson gson = new Gson();
-                    CityResponse cityResponse = gson.fromJson(response.body().string(), CityResponse.class);
-                    Log.d(TAG, "onResponse: " + cityResponse.toString());
-                    setCities(cityResponse.getResults());
+                    Log.d(TAG, "onResponse: " + response.body().getResults());
+                    setCities(response.body().getResults());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<CityResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: city");
             }
         });
     }
 
     @Override
-    public boolean attemptReg(final RegistrationInput regData) {
+    public boolean attemptReg(String reqType, final RegistrationInput regData) {
         PostAsync async = new PostAsync();
 
         async.execute(
-                "1",
+                reqType,
                 regData.getName(),
                 regData.getEmail(),
                 regData.getPassword(),
@@ -139,8 +124,8 @@ public class RegistrationActivityRepository extends BaseRepository
     @Override
     public boolean checkLoginState(Context context) {
         return (PreferenceManager
-                        .getDefaultSharedPreferences(context)
-                        .getString(ConstantProvider.SP_ACCESS_TOKEN, null)) != null;
+                .getDefaultSharedPreferences(context)
+                .getString(ConstantProvider.SP_ACCESS_TOKEN, null)) != null;
     }
 
     private void setCountries(List<Country> countries) {

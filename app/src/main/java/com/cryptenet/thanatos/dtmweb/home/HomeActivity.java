@@ -9,6 +9,7 @@ package com.cryptenet.thanatos.dtmweb.home;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -120,6 +121,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.buttonSearch)
     ImageView buttonSearch;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,9 +132,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         setSupportActionBar(toolbar);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         //presenter.getNavHeaderData();
 
 //        setUpNavigation();
+
 
 //        Intent intent = getIntent();
 //        String s = intent.getStringExtra("user");
@@ -146,6 +152,27 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         addFragment(R.id.frame_container, fragment);
 //        }
+
+        Intent intent = getIntent();
+        String s = intent.getStringExtra("user");
+        User user = null;
+        if (s != null) {
+            Gson gson = new Gson();
+            user = gson.fromJson(s, User.class);
+        }
+
+        String access_token = sharedPreferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null);
+
+
+        if (savedInstanceState == null) {
+            PlanListFragment fragmentPlancList = new PlanListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("token", access_token);
+            Log.d(TAG, "sending tk: " + access_token);
+            fragmentPlancList.setArguments(bundle);
+            addFragment(R.id.frame_container, fragmentPlancList);
+        }
+
 
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override

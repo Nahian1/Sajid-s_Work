@@ -12,10 +12,12 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
+import com.cryptenet.thanatos.dtmweb.events.LogInFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressBarHandler;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -69,6 +71,7 @@ public class LoginActivityRepository extends BaseRepository
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure: login");
+                EventBus.getDefault().post(new LogInFailureEvent(true));
                 e.printStackTrace();
             }
 
