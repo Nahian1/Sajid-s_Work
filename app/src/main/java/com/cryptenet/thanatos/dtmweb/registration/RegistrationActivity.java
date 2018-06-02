@@ -192,6 +192,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         spinAccType.setOnItemSelectedListener(this);
         spinCountry.setOnItemSelectedListener(this);
         spinCity.setOnItemSelectedListener(this);
+
+        //fetch country and city list from server
+        presenter.getAllCountries();
     }
 
     @Override
@@ -274,18 +277,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             if (pwd.equals(cPwd)) {
                 progressBarHandler.showProgress();
 
-                presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER,
-                        imageFile,
-                        accType,
-                        name,
-                        email,
-                        pwd,
-                        address,
-                        countryCode,
-                        cityCode,
-                        bankName,
-                        bankAccName,
-                        bankAccNum
+                presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER, imageFile, accType,
+                        name, email, pwd, address, countryCode, cityCode,
+                        bankName, bankAccName, bankAccNum
                 );
             } else {
                 showMessage("Password did not match");
@@ -398,7 +392,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
-        presenter.getAllCountries();
+        //presenter.getAllCountries();
     }
 
     @Override
