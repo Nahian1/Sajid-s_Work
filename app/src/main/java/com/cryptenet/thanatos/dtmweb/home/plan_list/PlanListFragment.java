@@ -26,6 +26,7 @@ import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -44,7 +45,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     private ListView projectLV;
     private PlanListAdapter adapter;
     private String token;
-    private ProgressDialog progressDialog;
+//    private ProgressDialog progressDialog;
 
     public PlanListFragment() {
         projectsRspList = new ArrayList<>();
@@ -94,7 +95,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
 
-        progressDialog.dismiss();
+        ProgressDialogHelper.hideProgress();
 
         this.projectsRspList = event.projectsRspList;
         for (ProjectsRsp projectsRsp : projectsRspList)
@@ -124,8 +125,8 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
         presenter.attachView(this);
 
-        progressDialog = ViewUtils.showProgress(getContext());
-        progressDialog.show();
+
+        ProgressDialogHelper.init(getActivity()).showProgress();
 
         presenter.getProjectList(activityContext, token);
     }

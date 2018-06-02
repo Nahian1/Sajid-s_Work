@@ -78,7 +78,6 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
         // Required empty public constructor
     }
 
-
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,7 +107,7 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
 
         Glide.with(activityContext)
                 .load(projectData.getInitiatorImage())
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(profilepic);
 
@@ -151,6 +150,6 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
 
     @OnClick(R.id.doneBtn)
     public void onViewClicked() {
-        showMessage("done clicked");
+        getActivity().onBackPressed();
     }
 }

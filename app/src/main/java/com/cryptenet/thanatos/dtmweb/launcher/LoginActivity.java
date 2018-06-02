@@ -24,6 +24,7 @@ import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -58,7 +59,6 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     @BindView(R.id.tv_forgot_pwd)
     TextView tvForgotPwd;
 
-    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,15 +123,13 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
                 if (email.equals("1")) {
 
-                    progressDialog = ViewUtils.showProgress(this);
-                    progressDialog.show();
+                    ProgressDialogHelper.init(this).showProgress();
 
                     presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
 
                 } else if (email.equals("2")) {
 
-                    progressDialog = ViewUtils.showProgress(this);
-                    progressDialog.show();
+                    ProgressDialogHelper.init(this).showProgress();
 
                     presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
 
@@ -172,7 +170,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
 
-        progressDialog.dismiss();
+        ProgressDialogHelper.hideProgress();
 
         if (event.isSuccess) {
             AsyncTask.execute(() -> {

@@ -11,10 +11,11 @@ package com.cryptenet.thanatos.dtmweb.events;
 import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
 
 public class TransactionSuccessEvent {
-    public final Transaction transaction;
-//    public final boolean isSuccess;
+    public Transaction transaction;
+    public boolean isSuccess;
 
-    public TransactionSuccessEvent(Transaction transaction) {
+    public TransactionSuccessEvent(Transaction transaction, boolean isSuccess) {
         this.transaction = transaction;
+        this.isSuccess = isSuccess;
     }
 }

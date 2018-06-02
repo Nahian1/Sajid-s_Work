@@ -32,6 +32,7 @@ import com.cryptenet.thanatos.dtmweb.events.ShowPlanDetailsEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -124,6 +125,9 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShowPlanDetailsEvent(ShowPlanDetailsEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
         projectsDetailed = event.detailed;
         if (event.detailed.getId() == null) {
             return;
@@ -234,7 +238,9 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 
         presenter.attachView(this);
 
-        if (type ==10 || type == 20) {
+        ProgressDialogHelper.init(getActivity()).showProgress();
+
+        if (type == 10 || type == 20) {
             presenter.getShortDetails(activityContext, projectId);
         } else if (type == 11 || type == 21) {
             presenter.getLongDetails(activityContext, projectId);

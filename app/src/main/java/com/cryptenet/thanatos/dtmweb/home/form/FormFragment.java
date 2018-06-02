@@ -27,6 +27,7 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.FormFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
 import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -161,21 +162,24 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 
                 if (!bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNo.isEmpty() && !transId.isEmpty()) {
 
-//                    Transaction transaction = new Transaction();
-//                    transaction.setBankName(bankName);
-//                    transaction.setBankAccountName(bankAccName);
-//                    transaction.setBankAccountNumber(bankAccNo);
-//                    transaction.setTransactionId(transId);
-//                    transaction.setNote(note);
-//                    transaction.setProjectsDetailed(details); //adding project details
+                    ProgressDialogHelper.init(getActivity()).showProgress();
 
                     Transaction transaction = new Transaction();
-                    transaction.setBankName("Bank");
-                    transaction.setBankAccountName("My name");
-                    transaction.setBankAccountNumber("1324657987");
-                    transaction.setTransactionId("313546313");
-                    transaction.setNote("note");
+                    transaction.setBankName(bankName);
+                    transaction.setBankAccountName(bankAccName);
+                    transaction.setBankAccountNumber(bankAccNo);
+                    transaction.setTransactionId(transId);
+                    transaction.setNote(note);
                     transaction.setProjectsDetailed(details); //adding project details
+
+                    //for debug only
+//                    Transaction transaction = new Transaction();
+//                    transaction.setBankName("Bank");
+//                    transaction.setBankAccountName("My name");
+//                    transaction.setBankAccountNumber("1324657987");
+//                    transaction.setTransactionId("313546313");
+//                    transaction.setNote("note");
+//                    transaction.setProjectsDetailed(details); //adding project details
 
                     presenter.submitTransactionData(transaction, activityContext);
 
@@ -188,15 +192,5 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 
         }
     }
-//
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onTransactionSuccessEvent(TransactionSuccessEvent event) {
-//
-//        //setting project details for use in transaction details fragment
-//        Transaction transaction = event.transaction;
-//        transaction.setProjectsDetailed(details);
-//
-//        EventBus.getDefault().post(new TransactionDataReceiveEvent(transaction));
-//
-//    }
+
 }

@@ -69,15 +69,25 @@ public class FormFragmentRepository extends BaseFragRepository
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure:");
                 e.printStackTrace();
+
+                EventBus.getDefault().post(new TransactionSuccessEvent(null, false));
+
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Transaction transaction1 = new Gson().fromJson(response.body().string(), Transaction.class);
-                transaction1.setProjectsDetailed(transaction.getProjectsDetailed());
 
-                if (response.isSuccessful())
-                    EventBus.getDefault().post(new TransactionSuccessEvent(transaction1));
+                Transaction transaction1 = null;
+
+                if (response.isSuccessful()) {
+
+                    transaction1 = new Gson().fromJson(response.body().string(), Transaction.class);
+                    transaction1.setProjectsDetailed(transaction.getProjectsDetailed());
+
+                }
+
+                EventBus.getDefault().post(new TransactionSuccessEvent(transaction1, response.isSuccessful()));
+
             }
         });
     }

@@ -19,7 +19,7 @@
                 android:id="@+id/textTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Title"
+                android:text=""
                 android:textColor="#535353"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Price: SR: 670 - SR: 780"
+                android:text=""
                 android:textColor="#535353"
                 android:textSize="15sp" />
 
@@ -38,8 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_marginTop="20dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/imgdemo" />
+                android:scaleType="centerCrop" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -53,8 +52,7 @@
                     android:layout_height="75dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_profile_blue" />
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/textViewName"
@@ -64,7 +62,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="6dp"
                     android:layout_toEndOf="@+id/profilepic"
-                    android:text="Habib Abdullah"
+                    android:text=""
                     android:textColor="#666666"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -75,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/textViewName"
                     android:layout_below="@+id/textViewName"
-                    android:text="Initiator"
+                    android:text=""
                     android:textColor="#535353"
                     android:textSize="12sp"
                     android:textStyle="normal" />
@@ -86,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/textViewType"
                     android:layout_below="@+id/textViewType"
-                    android:text="Riyad, Saudi Arabia"
+                    android:text=""
                     android:textColor="#535353"
                     android:textSize="12sp"
                     android:textStyle="normal" />
@@ -106,7 +104,7 @@
                 android:id="@+id/textShortDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Short Description"
+                android:text=""
                 android:textColor="#535353"
                 android:textSize="13sp" />
 
@@ -140,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
-                        android:text="Example Bank Limited"
+                        android:text=""
                         android:textAlignment="viewStart"
                         android:textColor="#535353"
                         android:textSize="14sp" />
@@ -175,7 +173,7 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:paddingTop="10dp"
-                        android:text="Khalid Bin Walid"
+                        android:text=""
                         android:textColor="#535353"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -210,7 +208,7 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:paddingTop="10dp"
-                        android:text="100.110.123456"
+                        android:text=""
                         android:textAlignment="viewStart"
                         android:textColor="#535353"
                         android:textSize="14sp" />
@@ -247,7 +245,7 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:paddingTop="10dp"
-                        android:text="SAR100"
+                        android:text=""
                         android:textAlignment="viewStart"
                         android:textColor="#535353"
                         android:textSize="14sp" />
@@ -267,7 +265,7 @@
                     android:background="@drawable/blue_button_selector"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
-                    android:text="Request for details"
+                    android:text="@string/request_for_details"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="12sp" />
 

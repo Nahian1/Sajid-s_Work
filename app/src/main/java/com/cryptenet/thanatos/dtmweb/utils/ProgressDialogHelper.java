@@ -10,24 +10,31 @@ import android.content.Context;
 
 public class ProgressDialogHelper {
 
-    private static volatile ProgressDialog mProgressDialog = null;
+    private static ProgressDialogHelper progressDialogHelper = null;
+    private static ProgressDialog mProgressDialog = null;
 
     private ProgressDialogHelper() {
     }
 
-    public static ProgressDialog init(Activity context) {
+    public static ProgressDialogHelper init(Activity context) {
 
-        if (mProgressDialog == null) mProgressDialog = new ProgressDialog(context);
+        if (progressDialogHelper == null) {
 
-        return mProgressDialog;
+            if (mProgressDialog == null)
+                mProgressDialog = new ProgressDialog(context);
+
+            return new ProgressDialogHelper();
+        }
+
+        return progressDialogHelper;
 
     }
 
-    public void showProgress(String message) {
+    public void showProgress() {
 
         if (mProgressDialog != null && !mProgressDialog.isShowing()) {
 
-            mProgressDialog.setMessage(message);
+            mProgressDialog.setMessage("Please wait...");
             mProgressDialog.show();
         }
     }
@@ -36,7 +43,9 @@ public class ProgressDialogHelper {
 
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
+
             mProgressDialog = null;
+            progressDialogHelper = null;
         }
     }
 }

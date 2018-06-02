@@ -23,12 +23,12 @@ public class ViewUtils {
         }
     }
 
-    public static ProgressDialog showProgress(Context context) {
-
-        ProgressDialog mProgressDialog = new ProgressDialog(context);
-        mProgressDialog.setMessage("Please wait...");
-
-        return mProgressDialog;
-    }
+//    public static ProgressDialog showProgress(Context context) {
+//
+//        ProgressDialog mProgressDialog = new ProgressDialog(context);
+//        mProgressDialog.setMessage("Please wait...");
+//
+//        return mProgressDialog;
+//    }
 
 }

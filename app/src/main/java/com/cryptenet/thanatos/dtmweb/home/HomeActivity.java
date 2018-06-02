@@ -58,6 +58,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -359,6 +360,11 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @Subscribe
     public void onTransactionSuccessEvent(TransactionSuccessEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        super.onBackPressed();
+
         TransactionFragment fragment = new TransactionFragment();
         Bundle bundle = new Bundle();
 
@@ -367,8 +373,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
 
-
-//        super.onBackPressed();
     }
 
     @Subscribe
