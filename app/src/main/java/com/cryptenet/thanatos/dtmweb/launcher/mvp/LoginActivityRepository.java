@@ -77,7 +77,13 @@ public class LoginActivityRepository extends BaseRepository
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                EventBus.getDefault().post(new LogInSuccessEvent(response.body().string(), response.body() != null));
+                if (response.isSuccessful()){
+                    EventBus.getDefault().post(new LogInSuccessEvent(response.body().string(), response.body() != null));
+                }else {
+                    Log.d("login failed",response.body().toString());
+                    EventBus.getDefault().post(new LogInFailureEvent(true));
+                }
+
             }
 
 

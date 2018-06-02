@@ -40,11 +40,12 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.fabric.sdk.android.services.concurrency.AsyncTask;
 
 
 public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
-        implements LoginActivityContract.View, View.OnClickListener {
+        implements LoginActivityContract.View {
     private static final String TAG = TagProvider.getDebugTag(LoginActivity.class);
     private User user;
     private ProgressBarHandler progressBarHandler;
@@ -55,14 +56,12 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     @BindView(R.id.et_pwd)
     EditText etPwd;
 
-    @BindView(R.id.btn_sign_in)
-    Button btnSignIn;
-
-    @BindView(R.id.tv_sign_up)
-    TextView tvSignUp;
-
-    @BindView(R.id.tv_forgot_pwd)
-    TextView tvForgotPwd;
+//    @BindView(R.id.btn_sign_in)
+//    Button btnSignIn;
+//    @BindView(R.id.tv_sign_up)
+//    TextView tvSignUp;
+//    @BindView(R.id.tv_forgot_pwd)
+//    TextView tvForgotPwd;
 
     ProgressDialog progressDialog;
 
@@ -71,15 +70,20 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        viewUnbinder = ButterKnife.bind(this);
+
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (preferences.getString(ConstantProvider.SP_NAME, null) != null) {
+        //Log.d(TAG, preferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null));
+
+        if (preferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null) != null) {
 
             navigator.toHomeActivity(this, null);
-
             finish();
         }
+
+        progressBarHandler = new ProgressBarHandler(this);
 
         String lang = preferences.getString(ConstantProvider.LOCALE, null);
 
@@ -89,8 +93,6 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
             preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
 
-
-            progressBarHandler = new ProgressBarHandler(this);
 
             String langs = PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, null);
             if (langs == null) {
@@ -102,11 +104,10 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
             }
 
-            viewUnbinder = ButterKnife.bind(this);
+            //btnSignIn.setOnClickListener(this);
+            //tvSignUp.setOnClickListener(this);
+            //tvForgotPwd.setOnClickListener(this);
 
-            btnSignIn.setOnClickListener(this);
-            tvSignUp.setOnClickListener(this);
-            tvForgotPwd.setOnClickListener(this);
         }
 
     }
@@ -131,108 +132,86 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_sign_in:
+    @OnClick(R.id.btn_sign_in)
+    public void signIn() {
+        ViewUtils.hideKeyboard(this);
+        //for debug only
+        String email = etEmail.getText().toString().trim();
+        String password = etPwd.getText().toString().trim();
 
+        if (!email.isEmpty()) {
+            if (!password.isEmpty()) {
+                progressBarHandler.showProgress();
 
-//                presenter.requestForLogin("creynolds@montgomery.com","asdasd123");
-//                presenter.requestForLogin("azam@gmail.com","asdasd123");
-//                presenter.requestForLogin("michaelperez@collier.com","asdasd123");
+                presenter.requestForLogin(
+                        etEmail.getText().toString().trim(),
+                        etPwd.getText().toString().trim()
+                );
+            } else {
+                // showMessage("Password can not be empty");
+                Toast.makeText(this, "Password can not be empty", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Email can not be empty", Toast.LENGTH_SHORT).show();
+            //showMessage("Email can not be empty");
 
-                ViewUtils.hideKeyboard(this);
+//            if (email.equals("1")) {
+//                progressDialog = ViewUtils.showProgress(this);
+//                progressDialog.show();
+//
+//                presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
+//
+//            } else if (email.equals("2")) {
+//                presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
+//            } else {
+//                showMessage("Give a type!");
+//            }
 
-
-                //for debug only
-                String email = etEmail.getText().toString().trim();
-
-                String password = etPwd.getText().toString().trim();
-
-                if (!email.isEmpty()) {
-                    if (!password.isEmpty()) {
-                        progressBarHandler.showProgress();
-
-                        presenter.requestForLogin(
-                                etEmail.getText().toString().trim(),
-                                etPwd.getText().toString().trim()
-                        );
-                    } else {
-                        // showMessage("Password can not be empty");
-                        Toast.makeText(this, "Password can not be empty", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(this, "Email can not be empty", Toast.LENGTH_SHORT).show();
-                    //showMessage("Email can not be empty");
-
-                    if (email.equals("1")) {
-
-                        progressDialog = ViewUtils.showProgress(this);
-                        progressDialog.show();
-
-                        presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
-
-                    } else if (email.equals("2")) {
-
-                        presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
-
-                    } else {
-                        showMessage("Give a type!");
-
-                    }
-
-                }
-
-
-                break;
-            case R.id.tv_sign_up:
-                navigator.toRegistrationActivity(this, false);
-                break;
-            case R.id.tv_forgot_pwd:
-                navigator.toForgotPasswordActivity(this);
-                break;
         }
     }
 
+    @OnClick(R.id.tv_sign_up)
+    public void goToSignUp() {
+        navigator.toRegistrationActivity(this, false);
+        finish();
+    }
 
-
+    @OnClick(R.id.tv_forgot_pwd)
+    public void goToForgotPassword() {
+        navigator.toForgotPasswordActivity(this);
+        //finish();
+    }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
-
-
-        progressDialog.dismiss();
+        //progressDialog.dismiss();
 
         if (event.isSuccess) {
+            progressBarHandler.hideProgress();
 
-            if (event.isSuccess) {
-                progressBarHandler.hideProgress();
-
-                AsyncTask.execute(() -> {
+            AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
-                    try {
-                        if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))) {
-                            navigator.toHomeActivity(LoginActivity.this, event.string);
-                            finish();
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                try {
+                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))) {
+                        navigator.toHomeActivity(LoginActivity.this, event.string);
+                        finish();
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                });
+            });
 
-            }
         }
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogInFailureEvent(LogInFailureEvent event) {
         if (event.isFailure) {
             progressBarHandler.hideProgress();
+            showMessage("Login Failed! Give correct credential.");
         }
     }
 

@@ -152,6 +152,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                         .into(ivPp);
             }
 
+            spinAccType.setEnabled(false);
+
             etNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_NAME, null));
             etEmailReg.setText(sharedPreferences.getString(ConstantProvider.SP_EMAIL, null));
             etAddress.setText(sharedPreferences.getString(ConstantProvider.SP_ADDRESS, null));
@@ -260,6 +262,18 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
         ViewUtils.hideKeyboard(this);
 
+        if (isEdit) {
+
+        } else
+            processInputForNewUserRegistration();
+
+
+//        if (isEdit) {
+//            navigator.toHomeActivity(this, null);
+//        }
+    }
+
+    private void processInputForNewUserRegistration() {
         String name = etNameReg.getText().toString().trim();
         String email = etEmailReg.getText().toString().trim();
         String pwd = etPwdReg.getText().toString().trim();
@@ -268,15 +282,6 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         String bankName = etBankNameReg.getText().toString().trim();
         String bankAccName = etBankAccNameReg.getText().toString().trim();
         String bankAccNum = etBankAccNumberReg.getText().toString().trim();
-
-//        String name = "Britly";
-//        String email = "britly@gmail.com";
-//        String pwd = "asdasd123";
-//        String cPwd = "asdasd123";
-//        String address = "home";
-//        String bankName = "bank";
-//        String bankAccName = "Britly";
-//        String bankAccNum = "123456789";
 
 
         if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
@@ -293,10 +298,6 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             }
         } else {
             showMessage("Please fill all fields");
-        }
-
-        if (isEdit) {
-            navigator.toHomeActivity(this, null);
         }
     }
 

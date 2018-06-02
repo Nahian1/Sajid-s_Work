@@ -128,6 +128,24 @@ public interface ApiClient {
             @Part("address") RequestBody address
     );
 
+    @Multipart
+    @POST("api/v1/user/")
+    Call<RegistrationResponse> updateUserProfile(
+            @Part("name") RequestBody name,
+            @Part("email") RequestBody email,
+            @Part("password") RequestBody password,
+
+            @Part MultipartBody.Part picture,
+
+            @Part("city") RequestBody city,
+            @Part("country") RequestBody country,
+            @Part("bank_name") RequestBody bank_name,
+            @Part("bank_account_name") RequestBody bank_account_name,
+            @Part("bank_account_number") RequestBody bank_account_number,
+            @Part("user_type") RequestBody user_type,
+            @Part("address") RequestBody address
+    );
+
     @GET("api/v1/country/")
     Call<CountryResponse> getAllcountries();
 

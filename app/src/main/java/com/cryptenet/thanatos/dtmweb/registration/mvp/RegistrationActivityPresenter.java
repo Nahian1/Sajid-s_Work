@@ -35,6 +35,15 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
     }
 
     @Override
+    public void carryUpdateProfileData(String reqType, File imageFile, String accType, String name, String email, String pwd,
+                                       String address, int countryCode, int cityCode, String bankName, String bankAccName,
+                                       String bankAccNumber) {
+        model.attachContext(view.getActivity());
+        model.attemptUpdateProfile(reqType, imageFile, accType, name, email, pwd, address, countryCode, cityCode,
+                bankName, bankAccName, bankAccNumber);
+    }
+
+    @Override
     public void getAllCountries() {
         model.getAllCountries();
     }

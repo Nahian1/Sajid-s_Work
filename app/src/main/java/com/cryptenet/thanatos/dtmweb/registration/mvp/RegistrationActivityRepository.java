@@ -24,6 +24,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
+import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileInput;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -110,8 +111,8 @@ public class RegistrationActivityRepository extends BaseRepository
                 regData.getPassword(),
                 regData.getPicture(),
                 regData.getAddress(),
-                regData.getCountry().toString(),
-                regData.getCity().toString(),
+                regData.getCountry(),
+                regData.getCity(),
                 regData.getBankName(),
                 regData.getBankAccountName(),
                 regData.getBankAccountNumber(),
@@ -122,10 +123,13 @@ public class RegistrationActivityRepository extends BaseRepository
     }
 
     @Override
+    public boolean attemptUpdateProfile(String reqType, UpdateProfileInput regData) {
+        return false;
+    }
+
+    @Override
     public boolean checkLoginState(Context context) {
-        return (PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .getString(ConstantProvider.SP_ACCESS_TOKEN, null)) != null;
+        return (PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null)) != null;
     }
 
     private void setCountries(List<Country> countries) {

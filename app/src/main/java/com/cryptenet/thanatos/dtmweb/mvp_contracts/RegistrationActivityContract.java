@@ -10,6 +10,7 @@ package com.cryptenet.thanatos.dtmweb.mvp_contracts;
 import android.content.Context;
 
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
+import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileInput;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 
 import java.io.File;
@@ -19,6 +20,12 @@ public interface RegistrationActivityContract {
         void carryRegData(String reqType,File imageFile, String accType, String name, String email, String pwd,
                           String address, int countryCode, int cityCode, String bankName,
                           String bankAccName, String bankAccNumber);
+
+        //update profile -- ashif
+        void carryUpdateProfileData(String reqType,File imageFile, String accType, String name, String email, String pwd,
+                          String address, int countryCode, int cityCode, String bankName,
+                          String bankAccName, String bankAccNumber);
+
         void getAllCountries();
         void getLimitedCities(int countryCode);
         void checkLoginState(Context context);
@@ -36,6 +43,11 @@ public interface RegistrationActivityContract {
                            String address, int countryCode, int cityCode, String bankName,
                            String bankAccName, String bankAccNumber);
 
+        //update profile -- ashif
+        boolean attemptUpdateProfile(String reqType,File imageFile, String accType, String name, String email, String pwd,
+                           String address, int countryCode, int cityCode, String bankName,
+                           String bankAccName, String bankAccNumber);
+
         boolean checkLoginState(Context context);
     }
 
@@ -44,6 +56,9 @@ public interface RegistrationActivityContract {
         void getLimitedCities(int countryCode);
 
         boolean attemptReg(String reqType, RegistrationInput regData);
+
+        //update profile -- ashif
+        boolean attemptUpdateProfile(String reqType, UpdateProfileInput regData);
 
         boolean checkLoginState(Context context);
     }
