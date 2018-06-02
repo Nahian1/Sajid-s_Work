@@ -33,6 +33,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
 import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
+import com.cryptenet.thanatos.dtmweb.events.RegistrationFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
@@ -286,18 +287,23 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
         if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
                 && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
-            if (pwd.equals(cPwd)) {
-                progressBarHandler.showProgress();
+            if (ViewUtils.isValidEmail(email)) {
+                if (pwd.equals(cPwd)) {
+                    progressBarHandler.showProgress();
 
-                presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER, imageFile, accType,
-                        name, email, pwd, address, countryCode, cityCode,
-                        bankName, bankAccName, bankAccNum
-                );
+                    presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER, imageFile, accType,
+                            name, email, pwd, address, countryCode, cityCode,
+                            bankName, bankAccName, bankAccNum
+                    );
+                } else {
+                    showMessage("Password did not match!");
+                }
             } else {
-                showMessage("Password did not match");
+                showMessage("Please give correct email !");
             }
+
         } else {
-            showMessage("Please fill all fields");
+            showMessage("Please fill all fields!");
         }
     }
 
@@ -362,15 +368,20 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         if (progressBarHandler != null)
             progressBarHandler.hideProgress();
 
-        if (!isEdit) {
-            showMessage("Registered");
-            navigator.toLoginActivity(this);
-
-        } else {
-            showMessage("Info updated.");
-        }
+        showMessage("Registered");
+        navigator.toLoginActivity(this);
 
         finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRegistrationFailureEvent(RegistrationFailureEvent event) {
+        if (progressBarHandler != null)
+            progressBarHandler.hideProgress();
+
+        if (event.isFailure) {
+            showMessage("Please try again!");
+        }
     }
 
     @Override

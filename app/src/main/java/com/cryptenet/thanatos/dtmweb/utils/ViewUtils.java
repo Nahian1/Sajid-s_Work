@@ -5,6 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
@@ -29,6 +32,25 @@ public class ViewUtils {
         mProgressDialog.setMessage("Please wait...");
 
         return mProgressDialog;
+    }
+
+    public static boolean isValidEmail(String email) {
+
+        if (email == null) {
+            return false;
+        }
+
+        final String emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Matcher matcher;
+        Pattern pattern = Pattern.compile(emailPattern);
+
+        matcher = pattern.matcher(email);
+
+        if (matcher != null) {
+            return matcher.matches();
+        } else {
+            return false;
+        }
     }
 
 }
