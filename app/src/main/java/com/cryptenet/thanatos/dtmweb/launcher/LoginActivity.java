@@ -130,6 +130,9 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
                 } else if (email.equals("2")) {
 
+                    progressDialog = ViewUtils.showProgress(this);
+                    progressDialog.show();
+
                     presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
 
                 } else {
