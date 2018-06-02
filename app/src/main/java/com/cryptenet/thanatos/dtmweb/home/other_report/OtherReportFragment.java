@@ -20,7 +20,9 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.IssueSubmittedEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.OtherReportFragmentContract;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,6 +65,9 @@ public class OtherReportFragment extends BaseFragment<OtherReportFragmentContrac
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_other_issue, container, false);
 
+        ((HomeActivity) getActivity()).hideSearchBar(true);
+
+
         issueCode = getArguments().getInt("issue_code");
         ButterKnife.bind(this, convertView);
 
@@ -93,6 +98,9 @@ public class OtherReportFragment extends BaseFragment<OtherReportFragmentContrac
 
     @OnClick({R.id.report_submit, R.id.report_cancel})
     public void onViewClicked(View view) {
+
+        ViewUtils.hideKeyboard(getActivity());
+
         switch (view.getId()) {
             case R.id.report_submit:
                 String issue = addReport.getText().toString().trim();
@@ -104,7 +112,7 @@ public class OtherReportFragment extends BaseFragment<OtherReportFragmentContrac
                 }
                 break;
             case R.id.report_cancel:
-                Objects.requireNonNull(getActivity()).onBackPressed();
+                getActivity().onBackPressed();
                 break;
         }
     }

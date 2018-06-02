@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.home.plan_list;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -22,8 +23,10 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -41,6 +44,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     private ListView projectLV;
     private PlanListAdapter adapter;
     private String token;
+    private ProgressDialog progressDialog;
 
     public PlanListFragment() {
         projectsRspList = new ArrayList<>();
@@ -51,6 +55,8 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_list, container, false);
+
+        ((HomeActivity) getActivity()).hideSearchBar(false);
 
         adapter = new PlanListAdapter(activityContext, projectsRspList);
         projectLV = convertView.findViewById(R.id.projectListPlan);
@@ -87,6 +93,9 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
+
+        progressDialog.dismiss();
+
         this.projectsRspList = event.projectsRspList;
         for (ProjectsRsp projectsRsp : projectsRspList)
             Log.d(TAG, "onProjectListReceiveEvent: " + projectsRsp.getTitle());
@@ -114,6 +123,9 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         super.onResume();
 
         presenter.attachView(this);
+
+        progressDialog = ViewUtils.showProgress(getContext());
+        progressDialog.show();
 
         presenter.getProjectList(activityContext, token);
     }

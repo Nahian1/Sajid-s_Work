@@ -29,6 +29,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.ShowPlanDetailsEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -100,6 +101,8 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_desc, container, false);
 
+        ((HomeActivity) getActivity()).hideSearchBar(true);
+
         projectId = getArguments().getInt("project_id");
         type = getArguments().getInt("type");
 
@@ -148,7 +151,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         if (profilepic != null)
             Glide.with(activityContext)
                     .load(event.detailed.getInitiatorImage())
-                    .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(profilepic);
 

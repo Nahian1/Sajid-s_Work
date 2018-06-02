@@ -21,6 +21,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -54,6 +55,8 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_investor_project, container, false);
+
+        ((HomeActivity) getActivity()).hideSearchBar(false);
 
         unbinder = ButterKnife.bind(this, convertView);
 

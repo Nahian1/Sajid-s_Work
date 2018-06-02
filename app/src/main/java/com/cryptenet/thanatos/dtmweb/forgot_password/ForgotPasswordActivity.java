@@ -11,6 +11,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.DataSendSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,6 +62,9 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
 
     @Override
     public void onClick(View v) {
+
+        ViewUtils.hideKeyboard(this);
+
         String mail = etForgot.getText().toString().trim();
         if (!mail.isEmpty()) {
             presenter.saveIdentifier(mail, this);

@@ -24,6 +24,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.TransactionFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
 import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
@@ -85,6 +86,8 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transaction_detail, container, false);
+
+        ((HomeActivity) getActivity()).hideSearchBar(true);
 
         viewUnbinder = ButterKnife.bind(this, view);
 
