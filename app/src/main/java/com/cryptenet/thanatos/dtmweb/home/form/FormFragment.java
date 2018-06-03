@@ -37,6 +37,11 @@ import com.google.gson.Gson;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -98,9 +103,22 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 
         if (details != null && details.getId() != null && details.getId() > 0) {
             textViewTitle.setText(details.getTitle());
-            price.setText("Price: " +
+            price.setText(getString(R.string.price) + " " +
                     String.format("%.2f", (Double.parseDouble(details.getMinimumInvestmentCost()) - Double.parseDouble(details.getMaximumInvestmentCost()))));
-//        date.setText(details.getTitle());
+
+            String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+            String dateOutputPattern = "dd MMM yyyy";
+
+            SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
+            SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
+
+            try {
+                Date datef = inputDateFormat.parse(details.getCreatedAt());
+                date.setText(outputDateFormat.format(datef));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
 //        status.setText(details.getTitle());
 
             Glide.with(activityContext)

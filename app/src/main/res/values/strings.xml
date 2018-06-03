@@ -73,7 +73,7 @@
     <string name="hint_et_note">Note</string>
     <string name="view_file">View File</string>
     <string name="update_profile">Update</string>
-    
+
     <string name="hint_et_issue">Tell us about the issue …</string>
     <string name="tag_accepted">Accepted</string>
     <string name="tag_pending">Pending</string>
@@ -84,9 +84,19 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
-    <string name="title_activity_message_request">MessageRequestActivity</string>
+    <string name="title_activity_message_request" translatable="false">MessageRequestActivity</string>
 
-    <string name="toast_crash">App Crashed</string>
+    <string name="toast_crash" translatable="false">App Crashed</string>
     <string name="request_for_details">Request for details</string>
     <string name="amount_to_be_paid_for_details">Amount to be paid for details</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="plan_updated">Plan Updated.</string>
+    <string name="plan_added">Plan Added.</string>
+    <string name="transaction_id">Transaction Id</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="pending">Pending</string>
+    <string name="price">Price:</string>
+    <string name="submitted">Submitted!</string>
+    <string name="approved">Approved</string>
 </resources>

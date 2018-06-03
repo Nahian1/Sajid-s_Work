@@ -351,7 +351,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         ProgressDialogHelper.hideProgress();
 
-        showMessage("Submitted!");
+        showMessage(getString(R.string.submitted));
 
         TransactionFragment fragment = new TransactionFragment();
         Bundle bundle = new Bundle();

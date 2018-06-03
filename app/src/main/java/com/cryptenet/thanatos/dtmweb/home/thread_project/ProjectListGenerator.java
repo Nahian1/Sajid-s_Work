@@ -18,31 +18,26 @@ import java.util.List;
 
 public final class ProjectListGenerator {
 
-    public static List<Project> generateProjects(){
+    public static List<Project> generateProjects() {
         List<Project> projects = new ArrayList<>();
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-        projects.add(new Project("Title","Name","Date",R.drawable.ic_thumb_plan_cover));
-
-
-
-
-
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
+        projects.add(new Project("Title", "Name", "Date", R.drawable.ic_thumb_plan_cover));
 
 
         return projects;

@@ -125,7 +125,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         if (project.isEditMode()) {
 
-            editTextName.setText(project.getInitiatorsName());
+            editTextName.setText(project.getTitle());
             editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
             editTextPriceMinimum.setText(project.getMinimumInvestmentCost());
             editTextShortDescription.setText(project.getShortDescription());
@@ -168,7 +168,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     public void savePlan(View view) {
 
         if (project.isEditMode()) {
-            // do when plan edit
+            processEditPlanInputData();
         } else {
             processAddNewPlanInputData();
         }
@@ -213,6 +213,61 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                 ProgressDialogHelper.init(getActivity()).showProgress();
 
                 presenter.saveUpdatePlan(projectsRq, activityContext, -1);
+            }
+
+        } else {
+            showMessage("Please fill all fields");
+        }
+
+    }
+
+    // edit a plan input processing
+    private void processEditPlanInputData() {
+
+        String title = editTextName.getText().toString().trim();
+        String shortDesc = editTextShortDescription.getText().toString().trim();
+        String longDesc = editTextLongDescription.getText().toString().trim();
+        String minInvest = editTextPriceMinimum.getText().toString().trim();
+        String maxInvest = editTextPriceMaximum.getText().toString().trim();
+        String accessPrice = editTextAccessPrice.getText().toString().trim();
+
+        ProjectsRq projectsRq = new ProjectsRq();
+
+        if (!title.isEmpty() && !shortDesc.isEmpty() && !longDesc.isEmpty()
+                && !minInvest.isEmpty() && !maxInvest.isEmpty() && !accessPrice.isEmpty()) {
+
+            projectsRq.setTitle(title);
+
+            if (categoryCode != 0) {
+                projectsRq.setCategory(categoryCode);
+            } else {
+                if (list != null && list.size() > 0) {
+                    projectsRq.setCategory(list.get(0).getId());
+                }
+            }
+
+            projectsRq.setShortDescription(shortDesc);
+            projectsRq.setLongDescription(longDesc);
+            projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(minInvest));
+            projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(maxInvest));
+            projectsRq.setAccessPrice((int) Double.parseDouble(accessPrice));
+
+            if (imageFile != null)
+                projectsRq.setCover(imageFile);
+            if (planFile != null)
+                projectsRq.setUploadedFile(planFile);
+
+            if (imageFile == null || planFile == null) {
+                showMessage("Attach your file/image !");
+            }
+
+            projectsRq.setNew(false);
+
+            if (imageFile != null && planFile != null) {
+
+                ProgressDialogHelper.init(getActivity()).showProgress();
+
+                presenter.saveUpdatePlan(projectsRq, activityContext, project.getId());
             }
 
         } else {
@@ -296,11 +351,12 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         ProgressDialogHelper.hideProgress();
 
         if (project.isEditMode())
-            showMessage("Updated.");
+            showMessage(getString(R.string.plan_updated));
         else
-            showMessage("Added.");
+            showMessage(getString(R.string.plan_added));
 
-        getActivity().onBackPressed();
+        if (getActivity() != null)
+            getActivity().onBackPressed();
     }
 
     @Override

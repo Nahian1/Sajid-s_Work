@@ -102,7 +102,7 @@
 
             <TextView
                 android:id="@+id/textShortDesc"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="#535353"
@@ -137,6 +137,7 @@
                         android:id="@+id/textBankName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:text=""
@@ -171,10 +172,12 @@
                         android:id="@+id/textBankAccName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:paddingTop="10dp"
                         android:text=""
+                        android:textAlignment="viewStart"
                         android:textColor="#535353"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -206,6 +209,7 @@
                         android:id="@+id/textBankAccNo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:paddingTop="10dp"
@@ -243,6 +247,7 @@
                         android:id="@+id/amountToBePaid"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:paddingTop="10dp"
@@ -288,7 +293,7 @@
                 android:id="@+id/textLongDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="description"
+                android:text=""
                 android:textSize="15sp"
                 android:visibility="gone" />
         </LinearLayout>

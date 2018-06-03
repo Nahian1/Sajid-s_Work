@@ -29,8 +29,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLength="14"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
             android:paddingTop="5dp"
             android:singleLine="true"
             android:text="Habib Abdullah"
@@ -41,7 +41,8 @@
             android:id="@+id/dateTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
             android:text="10 March 2018"
             android:textColor="#8c8c8c"
             android:textSize="12sp" />
@@ -58,6 +59,7 @@
             android:id="@+id/titleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="6dp"
             android:ellipsize="end"
             android:maxLines="1"
@@ -84,7 +86,7 @@
             android:clickable="false"
             android:text="@string/see_more"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="8sp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

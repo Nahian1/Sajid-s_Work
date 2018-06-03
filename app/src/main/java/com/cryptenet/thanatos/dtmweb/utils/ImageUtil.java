@@ -28,7 +28,7 @@ public class ImageUtil {
         Glide.with(context)
                 .asBitmap()
                 .load(url)
-                .into(new SimpleTarget<Bitmap>(150, 150) {
+                .into(new SimpleTarget<Bitmap>(300, 300) {
                     @Override
                     public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
 

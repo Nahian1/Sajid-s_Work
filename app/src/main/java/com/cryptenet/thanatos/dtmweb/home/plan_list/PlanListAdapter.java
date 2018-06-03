@@ -7,6 +7,7 @@
 
 package com.cryptenet.thanatos.dtmweb.home.plan_list;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -52,6 +53,7 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
         this.notifyDataSetChanged();
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -97,7 +99,7 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
         }
 
         titleTV.setText(projects.get(position).getTitle());
-        priceTV.setText(projects.get(position).getAccessPrice());
+        priceTV.setText(context.getString(R.string.price) + " " + projects.get(position).getAccessPrice());
         count++;
         Log.e("student", "getView: " + count);
 

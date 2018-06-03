@@ -68,7 +68,7 @@
                     android:layout_alignBottom="@+id/date"
                     android:layout_marginStart="20dp"
                     android:layout_toEndOf="@+id/date"
-                    android:text="Pending"
+                    android:text="@string/pending"
                     android:textColor="#939393"
                     android:textSize="15sp" />
 
@@ -149,7 +149,7 @@
                         android:layout_marginTop="1dp"
                         android:layout_weight="1"
                         android:paddingTop="12dp"
-                        android:text="Bank Name"
+                        android:text="@string/hint_et_bank_name"
                         android:textAlignment="viewStart"
                         android:textColor="#898989"
                         android:textSize="14sp" />
@@ -186,7 +186,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingTop="10dp"
-                        android:text="Bank Account Name"
+                        android:text="@string/hint_et_bank_acc_name"
                         android:textAlignment="viewStart"
                         android:textColor="#898989"
                         android:textSize="14sp" />
@@ -224,7 +224,7 @@
                         android:layout_marginTop="1dp"
                         android:layout_weight="1"
                         android:paddingTop="10dp"
-                        android:text="Bank Account Number"
+                        android:text="@string/hint_et_bank_acc_number"
                         android:textAlignment="viewStart"
                         android:textColor="#898989"
                         android:textSize="14sp" />
@@ -262,7 +262,7 @@
                         android:layout_marginTop="1dp"
                         android:layout_weight="1"
                         android:paddingTop="10dp"
-                        android:text="Transaction Id"
+                        android:text="@string/transaction_id"
                         android:textAlignment="viewStart"
                         android:textColor="#898989"
                         android:textSize="14sp" />
@@ -299,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
-                    android:text="Note" />
+                    android:text="@string/hint_et_note" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -326,7 +326,7 @@
                 android:layout_marginBottom="50dp"
                 android:layout_marginTop="50dp"
                 android:background="@drawable/blue_button_selector"
-                android:text="Done"
+                android:text="@string/btn_done"
                 android:textColor="@color/colorPrimaryDark" />
 
         </LinearLayout>

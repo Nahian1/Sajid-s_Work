@@ -80,14 +80,14 @@ public class ELVAdapter extends BaseExpandableListAdapter {
         if (isExpanded) {
             header_text.setTypeface(null, Typeface.BOLD);
             header_text.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-                    R.drawable.ic_action_right, 0);
+                    R.drawable.ic_right_arrow, 0);
         } else {
             // If group is not expanded then change the text back into normal
             // and change the icon
 
             header_text.setTypeface(null, Typeface.NORMAL);
             header_text.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-                    R.drawable.ic_action_down, 0);
+                    R.drawable.ic_down_arrow, 0);
         }
         return convertView;
     }

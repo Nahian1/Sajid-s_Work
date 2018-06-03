@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.cryptenet.thanatos.dtmweb.R;
+
 /**
  * Created by Asif on 5/30/2018.
  */
@@ -12,11 +14,14 @@ public class ProgressDialogHelper {
 
     private static ProgressDialogHelper progressDialogHelper = null;
     private static ProgressDialog mProgressDialog = null;
+    private static Activity mContext;
 
     private ProgressDialogHelper() {
     }
 
     public static ProgressDialogHelper init(Activity context) {
+
+        mContext = context;
 
         if (progressDialogHelper == null) {
 
@@ -34,7 +39,7 @@ public class ProgressDialogHelper {
 
         if (mProgressDialog != null && !mProgressDialog.isShowing()) {
 
-            mProgressDialog.setMessage("Please wait...");
+            mProgressDialog.setMessage(mContext.getString(R.string.please_wait));
             mProgressDialog.show();
         }
     }

@@ -14,13 +14,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.util.Patterns;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -73,6 +69,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class RegistrationActivity extends BaseActivity<RegistrationActivityContract.Presenter>
         implements RegistrationActivityContract.View, AdapterView.OnItemSelectedListener {
@@ -132,6 +131,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     @BindView(R.id.tv_sign_in)
     TextView tvSignIn;
 
+    String imageUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,15 +177,17 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             tvSignIn.setVisibility(View.GONE);
 
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            String imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL, null);
+            imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL, null);
 
             if (imageUrl != null) {
+
                 Glide.with(this)
                         .load(imageUrl)
                         .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_white))
                         .apply(RequestOptions.circleCropTransform())
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(ivPp);
+
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -328,7 +331,6 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         String bankAccName = etBankAccNameReg.getText().toString().trim();
         String bankAccNum = etBankAccNumberReg.getText().toString().trim();
 
-
         if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
                 && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
             if ((Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
@@ -338,8 +340,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
                     presenter.carryUpdateProfileData(this, ConstantProvider.REQ_TYPE_EDIT_PROFILE, imageFile, accType,
                             name, email, pwd, address, countryCode, cityCode,
-                            bankName, bankAccName, bankAccNum
-                    );
+                            bankName, bankAccName, bankAccNum);
+
                 } else {
                     showMessage("Password did not match!");
                 }
