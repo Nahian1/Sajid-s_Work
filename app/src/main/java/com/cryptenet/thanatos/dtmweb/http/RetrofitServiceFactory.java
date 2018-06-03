@@ -13,6 +13,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
@@ -36,6 +37,7 @@ public class RetrofitServiceFactory {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstantProvider.BASE_URL)
                 .addConverterFactory(new ToStringConverterFactory())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(getOkHttpClient())
                 .build();

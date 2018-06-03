@@ -15,6 +15,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,14 +29,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
 import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
 import com.cryptenet.thanatos.dtmweb.events.RegistrationFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
+import com.cryptenet.thanatos.dtmweb.events.UpdateProfileFailureEvent;
+import com.cryptenet.thanatos.dtmweb.events.UpdateProfileSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
@@ -128,6 +135,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     @BindView(R.id.tv_sign_in)
     TextView tvSignIn;
 
+    private Bitmap proPicBitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,13 +154,21 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             String imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL, null);
 
-            if (imageUrl != null) {
-                Glide.with(this)
-                        .load(imageUrl)
-                        .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(ivPp);
-            }
+//            if (imageUrl != null) {
+//                Glide.with(this)
+//                        .asBitmap()
+//                        .load(imageUrl)
+//                        .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+//                        .transition(BitmapTransitionOptions.withCrossFade())
+//                        .into(new SimpleTarget<Bitmap>() {
+//                            @Override
+//                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                                ivPp.setImageBitmap(resource);
+//                                proPicBitmap = resource;
+//                            }
+//                        });
+//
+//            }
 
             spinAccType.setEnabled(false);
 
@@ -264,16 +281,13 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         ViewUtils.hideKeyboard(this);
 
         if (isEdit) {
-
+            processInputForUpdateUserProfile();
         } else
             processInputForNewUserRegistration();
 
-
-//        if (isEdit) {
-//            navigator.toHomeActivity(this, null);
-//        }
     }
 
+    // to register new user
     private void processInputForNewUserRegistration() {
         String name = etNameReg.getText().toString().trim();
         String email = etEmailReg.getText().toString().trim();
@@ -292,6 +306,40 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                     progressBarHandler.showProgress();
 
                     presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER, imageFile, accType,
+                            name, email, pwd, address, countryCode, cityCode,
+                            bankName, bankAccName, bankAccNum
+                    );
+                } else {
+                    showMessage("Password did not match!");
+                }
+            } else {
+                showMessage("Please give correct email !");
+            }
+
+        } else {
+            showMessage("Please fill all fields!");
+        }
+    }
+
+    // to update/edit user profile
+    private void processInputForUpdateUserProfile() {
+        String name = etNameReg.getText().toString().trim();
+        String email = etEmailReg.getText().toString().trim();
+        String pwd = etPwdReg.getText().toString().trim();
+        String cPwd = etConfirmPwd.getText().toString().trim();
+        String address = etAddress.getText().toString().trim();
+        String bankName = etBankNameReg.getText().toString().trim();
+        String bankAccName = etBankAccNameReg.getText().toString().trim();
+        String bankAccNum = etBankAccNumberReg.getText().toString().trim();
+
+
+        if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
+                && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
+            if (ViewUtils.isValidEmail(email)) {
+                if (pwd.equals(cPwd)) {
+                    progressBarHandler.showProgress();
+
+                    presenter.carryUpdateProfileData(this, ConstantProvider.REQ_TYPE_EDIT_PROFILE, imageFile, accType,
                             name, email, pwd, address, countryCode, cityCode,
                             bankName, bankAccName, bankAccNum
                     );
@@ -378,6 +426,21 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     public void onRegistrationFailureEvent(RegistrationFailureEvent event) {
         if (progressBarHandler != null)
             progressBarHandler.hideProgress();
+
+        if (event.isFailure) {
+            showMessage("Please try again!");
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateProfileSuccessEvent(UpdateProfileSuccessEvent event) {
+        presenter.saveUpdatedUserData(event.updateProfileResponse);
+        showMessage("Your profile updated!");
+        finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateProfileFailureEvent(UpdateProfileFailureEvent event) {
 
         if (event.isFailure) {
             showMessage("Please try again!");

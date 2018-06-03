@@ -14,6 +14,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileInput;
+import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -56,7 +57,7 @@ public class RegistrationActivityModel extends BaseModel<RegistrationActivityCon
     }
 
     @Override
-    public boolean attemptUpdateProfile(String reqType, File imageFile, String accType, String name, String email,
+    public boolean attemptUpdateProfile(Context context, String reqType, File imageFile, String accType, String name, String email,
                                         String pwd, String address, int countryCode, int cityCode,
                                         String bankName, String bankAccName, String bankAccNumber) {
         UpdateProfileInput input = new UpdateProfileInput(
@@ -64,11 +65,16 @@ public class RegistrationActivityModel extends BaseModel<RegistrationActivityCon
                 bankName, bankAccName, bankAccNumber
         );
 
-        return repository.attemptUpdateProfile(reqType, input);
+        return repository.attemptUpdateProfile(context, reqType, input);
     }
 
     @Override
     public boolean checkLoginState(Context context) {
         return repository.checkLoginState(context);
+    }
+
+    @Override
+    public boolean saveUpdatedUserData(UpdateProfileResponse user) {
+        return repository.saveUpdatedUserData(user, context);
     }
 }

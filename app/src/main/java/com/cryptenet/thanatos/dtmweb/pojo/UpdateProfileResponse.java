@@ -10,10 +10,10 @@ package com.cryptenet.thanatos.dtmweb.pojo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.File;
-
-public class UpdateProfileInput {
-
+public class UpdateProfileResponse {
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("user_type")
     @Expose
     private String userType;
@@ -25,10 +25,7 @@ public class UpdateProfileInput {
     private String email;
     @SerializedName("picture")
     @Expose
-    private File picture;
-    @SerializedName("password")
-    @Expose
-    private String password;
+    private String picture;
     @SerializedName("address")
     @Expose
     private String address;
@@ -47,41 +44,26 @@ public class UpdateProfileInput {
     @SerializedName("bank_account_number")
     @Expose
     private String bankAccountNumber;
+    @SerializedName("city_name")
+    @Expose
+    private String cityName;
+    @SerializedName("country_name")
+    @Expose
+    private String countryName;
 
     /**
      * No args constructor for use in serialization
      *
      */
-    public UpdateProfileInput() {
+    public UpdateProfileResponse() {
     }
 
-    /**
-     *
-     * @param picture
-     * @param address
-     * @param email
-     * @param name
-     * @param bankAccountNumber
-     * @param bankName
-     * @param password
-     * @param bankAccountName
-     * @param city
-     * @param country
-     * @param userType
-     */
+    public int getId() {
+        return id;
+    }
 
-    public UpdateProfileInput(String userType, String name, String email, File picture, String password, String address, int country, int city, String bankName, String bankAccountName, String bankAccountNumber) {
-        this.userType = userType;
-        this.name = name;
-        this.email = email;
-        this.picture = picture;
-        this.password = password;
-        this.address = address;
-        this.country = country;
-        this.city = city;
-        this.bankName = bankName;
-        this.bankAccountName = bankAccountName;
-        this.bankAccountNumber = bankAccountNumber;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserType() {
@@ -108,20 +90,12 @@ public class UpdateProfileInput {
         this.email = email;
     }
 
-    public File getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(File picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getAddress() {
@@ -172,20 +146,38 @@ public class UpdateProfileInput {
         this.bankAccountNumber = bankAccountNumber;
     }
 
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
     @Override
     public String toString() {
-        return "UpdateProfileInput{" +
-                "userType='" + userType + '\'' +
+        return "UpdateProfileResponse{" +
+                "id=" + id +
+                ", userType='" + userType + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", picture=" + picture +
-                ", password='" + password + '\'' +
+                ", picture='" + picture + '\'' +
                 ", address='" + address + '\'' +
                 ", country=" + country +
                 ", city=" + city +
                 ", bankName='" + bankName + '\'' +
                 ", bankAccountName='" + bankAccountName + '\'' +
                 ", bankAccountNumber='" + bankAccountNumber + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", countryName='" + countryName + '\'' +
                 '}';
     }
 }

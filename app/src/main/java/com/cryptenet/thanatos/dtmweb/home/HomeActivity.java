@@ -134,6 +134,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        String access_token = sharedPreferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null);
+        //int country = sharedPreferences.getInt(ConstantProvider.SP_COUNTRY, -1);
+        //int city = sharedPreferences.getInt(ConstantProvider.SP_CITY, -1);
+
+        //Log.d("data", access_token + " " + country + " " + city);
+
         //presenter.getNavHeaderData();
 
 //        setUpNavigation();
@@ -160,8 +166,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             Gson gson = new Gson();
             user = gson.fromJson(s, User.class);
         }
-
-        String access_token = sharedPreferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 
 
         if (savedInstanceState == null) {
