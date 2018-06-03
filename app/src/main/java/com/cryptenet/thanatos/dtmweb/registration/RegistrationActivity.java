@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -46,6 +47,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+import com.cryptenet.thanatos.dtmweb.utils.ImageUtil;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
@@ -183,6 +185,16 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                         .apply(RequestOptions.circleCropTransform())
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(ivPp);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        imageFile = ImageUtil.getImageFromUrl(getApplicationContext(), imageUrl);
+
+                    }
+                });
+
             }
 
             etNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_NAME, null));
@@ -284,7 +296,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
         if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
                 && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
-            if ((Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+            if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 if (pwd.equals(cPwd)) {
 
                     ProgressDialogHelper.init(this).showProgress();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,16 +72,21 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
         ViewUtils.hideKeyboard(this);
 
         String mail = etForgot.getText().toString().trim();
-        if (!mail.isEmpty()) {
+
+        if (!mail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
+
             presenter.saveIdentifier(mail, this);
             presenter.sendIdentifier(mail);
 
             navigator.toCodeActivity(this);
-        } else
+
+        } else {
+
             showMessage("Field can not be empty");
+        }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSendSuccessEvent(DataSendSuccessEvent event) {
         if (event.isSuccess)
             navigator.toCodeActivity(this);
