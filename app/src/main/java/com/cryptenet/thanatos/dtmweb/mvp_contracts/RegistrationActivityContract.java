@@ -21,11 +21,10 @@ public interface RegistrationActivityContract {
                           String bankAccName, String bankAccNumber);
         void getAllCountries();
         void getLimitedCities(int countryCode);
-        void checkLoginState(Context context);
+
     }
 
     interface View extends BaseContract.View<RegistrationActivity> {
-        void moveToSignIn();
     }
 
     interface Model extends BaseContract.Model<RegistrationActivity> {
@@ -36,7 +35,6 @@ public interface RegistrationActivityContract {
                            String address, int countryCode, int cityCode, String bankName,
                            String bankAccName, String bankAccNumber);
 
-        boolean checkLoginState(Context context);
     }
 
     interface Repository extends BaseContract.Repository {
@@ -45,6 +43,5 @@ public interface RegistrationActivityContract {
 
         boolean attemptReg(RegistrationInput regData);
 
-        boolean checkLoginState(Context context);
     }
 }

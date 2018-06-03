@@ -11,7 +11,7 @@ import android.content.Context;
 
 public interface RequestDetailFragmentContract {
     interface Presenter extends BaseFragContract.Presenter<RequestDetailFragmentContract.View> {
-        void getTransactionDetails(Context context, int transactionId);
+        void getTransactionDetails(Context context, int transactionId, int userType);
         void confirmRequest(Context context, int transactionId);
     }
 
@@ -19,12 +19,12 @@ public interface RequestDetailFragmentContract {
     }
 
     interface Model extends BaseFragContract.Model {
-        void getTransactionDetails(Context context, int transactionId);
+        void getTransactionDetails(Context context, int transactionId, int userType);
         void confirmRequest(Context context, int transactionId);
     }
 
     interface Repository extends BaseFragContract.Repository {
-        void getTransactionDetails(Context context, int transactionId);
+        void getTransactionDetails(Context context, int transactionId, int userType);
         void confirmRequest(Context context, int transactionId);
     }
 }

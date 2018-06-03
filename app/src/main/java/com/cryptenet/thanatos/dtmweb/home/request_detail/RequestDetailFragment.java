@@ -8,8 +8,10 @@
 package com.cryptenet.thanatos.dtmweb.home.request_detail;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,6 +83,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
     TextView noteTV;
     Unbinder unbinder;
     private int transId;
+    private int userType;
 
     public RequestDetailFragment() {
         // Required empty public constructor
@@ -94,6 +97,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
         View convertView = inflater.inflate(R.layout.fragment_request_detail, container, false);
 
         transId = getArguments().getInt("transaction_id");
+        userType = (getArguments().getString("user_type")).equals("Investor") ? 1 : 2;
         unbinder = ButterKnife.bind(this, convertView);
         return convertView;
     }
@@ -139,21 +143,40 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
 
         noteTV.setText(event.details.getNote());
 
-        Glide.with(activityContext)
-                .load(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_PICTURE_URL, null))
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
-                .apply(RequestOptions.circleCropTransform())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(profilepic);
 
-        textViewName.setText(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_NAME, null));
-        textViewType.setText(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_USER_TYPE, null));
-        address.setText(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_ADDRESS, null));
+        if (event.user == null) {
+            Glide.with(activityContext)
+                    .load(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_PICTURE_URL, null))
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
+                    .apply(RequestOptions.circleCropTransform())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(profilepic);
+
+            textViewName.setText(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_NAME, null));
+            textViewType.setText(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_USER_TYPE, null));
+            address.setText(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_ADDRESS, null));
+        } else {
+            Glide.with(activityContext)
+                    .load(event.user.getPicture())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
+                    .apply(RequestOptions.circleCropTransform())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(profilepic);
+
+            textViewName.setText(event.user.getName());
+            textViewType.setText(event.user.getUserType());
+            address.setText(event.user.getAddress());
+        }
     }
 
     @OnClick(R.id.btn_confirm)
     public void onRequestConfirmed(View view) {
         presenter.confirmRequest(activityContext, transId);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Subscribe
+    public void onBackToManageRequestEvent(BackToManageRequestEvent event) {
+        Objects.requireNonNull(getActivity()).onBackPressed();
     }
 
     @Override
@@ -161,12 +184,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
         super.onResume();
         presenter.attachView(this);
 
-        presenter.getTransactionDetails(activityContext, transId);
-    }
-
-    @Subscribe
-    public void onBackToManageRequestEvent(BackToManageRequestEvent event) {
-        Objects.requireNonNull(getActivity()).onBackPressed();
+        presenter.getTransactionDetails(activityContext, transId, userType);
     }
 
     @Override

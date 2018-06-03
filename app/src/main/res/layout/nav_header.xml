@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="@dimen/margin_vertical_16"
         android:paddingLeft="@dimen/margin_horizontal_16"
@@ -41,6 +41,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="7dp"
                     android:layout_toEndOf="@+id/iv_nav_pp"
+                    android:text="@string/hint_et_bank_acc_number"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -51,6 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/tv_nav_name"
                     android:layout_below="@+id/tv_nav_name"
+                    android:text="@string/hint_et_bank_acc_number"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
                     android:textStyle="normal" />
@@ -61,6 +63,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/tv_nav_type"
                     android:layout_below="@+id/tv_nav_type"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/hint_et_bank_acc_number"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
                     android:textStyle="normal" />
@@ -88,7 +93,7 @@
                 android:id="@+id/project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:padding="10dp">
@@ -103,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:text="@string/nav_man_project"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:textColor="@android:color/white" />
@@ -113,7 +118,7 @@
                 android:id="@+id/request"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -126,7 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:text="@string/nav_man_request"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:textColor="@android:color/white" />
@@ -136,7 +141,7 @@
                 android:id="@+id/language"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -149,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:text="@string/nav_language"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:textColor="@android:color/white" />
@@ -159,7 +164,7 @@
                 android:id="@+id/conversation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -173,8 +178,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="15dp"
                     android:text="@string/nav_conversation"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:textColor="@android:color/white" />
@@ -184,7 +189,7 @@
                 android:id="@+id/report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -198,8 +203,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="15dp"
                     android:text="@string/nav_report"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:textColor="@android:color/white" />
@@ -209,7 +214,7 @@
                 android:id="@+id/logOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -222,7 +227,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:text="@string/nav_logout"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                     android:textColor="@android:color/white" />
@@ -239,7 +244,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
                 android:padding="10dp"
                 android:text="@string/nav_tc"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
@@ -250,7 +255,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
                 android:padding="10dp"
                 android:text="@string/nav_rate"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
@@ -261,7 +266,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
                 android:padding="10dp"
                 android:text="@string/nav_about"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"

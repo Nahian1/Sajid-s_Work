@@ -113,7 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -127,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
                         android:layout_weight="1"
-                        android:text="Bank Name"
+                        android:text="@string/hint_et_bank_name"
                         android:textAlignment="viewStart"
                         android:textColor="#535353"
                         android:textSize="14sp" />
@@ -161,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingTop="10dp"
-                        android:text="Bank Account Name"
+                        android:text="@string/hint_et_bank_acc_name"
                         android:textAlignment="viewStart"
                         android:textColor="#535353"
                         android:textSize="14sp" />
@@ -196,7 +197,7 @@
                         android:layout_marginTop="1dp"
                         android:layout_weight="1"
                         android:paddingTop="10dp"
-                        android:text="Bank Account Number"
+                        android:text="@string/hint_et_bank_acc_number"
                         android:textAlignment="viewStart"
                         android:textColor="#535353"
                         android:textSize="14sp" />
@@ -233,7 +234,7 @@
                         android:layout_marginTop="1dp"
                         android:layout_weight="1"
                         android:paddingTop="10dp"
-                        android:text="Amount to be paid for details"
+                        android:text="@string/amount_to_be_paid_for_details"
                         android:textAlignment="viewStart"
                         android:textColor="#535353"
                         android:textSize="14sp" />

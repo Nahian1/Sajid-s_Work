@@ -10,10 +10,10 @@ package com.cryptenet.thanatos.dtmweb.events;
 
 import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
 
-public class TransactionSuccessEvent {
+public class FormSubmitEvent {
     public Transaction transaction;
 
-    public TransactionSuccessEvent(Transaction transaction) {
+    public FormSubmitEvent(Transaction transaction) {
         this.transaction = transaction;
     }
 }

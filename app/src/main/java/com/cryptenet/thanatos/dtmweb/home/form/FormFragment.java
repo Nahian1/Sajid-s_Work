@@ -23,6 +23,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.FormSubmitEvent;
+import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.FormFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
@@ -31,6 +33,9 @@ import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -191,6 +196,30 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
                 break;
 
         }
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+
+    }
+
+    @Subscribe
+    public void onFormSubmitEvent(FormSubmitEvent event) {
+
+//        EventBus.getDefault().post(new TransactionSuccessEvent(event.transaction));
+
+//        getFragmentManager().popBackStackImmediate();
+//        getActivity().onBackPressed();
     }
 
 }

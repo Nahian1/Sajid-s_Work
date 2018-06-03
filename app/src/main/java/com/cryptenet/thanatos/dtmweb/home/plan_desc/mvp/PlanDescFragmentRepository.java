@@ -181,6 +181,8 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                         detailed1.setBankAccountName(user.getBankAccountName());
                         detailed1.setBankAccountNumber(user.getBankAccountNumber());
                         detailed1.setInitiatorAddress(user.getAddress());
+                        detailed1.setInitiatorImage(user.getPicture());
+                        detailed1.setInitiatorAddress(user.getAddress());
 
                         EventBus.getDefault().post(new ShowPlanDetailsEvent(detailed1));
                     }
@@ -258,6 +260,9 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                         detailed1.setBankAccountName(user.getBankAccountName());
                         detailed1.setBankAccountNumber(user.getBankAccountNumber());
                         detailed1.setInitiatorAddress(user.getAddress());
+                        detailed1.setInitiatorImage(user.getPicture());
+                        detailed1.setInitiatorAddress(user.getAddress());
+
 
                         EventBus.getDefault().post(new ShowPlanDetailsEvent(detailed1));
 

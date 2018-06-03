@@ -75,11 +75,11 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
             finish();
         }
 
-        String lang = preferences.getString(ConstantProvider.LOCALE, null);
+        String lang = preferences.getString(ConstantProvider.SELECTED_LANGUAGE, null);
 
         if (lang == null) {
             LocaleHelper.setNewLocale(this, "en");
-            preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
+//            preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
         } else {
             LocaleHelper.setNewLocale(this, lang);
         }
@@ -123,12 +123,13 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
                 if (email.equals("1")) {
 
-                    progressDialog = ViewUtils.showProgress(this);
-                    progressDialog.show();
+                    ProgressDialogHelper.init(this).showProgress();
 
                     presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
 
                 } else if (email.equals("2")) {
+
+                    ProgressDialogHelper.init(this).showProgress();
 
                     presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
 
@@ -144,6 +145,9 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 //
 //                if (!email.isEmpty()) {
 //                    if (!password.isEmpty()) {
+
+//                ProgressDialogHelper.init(this).showProgress();
+
 //                        presenter.requestForLogin(
 //                                etEmail.getText().toString().trim(),
 //                                etPwd.getText().toString().trim()
@@ -208,7 +212,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.LOCALE, "en");
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.SELECTED_LANGUAGE, "en");
         super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
     }
 

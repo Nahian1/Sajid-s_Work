@@ -53,9 +53,4 @@ public class RegistrationActivityModel extends BaseModel<RegistrationActivityCon
 
                 return repository.attemptReg(input);
         }
-
-        @Override
-        public boolean checkLoginState(Context context) {
-                return repository.checkLoginState(context);
-        }
 }

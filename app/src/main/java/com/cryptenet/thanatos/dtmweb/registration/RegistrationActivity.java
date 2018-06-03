@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.registration;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -39,6 +40,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
@@ -221,11 +223,6 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     }
 
-    @Override
-    public void moveToSignIn() {
-        navigator.toLoginActivity(this);
-        finish();
-    }
 
     @OnClick(R.id.iv_pp)
     public void getPp(View view) {
@@ -321,7 +318,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @OnClick(R.id.tv_sign_in)
     public void toSignIn(View view) {
-        presenter.checkLoginState(this);
+        navigator.toLoginActivity(this);
+        finish();
     }
 
     @Override
@@ -434,5 +432,11 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     protected void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.SELECTED_LANGUAGE, "en");
+        super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
     }
 }

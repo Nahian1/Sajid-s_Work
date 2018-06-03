@@ -7,6 +7,7 @@
 
 package com.cryptenet.thanatos.dtmweb.home;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -199,12 +200,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @OnClick(R.id.language)
     public void language(View view) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (preferences.getString(ConstantProvider.LOCALE, null).equals("en")) {
+        if (preferences.getString(ConstantProvider.SELECTED_LANGUAGE, null).equals("en")) {
             LocaleHelper.setNewLocale(this, "ar");
-            preferences.edit().putString(ConstantProvider.LOCALE, "ar").apply();
+//            preferences.edit().putString(ConstantProvider.SELECTED_LANGUAGE, "ar").apply();
         } else {
             LocaleHelper.setNewLocale(this, "en");
-            preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
+//            preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
         }
         finish();
         startActivity(new Intent(HomeActivity.this, HomeActivity.class));
@@ -212,8 +213,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @OnClick(R.id.project)
     public void onManageProject(View view) {
-
-        hideSearchBar(false);
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
@@ -234,8 +233,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @OnClick(R.id.request)
     public void onManageRequest(View view) {
-
-        hideSearchBar(false);
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
@@ -341,6 +338,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         Bundle bundle = new Bundle();
 
         bundle.putInt("transaction_id", event.transactionId);
+        bundle.putString("user_type", PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null));
 
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
@@ -361,10 +359,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @Subscribe
     public void onTransactionSuccessEvent(TransactionSuccessEvent event) {
-
         ProgressDialogHelper.hideProgress();
-
-//        super.onBackPressed();
 
         TransactionFragment fragment = new TransactionFragment();
         Bundle bundle = new Bundle();
@@ -396,7 +391,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putString("project", new Gson().toJson(event.project));
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
-
 
     }
 
@@ -472,9 +466,10 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 //                break;
 //        }
     }
+
     @Override
     protected void attachBaseContext(Context newBase) {
-        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.LOCALE, "en");
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.SELECTED_LANGUAGE, "en");
         super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
     }
 }

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestDetailFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
@@ -68,11 +69,13 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
         adapter = new ProjectManageAdapter(activityContext, projectsRspList, reqType);
         projectLV.setAdapter(adapter);
 
-        projectLV.setOnItemClickListener((parent, view, position, id) ->
-                EventBus.getDefault().post(
-                        new ToDetailsFragmentEvent(
-                                projectsRspList.get(position).getPlan(),
-                                (projectsRspList.get(position).getIsApproved()) ? 11 : 10)));
+        if (reqType == 1) {
+            projectLV.setOnItemClickListener((parent, view, position, id) ->
+                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getPlan(), 11)));
+        } else {
+            projectLV.setOnItemClickListener((parent, view, position, id) ->
+                    EventBus.getDefault().post(new RequestDetailFragmentEvent(projectsRspList.get(position).getId())));
+        }
 
         return convertView;
     }

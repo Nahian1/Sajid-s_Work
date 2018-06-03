@@ -139,11 +139,6 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         if (address != null) address.setText(event.detailed.getInitiatorAddress());
         if (textShortDesc != null) textShortDesc.setText(event.detailed.getShortDescription());
 
-        if (textBankAccName != null) textBankAccName.setText(event.detailed.getBankAccountName());
-        if (textBankAccNo != null) textBankAccNo.setText(event.detailed.getBankAccountNumber());
-        if (textBankName != null) textBankName.setText(event.detailed.getBankName());
-        if (amountToBePaid != null) amountToBePaid.setText(event.detailed.getAccessPrice());
-
         //commented out for later use
         if (demoImg != null)
             Glide.with(activityContext)
@@ -179,6 +174,16 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
             textLongDesc.setText(event.detailed.getLongDescription());
             textViewFile.setVisibility(View.VISIBLE);
         } else if (textDatePrice != null) {
+
+            layoutBankSection.setVisibility(View.VISIBLE);
+
+            textViewType.setText(getString(R.string.acc_type_initiator));
+            if (textBankAccName != null)
+                textBankAccName.setText(event.detailed.getBankAccountName());
+            if (textBankAccNo != null) textBankAccNo.setText(event.detailed.getBankAccountNumber());
+            if (textBankName != null) textBankName.setText(event.detailed.getBankName());
+            if (amountToBePaid != null) amountToBePaid.setText(event.detailed.getAccessPrice());
+
             textDatePrice.setText("Price: " + event.detailed.getMinimumInvestmentCost() + " - " + event.detailed.getMaximumInvestmentCost());
         }
 

@@ -44,9 +44,4 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
         model.getLimitedCities(countryCode);
     }
 
-    @Override
-    public void checkLoginState(Context context) {
-        if (model.checkLoginState(context))
-            view.moveToSignIn();
-    }
 }

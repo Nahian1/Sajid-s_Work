@@ -36,7 +36,7 @@ public class HomeActivityRepository extends BaseRepository
     @Override
     public boolean clearUserData(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String lang = sharedPreferences.getString(ConstantProvider.LOCALE, "en");
-        return PreferenceManager.getDefaultSharedPreferences(context).edit().clear().putString(ConstantProvider.LOCALE, lang).commit();
+        String lang = sharedPreferences.getString(ConstantProvider.SELECTED_LANGUAGE, "en");
+        return PreferenceManager.getDefaultSharedPreferences(context).edit().clear().putString(ConstantProvider.SELECTED_LANGUAGE, lang).commit();
     }
 }

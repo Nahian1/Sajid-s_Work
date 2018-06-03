@@ -7,7 +7,9 @@
 
 package com.cryptenet.thanatos.dtmweb.set_password;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +20,10 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.PwdResetEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -112,5 +116,11 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
     protected void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.SELECTED_LANGUAGE, "en");
+        super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
     }
 }

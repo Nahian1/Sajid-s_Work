@@ -14,11 +14,15 @@ import android.util.Log;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.BackToManageRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDataReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.ShowPlanDetailsEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,7 +42,8 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
     private static String TAG = TagProvider.getDebugTag(RequestDetailFragmentRepository.class);
 
     @Override
-    public void getTransactionDetails(Context context, int transactionId) {
+    public void getTransactionDetails(Context context, int transactionId, int userType) {
+        String head = "application/json";
         Call<TransactionDetails> call = apiClient.getTransactionDetails(
                 "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null),
                 transactionId
@@ -48,7 +53,38 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
             @Override
             public void onResponse(Call<TransactionDetails> call, Response<TransactionDetails> response) {
                 Log.d(TAG, "onResponse: " + response.body());
-                EventBus.getDefault().post(new RequestDataReceiveEvent(response.body()));
+                TransactionDetails details = response.body();
+                final User[] user = new User[1];
+                if (userType == 2) {
+                    OkHttpClient client = new OkHttpClient();
+
+                    Request request = new Request.Builder()
+                            .url(ConstantProvider.BASE_URL + "api/v1/user/" + response.body().getInvestor() + "/")
+                            .get()
+                            .addHeader("Content-Type", head)
+                            .addHeader("Authorization", "Bearer " + PreferenceManager
+                                    .getDefaultSharedPreferences(context)
+                                    .getString(ConstantProvider.SP_ACCESS_TOKEN, null))
+                            .build();
+
+                    client.newCall(request).enqueue(new okhttp3.Callback() {
+                        @Override
+                        public void onFailure(okhttp3.Call call, IOException e) {
+
+                        }
+
+                        @Override
+                        public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                            Gson gson = new Gson();
+                            user[0] = gson.fromJson(response.body().string(), User.class);
+                        }
+                    });
+                }
+                if (userType == 2)
+                    EventBus.getDefault().post(new RequestDataReceiveEvent(details, user[0]));
+                else
+                    EventBus.getDefault().post(new RequestDataReceiveEvent(details, null));
+
             }
 
             @Override
