@@ -15,7 +15,9 @@ import android.content.SharedPreferences;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.cryptenet.thanatos.dtmweb.BuildConfig;
+
 import com.cryptenet.thanatos.dtmweb.R;
+
 import com.cryptenet.thanatos.dtmweb.di.components.DaggerAppComponent;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -32,6 +34,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 
 @ReportsCrashes(
         mailTo = "asif.rahman307@gmail.com",
@@ -73,6 +76,11 @@ public class CryptApplication extends Application implements HasActivityInjector
         }
 
         DaggerAppComponent.builder().create(this).inject(this);
+
+        //configure timber for logging
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 
     @Override

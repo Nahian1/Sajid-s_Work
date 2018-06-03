@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 
-public class RegistrationInput {
+public class UpdateProfileInput {
 
     @SerializedName("user_type")
     @Expose
@@ -52,7 +52,7 @@ public class RegistrationInput {
      * No args constructor for use in serialization
      *
      */
-    public RegistrationInput() {
+    public UpdateProfileInput() {
     }
 
     /**
@@ -70,7 +70,7 @@ public class RegistrationInput {
      * @param userType
      */
 
-    public RegistrationInput(String userType, String name, String email, File picture, String password, String address, int country, int city, String bankName, String bankAccountName, String bankAccountNumber) {
+    public UpdateProfileInput(String userType, String name, String email, File picture, String password, String address, int country, int city, String bankName, String bankAccountName, String bankAccountNumber) {
         this.userType = userType;
         this.name = name;
         this.email = email;
@@ -174,7 +174,7 @@ public class RegistrationInput {
 
     @Override
     public String toString() {
-        return "RegistrationInput{" +
+        return "UpdateProfileInput{" +
                 "userType='" + userType + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +

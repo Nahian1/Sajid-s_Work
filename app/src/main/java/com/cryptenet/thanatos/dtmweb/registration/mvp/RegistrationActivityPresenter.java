@@ -8,10 +8,13 @@
 package com.cryptenet.thanatos.dtmweb.registration.mvp;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
+import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import java.io.File;
@@ -26,11 +29,20 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
     }
 
     @Override
-    public void carryRegData(File imageFile, String accType, String name, String email, String pwd,
+    public void carryRegData(String reqType, File imageFile, String accType, String name, String email, String pwd,
                              String address, int countryCode, int cityCode,
                              String bankName, String bankAccName, String bankAccNumber) {
         model.attachContext(view.getActivity());
-        model.attemptReg(imageFile, accType, name, email, pwd, address, countryCode, cityCode,
+        model.attemptReg(reqType, imageFile, accType, name, email, pwd, address, countryCode, cityCode,
+                bankName, bankAccName, bankAccNumber);
+    }
+
+    @Override
+    public void carryUpdateProfileData(Context context, String reqType, File imageFile, String accType, String name, String email, String pwd,
+                                       String address, int countryCode, int cityCode, String bankName, String bankAccName,
+                                       String bankAccNumber) {
+        model.attachContext(view.getActivity());
+        model.attemptUpdateProfile(view.getActivity(),reqType, imageFile, accType, name, email, pwd, address, countryCode, cityCode,
                 bankName, bankAccName, bankAccNumber);
     }
 
@@ -44,4 +56,10 @@ public class RegistrationActivityPresenter extends BasePresenter<RegistrationAct
         model.getLimitedCities(countryCode);
     }
 
+
+    @Override
+    public boolean saveUpdatedUserData(UpdateProfileResponse user) {
+        model.attachContext(view.getActivity());
+        return model.saveUpdatedUserData(user);
+    }
 }

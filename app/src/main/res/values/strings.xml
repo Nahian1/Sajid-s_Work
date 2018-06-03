@@ -83,6 +83,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+    <string name="title_activity_message_request">MessageRequestActivity</string>
+
     <string name="toast_crash">App Crashed</string>
     <string name="request_for_details">Request for details</string>
     <string name="amount_to_be_paid_for_details">Amount to be paid for details</string>

@@ -55,6 +55,7 @@ import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
+import com.cryptenet.thanatos.dtmweb.message.investor_thread.MessageRequestActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
@@ -121,6 +122,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.buttonSearch)
     ImageView buttonSearch;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,9 +133,18 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         setSupportActionBar(toolbar);
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String access_token = sharedPreferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null);
+        //int country = sharedPreferences.getInt(ConstantProvider.SP_COUNTRY, -1);
+        //int city = sharedPreferences.getInt(ConstantProvider.SP_CITY, -1);
+
+        //Log.d("data", access_token + " " + country + " " + city);
+
         //presenter.getNavHeaderData();
 
 //        setUpNavigation();
+
 
 //        Intent intent = getIntent();
 //        String s = intent.getStringExtra("user");
@@ -147,6 +159,25 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         addFragment(R.id.frame_container, fragment);
 //        }
+
+        Intent intent = getIntent();
+        String s = intent.getStringExtra("user");
+        User user = null;
+        if (s != null) {
+            Gson gson = new Gson();
+            user = gson.fromJson(s, User.class);
+        }
+
+
+        if (savedInstanceState == null) {
+            PlanListFragment fragmentPlancList = new PlanListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("token", access_token);
+            Log.d(TAG, "sending tk: " + access_token);
+            fragmentPlancList.setArguments(bundle);
+            addFragment(R.id.frame_container, fragmentPlancList);
+        }
+
 
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -257,11 +288,15 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        ThreadListFragment fragment1 = new ThreadListFragment();
-        Bundle bundle1 = new Bundle();
-        bundle1.putInt("reqType", PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null) == "Investor" ? 1 : 2);
-        fragment1.setArguments(bundle1);
-        replaceFragment(R.id.frame_container, fragment1);
+
+        Intent intent = new Intent(HomeActivity.this, MessageRequestActivity.class);
+        startActivity(intent);
+
+//        ThreadListFragment fragment1 = new ThreadListFragment();
+//        Bundle bundle1 = new Bundle();
+//        bundle1.putInt("reqType", PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null) == "Investor" ? 1 : 2);
+//        fragment1.setArguments(bundle1);
+//        replaceFragment(R.id.frame_container, fragment1);
     }
 
     @OnClick(R.id.report)

@@ -9,18 +9,37 @@ package com.cryptenet.thanatos.dtmweb.http;
 
 import com.cryptenet.thanatos.dtmweb.pojo.AllCategoriesResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
+import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
+
+
+import okhttp3.MultipartBody;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
+
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
+
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+
 import retrofit2.http.Query;
+import rx.Observable;
 
 public interface ApiClient {
 //    @GET("api/v1/country/")
@@ -97,4 +116,67 @@ public interface ApiClient {
 //
 //    @GET("GET /api/v1/plan/{id}/details")
 //    Call<ResponseBody> getLongDesc(@Header("Authorization") String token, @Path("id") int id);
+
+    @Multipart
+    @POST("api/v1/user/")
+    Call<RegistrationResponse> createNewUser(
+            @Part("name") RequestBody name,
+            @Part("email") RequestBody email,
+            @Part("password") RequestBody password,
+
+            @Part MultipartBody.Part picture,
+
+            @Part("city") RequestBody city,
+            @Part("country") RequestBody country,
+            @Part("bank_name") RequestBody bank_name,
+            @Part("bank_account_name") RequestBody bank_account_name,
+            @Part("bank_account_number") RequestBody bank_account_number,
+            @Part("user_type") RequestBody user_type,
+            @Part("address") RequestBody address
+    );
+
+    @Multipart
+    @PUT("api/v1/user/{id}/")
+    Observable<UpdateProfileResponse> updateUserProfile(
+            @Header("Authorization") String token,
+            @Path("id") int user_id,
+
+            @Part("name") String name,
+            @Part("email") String email,
+            @Part("password") String password,
+
+            @Part MultipartBody.Part picture,
+
+            @Part("city") String city,
+            @Part("country") String country,
+            @Part("bank_name") String bank_name,
+            @Part("bank_account_name") String bank_account_name,
+            @Part("bank_account_number") String bank_account_number,
+            @Part("user_type") String user_type,
+            @Part("address") String address
+    );
+
+    @GET("api/v1/country/")
+    Call<CountryResponse> getAllcountries();
+
+    @GET("api/v1/city/")
+    Call<CityResponse> getAllCities(
+            @Query("country") int countryCode
+    );
+
+    @Multipart
+    @POST("/api/v1/plan/")
+    Observable<ProjectsRsp> crerateNewInitiatorPlan(
+            @Header("Authorization") String token,
+            @Part("title") String title,
+            @Part("category") String category,
+            @Part("short_description") String short_description,
+            @Part("long_description") String long_description,
+            @Part("minimum_investment_cost") String minimum_investment_cost,
+            @Part("maximum_investment_cost") String maximum_investment_cost,
+            @Part("access_price") String access_price,
+
+            @Part MultipartBody.Part cover,
+            @Part MultipartBody.Part uploaded_file
+    );
 }

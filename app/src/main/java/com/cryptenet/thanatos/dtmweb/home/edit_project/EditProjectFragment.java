@@ -123,7 +123,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         if (project.isEditMode()) {
 
-            editTextName.setText(project.getTitle());
+            editTextName.setText(project.getInitiatorsName());
             editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
             editTextPriceMinimum.setText(project.getMinimumInvestmentCost());
             editTextShortDescription.setText(project.getShortDescription());
@@ -167,31 +167,76 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         ViewUtils.hideKeyboard(getActivity());
 
+        if (project.isEditMode()) {
+            // do when plan edit
+        } else {
+            processAddNewPlanInputData();
+        }
+
+        //EventBus.getDefault().post(new ReturnToHomeEvent());
+    }
+
+    // add new plan input processing
+    private void processAddNewPlanInputData() {
+        String title = editTextName.getText().toString().trim();
+        String shortDesc = editTextShortDescription.getText().toString().trim();
+        String longDesc = editTextLongDescription.getText().toString().trim();
+        String minInvest = editTextPriceMinimum.getText().toString().trim();
+        String maxInvest = editTextPriceMaximum.getText().toString().trim();
+        String accessPrice = editTextAccessPrice.getText().toString().trim();
+
+
+        ProjectsRq projectsRq = new ProjectsRq();
+
+        if (!title.isEmpty() && !shortDesc.isEmpty() && !longDesc.isEmpty()
+                && !minInvest.isEmpty() && !maxInvest.isEmpty() && !accessPrice.isEmpty()) {
+            projectsRq.setTitle(title);
+            projectsRq.setCategory(categoryCode);
+            projectsRq.setShortDescription(shortDesc);
+            projectsRq.setLongDescription(longDesc);
+            projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(minInvest));
+            projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(maxInvest));
+            projectsRq.setAccessPrice((int) Double.parseDouble(accessPrice));
+
+            if (imageFile != null)
+                projectsRq.setCover(imageFile);
+            if (planFile != null)
+                projectsRq.setUploadedFile(planFile);
+
+            if (imageFile == null || planFile == null) {
+                showMessage("Attach your file/image");
+            }
+
+            projectsRq.setNew(true);
+
+            if (imageFile != null && planFile != null) {
+                presenter.saveUpdatePlan(projectsRq, activityContext, -1);
+            }
+
+        } else {
+            showMessage("Please fill all fields");
+        }
+
+    }
+
+    @OnClick(R.id.buttonUploadImage)
+    public void getCoverImage(View view) {
         Dexter.withActivity(getActivity())
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
-                        ProjectsRq projectsRq = new ProjectsRq();
-                        projectsRq.setTitle(editTextName.getText().toString().trim());
-                        projectsRq.setCategory(categoryCode);
-                        projectsRq.setShortDescription(editTextShortDescription.getText().toString().trim());
-                        projectsRq.setLongDescription(editTextLongDescription.getText().toString().trim());
-                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMinimum.getText().toString().trim()));
-                        projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(editTextPriceMaximum.getText().toString().trim()));
-                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
-                        projectsRq.setCover(imageFile);
-                        projectsRq.setUploadedFile(planFile);
-                        projectsRq.setNew(project.isEditMode());
 
-                        presenter.saveUpdatePlan(projectsRq, activityContext, -1);
+                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                        photoPickerIntent.setType("image/*");
+                        startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        // check for permanent denial of permission
                         if (response.isPermanentlyDenied()) {
                             // navigate user to app settings
+                            showMessage("must grant permission");
                         }
                     }
 
@@ -202,20 +247,33 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                 }).check();
     }
 
-    @OnClick(R.id.buttonUploadImage)
-    public void getCoverImage(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
-    }
-
     @OnClick(R.id.buttonUploadFile)
     public void buttonUploadFile(View view) {
-        // Create the ACTION_GET_CONTENT Intent
-        Intent getContentIntent = FileUtils.createGetContentIntent();
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        // Create the ACTION_GET_CONTENT Intent
+                        Intent getContentIntent = FileUtils.createGetContentIntent();
 
-        Intent intent = Intent.createChooser(getContentIntent, "Select a file");
-        startActivityForResult(intent, ConstantProvider.RESULT_FILE_IMG);
+                        Intent intent = Intent.createChooser(getContentIntent, "Select a file");
+                        startActivityForResult(intent, ConstantProvider.RESULT_FILE_IMG);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        if (response.isPermanentlyDenied()) {
+                            // navigate user to app settings
+                            showMessage("must grant permission");
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
     }
 
     @Subscribe
@@ -238,7 +296,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         else
             showMessage("Added.");
 
-        getFragmentManager().popBackStackImmediate();
+        getActivity().onBackPressed();
     }
 
     @Override
@@ -252,7 +310,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
             if (requestCode == ConstantProvider.RESULT_LOAD_IMG) {
                 try {
                     final Uri imageUri = data.getData();
-                    showMessage(imageUri.getPath() + " added");
                     realPath = ImageFilePath.getPath(activityContext, data.getData());
                     assert imageUri != null;
                     final InputStream imageStream = activityContext.getContentResolver().openInputStream(imageUri);
@@ -273,9 +330,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                 // Alternatively, use FileUtils.getFile(Context, Uri)
                 if (path != null && FileUtils.isLocal(path)) {
                     planFile = new File(path);
-
-                    showMessage(path + " added");
-
                 }
             }
         }

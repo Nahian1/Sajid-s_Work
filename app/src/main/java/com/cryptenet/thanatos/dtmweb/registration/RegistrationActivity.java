@@ -16,7 +16,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.Patterns;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,7 +38,10 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
 import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
+import com.cryptenet.thanatos.dtmweb.events.RegistrationFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
+import com.cryptenet.thanatos.dtmweb.events.UpdateProfileFailureEvent;
+import com.cryptenet.thanatos.dtmweb.events.UpdateProfileSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
@@ -123,6 +129,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @BindView(R.id.tv_sign_in)
     TextView tvSignIn;
+
+    private Bitmap proPicBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,6 +265,15 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
         ViewUtils.hideKeyboard(this);
 
+        if (isEdit) {
+            processInputForUpdateUserProfile();
+        } else
+            processInputForNewUserRegistration();
+
+    }
+
+    // to register new user
+    private void processInputForNewUserRegistration() {
         String name = etNameReg.getText().toString().trim();
         String email = etEmailReg.getText().toString().trim();
         String pwd = etPwdReg.getText().toString().trim();
@@ -266,53 +283,60 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         String bankAccName = etBankAccNameReg.getText().toString().trim();
         String bankAccNum = etBankAccNumberReg.getText().toString().trim();
 
-//        String name = "Britly";
-//        String email = "britly@gmail.com";
-//        String pwd = "asdasd123";
-//        String cPwd = "asdasd123";
-//        String address = "home";
-//        String bankName = "bank";
-//        String bankAccName = "Britly";
-//        String bankAccNum = "123456789";
+
+        if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
+                && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
+            if ((Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+                if (pwd.equals(cPwd)) {
+
+                    ProgressDialogHelper.init(this).showProgress();
+
+                    presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER, imageFile, accType,
+                            name, email, pwd, address, countryCode, cityCode,
+                            bankName, bankAccName, bankAccNum
+                    );
+                } else {
+                    showMessage("Password did not match!");
+                }
+            } else {
+                showMessage("Please give correct email !");
+            }
+
+        } else {
+            showMessage("Please fill all fields!");
+        }
+    }
+
+    // to update/edit user profile
+    private void processInputForUpdateUserProfile() {
+        String name = etNameReg.getText().toString().trim();
+        String email = etEmailReg.getText().toString().trim();
+        String pwd = etPwdReg.getText().toString().trim();
+        String cPwd = etConfirmPwd.getText().toString().trim();
+        String address = etAddress.getText().toString().trim();
+        String bankName = etBankNameReg.getText().toString().trim();
+        String bankAccName = etBankAccNameReg.getText().toString().trim();
+        String bankAccNum = etBankAccNumberReg.getText().toString().trim();
 
 
         if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
                 && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
-            if (pwd.equals(cPwd)) {
+            if (ViewUtils.isValidEmail(email)) {
+                if (pwd.equals(cPwd)) {
 
-                if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-
-                    ProgressDialogHelper.init(this).showProgress();
-
-                    presenter.carryRegData(
-                            imageFile,
-                            accType,
-                            name,
-                            email,
-                            pwd,
-                            address,
-                            countryCode,
-                            cityCode,
-                            bankName,
-                            bankAccName,
-                            bankAccNum
+                    presenter.carryUpdateProfileData(this, ConstantProvider.REQ_TYPE_EDIT_PROFILE, imageFile, accType,
+                            name, email, pwd, address, countryCode, cityCode,
+                            bankName, bankAccName, bankAccNum
                     );
-
                 } else {
-
-                    showMessage("Invalid email!");
-
+                    showMessage("Password did not match!");
                 }
-
             } else {
-                showMessage("Password did not match");
+                showMessage("Please give correct email !");
             }
-        } else {
-            showMessage("Please fill all fields");
-        }
 
-        if (isEdit) {
-            navigator.toHomeActivity(this, null);
+        } else {
+            showMessage("Please fill all fields!");
         }
     }
 
@@ -372,8 +396,11 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         sCities.clear();
         for (City city : this.cities)
             sCities.add(city.getName());
-        cityCode = cities.get(0).getId();
-        spinCityAdapter.notifyDataSetChanged();
+        if (cities.size() > 0) {
+            cityCode = cities.get(0).getId();
+            spinCityAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -390,6 +417,31 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         }
 
         finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRegistrationFailureEvent(RegistrationFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        if (event.isFailure) {
+            showMessage("Please try again!");
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateProfileSuccessEvent(UpdateProfileSuccessEvent event) {
+        presenter.saveUpdatedUserData(event.updateProfileResponse);
+        showMessage("Your profile updated!");
+        finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateProfileFailureEvent(UpdateProfileFailureEvent event) {
+
+        if (event.isFailure) {
+            showMessage("Please try again!");
+        }
     }
 
     @Override
