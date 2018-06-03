@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -82,10 +83,15 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
 
         nameTV.setText(projects.get(position).getInitiatorsName());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        String dateOutputPattern = "dd MMM yyyy";
+
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
 
         try {
-            dateTV.setText(dateFormat.format(dateFormat.parse(projects.get(position).getCreatedAt())));
+            Date date = inputDateFormat.parse(projects.get(position).getCreatedAt());
+            dateTV.setText(outputDateFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }

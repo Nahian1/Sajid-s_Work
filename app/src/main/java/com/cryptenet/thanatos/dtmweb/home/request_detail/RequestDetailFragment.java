@@ -23,6 +23,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.BackToManageRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDataReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
@@ -35,6 +36,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -151,7 +153,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
 
     @OnClick(R.id.btn_confirm)
     public void onRequestConfirmed(View view) {
-//        presenter.confirmRequest(transId);
+        presenter.confirmRequest(activityContext, transId);
     }
 
     @Override
@@ -160,6 +162,11 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
         presenter.attachView(this);
 
         presenter.getTransactionDetails(activityContext, transId);
+    }
+
+    @Subscribe
+    public void onBackToManageRequestEvent(BackToManageRequestEvent event) {
+        Objects.requireNonNull(getActivity()).onBackPressed();
     }
 
     @Override

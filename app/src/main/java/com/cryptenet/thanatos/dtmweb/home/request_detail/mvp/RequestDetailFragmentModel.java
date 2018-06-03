@@ -27,4 +27,9 @@ public class RequestDetailFragmentModel extends BaseFragModel<RequestDetailFragm
     public void getTransactionDetails(Context context, int transactionId) {
         repository.getTransactionDetails(context, transactionId);
     }
+
+    @Override
+    public void confirmRequest(Context context, int transactionId) {
+        repository.confirmRequest(context, transactionId);
+    }
 }
