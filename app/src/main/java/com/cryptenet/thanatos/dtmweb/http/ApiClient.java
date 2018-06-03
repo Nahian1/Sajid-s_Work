@@ -13,6 +13,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
@@ -119,7 +120,6 @@ public interface ApiClient {
     @Multipart
     @POST("api/v1/user/")
     Call<RegistrationResponse> createNewUser(
-            //@Header()
             @Part("name") RequestBody name,
             @Part("email") RequestBody email,
             @Part("password") RequestBody password,
@@ -162,5 +162,21 @@ public interface ApiClient {
     @GET("api/v1/city/")
     Call<CityResponse> getAllCities(
             @Query("country") int countryCode
+    );
+
+    @Multipart
+    @POST("/api/v1/plan/")
+    Observable<ProjectsRsp> crerateNewInitiatorPlan(
+            @Header("Authorization") String token,
+            @Part("title") String title,
+            @Part("category") String category,
+            @Part("short_description") String short_description,
+            @Part("long_description") String long_description,
+            @Part("minimum_investment_cost") String minimum_investment_cost,
+            @Part("maximum_investment_cost") String maximum_investment_cost,
+            @Part("access_price") String access_price,
+
+            @Part MultipartBody.Part cover,
+            @Part MultipartBody.Part uploaded_file
     );
 }
