@@ -32,6 +32,11 @@ import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -104,6 +109,18 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
 
 //        date.setText(projectData.getTitle());
 //        status.setText(projectData.getTitle());
+        String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        String dateOutputPattern = "dd MMM yyyy";
+
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
+
+        try {
+            Date dateF = inputDateFormat.parse(projectData.getCreatedAt());
+            date.setText(outputDateFormat.format(dateF));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         Glide.with(activityContext)
                 .load(projectData.getInitiatorImage())
