@@ -194,10 +194,10 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
         presenter.confirmRequest(activityContext, transId);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Subscribe
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBackToManageRequestEvent(BackToManageRequestEvent event) {
-        Objects.requireNonNull(getActivity()).onBackPressed();
+        getActivity().onBackPressed();
     }
 
     @Override

@@ -65,6 +65,7 @@ import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -295,7 +296,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         finish();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onToDetailsFragmentEvent(ToDetailsFragmentEvent event) {
 
         PlanDescFragment fragment = new PlanDescFragment();
@@ -319,7 +320,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRequestDetailFragmentEvent(RequestDetailFragmentEvent event) {
         RequestDetailFragment fragment = new RequestDetailFragment();
 
@@ -332,7 +333,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         replaceFragment(R.id.frame_container, fragment);
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInitiatorThreadsEvent(InitiatorThreadsEvent event) {
         ThreadProjectFragment fragment = new ThreadProjectFragment();
         Bundle bundle = new Bundle();
@@ -345,9 +346,12 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTransactionSuccessEvent(TransactionSuccessEvent event) {
+
         ProgressDialogHelper.hideProgress();
+
+        showMessage("Submitted!");
 
         TransactionFragment fragment = new TransactionFragment();
         Bundle bundle = new Bundle();
@@ -359,7 +363,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPlanDetailsRequestEvent(PlanDetailsRequestEvent event) {
         FormFragment fragment = new FormFragment();
         Bundle bundle = new Bundle();
@@ -371,7 +375,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onToEditProjectFragmentEvent(ToEditPlanEvent event) {
         EditProjectFragment fragment = new EditProjectFragment();
         Bundle bundle = new Bundle();
@@ -382,7 +386,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onIssueTopicChosenEvent(IssueTopicChosenEvent event) {
         OtherReportFragment fragment = new OtherReportFragment();
         Bundle bundle = new Bundle();
@@ -394,13 +398,13 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReturnToHomeEvent(ReturnToHomeEvent event) {
         replaceFragment(R.id.frame_container, new PlanListFragment());
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onThreadIdReceiveEvent(ThreadIdReceiveEvent event) {
         ThreadMsgFragment fragment = new ThreadMsgFragment();
         Bundle bundle = new Bundle();

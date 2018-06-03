@@ -24,6 +24,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.TransactionFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
@@ -31,6 +32,8 @@ import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
 import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -168,6 +171,8 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
 
     @OnClick(R.id.doneBtn)
     public void onViewClicked() {
-        getActivity().onBackPressed();
+
+        EventBus.getDefault().post(new ReturnToHomeEvent());
+//        getActivity().onBackPressed();
     }
 }
