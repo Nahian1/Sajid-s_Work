@@ -55,6 +55,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -166,8 +167,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     @OnClick(R.id.btn_done)
     public void savePlan(View view) {
 
-        ProgressDialogHelper.init(getActivity()).showProgress();
-
         if (project.isEditMode()) {
             // do when plan edit
         } else {
@@ -210,6 +209,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
             projectsRq.setNew(true);
 
             if (imageFile != null && planFile != null) {
+
+                ProgressDialogHelper.init(getActivity()).showProgress();
+
                 presenter.saveUpdatePlan(projectsRq, activityContext, -1);
             }
 
@@ -288,7 +290,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         spinCatAdapter.notifyDataSetChanged();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEditPlanSuccessEvent(EditPlanSuccessEvent event) {
 
         ProgressDialogHelper.hideProgress();
@@ -305,28 +307,24 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        String realPath = null;
-//        Bitmap selectedImage;
+        String realPath = null;
+        Bitmap selectedImage;
 
         if (resultCode == RESULT_OK) {
             if (requestCode == ConstantProvider.RESULT_LOAD_IMG) {
-//                try {
+                try {
+                    final Uri imageUri = data.getData();
+                    showMessage(imageUri.getPath() + " added.");
 
-                final Uri imageUri = data.getData();
+                    realPath = ImageFilePath.getPath(activityContext, data.getData());
+                    assert imageUri != null;
+                    final InputStream imageStream = activityContext.getContentResolver().openInputStream(imageUri);
+                    selectedImage = BitmapFactory.decodeStream(imageStream);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
-                showMessage(imageUri.getPath() + " added.");
-
-//                    realPath = ImageFilePath.getPath(activityContext, data.getData());
-
-                imageFile = new File(imageUri.getPath());
-
-//                    assert imageUri != null;
-//                    final InputStream imageStream = activityContext.getContentResolver().openInputStream(imageUri);
-//                    selectedImage = BitmapFactory.decodeStream(imageStream);
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-
+                imageFile = new File(realPath);
 
             } else if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
 

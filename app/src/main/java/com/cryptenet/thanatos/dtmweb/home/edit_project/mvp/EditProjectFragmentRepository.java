@@ -92,7 +92,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
             RequestBody uploadedFile;
             MultipartBody.Part uploadedFileBody = null;
 
-            uploadedFile = RequestBody.create(MediaType.parse("application/*"), plan.getUploadedFile());
+            uploadedFile = RequestBody.create(MediaType.parse("*/*"), plan.getUploadedFile());
             uploadedFileBody = MultipartBody.Part.createFormData("uploaded_file", plan.getUploadedFile().getName(), uploadedFile);
 
 
@@ -113,7 +113,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
                         @Override
                         public void onNext(ProjectsRsp projectsRsp) {
-//                            Log.d(TAG, "add plan rsp: " + projectsRsp.toString());
+                            Log.d(TAG, "add plan rsp: " + projectsRsp.toString());
 
                             EventBus.getDefault().post(new EditPlanSuccessEvent(projectsRsp));
 

@@ -11,7 +11,6 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
 import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
@@ -36,9 +35,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

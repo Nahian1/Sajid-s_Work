@@ -74,17 +74,23 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
     @OnClick(R.id.btn_done)
     public void onClick(View v) {
 
-        ProgressDialogHelper.init(this).showProgress();
         ViewUtils.hideKeyboard(this);
 
         String pwd = etNewPwd.getText().toString().trim();
         String cPwd = etConfirmNewPwd.getText().toString().trim();
 
         if (!pwd.isEmpty() && !cPwd.isEmpty()) {
-            if (pwd.equals(cPwd))
+
+            if (pwd.equals(cPwd)) {
+                ProgressDialogHelper.init(this).showProgress();
+
                 presenter.sendPwdResetRequest(pwd, this);
-            else
-                showMessage("Filed values do not match");
+
+            } else {
+
+                showMessage("Passwords do not match");
+            }
+
         } else
             showMessage("Please fill both fields");
     }
@@ -93,6 +99,7 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
     public void onPwdResetEvent(PwdResetEvent event) {
 
         ProgressDialogHelper.hideProgress();
+
         if (event.isSuccess) {
             showMessage("Reset Done!!");
             navigator.toLoginActivity(this);
