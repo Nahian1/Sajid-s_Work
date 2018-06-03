@@ -70,7 +70,6 @@ public class OtherReportFragmentRepository extends BaseFragRepository
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }

@@ -410,14 +410,15 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @Subscribe
     public void onReturnToHomeEvent(ReturnToHomeEvent event) {
-        replaceFragment(R.id.frame_container, new PlanListFragment());
 
-        hideSearchBar(false);
+        replaceFragment(R.id.frame_container, new PlanListFragment());
 
     }
 
     @Subscribe
     public void onThreadIdReceiveEvent(ThreadIdReceiveEvent event) {
+
+//        super.onBackPressed();
         ThreadMsgFragment fragment = new ThreadMsgFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("thread_init", event.threadInitResponse);

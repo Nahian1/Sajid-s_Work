@@ -133,7 +133,38 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
         init();
 
+    }
+
+    private void init() {
+        accTypes = new ArrayList<>();
+        sCountries = new ArrayList<>();
+        sCities = new ArrayList<>();
+
+        sCountries.add("Country");
+
+        spinCountryAdapter = new ArrayAdapter<>(this,
+                R.layout.node_spin_reg, sCountries);
+        spinCountryAdapter.setDropDownViewResource(R.layout.node_spin_reg);
+        spinCountry.setAdapter(spinCountryAdapter);
+
+        sCities.add("City");
+
+        spinCityAdapter = new ArrayAdapter<>(this,
+                R.layout.node_spin_reg, sCities);
+        spinCityAdapter.setDropDownViewResource(R.layout.node_spin_reg);
+        spinCity.setAdapter(spinCityAdapter);
+
+        spinAccType.setOnItemSelectedListener(this);
+        spinCountry.setOnItemSelectedListener(this);
+        spinCity.setOnItemSelectedListener(this);
+
+
         if (isEdit) {
+
+            btnSignInReg.setText(R.string.update_profile);
+            tvHaveAcc.setVisibility(View.GONE);
+            tvSignIn.setVisibility(View.GONE);
+
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             String imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL, null);
 
@@ -153,43 +184,21 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             etBankAccNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NAME, null));
             etBankAccNumberReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NO, null));
 
-            btnSignInReg.setText(R.string.update_profile);
-            tvHaveAcc.setVisibility(View.GONE);
-            tvSignIn.setVisibility(View.GONE);
+            accTypes.add(sharedPreferences.getString(ConstantProvider.SP_USER_TYPE, null));
+
+            spinAccType.setEnabled(false);
+
+        } else {
+
+            accTypes.add(getString(R.string.acc_type_initiator));
+            accTypes.add(getString(R.string.acc_type_investor));
+
         }
-
-    }
-
-    private void init() {
-        accTypes = new ArrayList<>();
-        sCountries = new ArrayList<>();
-        sCities = new ArrayList<>();
-
-        accTypes.add(getString(R.string.acc_type_initiator));
-        accTypes.add(getString(R.string.acc_type_investor));
 
         spinAccTypeAdapter = new ArrayAdapter<>(this,
                 R.layout.node_spin_reg, accTypes);
         spinAccTypeAdapter.setDropDownViewResource(R.layout.node_spin_reg);
         spinAccType.setAdapter(spinAccTypeAdapter);
-
-        sCountries.add("Country");
-
-        spinCountryAdapter = new ArrayAdapter<>(this,
-                R.layout.node_spin_reg, sCountries);
-        spinCountryAdapter.setDropDownViewResource(R.layout.node_spin_reg);
-        spinCountry.setAdapter(spinCountryAdapter);
-
-        sCities.add("City");
-
-        spinCityAdapter = new ArrayAdapter<>(this,
-                R.layout.node_spin_reg, sCities);
-        spinCityAdapter.setDropDownViewResource(R.layout.node_spin_reg);
-        spinCity.setAdapter(spinCityAdapter);
-
-        spinAccType.setOnItemSelectedListener(this);
-        spinCountry.setOnItemSelectedListener(this);
-        spinCity.setOnItemSelectedListener(this);
     }
 
     @Override

@@ -95,15 +95,16 @@ public class OtherReportFragment extends BaseFragment<OtherReportFragmentContrac
     public void onIssueSubmittedEvent(IssueSubmittedEvent event) {
 
         ProgressDialogHelper.hideProgress();
-        if (event.isSubmitted)
-//            EventBus.getDefault().post(new ReturnToHomeEvent());
-            getActivity().onBackPressed();
+        if (event.isSubmitted) {
+
+            EventBus.getDefault().post(new ReturnToHomeEvent());
+
+        }
     }
 
     @OnClick({R.id.report_submit, R.id.report_cancel})
     public void onViewClicked(View view) {
 
-        ProgressDialogHelper.init(getActivity()).showProgress();
         ViewUtils.hideKeyboard(getActivity());
 
         switch (view.getId()) {
@@ -111,7 +112,10 @@ public class OtherReportFragment extends BaseFragment<OtherReportFragmentContrac
                 String issue = addReport.getText().toString().trim();
 
                 if (!issue.isEmpty()) {
+
+                    ProgressDialogHelper.init(getActivity()).showProgress();
                     presenter.sendIssue(activityContext, issueCode, issue);
+
                 } else {
                     showMessage("Field can not be empty");
                 }

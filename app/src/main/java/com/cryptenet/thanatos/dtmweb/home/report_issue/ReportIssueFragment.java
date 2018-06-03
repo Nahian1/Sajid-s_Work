@@ -106,11 +106,14 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
                 });
 
         expandableListView.setOnChildClickListener((listview, view, groupPos, childPos, id) -> {
+
+//            getActivity().onBackPressed();
+
             EventBus.getDefault().post(new IssueTopicChosenEvent(
                     issueParents.get(groupPos).getTopics().get(childPos).getId()
             ));
 
-            getActivity().onBackPressed();
+//            getActivity().onBackPressed();
 //            Toast.makeText(
 //                    activityContext,
 //                    "You clicked : " + issueParents.get(groupPos).getTopics().get(childPos).getName(),
@@ -155,18 +158,12 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
         presenter.getAllIssues(activityContext);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
-    }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
     }
 
     @Override

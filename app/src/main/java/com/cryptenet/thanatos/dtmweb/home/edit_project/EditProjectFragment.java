@@ -29,9 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
@@ -145,7 +142,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         spinnerProjectCategory.setAdapter(spinCatAdapter);
 
         spinnerProjectCategory.setOnItemSelectedListener(this);
-//        return binding.getRoot();
 
         return view;
     }
@@ -204,7 +200,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                         token.continuePermissionRequest();
                     }
                 }).check();
-        EventBus.getDefault().post(new ReturnToHomeEvent());
     }
 
     @OnClick(R.id.buttonUploadImage)
@@ -243,7 +238,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         else
             showMessage("Added.");
 
-        getActivity().onBackPressed();
+        getFragmentManager().popBackStackImmediate();
     }
 
     @Override
@@ -294,17 +289,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
