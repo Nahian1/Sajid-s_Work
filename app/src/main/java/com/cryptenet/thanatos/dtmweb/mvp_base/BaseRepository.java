@@ -13,12 +13,8 @@ import com.cryptenet.thanatos.dtmweb.http.ApiClient;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.BaseContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -29,19 +25,18 @@ public abstract class BaseRepository implements BaseContract.Repository {
     protected SharedPreferences preferences;
 
     public BaseRepository() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient httpClient = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .connectTimeout(180, TimeUnit.SECONDS)
-                .readTimeout(180, TimeUnit.SECONDS)
-                .writeTimeout(180, TimeUnit.SECONDS)
-                .build();
+//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        OkHttpClient httpClient = new OkHttpClient.Builder()
+//                .addInterceptor(interceptor)
+//                .connectTimeout(180, TimeUnit.SECONDS)
+//                .readTimeout(180, TimeUnit.SECONDS)
+//                .writeTimeout(180, TimeUnit.SECONDS)
+//                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstantProvider.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient)
                 .build();
 
         apiClient = retrofit.create(ApiClient.class);
