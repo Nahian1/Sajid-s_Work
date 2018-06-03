@@ -1,49 +1,48 @@
-/*
- * Copyright (c) 2018.
- *  Development Courtesy: Cryptenet Ltd.
- *  Developer Credit: Alamgir Hossain, Nabil Shawkat
- *  This project is under MIT license
- */
+package com.cryptenet.thanatos.dtmweb.http;
 
-package com.cryptenet.thanatos.dtmweb.mvp_base;
-
-import android.content.SharedPreferences;
-
-import com.cryptenet.thanatos.dtmweb.http.ApiClient;
-import com.cryptenet.thanatos.dtmweb.mvp_contracts.BaseFragContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
+import com.google.android.gms.common.api.Api;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-public class BaseFragRepository implements BaseFragContract.Repository {
-    protected ApiClient apiClient;
+/**
+ * Created by Ashif on 10/26/17.
+ * this class will be used when its needed outside of
+ * dependency injection
+ */
 
-    @Inject
-    protected SharedPreferences preferences;
-
-    public BaseFragRepository() {
-//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        OkHttpClient httpClient = new OkHttpClient.Builder()
-//                .addInterceptor(interceptor)
-//                .connectTimeout(180, TimeUnit.SECONDS)
-//                .readTimeout(180, TimeUnit.SECONDS)
-//                .writeTimeout(180, TimeUnit.SECONDS)
-//                .build();
+public class RetrofitServiceFactory {
+    /**
+     * Creates a retrofit service from an arbitrary class (clazz)
+     *
+     * @return retrofit service with defined endpoint/base-url
+     */
+    public static ApiClient createRetrofitService() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstantProvider.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(new ToStringConverterFactory())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(getOkHttpClient())
                 .build();
 
-        apiClient = retrofit.create(ApiClient.class);
+        return retrofit.create(ApiClient.class);
     }
 
     private static OkHttpClient getOkHttpClient() {
@@ -53,7 +52,7 @@ public class BaseFragRepository implements BaseFragContract.Repository {
             Request original = chain.request();
 
             Request request = original.newBuilder()
-                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Content-Type", "application/json" )
                     .method(original.method(), original.body())
                     .build();
 
@@ -61,9 +60,8 @@ public class BaseFragRepository implements BaseFragContract.Repository {
 
         });
 
-        httpClient.readTimeout(100, TimeUnit.SECONDS)
-                .connectTimeout(100, TimeUnit.SECONDS)
-                .writeTimeout(100, TimeUnit.SECONDS)
+        httpClient.readTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(mLoggingInterceptor);
 
 
@@ -81,6 +79,4 @@ public class BaseFragRepository implements BaseFragContract.Repository {
 
         return response;
     };
-
-
 }

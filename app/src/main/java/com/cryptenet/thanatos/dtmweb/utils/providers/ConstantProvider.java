@@ -38,4 +38,15 @@ public class ConstantProvider {
 
     public static final String SP_FORGOT_PASSWORD_EMAIL = "forgot_pass";
     public static final String SP_FORGOT_PASSWORD_CODE = "forgot_pass_code";
+
+    //registration code == 1
+    //edit profile code == 2
+    //create plan code == 3
+    //edit plan code == 4
+
+    public static final String REQ_TYPE_REG_USER = "1";
+    public static final String REQ_TYPE_EDIT_PROFILE = "2";
+    public static final String REQ_TYPE_CREATE_PLAN = "3";
+    public static final String REQ_TYPE_EDIT_PLAN = "4";
+
 }

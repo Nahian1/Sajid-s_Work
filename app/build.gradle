@@ -61,9 +61,12 @@ ext {
     gson = '2.8.4'
     retrofit = '2.4.0'
     ok_http = '3.10.0'
+    timber = '4.5.1'
     event_bus = '3.1.1'
     circle_iv = '2.2.0'
     glide = '4.7.1'
+    rxJavaVersion = '1.1.6'
+    rxAndroidVersion = '1.2.1'
 }
 
 dependencies {
@@ -100,9 +103,19 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
 
+    implementation "io.reactivex:rxjava:$rxJavaVersion"
+    implementation "io.reactivex:rxandroid:$rxAndroidVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit"
+
     //OkHttp3
     implementation "com.squareup.okhttp3:okhttp:$ok_http"
     implementation "com.squareup.okhttp3:logging-interceptor:${ok_http}"
+
+    //timber
+    implementation "com.jakewharton.timber:timber:$timber"
+
+    //circular iv
+    implementation "de.hdodenhof:circleimageview:$circle_iv"
 
     //event bus
     implementation "org.greenrobot:eventbus:$event_bus"

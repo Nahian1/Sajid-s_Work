@@ -7,6 +7,8 @@ import com.cryptenet.thanatos.dtmweb.events.EditPlanSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
@@ -22,7 +24,7 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
         ApiUtil util = new ApiUtil("https://fa-sa-801-dev.herokuapp.com/");
         String response = null;
 
-        if (objects[0].equals("1")) {
+        if (objects[0].equals(ConstantProvider.REQ_TYPE_REG_USER)) {
             //registration
 
             response = util.createUser(
@@ -43,9 +45,9 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
             RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
             EventBus.getDefault().post(new RegistrationSuccessEvent(registrationResponse));
 
-        } else if (objects[0].equals("2")) {
+        } else if (objects[0].equals(ConstantProvider.REQ_TYPE_EDIT_PROFILE)) {
             //edit or update user
-
+            Log.d(TAG, "enters here to update profile");
             response = util.editUser(
                     (String) objects[1],    //user id
                     (String) objects[2],    //name
@@ -62,11 +64,13 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
                     (String) objects[13]    //accessToken = "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
             );
 
-            Gson gson = new Gson();
-            RegistrationResponse registrationResponse = gson.fromJson(response, RegistrationResponse.class);
-            EventBus.getDefault().post(new RegistrationSuccessEvent(registrationResponse));
 
-        } else if (objects[0].equals("3")) {
+            Gson gson = new Gson();
+            UpdateProfileResponse updateProfileResponse = gson.fromJson(response, UpdateProfileResponse.class);
+            Log.d(TAG, "update response: " + updateProfileResponse.toString());
+            //EventBus.getDefault().post(new RegistrationSuccessEvent(registrationResponse));
+
+        } else if (objects[0].equals(ConstantProvider.REQ_TYPE_CREATE_PLAN)) {
             //add plan
 
             response = util.addPlan(
@@ -86,7 +90,7 @@ public class PostAsync extends AsyncTask<Object, Void, String> {
             ProjectsRsp projectsRsp = gson.fromJson(response, ProjectsRsp.class);
             EventBus.getDefault().post(new EditPlanSuccessEvent(projectsRsp));
 
-        } else if (objects[0].equals("4")) {
+        } else if (objects[0].equals(ConstantProvider.REQ_TYPE_EDIT_PLAN)) {
             //edit or update plan
 
             response = util.editPlan(

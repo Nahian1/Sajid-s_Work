@@ -125,6 +125,7 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
         Glide.with(activityContext)
                 .load(projectData.getInitiatorImage())
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
+                .apply(RequestOptions.circleCropTransform())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(profilepic);
 
