@@ -7,6 +7,9 @@
 
 package com.cryptenet.thanatos.dtmweb.home;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -193,11 +196,17 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     }
 
     @OnClick(R.id.language)
-    public void language() {
-        if (PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.LOCALE, null) == "en")
+    public void language(View view) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.getString(ConstantProvider.LOCALE, null).equals("en")) {
             LocaleHelper.setNewLocale(this, "ar");
-        else
+            preferences.edit().putString(ConstantProvider.LOCALE, "ar").apply();
+        } else {
             LocaleHelper.setNewLocale(this, "en");
+            preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
+        }
+        finish();
+        startActivity(new Intent(HomeActivity.this, HomeActivity.class));
     }
 
     @OnClick(R.id.project)
@@ -310,8 +319,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putInt("type", event.layoutType);
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
-
-
     }
 
 
@@ -449,5 +456,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
             super.onBackPressed();
     }
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.LOCALE, "en");
+        super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
+    }
 }

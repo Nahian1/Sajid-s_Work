@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.launcher;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -59,29 +60,27 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     TextView tvForgotPwd;
 
     ProgressDialog progressDialog;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (preferences.getString(ConstantProvider.SP_NAME, null) != null) {
-
             navigator.toHomeActivity(this, null);
-
             finish();
         }
 
         String lang = preferences.getString(ConstantProvider.LOCALE, null);
 
         if (lang == null) {
-
             LocaleHelper.setNewLocale(this, "en");
-
             preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
-
+        } else {
+            LocaleHelper.setNewLocale(this, lang);
         }
 
         viewUnbinder = ButterKnife.bind(this);
@@ -119,41 +118,41 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
                 ViewUtils.hideKeyboard(this);
 
                 //for debug only
-//                String email = etEmail.getText().toString().trim();
-//
-//                if (email.equals("1")) {
-//
-//                    progressDialog = ViewUtils.showProgress(this);
-//                    progressDialog.show();
-//
-//                    presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
-//
-//                } else if (email.equals("2")) {
-//
-//                    presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
-//
-//                } else {
-//                    showMessage("Give a type!");
-//                }
+                String email = etEmail.getText().toString().trim();
+
+                if (email.equals("1")) {
+
+                    progressDialog = ViewUtils.showProgress(this);
+                    progressDialog.show();
+
+                    presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
+
+                } else if (email.equals("2")) {
+
+                    presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
+
+                } else {
+                    showMessage("Give a type!");
+                }
 
 //                presenter.requestForLogin("azam@gmail.com","asdasd123");
 
                 //original code commented out for debug purpose
-                String email = etEmail.getText().toString().trim();
-                String password = etPwd.getText().toString().trim();
-
-                if (!email.isEmpty()) {
-                    if (!password.isEmpty()) {
-                        presenter.requestForLogin(
-                                etEmail.getText().toString().trim(),
-                                etPwd.getText().toString().trim()
-                        );
-                    } else {
-                        showMessage("Password can not be empty!");
-                    }
-                } else {
-                    showMessage("Email can not be empty!");
-                }
+//                String email = etEmail.getText().toString().trim();
+//                String password = etPwd.getText().toString().trim();
+//
+//                if (!email.isEmpty()) {
+//                    if (!password.isEmpty()) {
+//                        presenter.requestForLogin(
+//                                etEmail.getText().toString().trim(),
+//                                etPwd.getText().toString().trim()
+//                        );
+//                    } else {
+//                        showMessage("Password can not be empty!");
+//                    }
+//                } else {
+//                    showMessage("Email can not be empty!");
+//                }
 
                 break;
             case R.id.tv_sign_up:
@@ -169,7 +168,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
 
-//        progressDialog.dismiss();
+        progressDialog.dismiss();
 
         if (event.isSuccess) {
             AsyncTask.execute(() -> {
@@ -178,7 +177,6 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
                     if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))) {
                         navigator.toHomeActivity(LoginActivity.this, event.string);
                         finish();
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -206,4 +204,11 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.LOCALE, "en");
+        super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
+    }
+
 }
