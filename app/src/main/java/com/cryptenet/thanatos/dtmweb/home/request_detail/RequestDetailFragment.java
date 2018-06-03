@@ -36,6 +36,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -126,7 +127,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRequestDataReceiveEvent(RequestDataReceiveEvent event) {
 
         ProgressDialogHelper.hideProgress();

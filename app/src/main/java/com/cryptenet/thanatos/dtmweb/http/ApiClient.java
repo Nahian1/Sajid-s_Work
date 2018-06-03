@@ -13,6 +13,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -77,6 +78,9 @@ public interface ApiClient {
 
     @GET("/api/v1/plan-access/{id}")
     Call<TransactionDetails> getTransactionDetails(@Header("Authorization") String token, @Path("id") int transactionId);
+
+    @GET("/api/v1/user/{id}")
+    Call<User> getUserData(@Header("Authorization") String token, @Path("id") int transactionId);
 
 //    @FormUrlEncoded
 //    @POST("/api/v1/plan-access/")
