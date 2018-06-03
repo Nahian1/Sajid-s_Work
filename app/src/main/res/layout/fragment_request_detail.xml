@@ -59,7 +59,6 @@
                     android:textColor="#939393"
                     android:textSize="12sp" />
 
-
             </RelativeLayout>
 
             <ImageView
@@ -67,60 +66,65 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/lineoflist" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/profilepic"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/textViewName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/profilepic"
+                    android:text=""
+                    android:textColor="#535353"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textViewType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textViewName"
+                    android:layout_below="@+id/textViewName"
+                    android:text=""
+                    android:textColor="#535353"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textViewType"
+                    android:layout_below="@+id/textViewType"
+                    android:text=""
+                    android:textColor="#535353"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <!-- Payment Details -->
             <LinearLayout
+                android:id="@+id/layoutBankSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
-
-                    <ImageView
-                        android:id="@+id/profilepic"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:scaleType="centerCrop" />
-
-                    <TextView
-                        android:id="@+id/textViewName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_toEndOf="@+id/profilepic"
-                        android:text=""
-                        android:textColor="#535353"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/textViewType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@+id/textViewName"
-                        android:layout_below="@+id/textViewName"
-                        android:text=""
-                        android:textColor="#535353"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignStart="@+id/textViewType"
-                        android:layout_below="@+id/textViewType"
-                        android:text=""
-                        android:textColor="#535353"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <!-- Payment Details -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -265,29 +269,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/lineoflist" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Note:" />
-
-                <ImageView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/lineoflist" />
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/noteTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Note:" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/lineoflist" />
+
+                    <TextView
+                        android:id="@+id/noteTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <Button
@@ -299,8 +304,12 @@
                 android:layout_marginTop="50dp"
                 android:background="@drawable/btn_shape_blue"
                 android:text="@string/btn_confirm_req"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorPrimaryDark"
+                android:visibility="gone" />
+
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>
 

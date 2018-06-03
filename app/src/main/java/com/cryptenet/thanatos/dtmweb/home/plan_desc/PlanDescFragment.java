@@ -222,21 +222,6 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
-    }
 
     @Override
     public void onResume() {
@@ -260,8 +245,16 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
     public void onStop() {
         presenter.detachView();
+        EventBus.getDefault().unregister(this);
 
         super.onStop();
     }

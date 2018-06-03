@@ -16,7 +16,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.BackToManageRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDataReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -81,6 +84,11 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
     TextView transactionId;
     @BindView(R.id.noteTV)
     TextView noteTV;
+    @BindView(R.id.layoutBankSection)
+    LinearLayout layoutBankSection;
+    @BindView(R.id.btn_confirm)
+    Button btnConfirm;
+
     Unbinder unbinder;
     private int transId;
     private int userType;
@@ -96,9 +104,10 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_request_detail, container, false);
 
+        unbinder = ButterKnife.bind(this, convertView);
+
         transId = getArguments().getInt("transaction_id");
         userType = (getArguments().getString("user_type")).equals("Investor") ? 1 : 2;
-        unbinder = ButterKnife.bind(this, convertView);
         return convertView;
     }
 
@@ -119,6 +128,11 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
 
     @Subscribe
     public void onRequestDataReceiveEvent(RequestDataReceiveEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        layoutBankSection.setVisibility(View.VISIBLE);
+
         textViewTitle.setText(event.details.getPlanTitle());
 
         price.setText(String.valueOf(event.details.getPlanAccessPrice()));
@@ -144,7 +158,8 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
         noteTV.setText(event.details.getNote());
 
 
-        if (event.user == null) {
+        if (userType == 1) {
+
             Glide.with(activityContext)
                     .load(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_PICTURE_URL, null))
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
@@ -155,7 +170,11 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
             textViewName.setText(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_NAME, null));
             textViewType.setText(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_USER_TYPE, null));
             address.setText(PreferenceManager.getDefaultSharedPreferences(activityContext).getString(ConstantProvider.SP_ADDRESS, null));
+
         } else {
+
+            btnConfirm.setVisibility(View.VISIBLE);
+
             Glide.with(activityContext)
                     .load(event.user.getPicture())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
@@ -173,6 +192,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
     public void onRequestConfirmed(View view) {
         presenter.confirmRequest(activityContext, transId);
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Subscribe
     public void onBackToManageRequestEvent(BackToManageRequestEvent event) {
@@ -184,6 +204,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
         super.onResume();
         presenter.attachView(this);
 
+        ProgressDialogHelper.init(getActivity()).showProgress();
         presenter.getTransactionDetails(activityContext, transId, userType);
     }
 
