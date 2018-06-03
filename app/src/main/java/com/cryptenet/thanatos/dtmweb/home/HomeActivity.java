@@ -7,7 +7,6 @@
 
 package com.cryptenet.thanatos.dtmweb.home;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,7 +50,6 @@ import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.home.request_detail.RequestDetailFragment;
-import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
@@ -122,7 +120,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @BindView(R.id.buttonSearch)
     ImageView buttonSearch;
 
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,51 +130,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         setSupportActionBar(toolbar);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        String access_token = sharedPreferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null);
-        //int country = sharedPreferences.getInt(ConstantProvider.SP_COUNTRY, -1);
-        //int city = sharedPreferences.getInt(ConstantProvider.SP_CITY, -1);
-
-        //Log.d("data", access_token + " " + country + " " + city);
-
-        //presenter.getNavHeaderData();
-
-//        setUpNavigation();
-
-
-//        Intent intent = getIntent();
-//        String s = intent.getStringExtra("user");
-//        User user = null;
-//        if (s != null) {
-//            Gson gson = new Gson();
-//            user = gson.fromJson(s, User.class);
-//        }
-
-//        if (savedInstanceState == null) {
         PlanListFragment fragment = new PlanListFragment();
 
         addFragment(R.id.frame_container, fragment);
-//        }
-
-        Intent intent = getIntent();
-        String s = intent.getStringExtra("user");
-        User user = null;
-        if (s != null) {
-            Gson gson = new Gson();
-            user = gson.fromJson(s, User.class);
-        }
-
-
-        if (savedInstanceState == null) {
-            PlanListFragment fragmentPlancList = new PlanListFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("token", access_token);
-            Log.d(TAG, "sending tk: " + access_token);
-            fragmentPlancList.setArguments(bundle);
-            addFragment(R.id.frame_container, fragmentPlancList);
-        }
-
 
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -187,8 +142,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-//                EventBus.getDefault().post(new SearchEvent(charSequence.toString().trim()));
 
             }
 

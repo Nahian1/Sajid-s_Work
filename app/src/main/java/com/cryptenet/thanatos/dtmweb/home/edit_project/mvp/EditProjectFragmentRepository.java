@@ -14,6 +14,7 @@ import android.util.Log;
 import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.EditPlanSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.http.ApiClient;
 import com.cryptenet.thanatos.dtmweb.http.RetrofitServiceFactory;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
@@ -70,11 +71,8 @@ public class EditProjectFragmentRepository extends BaseFragRepository
     @Override
     public void saveUpdatePlan(ProjectsRq plan, Context context, int id) {
         if (plan.isNew()) {
-            ProgressBarHandler progressBarHandler = new ProgressBarHandler(context);
-            progressBarHandler.showProgress();
 
             String access_token = "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
-
 
             String title = plan.getTitle();
             String category = String.valueOf(plan.getCategory());
@@ -105,18 +103,20 @@ public class EditProjectFragmentRepository extends BaseFragRepository
                     .subscribe(new Observer<ProjectsRsp>() {
                         @Override
                         public void onCompleted() {
-                            progressBarHandler.hideProgress();
+
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            progressBarHandler.hideProgress();
                             e.printStackTrace();
                         }
 
                         @Override
                         public void onNext(ProjectsRsp projectsRsp) {
-                            Log.d(TAG, "add plan rsp: " + projectsRsp.toString());
+//                            Log.d(TAG, "add plan rsp: " + projectsRsp.toString());
+
+                            EventBus.getDefault().post(new EditPlanSuccessEvent(projectsRsp));
+
                         }
                     });
 

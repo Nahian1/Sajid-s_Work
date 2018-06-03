@@ -130,8 +130,6 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     @BindView(R.id.tv_sign_in)
     TextView tvSignIn;
 
-    private Bitmap proPicBitmap;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,7 +179,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             if (imageUrl != null) {
                 Glide.with(this)
                         .load(imageUrl)
-                        .apply(RequestOptions.placeholderOf(R.drawable.ic_pp_dummy))
+                        .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_white))
                         .apply(RequestOptions.circleCropTransform())
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(ivPp);
@@ -194,8 +192,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             etBankAccNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NAME, null));
             etBankAccNumberReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NO, null));
 
-            accTypes.add(sharedPreferences.getString(ConstantProvider.SP_USER_TYPE, null));
-
+            accType = sharedPreferences.getString(ConstantProvider.SP_USER_TYPE, null);
+            accTypes.add(accType);
             spinAccType.setEnabled(false);
 
         } else {
@@ -321,8 +319,10 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
         if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
                 && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
-            if (ViewUtils.isValidEmail(email)) {
+            if ((Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
                 if (pwd.equals(cPwd)) {
+
+                    ProgressDialogHelper.init(this).showProgress();
 
                     presenter.carryUpdateProfileData(this, ConstantProvider.REQ_TYPE_EDIT_PROFILE, imageFile, accType,
                             name, email, pwd, address, countryCode, cityCode,
@@ -431,6 +431,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdateProfileSuccessEvent(UpdateProfileSuccessEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
         presenter.saveUpdatedUserData(event.updateProfileResponse);
         showMessage("Your profile updated!");
         finish();
@@ -438,6 +441,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdateProfileFailureEvent(UpdateProfileFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
 
         if (event.isFailure) {
             showMessage("Please try again!");

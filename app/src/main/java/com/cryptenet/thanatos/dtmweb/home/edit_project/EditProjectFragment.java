@@ -40,6 +40,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.Categories;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
@@ -165,7 +166,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     @OnClick(R.id.btn_done)
     public void savePlan(View view) {
 
-        ViewUtils.hideKeyboard(getActivity());
+        ProgressDialogHelper.init(getActivity()).showProgress();
 
         if (project.isEditMode()) {
             // do when plan edit
@@ -173,7 +174,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
             processAddNewPlanInputData();
         }
 
-        //EventBus.getDefault().post(new ReturnToHomeEvent());
     }
 
     // add new plan input processing
@@ -291,6 +291,8 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     @Subscribe
     public void onEditPlanSuccessEvent(EditPlanSuccessEvent event) {
 
+        ProgressDialogHelper.hideProgress();
+
         if (project.isEditMode())
             showMessage("Updated.");
         else
@@ -303,22 +305,28 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String realPath = null;
-        Bitmap selectedImage;
+//        String realPath = null;
+//        Bitmap selectedImage;
 
         if (resultCode == RESULT_OK) {
             if (requestCode == ConstantProvider.RESULT_LOAD_IMG) {
-                try {
-                    final Uri imageUri = data.getData();
-                    realPath = ImageFilePath.getPath(activityContext, data.getData());
-                    assert imageUri != null;
-                    final InputStream imageStream = activityContext.getContentResolver().openInputStream(imageUri);
-                    selectedImage = BitmapFactory.decodeStream(imageStream);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+//                try {
 
-                imageFile = new File(realPath);
+                final Uri imageUri = data.getData();
+
+                showMessage(imageUri.getPath() + " added.");
+
+//                    realPath = ImageFilePath.getPath(activityContext, data.getData());
+
+                imageFile = new File(imageUri.getPath());
+
+//                    assert imageUri != null;
+//                    final InputStream imageStream = activityContext.getContentResolver().openInputStream(imageUri);
+//                    selectedImage = BitmapFactory.decodeStream(imageStream);
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+
 
             } else if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
 
@@ -329,6 +337,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
                 // Alternatively, use FileUtils.getFile(Context, Uri)
                 if (path != null && FileUtils.isLocal(path)) {
+                    showMessage(path + " added.");
                     planFile = new File(path);
                 }
             }

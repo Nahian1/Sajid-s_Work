@@ -53,10 +53,9 @@ public class RegistrationActivityModel extends BaseModel<RegistrationActivityCon
                 bankName, bankAccName, bankAccNumber
         );
 
-                return repository.attemptReg(input);
-        }
         return repository.attemptReg(reqType, input);
     }
+
 
     @Override
     public boolean attemptUpdateProfile(Context context, String reqType, File imageFile, String accType, String name, String email,
