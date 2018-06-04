@@ -126,4 +126,5 @@
     <string name="no_man_projects">You have no approved plans!!</string>
     <string name="no_man_requests">You have no requests yet!!</string>
     <string name="no_search_result">No matching plans found!!</string>
+    <string name="no_threads_found">No threads found</string>
 </resources>

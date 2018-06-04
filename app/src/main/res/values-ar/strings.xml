@@ -97,4 +97,5 @@
     <string name="no_man_projects">ليس لديك خطط معتمدة !!</string>
     <string name="no_man_requests">لا يوجد لديك طلبات حتى الآن !!</string>
     <string name="no_search_result">لم يتم العثور على خطط مطابقة !!</string>
+    <string name="no_threads_found">لم يتم العثور على خيوط</string>
 </resources>
