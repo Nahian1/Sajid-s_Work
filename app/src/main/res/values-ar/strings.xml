@@ -58,7 +58,6 @@
     <string name="short_desc">وصف قصير للمشروع</string>
     <string name="long_desc">وصف مفصل للمشروع</string>
     <string name="access_price">سعر الطلب للوصول للمشروع</string>
-    <string name="upload_file">تحميل ملفات</string>
     <string name="upload_cover">تحميل غطاء المشروع</string>
     <string name="hint_et_note">ملاحظة</string>
     <string name="view_file">استعراض الملف</string>
@@ -83,9 +82,21 @@
     <string name="price">السعر:</string>
     <string name="submitted">قدمت!</string>
     <string name="approved">وافق</string>
+    <string name="upload_file">رفع ملف</string>
+    <string name="update_file">ملف التحديث</string>
+    <string name="update_cover">تحديث تغطية المشروع</string>
+    <string name="plan_desc">وصف الخطة</string>
+    <string name="edit_plan">تحرير الخطة</string>
+    <string name="req_details">طلب التفاصيل</string>
+    <string name="submit_issue">تقديم القضية</string>
+    <string name="report_issue">قضية تقرير</string>
+    <string name="thread_list">قائمة الموضوع</string>
+    <string name="trans_summary">ملخص المعاملات</string>
+    <string name="thread_msg">رسالة الموضوع</string>
     <string name="no_all_plans">لا توجد خطط لإظهار!</string>
     <string name="no_man_projects">ليس لديك خطط معتمدة !!</string>
     <string name="no_man_requests">لا يوجد لديك طلبات حتى الآن !!</string>
     <string name="no_search_result">لم يتم العثور على خطط مطابقة !!</string>
     <string name="none">لا شيء</string>
+    <string name="no_threads_found">لم يتم العثور على خيوط</string>
 </resources>

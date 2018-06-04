@@ -108,7 +108,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_desc, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(true);
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.plan_desc));
 
         projectId = getArguments().getInt("project_id");
         type = getArguments().getInt("type");

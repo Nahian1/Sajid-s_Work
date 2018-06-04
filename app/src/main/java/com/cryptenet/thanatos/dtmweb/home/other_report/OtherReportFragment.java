@@ -69,8 +69,7 @@ public class OtherReportFragment extends BaseFragment<OtherReportFragmentContrac
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_other_issue, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(true);
-
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.submit_issue));
 
         issueCode = getArguments().getInt("issue_code");
         ButterKnife.bind(this, convertView);

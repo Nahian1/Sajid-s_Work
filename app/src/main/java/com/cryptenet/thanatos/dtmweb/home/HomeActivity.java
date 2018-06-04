@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -124,6 +125,10 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     EditText editTextSearch;
     @BindView(R.id.buttonSearch)
     ImageView buttonSearch;
+    @BindView(R.id.layoutSearch)
+    RelativeLayout layoutSearch;
+    @BindView(R.id.textToolBarTitle)
+    TextView textToolBarTitle;
 
 
     @Override
@@ -300,16 +305,22 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         finish();
     }
 
-
     public void hideSearchBar(boolean shouldHideSearchBar) {
 
         if (shouldHideSearchBar) {
-            editTextSearch.setVisibility(View.GONE);
-            buttonSearch.setVisibility(View.GONE);
+            layoutSearch.setVisibility(View.GONE);
+            textToolBarTitle.setVisibility(View.VISIBLE);
         } else {
-            editTextSearch.setVisibility(View.VISIBLE);
-            buttonSearch.setVisibility(View.VISIBLE);
+            layoutSearch.setVisibility(View.VISIBLE);
+            textToolBarTitle.setVisibility(View.GONE);
+
         }
+    }
+
+    public void setToolBarTitle(String title) {
+
+        hideSearchBar(true);
+        textToolBarTitle.setText(title);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

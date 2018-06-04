@@ -77,8 +77,10 @@
     <string name="short_desc">Project Shot Description</string>
     <string name="long_desc">Project Detailed Description</string>
     <string name="access_price">Project Access Request Price</string>
-    <string name="upload_file">Upload files</string>
+    <string name="upload_file">Upload file</string>
+    <string name="update_file">Update file</string>
     <string name="upload_cover">Upload Project Cover</string>
+    <string name="update_cover">Update Project Cover</string>
 
     <string name="hint_et_note">Note</string>
     <string name="view_file">View File</string>
@@ -106,9 +108,17 @@
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="pending">Pending</string>
-    <string name="price">Price: </string>
+    <string name="price">Price:</string>
     <string name="submitted">Submitted!</string>
     <string name="approved">Approved</string>
+    <string name="plan_desc">Plan Description</string>
+    <string name="edit_plan">Edit Plan</string>
+    <string name="req_details">Details Request</string>
+    <string name="submit_issue">Submit Issue</string>
+    <string name="report_issue">Report Issue</string>
+    <string name="thread_list">Thread List</string>
+    <string name="trans_summary">Transaction Summary</string>
+    <string name="thread_msg">Thread Message</string>
 
 
     <string name="no_all_plans">There are no plans to show!!</string>
@@ -117,4 +127,5 @@
     <string name="no_man_requests">You have no requests yet!!</string>
     <string name="no_search_result">No matching plans found!!</string>
     <string name="none">None</string>
+    <string name="no_threads_found">No threads found</string>
 </resources>

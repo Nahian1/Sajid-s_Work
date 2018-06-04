@@ -12,13 +12,10 @@ package com.cryptenet.thanatos.dtmweb.home.edit_project;
 
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,13 +27,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.EditPlanSuccessEvent;
-import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
@@ -44,7 +41,6 @@ import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
-import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -97,6 +93,10 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     LinearLayout buttonUploadFile;
     @BindView(R.id.imageviewCover)
     ImageView imageviewCover;
+    @BindView(R.id.textUploadFile)
+    TextView textUploadFile;
+    @BindView(R.id.textUploadCover)
+    TextView textUploadCover;
 
     private ProjectsRsp project;
     private List<Categories> list;
@@ -116,17 +116,16 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_project, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(true);
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.edit_plan));
 
         unbinder = ButterKnife.bind(this, view);
-
-
-//        FragmentEditProjectBinding binding = DataBindingUtil.inflate(inflater,
-//                R.layout.fragment_edit_project, container, false);
 
         project = new Gson().fromJson(getArguments().getString("project"), ProjectsRsp.class);
 
         if (project.isEditMode()) {
+
+            textUploadFile.setText(activityContext.getString(R.string.update_file));
+            textUploadCover.setText(activityContext.getString(R.string.update_cover));
 
             editTextName.setText(project.getTitle());
             editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
@@ -379,6 +378,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         if (resultCode == RESULT_OK) {
             if (requestCode == ConstantProvider.RESULT_LOAD_IMG) {
+
+                textUploadCover.setText(activityContext.getString(R.string.update_cover));
+
                 try {
                     final Uri imageUri = data.getData();
                     showMessage(imageUri.getPath() + " added.");
@@ -394,6 +396,8 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                 imageFile = new File(realPath);
 
             } else if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
+
+                textUploadFile.setText(activityContext.getString(R.string.update_file));
 
                 final Uri uri = data.getData();
 

@@ -25,6 +25,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ThreadProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadProjectFragmentContract;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,6 +49,7 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
     private RecyclerView mRecyclerView;
     private InitiatorThreadAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
     public ThreadProjectFragment() {
         // Required empty public constructor
     }
@@ -59,7 +61,7 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_thread_project, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(true);
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.nav_conversation));
 
         // unbinder = ButterKnife.bind(this, convertView);
 
@@ -67,7 +69,6 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
 
 //        adapter = new ProjectAdapter(activityContext, ProjectListGenerator.generateProjects());
 //        projectLV.setAdapter(adapter);
-
 
 
         mRecyclerView = convertView.findViewById(R.id.recycler_view);
@@ -79,7 +80,10 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
     }
 
     @Subscribe
-    public void onThreadProjectListReceive(ThreadProjectListReceiveEvent event){
+    public void onThreadProjectListReceive(ThreadProjectListReceiveEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
         mAdapter = new InitiatorThreadAdapter(event.threadInvs);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -104,6 +108,8 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
     public void onResume() {
         super.onResume();
         presenter.attachView(this);
+
+        ProgressDialogHelper.init(getActivity()).showProgress();
 
         presenter.getInvestorThreads(planId, activityContext);
     }
