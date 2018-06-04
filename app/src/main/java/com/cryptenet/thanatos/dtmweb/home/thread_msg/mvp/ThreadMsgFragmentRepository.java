@@ -30,6 +30,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -92,7 +93,7 @@ public class ThreadMsgFragmentRepository extends BaseFragRepository
                     if (response.body().getResults().length > 0){
                         //Toast.makeText(context, " Plan founds", Toast.LENGTH_SHORT).show();
 //                        Results[] messageThreadModels  = response.body().getResults();
-                        List<Results> messageThreadModels  = Arrays.asList(response.body().getResults());
+                        List<Results> messageThreadModels  = new ArrayList<>(Arrays.asList(response.body().getResults()));
                         EventBus.getDefault().post(new MessageListReceivedEvent(messageThreadModels));
                     }else {
 

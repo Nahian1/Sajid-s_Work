@@ -36,8 +36,10 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
     private List<Results> messageThreadModels;
 
     public MessagingAdapter(List<Results> messageThreadModels) {
+        Collections.reverse(messageThreadModels);
         this.messageThreadModels = messageThreadModels;
-        Collections.reverse(this.messageThreadModels);
+//        this.messageThreadModels = messageThreadModels;
+//        Collections.reverse(this.messageThreadModels);
     }
 
     @NonNull
@@ -54,7 +56,8 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
 
     public void setData(List<Results> data) {
         this.messageThreadModels = data;
-        Collections.reverse(this.messageThreadModels);
+//        Collections.reverse(this.messageThreadModels);
+//        this.notifyDataSetChanged();
     }
 
     @Override

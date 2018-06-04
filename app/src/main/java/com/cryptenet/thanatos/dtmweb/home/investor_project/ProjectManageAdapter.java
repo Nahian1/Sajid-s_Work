@@ -36,8 +36,8 @@ import java.util.Locale;
 
 public class ProjectManageAdapter extends BaseAdapter implements Filterable {
     private Context context;
-    private List<Plans> projects = new ArrayList<>();
-    private List<Plans> filteredList = new ArrayList<>();
+    private List<Plans> projects;
+    private List<Plans> filteredList;
     private int count = 0;
     private int reqType;
     private InitiatorProjectFilter initiatorProjectFilter;
@@ -53,11 +53,13 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
     }
 
     public void updateList(List<Plans> projs) {
-        this.projects.clear();
-        this.filteredList.clear();
-        this.projects.addAll(projs);
-        this.filteredList.addAll(projs);
-        this.notifyDataSetChanged();
+//        this.projects.clear();
+//        this.filteredList.clear();
+//        this.projects.addAll(projs);
+//        this.filteredList.addAll(projs);
+        this.projects = projs;
+        this.filteredList = projs;
+        notifyDataSetChanged();
     }
 
 

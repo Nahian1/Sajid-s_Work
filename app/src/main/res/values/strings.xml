@@ -87,7 +87,7 @@
     <string name="hint_et_issue">Tell us about the issue …</string>
     <string name="tag_accepted">Accepted</string>
     <string name="tag_pending">Pending</string>
-    <string name="last_conversation">Last Conversation</string>
+    <string name="last_conversation">Last Conv: </string>
     <string name="investor_tag_line">I\'m interested to invest your plan</string>
     <string name="btn_confirm_req">Confirm Request</string>
 
@@ -106,7 +106,7 @@
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="pending">Pending</string>
-    <string name="price">Price:</string>
+    <string name="price">Price: </string>
     <string name="submitted">Submitted!</string>
     <string name="approved">Approved</string>
 
@@ -116,4 +116,5 @@
     <string name="no_man_projects">You have no approved plans!!</string>
     <string name="no_man_requests">You have no requests yet!!</string>
     <string name="no_search_result">No matching plans found!!</string>
+    <string name="none">None</string>
 </resources>

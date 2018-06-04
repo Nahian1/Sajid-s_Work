@@ -418,7 +418,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     public void onThreadIdReceiveEvent(ThreadIdReceiveEvent event) {
         ThreadMsgFragment fragment = new ThreadMsgFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("thread_init", event.threadInitResponse);
+        bundle.putInt("thread_id", event.threadInitResponse.getId());
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
 

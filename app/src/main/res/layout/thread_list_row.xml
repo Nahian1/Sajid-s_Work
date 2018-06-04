@@ -61,7 +61,7 @@
                     android:id="@+id/dateTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/investor_tag_line"
+                    android:text="@string/last_conversation"
                     android:textColor="#939393"
                     android:textSize="12sp" />
             </LinearLayout>

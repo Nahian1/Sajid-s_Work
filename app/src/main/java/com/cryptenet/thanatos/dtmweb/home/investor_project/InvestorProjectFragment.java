@@ -114,7 +114,9 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
         ProgressDialogHelper.hideProgress();
 
         this.projectsRspList = event.projectsRspList;
-        adapter.updateList(this.projectsRspList);
+
+        if (projectsRspList != null)
+            adapter.updateList(this.projectsRspList);
     }
 
     @Override
