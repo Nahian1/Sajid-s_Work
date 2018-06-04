@@ -69,9 +69,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class RegistrationActivity extends BaseActivity<RegistrationActivityContract.Presenter>
         implements RegistrationActivityContract.View, AdapterView.OnItemSelectedListener {
@@ -331,7 +328,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         String bankAccName = etBankAccNameReg.getText().toString().trim();
         String bankAccNum = etBankAccNumberReg.getText().toString().trim();
 
-        if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
+        if (!name.isEmpty() && !email.isEmpty() && !address.isEmpty()
                 && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
             if ((Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
                 if (pwd.equals(cPwd)) {
