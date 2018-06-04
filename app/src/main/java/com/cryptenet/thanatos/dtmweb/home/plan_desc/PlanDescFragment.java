@@ -119,7 +119,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     }
 
     @OnClick(R.id.buttonRequestDetails)
-    public void buttonRequestDetails() {
+    public void buttonRequestDetails(View view) {
 
         if (type >= 20) {
             showMessage("Log in as Investor!");
@@ -228,12 +228,10 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
                 presenter.getThreadId(activityContext, projectId);
                 break;
             case R.id.textViewFile:
-
                 if (fileUrl != null)
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(fileUrl)));
                 else
                     showMessage("Couldn't open file!");
-
                 break;
         }
     }

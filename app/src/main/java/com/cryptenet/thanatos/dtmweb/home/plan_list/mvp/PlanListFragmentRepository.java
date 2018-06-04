@@ -13,7 +13,9 @@ package com.cryptenet.thanatos.dtmweb.home.plan_list.mvp;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
@@ -82,13 +84,18 @@ public class PlanListFragmentRepository extends BaseFragRepository
         req.enqueue(new Callback<AllPlansResponse>() {
             @Override
             public void onResponse(Call<AllPlansResponse> call, retrofit2.Response<AllPlansResponse> response) {
-
-                AllPlansResponse allPlansResponse = response.body();
-                try {
-                    assert allPlansResponse != null;
-                    setProjects(allPlansResponse.getResults());
-                } catch (NullPointerException ex) {
-                    ex.printStackTrace();
+                if (response.isSuccessful()) {
+                    AllPlansResponse allPlansResponse = response.body();
+                    try {
+                        assert allPlansResponse != null;
+                        setProjects(allPlansResponse.getResults());
+                    } catch (NullPointerException ex) {
+                        ex.printStackTrace();
+                    }
+                    if (allPlansResponse.getResults().size() == 0)
+                        Toast.makeText(context, context.getString(R.string.no_all_plans), Toast.LENGTH_LONG).show();
+                } else {
+                    Log.d(TAG, "onResponse: " + response.code());
                 }
             }
 
@@ -108,9 +115,13 @@ public class PlanListFragmentRepository extends BaseFragRepository
             @Override
             public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
                 //you got your search result
-
-                EventBus.getDefault().post(new ProjectListReceiveEvent(response.body().getResults()));
-
+                if (response.isSuccessful()) {
+                    EventBus.getDefault().post(new ProjectListReceiveEvent(response.body().getResults()));
+                    if (response.body().getResults().size() == 0)
+                        Toast.makeText(context, context.getString(R.string.no_search_result), Toast.LENGTH_LONG).show();
+                } else {
+                    Log.d(TAG, "onResponse: " + response.code());
+                }
             }
 
             @Override

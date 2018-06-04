@@ -90,7 +90,6 @@
     <string name="last_conversation">Last Conversation</string>
     <string name="investor_tag_line">I\'m interested to invest your plan</string>
     <string name="btn_confirm_req">Confirm Request</string>
-    <string name="no_messages">No Messages</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
@@ -110,4 +109,11 @@
     <string name="price">Price:</string>
     <string name="submitted">Submitted!</string>
     <string name="approved">Approved</string>
+
+
+    <string name="no_all_plans">There are no plans to show!!</string>
+    <string name="no_messages">You have no messages yet!!</string>
+    <string name="no_man_projects">You have no approved plans!!</string>
+    <string name="no_man_requests">You have no requests yet!!</string>
+    <string name="no_search_result">No matching plans found!!</string>
 </resources>
