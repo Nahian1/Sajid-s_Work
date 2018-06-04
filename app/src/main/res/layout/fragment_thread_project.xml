@@ -13,13 +13,9 @@
     android:layout_height="match_parent"
     tools:context=".home.thread_project.ThreadProjectFragment">
 
-    <ListView
-        android:id="@+id/threadProjectListView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>
 

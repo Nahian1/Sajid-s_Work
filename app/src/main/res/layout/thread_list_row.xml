@@ -23,18 +23,18 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/iv_pp"
-                android:layout_width="60dp"
+                android:id="@+id/demoIV"
+                android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_profile_blue" />
+                app:srcCompat="@drawable/ic_image_placeholder" />
 
             <LinearLayout
                 android:id="@+id/right_layout"
                 android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/iv_pp"
+                android:layout_toEndOf="@+id/demoIV"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/titleTV"
@@ -51,8 +51,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/investor_tag_line"
-                    android:maxLines="1"
-                    android:ellipsize="end"
                     android:textColor="#939393"
                     android:textSize="12sp" />
 

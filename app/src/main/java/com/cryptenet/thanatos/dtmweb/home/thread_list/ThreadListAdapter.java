@@ -23,32 +23,36 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.events.InitiatorThreadsEvent;
+import com.cryptenet.thanatos.dtmweb.events.InvestorThreadsEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadIdentity;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class ThreadListAdapter extends ArrayAdapter<ThreadIdentity> {
     private Context context;
-    private List<ThreadIdentity> projects;
+    private List<ThreadIdentity> threadIdentities;
     private int count = 0;
+    private int reqType;
 //    private ItemClickListener itemClickListener;
 
-    public ThreadListAdapter(@NonNull Context context, List<ThreadIdentity> projects) {
-        super(context, R.layout.thread_project_list_row, projects);
+    public ThreadListAdapter(@NonNull Context context, List<ThreadIdentity> threadIdentities, int reqType) {
+        super(context, R.layout.thread_project_list_row, threadIdentities);
         this.context = context;
-        this.projects = projects;
+        this.threadIdentities = threadIdentities;
+        this.reqType = reqType;
 //        itemClickListener = (ItemClickListener) context;
     }
 
     public void updateList(List<ThreadIdentity> projs) {
-        this.projects.clear();
+        this.threadIdentities.clear();
         if (projs != null)
-            this.projects.addAll(projs);
+            this.threadIdentities.addAll(projs);
         this.notifyDataSetChanged();
     }
 
@@ -56,41 +60,55 @@ public class ThreadListAdapter extends ArrayAdapter<ThreadIdentity> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.thread_project_list_row, parent, false);
+        convertView = inflater.inflate(R.layout.thread_list_row, parent, false);
         ImageView projectIV = convertView.findViewById(R.id.demoIV);
         TextView titleTV = convertView.findViewById(R.id.titleTV);
-        TextView nameTV = convertView.findViewById(R.id.nameTV);
+        TextView nameTV = convertView.findViewById(R.id.tv_investor_name);
         TextView dateTV = convertView.findViewById(R.id.dateTV);
 
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        convertView.setOnClickListener(view -> {
 
 //                itemClickListener.onItemClick(position);
+            if (reqType == 1)
+                EventBus.getDefault().post(new InvestorThreadsEvent(threadIdentities.get(position).getId()));
+            else
+                EventBus.getDefault().post(new InitiatorThreadsEvent(threadIdentities.get(position).getPlan()));
 
-                EventBus.getDefault().post(new InitiatorThreadsEvent(projects.get(position).getId()));
-
-            }
         });
 //        ImageView seemoreIV = convertView.findViewById(R.id.seemoreImg);
 
         Glide.with(context)
-                .load(projects.get(position).getPlanCover())
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_grey))
+                .load(threadIdentities.get(position).getPlanCover())
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_image_placeholder))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(projectIV);
 
-        nameTV.setText(projects.get(position).getInitiatorName());
+        nameTV.setText(threadIdentities.get(position).getInitiatorName());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        String dateOutputPattern = "dd MMM yyyy";
+
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
 
         try {
-            dateTV.setText(dateFormat.format(dateFormat.parse(projects.get(position).getCreatedAt())));
+            Date date = inputDateFormat.parse(threadIdentities.get(position).getLastActive());
+            dateTV.setText(outputDateFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            dateTV.setText("");
         }
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+//
+//        try {
+//            dateTV.setText(dateFormat.format(dateFormat.parse(threadIdentities.get(position).getCreatedAt())));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
-        titleTV.setText(projects.get(position).getPlanTitle());
+        titleTV.setText(threadIdentities.get(position).getPlanTitle());
         count++;
         Log.e("student", "getView: " + count);
 

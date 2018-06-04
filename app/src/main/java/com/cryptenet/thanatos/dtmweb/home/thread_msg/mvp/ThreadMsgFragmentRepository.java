@@ -7,13 +7,140 @@
 
 package com.cryptenet.thanatos.dtmweb.home.thread_msg.mvp;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
+import com.cryptenet.thanatos.dtmweb.events.MessageListReceivedEvent;
+import com.cryptenet.thanatos.dtmweb.events.onMessageSentEvent;
+import com.cryptenet.thanatos.dtmweb.home.thread_msg.MessagingAdapter;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadMsgFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.message_model.MessageListModel;
+import com.cryptenet.thanatos.dtmweb.pojo.message_model.Results;
+import com.cryptenet.thanatos.dtmweb.pojo.message_model.SendMessageModel;
+import com.cryptenet.thanatos.dtmweb.pojo.message_model.ThreadRequestModel;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @PerFragment
 public class ThreadMsgFragmentRepository extends BaseFragRepository
         implements ThreadMsgFragmentContract.Repository {
     private static String TAG = TagProvider.getDebugTag(ThreadMsgFragmentRepository.class);
+
+    @Override
+    public int getThreadIdForInvestor(Context context, int threadID) {
+        Call<ThreadRequestModel> threadCall = apiClient.getThreadID(
+                "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
+                threadID
+        );
+
+        threadCall.enqueue(new Callback<ThreadRequestModel>() {
+            @Override
+            public void onResponse(Call<ThreadRequestModel> call, Response<ThreadRequestModel> response) {
+
+                // response.body().toString();
+
+                if (response.isSuccessful()){
+
+//                    threadID = response.body().getId();
+//                    getMessageList(threadID);
+//
+//                    Toast.makeText(context, "success", Toast.LENGTH_SHORT).show();
+
+                    getMessageList(context, Integer.parseInt(response.body().getId()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ThreadRequestModel> call, Throwable t) {
+                Toast.makeText(context, "error from threadid", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        return 0;
+    }
+
+    @Override
+    public void getMessageList(Context context, int threadID) {
+        Call<MessageListModel> threadCall = apiClient.getMessages(
+                "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
+                String.valueOf(threadID)
+        );
+
+        threadCall.enqueue(new Callback<MessageListModel>() {
+            @Override
+            public void onResponse(Call<MessageListModel> call, Response<MessageListModel> response) {
+                //  response.body().toString();
+
+                if (response.isSuccessful()){
+
+                    if (response.body().getResults().length > 0){
+                        //Toast.makeText(context, " Plan founds", Toast.LENGTH_SHORT).show();
+//                        Results[] messageThreadModels  = response.body().getResults();
+                        List<Results> messageThreadModels  = Arrays.asList(response.body().getResults());
+                        EventBus.getDefault().post(new MessageListReceivedEvent(messageThreadModels));
+                    }else {
+
+                        Toast.makeText(context, context.getString(R.string.no_messages), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessageListModel> call, Throwable t) {
+                Toast.makeText(context, "error from message list", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    @Override
+    public void setSendMessage(Context context, int threadID, String message) {
+        Call<SendMessageModel> threadCall = apiClient.sendMessage(
+                "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
+                String.valueOf(threadID),
+                message
+        );
+
+        threadCall.enqueue(new Callback<SendMessageModel>() {
+            @Override
+            public void onResponse(Call<SendMessageModel> call, Response<SendMessageModel> response) {
+                Results results = new Results();
+
+                results.setId(response.body().getId());
+                results.setThread(response.body().getThread());
+                results.setSender(response.body().getSender());
+                results.setReceiver(response.body().getReceiver());
+                results.setText(response.body().getText());
+                results.setCreated_at(response.body().getCreated_at());
+                results.setSender_name(response.body().getSender_name());
+                results.setSender_picture(response.body().getSender_picture());
+                results.setReceiver_name(response.body().getReceiver_name());
+                results.setReceiver_picture(response.body().getReceiver_picture());
+
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: " + "msg success");
+                    EventBus.getDefault().post(new onMessageSentEvent(results));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SendMessageModel> call, Throwable t) {
+                Log.d(TAG, "onResponse: " + "msg fail");
+            }
+        });
+    }
 }

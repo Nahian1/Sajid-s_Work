@@ -41,23 +41,49 @@ public class ThreadListFragmentRepository extends BaseFragRepository
 
     @Override
     public void getThreadList(Context context) {
+        if (PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_USER_TYPE, null).equals("Initiator")) {
+            Call<ThreadDistinctResponse> req = apiClient.getThreadList("Bearer " +
+                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null));
 
-        Call<ThreadDistinctResponse> req = apiClient.getThreadList("Bearer " +
-                PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
 
-        req.enqueue(new Callback<ThreadDistinctResponse>() {
-            @Override
-            public void onResponse(Call<ThreadDistinctResponse> call, Response<ThreadDistinctResponse> response) {
-                ThreadDistinctResponse allPlansResponse = response.body();
-                assert allPlansResponse != null;
-                setAllThreads(allPlansResponse.getResults());
-            }
+            req.enqueue(new Callback<ThreadDistinctResponse>() {
+                @Override
+                public void onResponse(Call<ThreadDistinctResponse> call, Response<ThreadDistinctResponse> response) {
 
-            @Override
-            public void onFailure(Call<ThreadDistinctResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: AllPlansResponse");
-            }
-        });
+                    if (response.isSuccessful()) {
+                        ThreadDistinctResponse allPlansResponse = response.body();
+                        assert allPlansResponse != null;
+                        setAllThreads(allPlansResponse.getResults());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ThreadDistinctResponse> call, Throwable t) {
+                    Log.d(TAG, "onFailure: AllPlansResponse");
+                }
+            });
+        } else {
+            Call<ThreadDistinctResponse> req = apiClient.getThreadInv("Bearer " +
+                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null));
+
+
+            req.enqueue(new Callback<ThreadDistinctResponse>() {
+                @Override
+                public void onResponse(Call<ThreadDistinctResponse> call, Response<ThreadDistinctResponse> response) {
+
+                    if (response.isSuccessful()) {
+                        ThreadDistinctResponse allPlansResponse = response.body();
+                        assert allPlansResponse != null;
+                        setAllThreads(allPlansResponse.getResults());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ThreadDistinctResponse> call, Throwable t) {
+                    Log.d(TAG, "onFailure: AllPlansResponse");
+                }
+            });
+        }
     }
 
     public void setAllThreads(List<ThreadIdentity> threadIdentities) {

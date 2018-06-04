@@ -40,6 +40,7 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
     public static final String TAG = TagProvider.getDebugTag(ThreadListFragment.class);
     private List<ThreadIdentity> threadIdentities;
     private ThreadListAdapter adapter;
+    private int reqType;
 
     @BindView(R.id.lv_thread_list)
     ListView lvThreadList;
@@ -57,9 +58,9 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
         ((HomeActivity) getActivity()).hideSearchBar(true);
 
         unbinder = ButterKnife.bind(this, convertView);
+        reqType = getArguments().getInt("reqType");
 
-
-        adapter = new ThreadListAdapter(activityContext, threadIdentities);
+        adapter = new ThreadListAdapter(activityContext, threadIdentities, reqType);
 //        lvThreadList = convertView.findViewById(R.id.lv_thread_list);
         lvThreadList.setAdapter(adapter);
 

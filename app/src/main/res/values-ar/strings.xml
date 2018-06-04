@@ -69,4 +69,5 @@
     <string name="btn_confirm_req">تأكيد الطلب</string>
     <string name="request_for_details">طلب تفاصيل</string>
     <string name="amount_to_be_paid_for_details">المبلغ الواجب دفعه للحصول على التفاصيل</string>
+    <string name="no_messages">لا رسائل</string>
 </resources>

@@ -12,6 +12,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.MessageThreadModel;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
@@ -19,12 +20,16 @@ import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.message_model.MessageListModel;
+import com.cryptenet.thanatos.dtmweb.pojo.message_model.SendMessageModel;
+import com.cryptenet.thanatos.dtmweb.pojo.message_model.ThreadRequestModel;
 
 
 import okhttp3.MultipartBody;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
@@ -93,7 +98,7 @@ public interface ApiClient {
     Call<ThreadDistinctResponse> getThreadList(@Header("Authorization") String token);
 
     @GET("/api/v1/message-thread/")
-    Call<ThreadDistinctResponse> getThreadInv(@Header("Authorization") String token, @Query("plan") int planId);
+    Call<ThreadDistinctResponse> getThreadInv(@Header("Authorization") String token);
 
     @GET("/api/v1/plan-access/{id}")
     Call<TransactionDetails> getTransactionDetails(@Header("Authorization") String token, @Path("id") int transactionId);
@@ -183,4 +188,18 @@ public interface ApiClient {
             @Part MultipartBody.Part cover,
             @Part MultipartBody.Part uploaded_file
     );
+
+    @GET("api/v1/message-thread/")
+    Call<MessageThreadModel> getThreads(@Header("Authorization") String token , @Query("plan") int planId);
+
+    @FormUrlEncoded
+    @POST("api/v1/message/")
+    Call<SendMessageModel> sendMessage(@Header("Authorization") String token , @Field("thread") String threadId , @Field("text") String text);
+
+    @GET("api/v1/message-thread/{thread_id}/messages/")
+    Call<MessageListModel> getMessages(@Header("Authorization") String token , @Path("thread_id") String threadId);
+
+    @FormUrlEncoded
+    @POST("api/v1/message-thread/")
+    Call<ThreadRequestModel> getThreadID(@Header("Authorization") String token , @Field("plan") int planId);
 }

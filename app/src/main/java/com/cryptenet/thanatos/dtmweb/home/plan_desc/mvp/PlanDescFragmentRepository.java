@@ -300,10 +300,12 @@ public class PlanDescFragmentRepository extends BaseFragRepository
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Gson gson = new Gson();
-                ThreadInitResponse initResponse = gson.fromJson(response.body().string(), ThreadInitResponse.class);
-                EventBus.getDefault().post(new ThreadIdReceiveEvent(initResponse));
-                Log.d(TAG, "onResponse: thread" + initResponse.toString());
+                if (response.isSuccessful()) {
+                    Gson gson = new Gson();
+                    ThreadInitResponse initResponse = gson.fromJson(response.body().string(), ThreadInitResponse.class);
+                    EventBus.getDefault().post(new ThreadIdReceiveEvent(initResponse));
+                    Log.d(TAG, "onResponse: thread" + initResponse.toString());
+                }
             }
         });
     }

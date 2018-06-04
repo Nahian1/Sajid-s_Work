@@ -1,9 +1,9 @@
 package com.cryptenet.thanatos.dtmweb.events;
 
 public class InitiatorThreadsEvent {
-    public final int threadId;
+    public final int planId;
 
-    public InitiatorThreadsEvent(int threadId) {
-        this.threadId = threadId;
+    public InitiatorThreadsEvent(int planId) {
+        this.planId = planId;
     }
 }
