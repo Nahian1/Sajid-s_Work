@@ -1,42 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~  Copyright (c) 2018.
-  ~  Development Lead: Cryptenet Ltd.
-  ~  Developer Credit:
-  ~     Alamgir Hossain,
-  ~     Md. Rezwanur Rahman Khan,
-  ~     Ashif Mujtoba
-  ~  This project is under Apache License 2.0
-  -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="28dp"
-    android:height="44dp"
-    android:viewportHeight="44"
-    android:viewportWidth="28">
+    android:viewportWidth="11"
+    android:viewportHeight="17"
+    android:width="11dp"
+    android:height="17dp">
     <group
         android:rotation="1.24349"
-        android:scaleX="-4"
-        android:scaleY="4"
-        android:translateX="24.9922"
-        android:translateY="22.9797">
+        android:scaleX="-1.5"
+        android:scaleY="1.5"
+        android:translateX="9.37207"
+        android:translateY="8.61738">
         <path
             android:pathData="M0 0L5 4.746"
-            android:strokeColor="#666666"
+            android:strokeWidth="1.2"
             android:strokeLineCap="round"
             android:strokeMiterLimit="10"
-            android:strokeWidth="1.2" />
+            android:strokeColor="#666666" />
     </group>
     <group
         android:rotation="1.24349"
-        android:scaleX="-4"
-        android:scaleY="4"
-        android:translateX="25.4043"
-        android:translateY="4.00018">
+        android:scaleX="-1.5"
+        android:scaleY="1.5"
+        android:translateX="9.52661"
+        android:translateY="1.50007">
         <path
             android:pathData="M5 0L0 4.746"
-            android:strokeColor="#666666"
+            android:strokeWidth="1.2"
             android:strokeLineCap="round"
             android:strokeMiterLimit="10"
-            android:strokeWidth="1.2" />
+            android:strokeColor="#666666" />
     </group>
 </vector>

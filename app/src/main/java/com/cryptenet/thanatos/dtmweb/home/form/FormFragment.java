@@ -98,7 +98,8 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transaction_form, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(true);
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.req_details));
+
 
         unbinder = ButterKnife.bind(this, view);
 

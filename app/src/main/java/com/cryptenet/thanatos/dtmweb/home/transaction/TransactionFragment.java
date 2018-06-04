@@ -97,7 +97,8 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transaction_detail, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(true);
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.trans_summary));
+
 
         viewUnbinder = ButterKnife.bind(this, view);
 

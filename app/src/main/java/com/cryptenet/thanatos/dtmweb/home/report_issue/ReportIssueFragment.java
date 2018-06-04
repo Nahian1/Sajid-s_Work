@@ -56,7 +56,7 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_report_issue, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(true);
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.report_issue));
 
         expandableListView = convertView.findViewById(R.id.elv_report);
         expandableListView.setGroupIndicator(null);

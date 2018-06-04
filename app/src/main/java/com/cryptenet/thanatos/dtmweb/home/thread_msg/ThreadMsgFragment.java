@@ -29,6 +29,7 @@ import com.cryptenet.thanatos.dtmweb.events.onMessageSentEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadMsgFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Results;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,10 +45,10 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
     private RecyclerView.LayoutManager mLayoutManager;
 
     private EditText sendMessage;
-//    private Results[] results;
+    //    private Results[] results;
     private List<Results> resultsList;
 
-//    String threadIDString;
+    //    String threadIDString;
 //    String threadID;
     int threadId;
 
@@ -62,7 +63,7 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_thread_msg, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(false);
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.thread_msg));
 
         threadId = getArguments().getInt("thread_id");
         mRecyclerView = view.findViewById(R.id.recycler_view);
@@ -89,9 +90,9 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 // setSendMessage();
                 String message = sendMessage.getText().toString().trim();
-                if (message.length() > 0){
+                if (message.length() > 0) {
                     setSendMessage();
-                }else {
+                } else {
                     Toast.makeText(activityContext, "Please enter text message!", Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -188,7 +189,6 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
 //    }
 
 
-
 //    private void getThreadIdForInvestor() {
 //
 //        final ApiClient apiCallData = ApiClientBase.getApiService();
@@ -241,6 +241,9 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
 
     @Subscribe
     public void onMessageListReceivedEvent(MessageListReceivedEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
         resultsList = event.messageThreadModels;
         mAdapter = new MessagingAdapter(resultsList);
         mRecyclerView.setAdapter(mAdapter);
@@ -258,6 +261,8 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
     public void onResume() {
         super.onResume();
         presenter.attachView(this);
+
+        ProgressDialogHelper.init(getActivity()).showProgress();
 
         presenter.getMessageList(activityContext, threadId);
     }

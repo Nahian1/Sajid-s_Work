@@ -25,6 +25,7 @@ import com.cryptenet.thanatos.dtmweb.events.DistinctThreadsReceived;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadIdentity;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -58,7 +59,7 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
                              Bundle savedInstanceState) {
         View convertView = inflater.inflate(R.layout.fragment_thread_list, container, false);
 
-        ((HomeActivity) getActivity()).hideSearchBar(true);
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.thread_list));
 
         unbinder = ButterKnife.bind(this, convertView);
         reqType = getArguments().getInt("reqType");
@@ -88,6 +89,9 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
 
     @Subscribe
     public void onDistinctThreadsReceived(DistinctThreadsReceived event) {
+
+        ProgressDialogHelper.hideProgress();
+
         this.threadIdentities = event.threadIdentities;
         adapter.updateList(this.threadIdentities);
     }
@@ -97,6 +101,8 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
         super.onResume();
 
         presenter.attachView(this);
+
+        ProgressDialogHelper.init(getActivity()).showProgress();
         presenter.getThreadList(activityContext);
     }
 

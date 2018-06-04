@@ -189,14 +189,14 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                         .into(ivPp);
 
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        imageFile = ImageUtil.getImageFromUrl(getApplicationContext(), imageUrl);
-
-                    }
-                });
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        imageFile = ImageUtil.getImageFromUrl(getApplicationContext(), imageUrl);
+//
+//                    }
+//                });
 
             }
 
