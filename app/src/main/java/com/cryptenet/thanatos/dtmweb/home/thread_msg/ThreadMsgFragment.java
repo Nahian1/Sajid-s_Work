@@ -271,6 +271,7 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
         resultsList.add(event.results);
         mAdapter.setData(resultsList);
         mAdapter.notifyDataSetChanged();
+        mLayoutManager.scrollToPosition(resultsList.size() - 1);
     }
 
 
