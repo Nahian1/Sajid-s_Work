@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (c) 2018.
+  ~  Development Lead: Cryptenet Ltd.
+  ~  Developer Credit:
+  ~     Alamgir Hossain,
+  ~     Md. Rezwanur Rahman Khan,
+  ~     Ashif Mujtoba
+  ~  This project is under Apache License 2.0
+  -->
+
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cryptenet.thanatos.dtmweb.message.investor_thread.MessageRequestActivity">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

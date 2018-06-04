@@ -1,8 +1,11 @@
 /*
- * Copyright (c) 2018.
- *  Development Courtesy: Cryptenet Ltd.
- *  Developer Credit: Alamgir Hossain, Nabil Shawkat
- *  This project is under MIT license
+ *  Copyright (c) 2018.
+ *  Development Lead: Cryptenet Ltd.
+ *  Developer Credit:
+ *      Alamgir Hossain,
+ *      Md. Rezwanur Rahman Khan,
+ *      Ashif Mujtoba
+ *  This project is under Apache License 2.0
  */
 
 package com.cryptenet.thanatos.dtmweb.http;
@@ -20,9 +23,9 @@ import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
-import com.cryptenet.thanatos.dtmweb.pojo.message_model.MessageListModel;
-import com.cryptenet.thanatos.dtmweb.pojo.message_model.SendMessageModel;
-import com.cryptenet.thanatos.dtmweb.pojo.message_model.ThreadRequestModel;
+import com.cryptenet.thanatos.dtmweb.pojo.MessageListModel;
+import com.cryptenet.thanatos.dtmweb.pojo.SendMessageModel;
+import com.cryptenet.thanatos.dtmweb.pojo.ThreadRequestModel;
 
 
 import okhttp3.MultipartBody;
@@ -32,16 +35,13 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 import retrofit2.http.Multipart;
-import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 import retrofit2.http.Query;

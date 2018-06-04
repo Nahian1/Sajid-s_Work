@@ -1,6 +1,16 @@
-package com.cryptenet.thanatos.dtmweb.pojo.message_model;
+/*
+ *  Copyright (c) 2018.
+ *  Development Lead: Cryptenet Ltd.
+ *  Developer Credit:
+ *      Alamgir Hossain,
+ *      Md. Rezwanur Rahman Khan,
+ *      Ashif Mujtoba
+ *  This project is under Apache License 2.0
+ */
 
-public class SendMessageModel {
+package com.cryptenet.thanatos.dtmweb.pojo;
+
+public class Results {
     private String sender;
 
     private String id;

@@ -1,26 +1,25 @@
 /*
- * Copyright (c) 2018.
- *  Development Courtesy: Cryptenet Ltd.
- *  Developer Credit: Alamgir Hossain, Nabil Shawkat
- *  This project is under MIT license
+ *  Copyright (c) 2018.
+ *  Development Lead: Cryptenet Ltd.
+ *  Developer Credit:
+ *      Alamgir Hossain,
+ *      Md. Rezwanur Rahman Khan,
+ *      Ashif Mujtoba
+ *  This project is under Apache License 2.0
  */
 
 package com.cryptenet.thanatos.dtmweb.home.thread_msg;
 
 
-import android.content.Context;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
@@ -28,23 +27,14 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.MessageListReceivedEvent;
 import com.cryptenet.thanatos.dtmweb.events.onMessageSentEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
-import com.cryptenet.thanatos.dtmweb.http.ApiClient;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadMsgFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.message_model.MessageListModel;
-import com.cryptenet.thanatos.dtmweb.pojo.message_model.Results;
-import com.cryptenet.thanatos.dtmweb.pojo.message_model.SendMessageModel;
-import com.cryptenet.thanatos.dtmweb.pojo.message_model.ThreadRequestModel;
-import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
+import com.cryptenet.thanatos.dtmweb.pojo.Results;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Presenter>
         implements ThreadMsgFragmentContract.View {

@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (c) 2018.
+  ~  Development Lead: Cryptenet Ltd.
+  ~  Developer Credit:
+  ~     Alamgir Hossain,
+  ~     Md. Rezwanur Rahman Khan,
+  ~     Ashif Mujtoba
+  ~  This project is under Apache License 2.0
+  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cryptenet.thanatos.dtmweb">
 
@@ -93,10 +102,6 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".message.investor_thread.MessageRequestActivity"
-            android:label="@string/title_activity_message_request"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

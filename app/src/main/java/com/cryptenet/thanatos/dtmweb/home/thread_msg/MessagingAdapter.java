@@ -1,3 +1,13 @@
+/*
+ *  Copyright (c) 2018.
+ *  Development Lead: Cryptenet Ltd.
+ *  Developer Credit:
+ *      Alamgir Hossain,
+ *      Md. Rezwanur Rahman Khan,
+ *      Ashif Mujtoba
+ *  This project is under Apache License 2.0
+ */
+
 package com.cryptenet.thanatos.dtmweb.home.thread_msg;
 
 import android.content.Context;
@@ -15,7 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.pojo.message_model.Results;
+import com.cryptenet.thanatos.dtmweb.pojo.Results;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 
 import java.util.Collections;

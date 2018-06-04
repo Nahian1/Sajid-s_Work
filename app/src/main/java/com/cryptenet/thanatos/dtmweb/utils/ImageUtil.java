@@ -1,3 +1,13 @@
+/*
+ *  Copyright (c) 2018.
+ *  Development Lead: Cryptenet Ltd.
+ *  Developer Credit:
+ *      Alamgir Hossain,
+ *      Md. Rezwanur Rahman Khan,
+ *      Ashif Mujtoba
+ *  This project is under Apache License 2.0
+ */
+
 package com.cryptenet.thanatos.dtmweb.utils;
 
 import android.content.Context;
@@ -14,10 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-/**
- * Created by Asif on 6/3/2018.
- */
 
 public class ImageUtil {
 

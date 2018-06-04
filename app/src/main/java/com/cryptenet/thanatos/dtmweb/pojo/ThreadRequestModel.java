@@ -1,4 +1,14 @@
-package com.cryptenet.thanatos.dtmweb.pojo.message_model;
+/*
+ *  Copyright (c) 2018.
+ *  Development Lead: Cryptenet Ltd.
+ *  Developer Credit:
+ *      Alamgir Hossain,
+ *      Md. Rezwanur Rahman Khan,
+ *      Ashif Mujtoba
+ *  This project is under Apache License 2.0
+ */
+
+package com.cryptenet.thanatos.dtmweb.pojo;
 
 public class ThreadRequestModel {
     private String initiator_name;

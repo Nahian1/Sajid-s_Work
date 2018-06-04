@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2018.
- *  Development Courtesy: Cryptenet Ltd.
- *  Developer Credit: Alamgir Hossain, Nabil Shawkat
- *  This project is under MIT license
+ *  Copyright (c) 2018.
+ *  Development Lead: Cryptenet Ltd.
+ *  Developer Credit:
+ *      Alamgir Hossain,
+ *      Md. Rezwanur Rahman Khan,
+ *      Ashif Mujtoba
+ *  This project is under Apache License 2.0
  */
 
 package com.cryptenet.thanatos.dtmweb.home.report_issue;
 
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;

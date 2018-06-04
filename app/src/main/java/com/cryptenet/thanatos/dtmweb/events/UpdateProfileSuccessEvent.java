@@ -1,13 +1,15 @@
 /*
- * Copyright (c) 2018.
- * Development Courtesy: Cryptenet Ltd.
- * Developer Credit: Alamgir Hossain, Nabil Shawkat
- * This project is under MIT license
+ *  Copyright (c) 2018.
+ *  Development Lead: Cryptenet Ltd.
+ *  Developer Credit:
+ *      Alamgir Hossain,
+ *      Md. Rezwanur Rahman Khan,
+ *      Ashif Mujtoba
+ *  This project is under Apache License 2.0
  */
 
 package com.cryptenet.thanatos.dtmweb.events;
 
-import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
 
 public class UpdateProfileSuccessEvent {
