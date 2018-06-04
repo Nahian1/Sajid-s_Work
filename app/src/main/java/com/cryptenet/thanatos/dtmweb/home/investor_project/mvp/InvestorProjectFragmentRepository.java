@@ -13,7 +13,9 @@ package com.cryptenet.thanatos.dtmweb.home.investor_project.mvp;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
@@ -50,9 +52,15 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
             req.enqueue(new Callback<PlanAccessResponse>() {
                 @Override
                 public void onResponse(Call<PlanAccessResponse> call, Response<PlanAccessResponse> response) {
-                    PlanAccessResponse allPlansResponse = response.body();
-                    assert allPlansResponse != null;
-                    setProjects(allPlansResponse.getResults());
+                    if (response.isSuccessful()) {
+                        PlanAccessResponse allPlansResponse = response.body();
+                        assert allPlansResponse != null;
+                        setProjects(allPlansResponse.getResults());
+                        if (allPlansResponse.getResults().size() == 0)
+                            Toast.makeText(context, context.getString(R.string.no_man_requests), Toast.LENGTH_LONG).show();
+                    } else {
+                        Log.d(TAG, "onResponse: " + response.code());
+                    }
                 }
 
                 @Override
@@ -65,9 +73,15 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
             req.enqueue(new Callback<PlanAccessResponse>() {
                 @Override
                 public void onResponse(Call<PlanAccessResponse> call, Response<PlanAccessResponse> response) {
-                    PlanAccessResponse allPlansResponse = response.body();
-                    assert allPlansResponse != null;
-                    setProjects(allPlansResponse.getResults());
+                    if (response.isSuccessful()) {
+                        PlanAccessResponse allPlansResponse = response.body();
+                        assert allPlansResponse != null;
+                        setProjects(allPlansResponse.getResults());
+                        if (allPlansResponse.getResults().size() == 0)
+                            Toast.makeText(context, context.getString(R.string.no_man_projects), Toast.LENGTH_LONG).show();
+                    } else {
+                        Log.d(TAG, "onResponse: " + response.code());
+                    }
                 }
 
                 @Override
