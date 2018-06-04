@@ -189,26 +189,34 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         if (!title.isEmpty() && !shortDesc.isEmpty() && !longDesc.isEmpty()
                 && !minInvest.isEmpty() && !maxInvest.isEmpty() && !accessPrice.isEmpty()) {
+
             projectsRq.setTitle(title);
-            projectsRq.setCategory(categoryCode);
             projectsRq.setShortDescription(shortDesc);
             projectsRq.setLongDescription(longDesc);
-            projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(minInvest));
-            projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(maxInvest));
-            projectsRq.setAccessPrice((int) Double.parseDouble(accessPrice));
+            projectsRq.setMinimumInvestmentCost(minInvest);
+            projectsRq.setMaximumInvestmentCost(maxInvest);
+            projectsRq.setAccessPrice(accessPrice);
+
+            if (categoryCode != 0) {
+                projectsRq.setCategory(categoryCode);
+            } else {
+                if (list != null && list.size() > 0) {
+                    projectsRq.setCategory(list.get(0).getId());
+                }
+            }
 
             if (imageFile != null)
                 projectsRq.setCover(imageFile);
             if (planFile != null)
                 projectsRq.setUploadedFile(planFile);
 
-            if (imageFile == null || planFile == null) {
-                showMessage("Attach your file/image");
+            if (imageFile == null) {
+                showMessage("Attach your cover image");
             }
 
             projectsRq.setNew(true);
 
-            if (imageFile != null && planFile != null) {
+            if (imageFile != null) {
 
                 ProgressDialogHelper.init(getActivity()).showProgress();
 
@@ -248,27 +256,27 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
             projectsRq.setShortDescription(shortDesc);
             projectsRq.setLongDescription(longDesc);
-            projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(minInvest));
-            projectsRq.setMinimumInvestmentCost((int) Float.parseFloat(maxInvest));
-            projectsRq.setAccessPrice((int) Double.parseDouble(accessPrice));
+            projectsRq.setMinimumInvestmentCost(minInvest);
+            projectsRq.setMaximumInvestmentCost(maxInvest);
+            projectsRq.setAccessPrice(accessPrice);
 
             if (imageFile != null)
                 projectsRq.setCover(imageFile);
             if (planFile != null)
                 projectsRq.setUploadedFile(planFile);
 
-            if (imageFile == null || planFile == null) {
-                showMessage("Attach your file/image !");
-            }
+//            if (imageFile == null || planFile == null) {
+//                showMessage("Attach your file/image !");
+//            }
 
             projectsRq.setNew(false);
 
-            if (imageFile != null && planFile != null) {
+            // if (imageFile != null && planFile != null) {
 
-                ProgressDialogHelper.init(getActivity()).showProgress();
+            ProgressDialogHelper.init(getActivity()).showProgress();
 
-                presenter.saveUpdatePlan(projectsRq, activityContext, project.getId());
-            }
+            presenter.saveUpdatePlan(projectsRq, activityContext, project.getId());
+            // }
 
         } else {
             showMessage("Please fill all fields");

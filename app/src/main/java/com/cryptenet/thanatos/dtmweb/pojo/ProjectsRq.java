@@ -24,13 +24,13 @@ public class ProjectsRq {
     private String longDescription;
     @SerializedName("minimum_investment_cost")
     @Expose
-    private int minimumInvestmentCost;
+    private String minimumInvestmentCost;
     @SerializedName("maximum_investment_cost")
     @Expose
-    private int maximumInvestmentCost;
+    private String maximumInvestmentCost;
     @SerializedName("access_price")
     @Expose
-    private int accessPrice;
+    private String accessPrice;
     @SerializedName("cover")
     @Expose
     private File cover;
@@ -43,19 +43,7 @@ public class ProjectsRq {
     public ProjectsRq() {
     }
 
-    /**
-     *
-     * @param cover
-     * @param category
-     * @param title
-     * @param maximumInvestmentCost
-     * @param shortDescription
-     * @param longDescription
-     * @param uploadedFile
-     * @param accessPrice
-     * @param minimumInvestmentCost
-     */
-    public ProjectsRq(String title, int category, String shortDescription, String longDescription, int minimumInvestmentCost, int maximumInvestmentCost, int accessPrice, File cover, File uploadedFile) {
+    public ProjectsRq(String title, int category, String shortDescription, String longDescription, String minimumInvestmentCost, String maximumInvestmentCost, String accessPrice, File cover, File uploadedFile, boolean isNew) {
         super();
         this.title = title;
         this.category = category;
@@ -66,14 +54,7 @@ public class ProjectsRq {
         this.accessPrice = accessPrice;
         this.cover = cover;
         this.uploadedFile = uploadedFile;
-    }
-
-    public boolean isNew() {
-        return isNew;
-    }
-
-    public void setNew(boolean aNew) {
-        isNew = aNew;
+        this.isNew = isNew;
     }
 
     public String getTitle() {
@@ -108,27 +89,27 @@ public class ProjectsRq {
         this.longDescription = longDescription;
     }
 
-    public int getMinimumInvestmentCost() {
+    public String getMinimumInvestmentCost() {
         return minimumInvestmentCost;
     }
 
-    public void setMinimumInvestmentCost(int minimumInvestmentCost) {
+    public void setMinimumInvestmentCost(String minimumInvestmentCost) {
         this.minimumInvestmentCost = minimumInvestmentCost;
     }
 
-    public int getMaximumInvestmentCost() {
+    public String getMaximumInvestmentCost() {
         return maximumInvestmentCost;
     }
 
-    public void setMaximumInvestmentCost(int maximumInvestmentCost) {
+    public void setMaximumInvestmentCost(String maximumInvestmentCost) {
         this.maximumInvestmentCost = maximumInvestmentCost;
     }
 
-    public int getAccessPrice() {
+    public String getAccessPrice() {
         return accessPrice;
     }
 
-    public void setAccessPrice(int accessPrice) {
+    public void setAccessPrice(String accessPrice) {
         this.accessPrice = accessPrice;
     }
 
@@ -148,6 +129,30 @@ public class ProjectsRq {
         this.uploadedFile = uploadedFile;
     }
 
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
+
+    /**
+     *
+     * @param cover
+     * @param category
+     * @param title
+     * @param maximumInvestmentCost
+     * @param shortDescription
+     * @param longDescription
+     * @param uploadedFile
+     * @param accessPrice
+     * @param minimumInvestmentCost
+     */
+
+
+
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(title);
         dest.writeValue(category);
@@ -164,4 +169,19 @@ public class ProjectsRq {
         return  0;
     }
 
+    @Override
+    public String toString() {
+        return "ProjectsRq{" +
+                "title='" + title + '\'' +
+                ", category=" + category +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", longDescription='" + longDescription + '\'' +
+                ", minimumInvestmentCost='" + minimumInvestmentCost + '\'' +
+                ", maximumInvestmentCost='" + maximumInvestmentCost + '\'' +
+                ", accessPrice='" + accessPrice + '\'' +
+                ", cover=" + cover +
+                ", uploadedFile=" + uploadedFile +
+                ", isNew=" + isNew +
+                '}';
+    }
 }

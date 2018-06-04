@@ -72,6 +72,8 @@ public class EditProjectFragmentRepository extends BaseFragRepository
     public void saveUpdatePlan(ProjectsRq plan, Context context, int plan_id) {
         if (plan.isNew()) {
 
+            Log.d(TAG, "sending add plan: " + plan.toString());
+
             String access_token = "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 
             String title = plan.getTitle();
@@ -92,8 +94,10 @@ public class EditProjectFragmentRepository extends BaseFragRepository
             RequestBody uploadedFile;
             MultipartBody.Part uploadedFileBody = null;
 
-            uploadedFile = RequestBody.create(MediaType.parse("*/*"), plan.getUploadedFile());
-            uploadedFileBody = MultipartBody.Part.createFormData("uploaded_file", plan.getUploadedFile().getName(), uploadedFile);
+            if (plan.getUploadedFile() != null){
+                uploadedFile = RequestBody.create(MediaType.parse("*/*"), plan.getUploadedFile());
+                uploadedFileBody = MultipartBody.Part.createFormData("uploaded_file", plan.getUploadedFile().getName(), uploadedFile);
+            }
 
 
             mApiClient.crerateNewInitiatorPlan(access_token, title, category, shortDesc, longDesc,
@@ -123,6 +127,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
         } else {
 
+            Log.d(TAG, "sending edit plan: " + plan.toString());
             String access_token = "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 
             String title = plan.getTitle();
@@ -136,14 +141,18 @@ public class EditProjectFragmentRepository extends BaseFragRepository
             RequestBody coverPictureFile;
             MultipartBody.Part coverPictureBody = null;
 
-            coverPictureFile = RequestBody.create(MediaType.parse("image/*"), plan.getCover());
-            coverPictureBody = MultipartBody.Part.createFormData("cover", plan.getCover().getName(), coverPictureFile);
+            if (plan.getCover() != null){
+                coverPictureFile = RequestBody.create(MediaType.parse("image/*"), plan.getCover());
+                coverPictureBody = MultipartBody.Part.createFormData("cover", plan.getCover().getName(), coverPictureFile);
+            }
 
             RequestBody uploadedFile;
             MultipartBody.Part uploadedFileBody = null;
 
-            uploadedFile = RequestBody.create(MediaType.parse("*/*"), plan.getUploadedFile());
-            uploadedFileBody = MultipartBody.Part.createFormData("uploaded_file", plan.getUploadedFile().getName(), uploadedFile);
+            if (plan.getUploadedFile() != null){
+                uploadedFile = RequestBody.create(MediaType.parse("*/*"), plan.getUploadedFile());
+                uploadedFileBody = MultipartBody.Part.createFormData("uploaded_file", plan.getUploadedFile().getName(), uploadedFile);
+            }
 
             mApiClient.editInitiatorPlan(access_token, plan_id, title, category, shortDesc, longDesc,
                     minInvestCost, maxInvestCost, accessPrice, coverPictureBody, uploadedFileBody)
@@ -157,9 +166,8 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
                         @Override
                         public void onError(Throwable e) {
-
                             e.printStackTrace();
-//                            EventBus.getDefault().post(new EditPlanFailureEvent(true));
+                            //EventBus.getDefault().post(new EditPlanFailureEvent(true));
                         }
 
                         @Override
