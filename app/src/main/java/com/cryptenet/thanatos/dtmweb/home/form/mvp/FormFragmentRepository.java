@@ -40,44 +40,6 @@ public class FormFragmentRepository extends BaseFragRepository
 
     @Override
     public void submitTransactionData(Transaction transaction, Context context) {
-//        Map<String, String> map = new HashMap<>();
-//
-//        map.put("plan", String.valueOf(transaction.getPlan()));
-//        map.put("bank_name", transaction.getBankName());
-//        map.put("bank_account_name", transaction.getBankAccountName());
-//        map.put("bank_account_number", transaction.getBankAccountNumber());
-//        map.put("transaction_id", String.valueOf(transaction.getTransactionId()));
-//        map.put("note", transaction.getNote());
-
-//        RequestBody formBody = new FormBody.Builder()
-//            .add("plan", String.valueOf(transaction.getProjectsDetailed().getId()))
-//            .add("bank_name", transaction.getBankName())
-//            .add("bank_account_name", transaction.getBankAccountName())
-//            .add("bank_account_number", transaction.getBankAccountNumber())
-//            .add("transaction_id", transaction.getTransactionId())
-//            .add("note", transaction.getNote())
-//            .build();
-//
-//        Call<TransactionDetails> call = apiClient.submitTransaction(
-//                "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
-//                formBody
-//        );
-//
-//        call.enqueue(new Callback<TransactionDetails>() {
-//            @Override
-//            public void onResponse(Call<TransactionDetails> call, Response<TransactionDetails> response) {
-//                Log.d(TAG, "onResponse: " + response.body());
-////                EventBus.getDefault().post(new TransactionSuccessEvent(response));
-//            }
-//
-//            @Override
-//            public void onFailure(Call<TransactionDetails> call, Throwable t) {
-//                Log.d(TAG, "onFailure: " + "submit failed", t);
-//            }
-//        });
-
-
-        //EventBus.getDefault().post(new TransactionSuccessEvent(transaction)); //for test purpose
 
         String head = "application/json";
 

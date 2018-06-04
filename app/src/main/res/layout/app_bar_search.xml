@@ -53,7 +53,8 @@
                 android:layout_alignEnd="@+id/editTextSearch"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="8dp"
-                android:src="@drawable/search_icon" />
+                app:srcCompat="@drawable/ic_search" />
+
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

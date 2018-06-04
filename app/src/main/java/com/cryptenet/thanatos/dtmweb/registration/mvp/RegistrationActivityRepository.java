@@ -199,8 +199,11 @@ public class RegistrationActivityRepository extends BaseRepository
         RequestBody filePicture;
         MultipartBody.Part bodyPicture = null;
 
-        filePicture = RequestBody.create(MediaType.parse("image/*"), regData.getPicture());
-        bodyPicture = MultipartBody.Part.createFormData("picture", regData.getPicture().getName(), filePicture);
+        if (regData.getPicture() != null) {
+            filePicture = RequestBody.create(MediaType.parse("image/*"), regData.getPicture());
+            bodyPicture = MultipartBody.Part.createFormData("picture", regData.getPicture().getName(), filePicture);
+
+        }
 
 
         //RequestBody city = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(regData.getCity()));

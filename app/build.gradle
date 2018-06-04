@@ -65,7 +65,7 @@ ext {
     event_bus = '3.1.1'
     circle_iv = '2.2.0'
     glide = '4.7.1'
-    rxJavaVersion = '1.1.6'
+    rxJavaVersion = '1.1.8'
     rxAndroidVersion = '1.2.1'
 }
 

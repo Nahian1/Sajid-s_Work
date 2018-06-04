@@ -106,7 +106,7 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
 
         textViewTitle.setText(projectData.getTitle());
 
-        price.setText("Price: " +
+        price.setText(getString(R.string.price) + " " +
                 String.format("%.2f", (Double.parseDouble(projectData.getMinimumInvestmentCost())
                         - Double.parseDouble(projectData.getMaximumInvestmentCost()))));
 

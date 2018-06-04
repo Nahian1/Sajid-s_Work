@@ -8,6 +8,7 @@
 package com.cryptenet.thanatos.dtmweb.home.request_detail;
 
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -127,6 +128,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRequestDataReceiveEvent(RequestDataReceiveEvent event) {
 
@@ -136,7 +138,7 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
 
         textViewTitle.setText(event.details.getPlanTitle());
 
-        price.setText(String.valueOf(event.details.getPlanAccessPrice()));
+        price.setText(getString(R.string.price) + " " + String.valueOf(event.details.getPlanAccessPrice()));
 
         String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         String dateOutputPattern = "dd MMM yyyy";

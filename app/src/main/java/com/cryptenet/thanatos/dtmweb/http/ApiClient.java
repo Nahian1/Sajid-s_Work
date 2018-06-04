@@ -189,6 +189,23 @@ public interface ApiClient {
             @Part MultipartBody.Part uploaded_file
     );
 
+    @Multipart
+    @PUT("/api/v1/plan/{id}/")
+    Observable<ProjectsRsp> editInitiatorPlan(
+            @Header("Authorization") String token,
+            @Path("id") int project_id,
+            @Part("title") String title,
+            @Part("category") String category,
+            @Part("short_description") String short_description,
+            @Part("long_description") String long_description,
+            @Part("minimum_investment_cost") String minimum_investment_cost,
+            @Part("maximum_investment_cost") String maximum_investment_cost,
+            @Part("access_price") String access_price,
+
+            @Part MultipartBody.Part cover,
+            @Part MultipartBody.Part uploaded_file
+    );
+
     @GET("api/v1/message-thread/")
     Call<MessageThreadModel> getThreads(@Header("Authorization") String token , @Query("plan") int planId);
 

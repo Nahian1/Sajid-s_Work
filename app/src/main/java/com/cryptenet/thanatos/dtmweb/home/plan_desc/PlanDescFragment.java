@@ -11,6 +11,8 @@ package com.cryptenet.thanatos.dtmweb.home.plan_desc;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -90,6 +92,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 
     private int projectId, type;
     private ProjectsDetailed projectsDetailed;
+    private String fileUrl;
 
     public PlanDescFragment() {
         // Required empty public constructor
@@ -129,6 +132,7 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         ProgressDialogHelper.hideProgress();
 
         projectsDetailed = event.detailed;
+
         if (event.detailed.getId() == null) {
             return;
         }
@@ -173,6 +177,9 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
             textLongDesc.setVisibility(View.VISIBLE);
             textLongDesc.setText(event.detailed.getLongDescription());
             textViewFile.setVisibility(View.VISIBLE);
+
+            fileUrl = event.detailed.getUploadedFile();
+
         } else if (textDatePrice != null) {
 
             layoutBankSection.setVisibility(View.VISIBLE);
@@ -218,6 +225,12 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
                 presenter.getThreadId(activityContext, projectId);
                 break;
             case R.id.textViewFile:
+
+                if (fileUrl != null)
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(fileUrl)));
+                else
+                    showMessage("Couldn't open file!");
+
                 break;
         }
     }

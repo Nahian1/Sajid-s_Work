@@ -7,7 +7,7 @@
   -->
 
 <resources>
-    <string name="app_name">Fikra</string>
+    <string name="app_name">فكرة</string>
 
     <string name="hint_et_email">البريد الالكتروني</string>
     <string name="hint_et_pwd">كلمة المرور</string>
@@ -70,4 +70,14 @@
     <string name="request_for_details">طلب تفاصيل</string>
     <string name="amount_to_be_paid_for_details">المبلغ الواجب دفعه للحصول على التفاصيل</string>
     <string name="no_messages">لا رسائل</string>
+    <string name="please_wait">أرجو الإنتظار…</string>
+    <string name="plan_updated">الخطة المحدثة.</string>
+    <string name="plan_added">الخطة المضافة.</string>
+    <string name="transaction_id">معرف المعاملة</string>
+    <string name="cancel">إلغاء</string>
+    <string name="submit">خضع</string>
+    <string name="pending">قيد الانتظار</string>
+    <string name="price">السعر:</string>
+    <string name="submitted">قدمت!</string>
+    <string name="approved">وافق</string>
 </resources>

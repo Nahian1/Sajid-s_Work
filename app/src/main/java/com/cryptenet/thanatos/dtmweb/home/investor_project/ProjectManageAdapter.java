@@ -7,6 +7,7 @@
 
 package com.cryptenet.thanatos.dtmweb.home.investor_project;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -89,6 +90,7 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
         return i;
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -106,7 +108,7 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
             statusTV.setVisibility(View.GONE);
 
         titleTV.setText(filteredList.get(position).getPlanTitle());
-        priceTV.setText(String.valueOf(filteredList.get(position).getPlanAccessPrice()));
+        priceTV.setText(context.getString(R.string.price) + " " + String.valueOf(filteredList.get(position).getPlanAccessPrice()));
 
         String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         String dateOutputPattern = "dd MMM yyyy";
@@ -122,10 +124,10 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
         }
 
         if (filteredList.get(position).getIsApproved()) {
-            statusTV.setText("Approved");
+            statusTV.setText(context.getString(R.string.approved));
             statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
         } else {
-            statusTV.setText("Pending");
+            statusTV.setText(context.getString(R.string.pending));
             statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
         }
 

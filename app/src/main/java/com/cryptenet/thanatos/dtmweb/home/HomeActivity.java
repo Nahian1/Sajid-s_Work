@@ -55,7 +55,6 @@ import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.transaction.TransactionFragment;
-//import com.cryptenet.thanatos.dtmweb.message.investor_thread.MessageRequestActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
 import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
@@ -358,6 +357,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         ProgressDialogHelper.hideProgress();
         showMessage("Submitted!");
+
+        showMessage(getString(R.string.submitted));
 
         TransactionFragment fragment = new TransactionFragment();
         Bundle bundle = new Bundle();
