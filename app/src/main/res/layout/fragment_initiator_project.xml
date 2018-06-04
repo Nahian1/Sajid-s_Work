@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2018.
   ~ Development Courtesy: Cryptenet Ltd.
   ~ Developer Credit: Alamgir Hossain, Nabil Shawkat
@@ -20,27 +19,27 @@
 
         <Button
             android:id="@+id/btnAddPlan"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="6dp"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/blue_button_selector"
             android:scaleType="fitXY"
             android:text="@string/add_plan"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/btn_shape_b"/>
+            android:textColor="@color/colorPrimary" />
+
         <ListView
             android:id="@+id/projectListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
-
 
 
 </android.support.constraint.ConstraintLayout>

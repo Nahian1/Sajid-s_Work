@@ -13,29 +13,66 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.IssueSubmittedEvent;
+import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.OtherReportFragmentContract;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Objects;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class OtherReportFragment extends BaseFragment<OtherReportFragmentContract.Presenter>
         implements OtherReportFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(OtherReportFragment.class);
+    @BindView(R.id.add_report)
+    EditText addReport;
 
+    private int issueCode;
 
     public OtherReportFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_other_issue, container, false);
+        View convertView = inflater.inflate(R.layout.fragment_other_issue, container, false);
+
+        ((HomeActivity) getActivity()).hideSearchBar(true);
+
+
+        issueCode = getArguments().getInt("issue_code");
+        ButterKnife.bind(this, convertView);
+
+        return convertView;
     }
 
     @Override
@@ -52,5 +89,47 @@ public class OtherReportFragment extends BaseFragment<OtherReportFragmentContrac
     @Override
     public void restoreState(Bundle savedState) {
 
+    }
+
+    @Subscribe
+    public void onIssueSubmittedEvent(IssueSubmittedEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+        if (event.isSubmitted) {
+
+            EventBus.getDefault().post(new ReturnToHomeEvent());
+
+        }
+    }
+
+    @OnClick({R.id.report_submit, R.id.report_cancel})
+    public void onViewClicked(View view) {
+
+        ViewUtils.hideKeyboard(getActivity());
+
+        switch (view.getId()) {
+            case R.id.report_submit:
+                String issue = addReport.getText().toString().trim();
+
+                if (!issue.isEmpty()) {
+
+                    ProgressDialogHelper.init(getActivity()).showProgress();
+                    presenter.sendIssue(activityContext, issueCode, issue);
+
+                } else {
+                    showMessage("Field can not be empty");
+                }
+                break;
+            case R.id.report_cancel:
+                getActivity().onBackPressed();
+                break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.attachView(this);
     }
 }

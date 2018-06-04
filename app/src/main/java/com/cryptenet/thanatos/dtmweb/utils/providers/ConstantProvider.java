@@ -10,11 +10,9 @@ package com.cryptenet.thanatos.dtmweb.utils.providers;
 public class ConstantProvider {
     public static final String ACTIVITY_FRAGMENT_MANAGER = "ActivityFragmentManager";
 
-    public static final String NAV_PP_URL = "navPpUrl";
-    public static final String NAV_NAME = "navName";
-    public static final String NAV_TYPE = "navType";
-    public static final String NAV_ADDRESS = "navAddress";
-    public static final String NAV_DETAILS = "navDetails";
+//    public static final String LOCALE = "locale";
+    public static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
+
 
     public static final String CLIENT_KEY = "xcziSPz2aLcKc5Egm1janzwGBS5jcNvi68BA88GP:VHSlol14f1AKcaXcdefMzsNA9kMKyngVPrSD5FxdxcQzukBzH8axcQRts4NUMdztZ035bSI4RGgzSRUsm4N7h7e106T9SfnijBvSgmRizIyPrXzKetePl5HpO49XQ3LK";
     public static final String ACCESS_BASIC = "eGN6aVNQejJhTGNLYzVFZ20xamFuendHQlM1amNOdmk2OEJBODhHUDpWSFNsb2wxNGYxQUtjYVhjZGVmTXpzTkE5a01LeW5nVlByU0Q1RnhkeGNRenVrQnpIOGF4Y1FSdHM0TlVNZHp0WjAzNWJTSTRSR2d6U1JVc200TjdoN2UxMDZUOVNmbmlqQnZTZ21SaXpJeVByWHpLZXRlUGw1SHBPNDlYUTNMSw==";
@@ -40,4 +38,15 @@ public class ConstantProvider {
 
     public static final String SP_FORGOT_PASSWORD_EMAIL = "forgot_pass";
     public static final String SP_FORGOT_PASSWORD_CODE = "forgot_pass_code";
+
+    //registration code == 1
+    //edit profile code == 2
+    //create plan code == 3
+    //edit plan code == 4
+
+    public static final String REQ_TYPE_REG_USER = "1";
+    public static final String REQ_TYPE_EDIT_PROFILE = "2";
+    public static final String REQ_TYPE_CREATE_PLAN = "3";
+    public static final String REQ_TYPE_EDIT_PLAN = "4";
+
 }

@@ -27,6 +27,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 @PerFragment
 public class PlanListFragmentRepository extends BaseFragRepository
@@ -41,8 +42,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
     @Override
     public void getAllProjects(Context context, String token) {
         String head = "application/json";
-        String oauth = token;
-                //PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
+        //PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 //        Log.d(TAG, "getAllProjects: " + token);
 //        if (oauth != null) {
 //
@@ -67,7 +67,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
 //                        Log.d(TAG, "onResponse: " + response.body().string());
 //                        Gson gson = new Gson();
 //                        AllPlansResponse allPlansResponse = gson.fromJson(response.body().string(), AllPlansResponse.class);
-//                        EventBus.getDefault().post(new ProjectListReceiveEvent(allPlansResponse.getResults()));
+//                        EventBus.getDefault().post(new ProjectListReceiveEvent(allPlansResponse.getIssueParents()));
 //                    } catch (Exception e) {
 //                        e.printStackTrace();
 //                    }
@@ -97,13 +97,35 @@ public class PlanListFragmentRepository extends BaseFragRepository
     }
 
     @Override
+    public void searchMyPlans(Context context, String token, String searchTerm) {
+
+        Call<AllPlansResponse> req = apiClient.getAllMyPlansSearch("Bearer " + token, searchTerm);
+
+        req.enqueue(new Callback<AllPlansResponse>() {
+            @Override
+            public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
+                //you got your search result
+
+                EventBus.getDefault().post(new ProjectListReceiveEvent(response.body().getResults()));
+
+            }
+
+            @Override
+            public void onFailure(Call<AllPlansResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + "search failed");
+            }
+        });
+
+    }
+
+    @Override
     public int checkUserType(Context context) {
         String user = PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_USER_TYPE, null);
 
         if (user.equals("Initiator"))
-            return 1;
-        else
             return 2;
+        else
+            return 1;
     }
 
     private void setProjects(List<ProjectsRsp> projectsRspList) {

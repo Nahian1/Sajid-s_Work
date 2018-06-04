@@ -8,10 +8,9 @@
 package com.cryptenet.thanatos.dtmweb.home.plan_list;
 
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Build;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +21,14 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,11 +39,13 @@ import java.util.List;
 
 public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Presenter>
         implements PlanListFragmentContract.View {
+
     public static final String TAG = TagProvider.getDebugTag(PlanListFragment.class);
     private List<ProjectsRsp> projectsRspList;
     private ListView projectLV;
-    private ProjectAdapter adapter;
+    private PlanListAdapter adapter;
     private String token;
+//    private ProgressDialog progressDialog;
 
     public PlanListFragment() {
         projectsRspList = new ArrayList<>();
@@ -51,13 +56,15 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_plan_list, container, false);
-        adapter = new ProjectAdapter(activityContext, projectsRspList);
-        projectLV =  convertView.findViewById(R.id.projectListView);
-        projectLV.setAdapter(adapter);
-        projectLV.setOnItemClickListener((parent, view, position, id) ->
-            presenter.checkUserType(projectsRspList.get(position), activityContext));
 
-        token = getArguments().getString("token");
+        ((HomeActivity) getActivity()).hideSearchBar(false);
+
+        adapter = new PlanListAdapter(activityContext, projectsRspList);
+        projectLV = convertView.findViewById(R.id.projectListPlan);
+        projectLV.setAdapter(adapter);
+
+//        token = getArguments().getString("token");
+        token = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
         return convertView;
     }
 
@@ -78,21 +85,38 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     @Override
     public void toDetailsView(ProjectsRsp projectsRsp, int type) {
-        if (type == 1 && projectsRsp.getIsApproved())
-            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 1));
-        else if (type ==1 && !projectsRsp.getIsApproved()) {
-            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 2));
+        if (type == 1) {
+            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 10));
         } else {
-            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 3));
+            EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 20));
         }
     }
 
     @Subscribe
     public void onProjectListReceiveEvent(ProjectListReceiveEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
         this.projectsRspList = event.projectsRspList;
         for (ProjectsRsp projectsRsp : projectsRspList)
             Log.d(TAG, "onProjectListReceiveEvent: " + projectsRsp.getTitle());
         adapter.updateList(this.projectsRspList);
+    }
+
+    @Subscribe
+    public void onItemClickEvent(String clickPosition) {
+        presenter.checkUserType(projectsRspList.get(Integer.parseInt(clickPosition)), activityContext);
+
+    }
+
+    @Subscribe
+    public void onSearchEvent(SearchEvent event) {
+
+        if (event.searchTxt.isEmpty())
+            presenter.getProjectList(activityContext, token);
+        else
+            presenter.searchMyPlans(activityContext, token, event.searchTxt);
+
     }
 
     @Override
@@ -101,26 +125,37 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
         presenter.attachView(this);
 
+
+        ProgressDialogHelper.init(getActivity()).showProgress();
+
         presenter.getProjectList(activityContext, token);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
-    }
+    //commented out by Asif
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+//            EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+//            EventBus.getDefault().register(this);
+//    }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
-        EventBus.getDefault().unregister(this);
         super.onStop();
+        EventBus.getDefault().unregister(this);
     }
+
 }

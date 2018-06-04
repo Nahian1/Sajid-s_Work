@@ -7,7 +7,7 @@
   -->
 
 <resources>
-    <string name="app_name">Fikra</string>
+    <string name="app_name">فكرة</string>
 
     <string name="hint_et_email">البريد الالكتروني</string>
     <string name="hint_et_pwd">كلمة المرور</string>
@@ -45,7 +45,7 @@
     <string name="nav_about">عن</string>
     <string name="nav_rate">قيّم التطبيق</string>
     <string name="search_bar">ابحث عن أي مشروع</string>
-    <string name="nav_language">Switch To English</string>
+    <string name="nav_language">التحول إلى اللغة الإنجليزية</string>
     <string name="see_more">شاهد المزيد</string>
     <string name="add_plan">أضف خطة</string>
     <string name="category">فئة المشروع</string>
@@ -59,4 +59,25 @@
     <string name="upload_cover">تحميل غطاء المشروع</string>
     <string name="hint_et_note">ملاحظة</string>
     <string name="view_file">استعراض الملف</string>
+    <string name="update_profile">تحديث</string>
+    <string name="btn_cancel">الغاء</string>
+    <string name="hint_et_issue">اخبرنا عن مشكلتك</string>
+    <string name="tag_accepted">مقبول</string>
+    <string name="tag_pending">قيد الانتظار</string>
+    <string name="last_conversation">المحادثة الأخيرة</string>
+    <string name="investor_tag_line">انا مهتم بالاستثمار في خطتك</string>
+    <string name="btn_confirm_req">تأكيد الطلب</string>
+    <string name="request_for_details">طلب تفاصيل</string>
+    <string name="amount_to_be_paid_for_details">المبلغ الواجب دفعه للحصول على التفاصيل</string>
+    <string name="no_messages">لا رسائل</string>
+    <string name="please_wait">أرجو الإنتظار…</string>
+    <string name="plan_updated">الخطة المحدثة.</string>
+    <string name="plan_added">الخطة المضافة.</string>
+    <string name="transaction_id">معرف المعاملة</string>
+    <string name="cancel">إلغاء</string>
+    <string name="submit">خضع</string>
+    <string name="pending">قيد الانتظار</string>
+    <string name="price">السعر:</string>
+    <string name="submitted">قدمت!</string>
+    <string name="approved">وافق</string>
 </resources>

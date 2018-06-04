@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2018.
   ~ Development Courtesy: Cryptenet Ltd.
   ~ Developer Credit: Alamgir Hossain, Nabil Shawkat
@@ -7,23 +6,26 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
             <TextView
                 android:id="@+id/titleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
                 android:text="Title"
                 android:textColor="#939393"
                 android:textSize="20sp"
@@ -58,28 +60,26 @@
                 android:layout_height="20dp"
                 android:layout_alignBottom="@+id/titleTV"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/editproject" />
+                app:srcCompat="@drawable/ic_edit" />
 
             <TextView
                 android:id="@+id/statusTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pending"
-                android:paddingTop=".5dp"
+                android:layout_alignBaseline="@+id/dateTV"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/dateTV"
+                android:background="@drawable/tv_shape_pnd"
                 android:paddingBottom=".5dp"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
-                android:textSize="12sp"
-                android:layout_alignBaseline="@+id/dateTV"
-                android:layout_toEndOf="@+id/dateTV"
-                android:layout_marginStart="20dp"
+                android:paddingTop=".5dp"
+                android:text="Pending"
                 android:textColor="#ffff"
-                android:background="@drawable/tv_shape_pnd"/>
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
     </LinearLayout>
-
-
 
 </RelativeLayout>

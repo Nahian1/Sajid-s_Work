@@ -23,7 +23,8 @@ android {
         minSdkVersion 18
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "0.2 beta"
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,6 +43,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 ext {
@@ -56,9 +61,12 @@ ext {
     gson = '2.8.4'
     retrofit = '2.4.0'
     ok_http = '3.10.0'
+    timber = '4.5.1'
     event_bus = '3.1.1'
     circle_iv = '2.2.0'
     glide = '4.7.1'
+    rxJavaVersion = '1.1.8'
+    rxAndroidVersion = '1.2.1'
 }
 
 dependencies {
@@ -81,8 +89,10 @@ dependencies {
     //firebase
     implementation "com.google.firebase:firebase-core:$firebase"
     implementation "com.google.firebase:firebase-messaging:$firebase_cm"
+
     //crashlytics
     implementation "com.crashlytics.sdk.android:crashlytics:$crashlytic_s"
+
     //twitter answer
     implementation "com.crashlytics.sdk.android:answers:$answers"
 
@@ -93,8 +103,16 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
 
+    implementation "io.reactivex:rxjava:$rxJavaVersion"
+    implementation "io.reactivex:rxandroid:$rxAndroidVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit"
+
     //OkHttp3
     implementation "com.squareup.okhttp3:okhttp:$ok_http"
+    implementation "com.squareup.okhttp3:logging-interceptor:${ok_http}"
+
+    //timber
+    implementation "com.jakewharton.timber:timber:$timber"
 
     //circular iv
     implementation "de.hdodenhof:circleimageview:$circle_iv"
@@ -112,10 +130,19 @@ dependencies {
     //file chooser library
     implementation project(':aFileChooser')
 
+    //crash report
+    implementation 'ch.acra:acra:4.9.1'
+
     //testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+    implementation group: 'org.apache.james', name: 'apache-mime4j-core', version: '0.8.2'
+    implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.9'
+//    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
+    implementation group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.5'
 }
 
 apply plugin: 'com.google.gms.google-services'

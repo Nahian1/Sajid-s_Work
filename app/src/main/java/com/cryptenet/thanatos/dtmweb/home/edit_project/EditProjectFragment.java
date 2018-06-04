@@ -32,11 +32,16 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.EditPlanSuccessEvent;
+import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.EditProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
+import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
@@ -50,6 +55,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -107,6 +113,8 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_project, container, false);
 
+        ((HomeActivity) getActivity()).hideSearchBar(true);
+
         unbinder = ButterKnife.bind(this, view);
 
 
@@ -115,9 +123,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
         project = new Gson().fromJson(getArguments().getString("project"), ProjectsRsp.class);
 
-        if (project.isEditMode()){
+        if (project.isEditMode()) {
 
-            editTextName.setText(project.getInitiatorsName());
+            editTextName.setText(project.getTitle());
             editTextPriceMaximum.setText(project.getMaximumInvestmentCost());
             editTextPriceMinimum.setText(project.getMinimumInvestmentCost());
             editTextShortDescription.setText(project.getShortDescription());
@@ -136,7 +144,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         spinnerProjectCategory.setAdapter(spinCatAdapter);
 
         spinnerProjectCategory.setOnItemSelectedListener(this);
-//        return binding.getRoot();
 
         return view;
     }
@@ -159,31 +166,142 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @OnClick(R.id.btn_done)
     public void savePlan(View view) {
+
+        if (project.isEditMode()) {
+            processEditPlanInputData();
+        } else {
+            processAddNewPlanInputData();
+        }
+
+    }
+
+    // add new plan input processing
+    private void processAddNewPlanInputData() {
+        String title = editTextName.getText().toString().trim();
+        String shortDesc = editTextShortDescription.getText().toString().trim();
+        String longDesc = editTextLongDescription.getText().toString().trim();
+        String minInvest = editTextPriceMinimum.getText().toString().trim();
+        String maxInvest = editTextPriceMaximum.getText().toString().trim();
+        String accessPrice = editTextAccessPrice.getText().toString().trim();
+
+
+        ProjectsRq projectsRq = new ProjectsRq();
+
+        if (!title.isEmpty() && !shortDesc.isEmpty() && !longDesc.isEmpty()
+                && !minInvest.isEmpty() && !maxInvest.isEmpty() && !accessPrice.isEmpty()) {
+
+            projectsRq.setTitle(title);
+            projectsRq.setShortDescription(shortDesc);
+            projectsRq.setLongDescription(longDesc);
+            projectsRq.setMinimumInvestmentCost(minInvest);
+            projectsRq.setMaximumInvestmentCost(maxInvest);
+            projectsRq.setAccessPrice(accessPrice);
+
+            if (categoryCode != 0) {
+                projectsRq.setCategory(categoryCode);
+            } else {
+                if (list != null && list.size() > 0) {
+                    projectsRq.setCategory(list.get(0).getId());
+                }
+            }
+
+            if (imageFile != null)
+                projectsRq.setCover(imageFile);
+            if (planFile != null)
+                projectsRq.setUploadedFile(planFile);
+
+            if (imageFile == null) {
+                showMessage("Attach your cover image");
+            }
+
+            projectsRq.setNew(true);
+
+            if (imageFile != null) {
+
+                ProgressDialogHelper.init(getActivity()).showProgress();
+
+                presenter.saveUpdatePlan(projectsRq, activityContext, -1);
+            }
+
+        } else {
+            showMessage("Please fill all fields");
+        }
+
+    }
+
+    // edit a plan input processing
+    private void processEditPlanInputData() {
+
+        String title = editTextName.getText().toString().trim();
+        String shortDesc = editTextShortDescription.getText().toString().trim();
+        String longDesc = editTextLongDescription.getText().toString().trim();
+        String minInvest = editTextPriceMinimum.getText().toString().trim();
+        String maxInvest = editTextPriceMaximum.getText().toString().trim();
+        String accessPrice = editTextAccessPrice.getText().toString().trim();
+
+        ProjectsRq projectsRq = new ProjectsRq();
+
+        if (!title.isEmpty() && !shortDesc.isEmpty() && !longDesc.isEmpty()
+                && !minInvest.isEmpty() && !maxInvest.isEmpty() && !accessPrice.isEmpty()) {
+
+            projectsRq.setTitle(title);
+
+            if (categoryCode != 0) {
+                projectsRq.setCategory(categoryCode);
+            } else {
+                if (list != null && list.size() > 0) {
+                    projectsRq.setCategory(list.get(0).getId());
+                }
+            }
+
+            projectsRq.setShortDescription(shortDesc);
+            projectsRq.setLongDescription(longDesc);
+            projectsRq.setMinimumInvestmentCost(minInvest);
+            projectsRq.setMaximumInvestmentCost(maxInvest);
+            projectsRq.setAccessPrice(accessPrice);
+
+            if (imageFile != null)
+                projectsRq.setCover(imageFile);
+            if (planFile != null)
+                projectsRq.setUploadedFile(planFile);
+
+//            if (imageFile == null || planFile == null) {
+//                showMessage("Attach your file/image !");
+//            }
+
+            projectsRq.setNew(false);
+
+            // if (imageFile != null && planFile != null) {
+
+            ProgressDialogHelper.init(getActivity()).showProgress();
+
+            presenter.saveUpdatePlan(projectsRq, activityContext, project.getId());
+            // }
+
+        } else {
+            showMessage("Please fill all fields");
+        }
+
+    }
+
+    @OnClick(R.id.buttonUploadImage)
+    public void getCoverImage(View view) {
         Dexter.withActivity(getActivity())
                 .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
-                        ProjectsRq projectsRq = new ProjectsRq();
-                        projectsRq.setTitle(editTextName.getText().toString().trim());
-                        projectsRq.setCategory(categoryCode);
-                        projectsRq.setShortDescription(editTextShortDescription.getText().toString().trim());
-                        projectsRq.setLongDescription(editTextLongDescription.getText().toString().trim());
-                        projectsRq.setMinimumInvestmentCost((int) Double.parseDouble(editTextPriceMinimum.getText().toString().trim()));
-                        projectsRq.setMinimumInvestmentCost((int) Double.parseDouble(editTextPriceMaximum.getText().toString().trim()));
-                        projectsRq.setAccessPrice((int) Double.parseDouble(editTextAccessPrice.getText().toString().trim()));
-                        projectsRq.setCover(imageFile);
-                        projectsRq.setUploadedFile(planFile);
-                        projectsRq.setNew(true);
 
-                        presenter.saveUpdatePlan(projectsRq, activityContext, -1);
+                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                        photoPickerIntent.setType("image/*");
+                        startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        // check for permanent denial of permission
                         if (response.isPermanentlyDenied()) {
                             // navigate user to app settings
+                            showMessage("must grant permission");
                         }
                     }
 
@@ -194,20 +312,33 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                 }).check();
     }
 
-    @OnClick(R.id.imageviewCover)
-    public void getCoverImage(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
-    }
-
     @OnClick(R.id.buttonUploadFile)
     public void buttonUploadFile(View view) {
-        // Create the ACTION_GET_CONTENT Intent
-        Intent getContentIntent = FileUtils.createGetContentIntent();
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        // Create the ACTION_GET_CONTENT Intent
+                        Intent getContentIntent = FileUtils.createGetContentIntent();
 
-        Intent intent = Intent.createChooser(getContentIntent, "Select a file");
-        startActivityForResult(intent, ConstantProvider.RESULT_FILE_IMG);
+                        Intent intent = Intent.createChooser(getContentIntent, "Select a file");
+                        startActivityForResult(intent, ConstantProvider.RESULT_FILE_IMG);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        if (response.isPermanentlyDenied()) {
+                            // navigate user to app settings
+                            showMessage("must grant permission");
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
     }
 
     @Subscribe
@@ -222,6 +353,20 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         spinCatAdapter.notifyDataSetChanged();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEditPlanSuccessEvent(EditPlanSuccessEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        if (project.isEditMode())
+            showMessage(getString(R.string.plan_updated));
+        else
+            showMessage(getString(R.string.plan_added));
+
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -233,6 +378,8 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
             if (requestCode == ConstantProvider.RESULT_LOAD_IMG) {
                 try {
                     final Uri imageUri = data.getData();
+                    showMessage(imageUri.getPath() + " added.");
+
                     realPath = ImageFilePath.getPath(activityContext, data.getData());
                     assert imageUri != null;
                     final InputStream imageStream = activityContext.getContentResolver().openInputStream(imageUri);
@@ -243,7 +390,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
                 imageFile = new File(realPath);
 
-            }else   if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
+            } else if (requestCode == ConstantProvider.RESULT_FILE_IMG) {
 
                 final Uri uri = data.getData();
 
@@ -252,6 +399,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
                 // Alternatively, use FileUtils.getFile(Context, Uri)
                 if (path != null && FileUtils.isLocal(path)) {
+                    showMessage(path + " added.");
                     planFile = new File(path);
                 }
             }
@@ -266,17 +414,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-            EventBus.getDefault().register(this);
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -293,7 +433,9 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        this.categoryCode = list.get(position).getId();
+        if (list != null && list.size() > 0) {
+            this.categoryCode = list.get(position).getId();
+        }
     }
 
     @Override

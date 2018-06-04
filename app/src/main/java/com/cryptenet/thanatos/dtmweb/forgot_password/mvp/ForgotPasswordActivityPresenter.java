@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.forgot_password.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
@@ -27,7 +29,7 @@ public class ForgotPasswordActivityPresenter extends BasePresenter<ForgotActivit
     }
 
     @Override
-    public void saveIdentifier(String identifier) {
-        model.saveIdentifier(identifier);
+    public void saveIdentifier(String identifier, Context context) {
+        model.saveIdentifier(identifier, context);
     }
 }

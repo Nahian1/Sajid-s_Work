@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2018.
   ~ Development Courtesy: Cryptenet Ltd.
   ~ Developer Credit: Alamgir Hossain, Nabil Shawkat
@@ -8,33 +7,34 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#ededed"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:padding="20dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
                 <TextView
+                    android:id="@+id/textViewTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/layout_pics"
-                    android:layout_toEndOf="@+id/layout_pics"
                     android:text="Title"
                     android:textColor="#939393"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:id="@+id/textViewTitle" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/price"
@@ -66,37 +66,40 @@
                     android:layout_alignBottom="@+id/date"
                     android:layout_marginStart="20dp"
                     android:layout_toEndOf="@+id/date"
-                    android:text="Pending"
+                    android:text="@string/pending"
                     android:textColor="#939393"
                     android:textSize="15sp" />
 
 
             </RelativeLayout>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:src="@drawable/lineoflist"/>
+
             <LinearLayout
-                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
+
                 <RelativeLayout
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
                     <ImageView
                         android:id="@+id/profilepic"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
-                        android:scaleType="centerCrop"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:src="@drawable/img_initiator_profile_picture" />
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_profile_grey" />
 
                     <TextView
+                        android:id="@+id/textViewName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
@@ -104,9 +107,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/profilepic"
                         android:text="Habib Abdullah"
-                        android:textSize="16sp"
                         android:textColor="#535353"
-                        android:id="@+id/textViewName" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/textViewType"
@@ -115,8 +117,8 @@
                         android:layout_alignStart="@+id/textViewName"
                         android:layout_below="@+id/textViewName"
                         android:text="Initiator"
-                        android:textSize="12sp"
-                        android:textColor="#535353" />
+                        android:textColor="#535353"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/address"
@@ -125,142 +127,181 @@
                         android:layout_alignStart="@+id/textViewType"
                         android:layout_below="@+id/textViewType"
                         android:text="Riyad, Saudi Arabia"
-                        android:textSize="12sp"
-                        android:textColor="#535353"/>
+                        android:textColor="#535353"
+                        android:textSize="12sp" />
 
                 </RelativeLayout>
 
                 <!-- Payment Details -->
                 <LinearLayout
-                    android:layout_marginTop="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="2"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="25dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
                     <EditText
                         android:id="@+id/bankNameET"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:paddingTop="12dp"
-                        android:textAlignment="viewStart"
-                        android:hint="Bank Name"
-                        android:textSize="14sp"
                         android:background="@android:color/transparent"
-                        android:textColor="#898989"/>
+                        android:hint="@string/hint_et_bank_name"
+                        android:inputType="text"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingTop="12dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewStart"
+                        android:textColor="#898989"
+                        android:textSize="14sp" />
                 </LinearLayout>
-                <ImageView
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lineoflist"/>
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="2"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <EditText
                         android:id="@+id/bankAccNameET"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:paddingTop="12dp"
-                        android:textAlignment="viewStart"
-                        android:hint="Bank Account Name"
-                        android:textSize="14sp"
                         android:background="@android:color/transparent"
-                        android:textColor="#898989"/>
+                        android:hint="@string/hint_et_bank_acc_name"
+                        android:inputType="text"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingTop="12dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewStart"
+                        android:textColor="#898989"
+                        android:textSize="14sp" />
                 </LinearLayout>
-                <ImageView
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lineoflist"/>
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="2"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
                     <EditText
                         android:id="@+id/bankAccNumET"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:paddingTop="12dp"
-                        android:textAlignment="viewStart"
-                        android:hint="Bank Account Number"
-                        android:textSize="14sp"
                         android:background="@android:color/transparent"
-                        android:textColor="#898989"/>
+                        android:hint="@string/hint_et_bank_acc_number"
+                        android:inputType="number"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingTop="12dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewStart"
+                        android:textColor="#898989"
+                        android:textSize="14sp" />
                 </LinearLayout>
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lineoflist"/>
+
                 <LinearLayout
-                    android:weightSum="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
                     <EditText
                         android:id="@+id/transIdET"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:paddingTop="12dp"
-                        android:textAlignment="viewStart"
-                        android:hint="Transaction Id"
-                        android:textSize="14sp"
                         android:background="@android:color/transparent"
-                        android:textColor="#898989"/>
+                        android:hint="@string/transaction_id"
+                        android:inputType="text"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingTop="12dp"
+                        android:singleLine="true"
+                        android:textAlignment="viewStart"
+                        android:textColor="#898989"
+                        android:textSize="14sp" />
                 </LinearLayout>
-                <ImageView
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lineoflist"/>
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey" />
+
             </LinearLayout>
+
             <LinearLayout
-                android:layout_margin="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:orientation="vertical">
+
                 <EditText
                     android:id="@+id/add_report"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="99dp"
                     android:background="@drawable/background_text"
                     android:gravity="top"
                     android:hint="@string/hint_et_note"
-                    android:textSize="15sp"
                     android:inputType="textMultiLine"
                     android:lines="20"
                     android:minLines="5"
+                    android:padding="10dp"
                     android:scrollbars="vertical"
+                    android:textSize="15sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
+
                     <Button
                         android:id="@+id/cancelBtn"
-                        android:text="Cancel"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
                         android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
                         android:layout_weight="1"
-                        android:layout_height="35dp"/>
+                        android:background="@drawable/grey_button_selector"
+                        android:text="@string/cancel"
+                        android:textColor="#404040" />
+
                     <Button
                         android:id="@+id/submitBtn"
-                        android:text="Submit"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
                         android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
-                        android:layout_height="35dp"/>
+                        android:background="@drawable/blue_button_selector"
+                        android:text="@string/submit"
+                        android:textColor="@color/colorPrimaryDark" />
                 </LinearLayout>
 
             </LinearLayout>

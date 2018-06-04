@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.other_report.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragPresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.OtherReportFragmentContract;
@@ -19,5 +21,10 @@ public class OtherReportFragmentPresenter extends BaseFragPresenter<OtherReportF
 
     public OtherReportFragmentPresenter(OtherReportFragmentContract.Model model) {
         super(model);
+    }
+
+    @Override
+    public void sendIssue(Context context, int issueCode, String issue) {
+        model.sendIssue(context, issueCode, issue);
     }
 }

@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
@@ -29,7 +31,12 @@ public class HomeActivityModel extends BaseModel<HomeActivityContract.Repository
     }
 
     @Override
-    public NavHeader getNavHeaderData() {
-        return repository.getNavHeaderData();
+    public NavHeader getNavHeaderData(Context context) {
+        return repository.getNavHeaderData(context);
+    }
+
+    @Override
+    public boolean clearUserData(Context context) {
+        return repository.clearUserData(context);
     }
 }

@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="@dimen/margin_vertical_16"
         android:paddingLeft="@dimen/margin_horizontal_16"
@@ -15,32 +16,35 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <LinearLayout
-            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <de.hdodenhof.circleimageview.CircleImageView
+
+                <ImageView
+                    android:id="@+id/iv_nav_pp"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
+                    android:adjustViewBounds="false"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_nav_profile_picture"
-                    android:id="@+id/iv_nav_pp" />
+                    app:srcCompat="@drawable/ic_profile_white" />
 
                 <TextView
+                    android:id="@+id/tv_nav_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="7dp"
                     android:layout_toEndOf="@+id/iv_nav_pp"
-                    android:text="Habib Abdullah"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:text="@string/hint_et_bank_acc_number"
                     android:textColor="@android:color/white"
-                    android:id="@+id/tv_nav_name" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_nav_type"
@@ -48,10 +52,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/tv_nav_name"
                     android:layout_below="@+id/tv_nav_name"
-                    android:textStyle="normal"
-                    android:text="Initiator"
+                    android:text="@string/hint_et_bank_acc_number"
+                    android:textColor="@android:color/white"
                     android:textSize="12sp"
-                    android:textColor="@android:color/white" />
+                    android:textStyle="normal" />
 
                 <TextView
                     android:id="@+id/tv_nav_address"
@@ -59,10 +63,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/tv_nav_type"
                     android:layout_below="@+id/tv_nav_type"
-                    android:text="Riyad, Saudi Arabia"
-                    android:textStyle="normal"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/hint_et_bank_acc_number"
+                    android:textColor="@android:color/white"
                     android:textSize="12sp"
-                    android:textColor="@android:color/white" />
+                    android:textStyle="normal" />
 
                 <ImageView
                     android:id="@+id/iv_nav_edit_profile"
@@ -71,7 +77,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@+id/tv_nav_name"
                     android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_edit" />
+                    app:srcCompat="@drawable/ic_edit_white" />
 
                 <TextView
                     android:id="@+id/details"
@@ -83,146 +89,188 @@
 
             </RelativeLayout>
 
-
             <LinearLayout
                 android:id="@+id/project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:tint="#FFFFFF"
-                    android:src="@drawable/ic_man_project"/>
+                    app:srcCompat="@drawable/ic_project" />
+
                 <TextView
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/nav_man_project"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                    android:text="@string/nav_man_project"/>
+                    android:textColor="@android:color/white" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/request"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_man_request"/>
+                    app:srcCompat="@drawable/ic_request" />
+
                 <TextView
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/nav_man_request"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                    android:text="@string/nav_man_request"/>
+                    android:textColor="@android:color/white" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/language"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_language"/>
+                    app:srcCompat="@drawable/ic_language" />
+
                 <TextView
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/nav_language"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                    android:text="@string/nav_conversation"/>
+                    android:textColor="@android:color/white" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/conversation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_conversation"/>
+                    app:srcCompat="@drawable/ic_conversation" />
+
                 <TextView
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/nav_conversation"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                    android:text="@string/nav_conversation"/>
+                    android:textColor="@android:color/white" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_report" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/nav_report"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/logOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_logout"/>
+                    app:srcCompat="@drawable/ic_logout" />
+
                 <TextView
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/nav_logout"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                    android:text="@string/nav_logout"/>
+                    android:textColor="@android:color/white" />
             </LinearLayout>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/line"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/line" />
+
             <TextView
                 android:id="@+id/terms"
-                android:layout_marginLeft="35dp"
-                android:layout_gravity="center"
-                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:layout_marginStart="35dp"
+                android:padding="10dp"
+                android:text="@string/nav_tc"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                android:text="@string/nav_tc"/>
+                android:textColor="@android:color/white" />
+
             <TextView
                 android:id="@+id/rateUs"
-                android:layout_marginLeft="35dp"
-                android:padding="10dp"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:layout_marginStart="35dp"
+                android:padding="10dp"
+                android:text="@string/nav_rate"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                android:text="@string/nav_rate"/>
+                android:textColor="@android:color/white" />
+
             <TextView
                 android:id="@+id/about"
-                android:layout_marginLeft="35dp"
-                android:padding="10dp"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:layout_marginStart="35dp"
+                android:padding="10dp"
+                android:text="@string/nav_about"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                android:text="@string/nav_about"/>
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

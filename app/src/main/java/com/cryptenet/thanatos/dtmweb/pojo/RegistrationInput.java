@@ -34,10 +34,10 @@ public class RegistrationInput {
     private String address;
     @SerializedName("country")
     @Expose
-    private Integer country;
+    private int country;
     @SerializedName("city")
     @Expose
-    private Integer city;
+    private int city;
     @SerializedName("bank_name")
     @Expose
     private String bankName;
@@ -69,8 +69,8 @@ public class RegistrationInput {
      * @param country
      * @param userType
      */
-    public RegistrationInput(String userType, String name, String email, File picture, String password, String address, Integer country, Integer city, String bankName, String bankAccountName, String bankAccountNumber) {
-        super();
+
+    public RegistrationInput(String userType, String name, String email, File picture, String password, String address, int country, int city, String bankName, String bankAccountName, String bankAccountNumber) {
         this.userType = userType;
         this.name = name;
         this.email = email;
@@ -132,19 +132,19 @@ public class RegistrationInput {
         this.address = address;
     }
 
-    public Integer getCountry() {
+    public int getCountry() {
         return country;
     }
 
-    public void setCountry(Integer country) {
+    public void setCountry(int country) {
         this.country = country;
     }
 
-    public Integer getCity() {
+    public int getCity() {
         return city;
     }
 
-    public void setCity(Integer city) {
+    public void setCity(int city) {
         this.city = city;
     }
 

@@ -1,11 +1,19 @@
 package com.cryptenet.thanatos.dtmweb.borrowed;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.IOException;
 
 public class ApiUtil {
     String BASE_URL;
     String charset = "UTF-8";
+
+    //registration code == 1
+    //edit profile code == 2
+    //create plan code == 3
+    //edit plan code == 4
+
 
     public ApiUtil(String BASEURL) {
         this.BASE_URL = BASEURL;
@@ -34,13 +42,15 @@ public class ApiUtil {
             multipart.addFormField("address", address);
             return multipart.finish();
         } catch (IOException ex) {
+            Log.d("createUser Error => ", ex.getMessage(), ex);
+
             ex.printStackTrace();
             return "IOException";
         }
     }
 
     public String editUser(String id, String name, String email,
-                           File picture,
+                           File picture, String userType, String pwd,
                            String address, String country, String city, String bankName,
                            String bankAccountName, String bankAccountNumber, String accessToken) {
         String requestUrl = BASE_URL + "api/v1/user/" + id + "/?format=json";
@@ -58,6 +68,8 @@ public class ApiUtil {
             multipart.addFormField("bank_account_name", bankAccountName);
             multipart.addFormField("bank_account_number", bankAccountNumber);
             multipart.addFormField("address", address);
+            multipart.addFormField("user_type", userType);
+            multipart.addFormField("password", pwd);
 
             return multipart.finish();
 
@@ -72,7 +84,7 @@ public class ApiUtil {
         String requestUrl = BASE_URL + "api/v1/plan/?format=json";
 
         try {
-            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "POST", "Bearer " + accessToken);
+            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "POST", accessToken);
 
             multipart.addHeaderField("Content-Type", "application/json");
 
@@ -98,7 +110,7 @@ public class ApiUtil {
         String requestUrl = BASE_URL + "/api/v1/plan/" + id + "/?format=json";
 
         try {
-            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "PUT", "Bearer " + accessToken);
+            MultipartUtility multipart = new MultipartUtility(requestUrl, charset, "PUT", accessToken);
 
             multipart.addHeaderField("Content-Type", "application/json");
 

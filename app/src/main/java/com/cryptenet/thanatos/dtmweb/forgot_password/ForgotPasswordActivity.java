@@ -1,7 +1,10 @@
 package com.cryptenet.thanatos.dtmweb.forgot_password;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,10 +14,14 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.DataSendSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,13 +68,25 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
 
     @Override
     public void onClick(View v) {
-        presenter.sendIdentifier(etForgot.getText().toString().trim());
-        presenter.saveIdentifier(etForgot.getText().toString().trim());
 
-        navigator.toCodeActivity(this);
+        ViewUtils.hideKeyboard(this);
+
+        String mail = etForgot.getText().toString().trim();
+
+        if (!mail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
+
+            presenter.saveIdentifier(mail, this);
+            presenter.sendIdentifier(mail);
+
+            navigator.toCodeActivity(this);
+
+        } else {
+
+            showMessage("Field can not be empty");
+        }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSendSuccessEvent(DataSendSuccessEvent event) {
         if (event.isSuccess)
             navigator.toCodeActivity(this);
@@ -91,5 +110,11 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
     protected void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.SELECTED_LANGUAGE, "en");
+        super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
     }
 }

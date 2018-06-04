@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
@@ -23,7 +25,13 @@ public class HomeActivityPresenter
     }
 
     @Override
-    public void getNavHeaderData() {
-        view.getNavHeaderData(model.getNavHeaderData());
+    public void getNavHeaderData(Context context) {
+        view.getNavHeaderData(model.getNavHeaderData(context));
+    }
+
+    @Override
+    public void clearUserData(Context context) {
+        if (model.clearUserData(context))
+            view.userDataCleaned();
     }
 }

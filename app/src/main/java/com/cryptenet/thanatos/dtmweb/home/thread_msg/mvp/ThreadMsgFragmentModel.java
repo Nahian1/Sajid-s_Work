@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.home.thread_msg.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadMsgFragmentContract;
@@ -22,4 +24,18 @@ public class ThreadMsgFragmentModel extends BaseFragModel<ThreadMsgFragmentContr
     }
 
 
+    @Override
+    public int getThreadIdForInvestor(Context context, int threadID) {
+        return repository.getThreadIdForInvestor(context, threadID);
+    }
+
+    @Override
+    public void getMessageList(Context context, int threadID) {
+        repository.getMessageList(context, threadID);
+    }
+
+    @Override
+    public void setSendMessage(Context context, int threadID, String message) {
+        repository.setSendMessage(context, threadID, message);
+    }
 }

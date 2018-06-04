@@ -7,7 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.registration;
 
-import android.app.backup.SharedPreferencesBackupHelper;
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -16,12 +17,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -31,14 +35,26 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
 import com.cryptenet.thanatos.dtmweb.events.CountryFetchEvent;
+import com.cryptenet.thanatos.dtmweb.events.RegistrationFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.RegistrationSuccessEvent;
+import com.cryptenet.thanatos.dtmweb.events.UpdateProfileFailureEvent;
+import com.cryptenet.thanatos.dtmweb.events.UpdateProfileSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
-import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
+import com.cryptenet.thanatos.dtmweb.utils.ImageUtil;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,12 +73,13 @@ import butterknife.OnClick;
 public class RegistrationActivity extends BaseActivity<RegistrationActivityContract.Presenter>
         implements RegistrationActivityContract.View, AdapterView.OnItemSelectedListener {
     private static final String TAG = TagProvider.getDebugTag(RegistrationActivity.class);
+
     private File imageFile;
     private String accType;
     private int countryCode, cityCode;
     private List<Country> countries;
     private List<City> cities;
-    private List<String> sCountries, sCities;
+    private List<String> accTypes, sCountries, sCities;
     private ArrayAdapter<String> spinAccTypeAdapter, spinCountryAdapter, spinCityAdapter;
     private boolean isEdit;
 
@@ -102,6 +119,17 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     @BindView(R.id.spin_city)
     Spinner spinCity;
 
+    @BindView(R.id.btn_sign_in_reg)
+    Button btnSignInReg;
+
+    @BindView(R.id.tv_have_acc)
+    TextView tvHaveAcc;
+
+    @BindView(R.id.tv_sign_in)
+    TextView tvSignIn;
+
+    String imageUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,47 +137,16 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
         viewUnbinder = ButterKnife.bind(this);
 
-        isEdit = getIntent().getBooleanExtra("isEdit",false);
+        isEdit = getIntent().getBooleanExtra("isEdit", false);
 
         init();
-
-        if (isEdit) {
-
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            String imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL,null);
-
-            if (imageUrl!=null) {
-                Glide.with(this)
-                        .load(imageUrl)
-                        .apply(RequestOptions.placeholderOf(R.drawable.ic_nav_profile_picture))
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(ivPp);
-
-            }
-
-            etNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_NAME,null));
-            etEmailReg.setText(sharedPreferences.getString(ConstantProvider.SP_EMAIL,null));
-            etAddress.setText(sharedPreferences.getString(ConstantProvider.SP_ADDRESS,null));
-            etBankNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_NAME,null));
-            etBankAccNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NAME,null));
-            etBankAccNumberReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NO,null));
-
-        }
 
     }
 
     private void init() {
-        List<String> accTypes = new ArrayList<>();
+        accTypes = new ArrayList<>();
         sCountries = new ArrayList<>();
         sCities = new ArrayList<>();
-
-        accTypes.add(getString(R.string.acc_type_initiator));
-        accTypes.add(getString(R.string.acc_type_investor));
-
-        spinAccTypeAdapter = new ArrayAdapter<>(this,
-                R.layout.node_spin_reg, accTypes);
-        spinAccTypeAdapter.setDropDownViewResource(R.layout.node_spin_reg);
-        spinAccType.setAdapter(spinAccTypeAdapter);
 
         sCountries.add("Country");
 
@@ -168,6 +165,60 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         spinAccType.setOnItemSelectedListener(this);
         spinCountry.setOnItemSelectedListener(this);
         spinCity.setOnItemSelectedListener(this);
+
+
+        if (isEdit) {
+
+            btnSignInReg.setText(R.string.update_profile);
+            tvHaveAcc.setVisibility(View.GONE);
+            tvSignIn.setVisibility(View.GONE);
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL, null);
+
+            if (imageUrl != null) {
+
+                Glide.with(this)
+                        .load(imageUrl)
+                        .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_white))
+                        .apply(RequestOptions.circleCropTransform())
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(ivPp);
+
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        imageFile = ImageUtil.getImageFromUrl(getApplicationContext(), imageUrl);
+
+                    }
+                });
+
+            }
+
+            etNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_NAME, null));
+            etEmailReg.setText(sharedPreferences.getString(ConstantProvider.SP_EMAIL, null));
+            etAddress.setText(sharedPreferences.getString(ConstantProvider.SP_ADDRESS, null));
+            etBankNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_NAME, null));
+            etBankAccNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NAME, null));
+            etBankAccNumberReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NO, null));
+
+            accType = sharedPreferences.getString(ConstantProvider.SP_USER_TYPE, null);
+            accTypes.add(accType);
+            spinAccType.setEnabled(false);
+
+        } else {
+
+            accTypes.add(getString(R.string.acc_type_initiator));
+            accTypes.add(getString(R.string.acc_type_investor));
+
+        }
+
+        spinAccTypeAdapter = new ArrayAdapter<>(this,
+                R.layout.node_spin_reg, accTypes);
+        spinAccTypeAdapter.setDropDownViewResource(R.layout.node_spin_reg);
+        spinAccType.setAdapter(spinAccTypeAdapter);
     }
 
     @Override
@@ -190,40 +241,120 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     }
 
-    @Override
-    public void moveToSignIn() {
-        navigator.toLoginActivity(this);
-        finish();
-    }
 
     @OnClick(R.id.iv_pp)
     public void getPp(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                        photoPickerIntent.setType("image/*");
+
+                        startActivityForResult(photoPickerIntent, ConstantProvider.RESULT_LOAD_IMG);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        if (response.isPermanentlyDenied()) {
+                            // navigate user to app settings
+                            showMessage("must grant permission");
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
     }
 
     @OnClick(R.id.btn_sign_in_reg)
     public void requestRegistration(View view) {
-        presenter.carryRegData(
-                imageFile,
-                accType,
-                etNameReg.getText().toString().trim(),
-                etEmailReg.getText().toString().trim(),
-                etPwdReg.getText().toString().trim(),
-                etConfirmPwd.getText().toString().trim(),
-                etAddress.getText().toString().trim(),
-                countryCode,
-                cityCode,
-                etBankNameReg.getText().toString().trim(),
-                etBankAccNameReg.getText().toString().trim(),
-                etBankAccNumberReg.getText().toString().trim()
-        );
+
+        ViewUtils.hideKeyboard(this);
+
+        if (isEdit) {
+            processInputForUpdateUserProfile();
+        } else
+            processInputForNewUserRegistration();
+
+    }
+
+    // to register new user
+    private void processInputForNewUserRegistration() {
+        String name = etNameReg.getText().toString().trim();
+        String email = etEmailReg.getText().toString().trim();
+        String pwd = etPwdReg.getText().toString().trim();
+        String cPwd = etConfirmPwd.getText().toString().trim();
+        String address = etAddress.getText().toString().trim();
+        String bankName = etBankNameReg.getText().toString().trim();
+        String bankAccName = etBankAccNameReg.getText().toString().trim();
+        String bankAccNum = etBankAccNumberReg.getText().toString().trim();
+
+
+        if (imageFile != null && !name.isEmpty() && !email.isEmpty() && !address.isEmpty()
+                && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
+            if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                if (pwd.equals(cPwd)) {
+
+                    ProgressDialogHelper.init(this).showProgress();
+
+                    presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER, imageFile, accType,
+                            name, email, pwd, address, countryCode, cityCode,
+                            bankName, bankAccName, bankAccNum
+                    );
+                } else {
+                    showMessage("Password did not match!");
+                }
+            } else {
+                showMessage("Please give correct email !");
+            }
+
+        } else {
+            showMessage("Please fill all fields!");
+        }
+    }
+
+    // to update/edit user profile
+    private void processInputForUpdateUserProfile() {
+        String name = etNameReg.getText().toString().trim();
+        String email = etEmailReg.getText().toString().trim();
+        String pwd = etPwdReg.getText().toString().trim();
+        String cPwd = etConfirmPwd.getText().toString().trim();
+        String address = etAddress.getText().toString().trim();
+        String bankName = etBankNameReg.getText().toString().trim();
+        String bankAccName = etBankAccNameReg.getText().toString().trim();
+        String bankAccNum = etBankAccNumberReg.getText().toString().trim();
+
+        if (!name.isEmpty() && !email.isEmpty() && !address.isEmpty()
+                && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
+            if ((Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+                if (pwd.equals(cPwd)) {
+
+                    ProgressDialogHelper.init(this).showProgress();
+
+                    presenter.carryUpdateProfileData(this, ConstantProvider.REQ_TYPE_EDIT_PROFILE, imageFile, accType,
+                            name, email, pwd, address, countryCode, cityCode,
+                            bankName, bankAccName, bankAccNum);
+
+                } else {
+                    showMessage("Password did not match!");
+                }
+            } else {
+                showMessage("Please give correct email !");
+            }
+
+        } else {
+            showMessage("Please fill all fields!");
+        }
     }
 
     @OnClick(R.id.tv_sign_in)
     public void toSignIn(View view) {
-        presenter.checkLoginState(this);
+        navigator.toLoginActivity(this);
+        finish();
     }
 
     @Override
@@ -241,12 +372,20 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                     assert imageUri != null;
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                     selectedImage = BitmapFactory.decodeStream(imageStream);
-                    ivPp.setImageBitmap(selectedImage);
+
+                    imageFile = new File(realPath);
+
+                    Glide.with(this)
+                            .load(selectedImage)
+                            .apply(RequestOptions.circleCropTransform())
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .into(ivPp);
+
+//                    ivPp.setImageBitmap(selectedImage);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
 
-                imageFile = new File(realPath);
             }
         }
     }
@@ -257,6 +396,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         sCountries.clear();
         for (Country country : this.countries)
             sCountries.add(country.getName());
+        countryCode = countries.get(0).getId();
+        presenter.getLimitedCities(countries.get(0).getId());
         spinCountryAdapter.notifyDataSetChanged();
     }
 
@@ -266,14 +407,57 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
         sCities.clear();
         for (City city : this.cities)
             sCities.add(city.getName());
-        spinCityAdapter.notifyDataSetChanged();
+        if (cities.size() > 0) {
+            cityCode = cities.get(0).getId();
+            spinCityAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegistrationSuccessEvent(RegistrationSuccessEvent event) {
-        showMessage("Registered");
-        navigator.toLoginActivity(this);
+
+        ProgressDialogHelper.hideProgress();
+
+        if (!isEdit) {
+            showMessage("Registered");
+            navigator.toLoginActivity(this);
+
+        } else {
+            showMessage("Info updated.");
+        }
+
         finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRegistrationFailureEvent(RegistrationFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        if (event.isFailure) {
+            showMessage("Please try again!");
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateProfileSuccessEvent(UpdateProfileSuccessEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        presenter.saveUpdatedUserData(event.updateProfileResponse);
+        showMessage("Your profile updated!");
+        finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateProfileFailureEvent(UpdateProfileFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        if (event.isFailure) {
+            showMessage("Please try again!");
+        }
     }
 
     @Override
@@ -284,22 +468,19 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                 break;
             case R.id.spin_country:
                 if (countries != null)
-                countryCode = (countries.get(position)).getId();
+                    countryCode = (countries.get(position)).getId();
                 Log.d(TAG, "onItemSelected: " + countryCode);
-                presenter.getLimitedCities(countryCode == 0 ? 1 : countryCode);
+                presenter.getLimitedCities(countryCode);
                 break;
             case R.id.spin_city:
                 if (cities != null)
-                cityCode = cities.get(position).getId();
+                    cityCode = cities.get(position).getId();
                 break;
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        if (parent.getId() == R.id.spin_country) {
-            presenter.getLimitedCities(1);
-        }
     }
 
     @Override
@@ -319,5 +500,11 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     protected void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.SELECTED_LANGUAGE, "en");
+        super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
     }
 }

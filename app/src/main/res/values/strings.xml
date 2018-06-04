@@ -17,7 +17,7 @@
     <string name="hint_et_bank_name">Bank Name</string>
     <string name="hint_et_bank_acc_name">Bank Account Name</string>
     <string name="hint_et_bank_acc_number">Bank Account Number</string>
-    <string name="hint_et_forgot">Email or Phone Number</string>
+    <string name="hint_et_forgot">Email</string>
     <string name="hint_et_new_pwd">New Password</string>
     <string name="hint_et_confirm_new_pwd">Confirm New Password</string>
     <string name="hint_et_code" translatable="false">00 00 00</string>
@@ -38,12 +38,13 @@
     <string name="btn_done">Done</string>
     <string name="btn_next">Next</string>
     <string name="btn_submit">Submit</string>
+    <string name="btn_cancel">Cancel</string>
 
     <string name="acc_type_investor">Investor</string>
     <string name="acc_type_initiator">Initiator</string>
 
     <string name="nav_man_request">Manage Requests</string>
-    <string name="nav_language">التحول إلى اللغة الإنجليزية</string>
+    <string name="nav_language">Switch to Arabic</string>
     <string name="nav_conversation">Conversation</string>
     <string name="nav_report">Report An Issue</string>
     <string name="nav_logout">Log Out</string>
@@ -71,8 +72,32 @@
 
     <string name="hint_et_note">Note</string>
     <string name="view_file">View File</string>
+    <string name="update_profile">Update</string>
 
+    <string name="hint_et_issue">Tell us about the issue …</string>
+    <string name="tag_accepted">Accepted</string>
+    <string name="tag_pending">Pending</string>
+    <string name="last_conversation">Last Conversation</string>
+    <string name="investor_tag_line">I\'m interested to invest your plan</string>
+    <string name="btn_confirm_req">Confirm Request</string>
+    <string name="no_messages">No Messages</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+    <string name="title_activity_message_request" translatable="false">MessageRequestActivity</string>
+
+    <string name="toast_crash" translatable="false">App Crashed</string>
+    <string name="request_for_details">Request for details</string>
+    <string name="amount_to_be_paid_for_details">Amount to be paid for details</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="plan_updated">Plan Updated.</string>
+    <string name="plan_added">Plan Added.</string>
+    <string name="transaction_id">Transaction Id</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="pending">Pending</string>
+    <string name="price">Price:</string>
+    <string name="submitted">Submitted!</string>
+    <string name="approved">Approved</string>
 </resources>

@@ -8,6 +8,9 @@
 package com.cryptenet.thanatos.dtmweb.home.report_issue;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,11 +21,18 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.IssueListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ReportIssueFragmentContract;
+import com.cryptenet.thanatos.dtmweb.pojo.IssueParent;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -30,11 +40,13 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
         implements ReportIssueFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(ReportIssueFragment.class);
 
-    private static ExpandableListView expandableListView;
-    private static ELVAdapter adapter;
+    private ExpandableListView expandableListView;
+    private ELVAdapter adapter;
+
+    private List<IssueParent> issueParents;
 
     public ReportIssueFragment() {
-        // Required empty public constructor
+        issueParents = new ArrayList<>();
     }
 
 
@@ -43,7 +55,10 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_report_issue, container, false);
-        expandableListView = (ExpandableListView) convertView.findViewById(R.id.elv_report);
+
+        ((HomeActivity) getActivity()).hideSearchBar(true);
+
+        expandableListView = convertView.findViewById(R.id.elv_report);
         expandableListView.setGroupIndicator(null);
 
         setItems();
@@ -52,75 +67,27 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
     }
 
     void setItems() {
+        adapter = new ELVAdapter(activityContext, issueParents);
 
-        // Array list for header
-        ArrayList<String> header = new ArrayList<String>();
-
-        // Array list for child items
-        List<String> child1 = new ArrayList<String>();
-        List<String> child2 = new ArrayList<String>();
-        List<String> child3 = new ArrayList<String>();
-        List<String> child4 = new ArrayList<String>();
-
-        // Hash map for both header and child
-        HashMap<String, List<String>> hashMap = new HashMap<String, List<String>>();
-
-        // Adding headers to list
-        for (int i = 1; i < 5; i++) {
-            header.add("Group " + i);
-
-        }
-        // Adding child data
-        for (int i = 1; i < 5; i++) {
-            child1.add("Group 1  - " + " : Child" + i);
-
-        }
-        // Adding child data
-        for (int i = 1; i < 5; i++) {
-            child2.add("Group 2  - " + " : Child" + i);
-
-        }
-        // Adding child data
-        for (int i = 1; i < 6; i++) {
-            child3.add("Group 3  - " + " : Child" + i);
-
-        }
-        // Adding child data
-        for (int i = 1; i < 7; i++) {
-            child4.add("Group 4  - " + " : Child" + i);
-
-        }
-
-        // Adding header and childs to hash map
-        hashMap.put(header.get(0), child1);
-        hashMap.put(header.get(1), child2);
-        hashMap.put(header.get(2), child3);
-        hashMap.put(header.get(3), child4);
-
-        adapter = new ELVAdapter(activityContext, header, hashMap);
-
-        // Setting adpater over expandablelistview
         expandableListView.setAdapter(adapter);
     }
 
     void setListener() {
 
-        // This listener will show toast on group click
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+//        // This listener will show toast on group click
+//        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+//
+//            @Override
+//            public boolean onGroupClick(ExpandableListView listview, View view,
+//                                        int group_pos, long id) {
+//
+//                Toast.makeText(activityContext,
+//                        "You clicked : " + adapter.getGroup(group_pos),
+//                        Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        });
 
-            @Override
-            public boolean onGroupClick(ExpandableListView listview, View view,
-                                        int group_pos, long id) {
-
-                Toast.makeText(activityContext,
-                        "You clicked : " + adapter.getGroup(group_pos),
-                        Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-        // This listener will expand one group at one time
-        // You can remove this listener for expanding all groups
         expandableListView
                 .setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
@@ -138,18 +105,20 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
 
                 });
 
-        // This listener will show toast on child click
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        expandableListView.setOnChildClickListener((listview, view, groupPos, childPos, id) -> {
 
-            @Override
-            public boolean onChildClick(ExpandableListView listview, View view,
-                                        int groupPos, int childPos, long id) {
-                Toast.makeText(
-                        activityContext,
-                        "You clicked : " + adapter.getChild(groupPos, childPos),
-                        Toast.LENGTH_SHORT).show();
-                return false;
-            }
+//            getActivity().onBackPressed();
+
+            EventBus.getDefault().post(new IssueTopicChosenEvent(
+                    issueParents.get(groupPos).getTopics().get(childPos).getId()
+            ));
+
+//            getActivity().onBackPressed();
+//            Toast.makeText(
+//                    activityContext,
+//                    "You clicked : " + issueParents.get(groupPos).getTopics().get(childPos).getName(),
+//                    Toast.LENGTH_SHORT).show();
+            return true;
         });
     }
 
@@ -157,7 +126,6 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
     @Override
     public void showMessage(String message) {
         Toast.makeText(activityContext, message, Toast.LENGTH_LONG).show();
-
     }
 
     @Override
@@ -169,4 +137,39 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
     public void restoreState(Bundle savedState) {
 
     }
+
+    @Subscribe
+    public void onIssueListReceiveEvent(IssueListReceiveEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        this.issueParents = event.issueParents;
+
+        adapter.updateList(this.issueParents);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.attachView(this);
+
+        ProgressDialogHelper.init(getActivity()).showProgress();
+        presenter.getAllIssues(activityContext);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
 }

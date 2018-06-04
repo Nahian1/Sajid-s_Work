@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2018.
   ~  Development Courtesy: Cryptenet Ltd.
   ~  Developer Credit: Alamgir Hossain, Nabil Shawkat
   ~  This project is under MIT license
   -->
-
 <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/AppTheme.AppBarOverlay" >
+    android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -26,40 +24,37 @@
             <ImageView
                 android:id="@+id/menuRight"
                 android:layout_width="30dp"
-                android:background="@android:color/transparent"
                 android:layout_height="28dp"
-                android:scaleType="fitXY"
-                android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"
-                android:src="@drawable/menuicon" />
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_menu" />
 
             <EditText
+                android:id="@+id/editTextSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textSize="13sp"
-                android:singleLine="true"
-                android:layout_toRightOf="@id/menuRight"
-                android:layout_toEndOf="@id/menuRight"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="10dp"
                 android:layout_marginEnd="8dp"
-                android:focusableInTouchMode="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/menuRight"
                 android:background="@drawable/input_outline"
                 android:hint="@string/search_bar"
-                android:id="@+id/editTextSearch" />
+                android:paddingBottom="5dp"
+                android:paddingEnd="35dp"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:textSize="13sp" />
 
             <ImageView
-                android:id="@+id/searchIcom"
+                android:id="@+id/buttonSearch"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_alignEnd="@+id/editTextSearch"
-                android:layout_alignRight="@+id/editTextSearch"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:src="@drawable/search_icon" />
+                app:srcCompat="@drawable/ic_search" />
+
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

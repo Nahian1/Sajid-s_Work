@@ -7,7 +7,11 @@
 
 package com.cryptenet.thanatos.dtmweb.launcher;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +24,10 @@ import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
@@ -52,10 +60,29 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     @BindView(R.id.tv_forgot_pwd)
     TextView tvForgotPwd;
 
+    ProgressDialog progressDialog;
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (preferences.getString(ConstantProvider.SP_NAME, null) != null) {
+            navigator.toHomeActivity(this, null);
+            finish();
+        }
+
+        String lang = preferences.getString(ConstantProvider.SELECTED_LANGUAGE, null);
+
+        if (lang == null) {
+            LocaleHelper.setNewLocale(this, "en");
+//            preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
+        } else {
+            LocaleHelper.setNewLocale(this, lang);
+        }
 
         viewUnbinder = ButterKnife.bind(this);
 
@@ -88,23 +115,53 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sign_in:
-                presenter.requestForLogin("michaelperez@collier.com","asdasd123");
 
-//                if ((etEmail.getText().toString().trim()) !=null && !(etEmail.getText().toString().trim()).isEmpty()) {
-//                    if ((etPwd.getText().toString().trim()) != null && !(etPwd.getText().toString().trim()).isEmpty()) {
-//                        presenter.requestForLogin(
-//                                etEmail.getText().toString().trim(),
-//                                etPwd.getText().toString().trim()
-//                        );
-//                    } else {
-//                        showMessage("Password can not be empty");
-//                    }
+                ViewUtils.hideKeyboard(this);
+
+                //for debug only
+//                String email = etEmail.getText().toString().trim();
+//
+//                if (email.equals("1")) {
+//
+//                    ProgressDialogHelper.init(this).showProgress();
+//
+//                    presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
+//
+//                } else if (email.equals("2")) {
+//
+//                    ProgressDialogHelper.init(this).showProgress();
+//
+//                    presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
+//
 //                } else {
-//                    showMessage("Email can not be empty");
+//                    showMessage("Give a type!");
 //                }
+
+//                presenter.requestForLogin("azam@gmail.com","asdasd123");
+
+                //original code commented out for debug purpose
+                String email = etEmail.getText().toString().trim();
+                String password = etPwd.getText().toString().trim();
+
+                if (!email.isEmpty()) {
+                    if (!password.isEmpty()) {
+
+                        ProgressDialogHelper.init(this).showProgress();
+
+                        presenter.requestForLogin(
+                                etEmail.getText().toString().trim(),
+                                etPwd.getText().toString().trim()
+                        );
+                    } else {
+                        showMessage("Password can not be empty!");
+                    }
+                } else {
+                    showMessage("Email can not be empty!");
+                }
+
                 break;
             case R.id.tv_sign_up:
-                navigator.toRegistrationActivity(this,false);
+                navigator.toRegistrationActivity(this, false);
                 break;
             case R.id.tv_forgot_pwd:
                 navigator.toForgotPasswordActivity(this);
@@ -116,13 +173,22 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
 //        this.user = event.string;
 
-        if(event.isSuccess) {
+        ProgressDialogHelper.hideProgress();
+
+        if (event.isSuccess) {
             AsyncTask.execute(() -> {
 //                    showMessage("Loading data...");
-                if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))){
-                    navigator.toHomeActivity(LoginActivity.this, event.string);
+                try {
+                    if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))) {
+                        navigator.toHomeActivity(LoginActivity.this, event.string);
+                        finish();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             });
+
         }
     }
 
@@ -143,4 +209,11 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.SELECTED_LANGUAGE, "en");
+        super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
+    }
+
 }

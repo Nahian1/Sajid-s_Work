@@ -7,7 +7,9 @@
 
 package com.cryptenet.thanatos.dtmweb.code;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,9 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
 import com.cryptenet.thanatos.dtmweb.events.CodeEnteredEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.CodeActivityContract;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,9 +75,18 @@ public class CodeActivity extends BaseActivity<CodeActivityContract.Presenter>
 
     @Override
     public void onClick(View v) {
-        presenter.saveResetCode(etCode.getText().toString());
-        showMessage("Verifying!!!");
-//        navigator.toSetPasswordActivity(this);
+
+        ViewUtils.hideKeyboard(this);
+
+        String code = etCode.getText().toString();
+
+        if (!code.isEmpty()) {
+            presenter.saveResetCode(code, this);
+
+            navigator.toSetPasswordActivity(this);
+        } else {
+            showMessage("Field can not be empty");
+        }
     }
 
     @Subscribe
@@ -100,5 +114,11 @@ public class CodeActivity extends BaseActivity<CodeActivityContract.Presenter>
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.SELECTED_LANGUAGE, "en");
+        super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
     }
 }

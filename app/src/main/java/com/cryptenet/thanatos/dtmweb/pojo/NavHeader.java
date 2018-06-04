@@ -5,14 +5,12 @@ public class NavHeader {
     private String name;
     private String type;
     private String location;
-    private String desc;
 
-    public NavHeader(String ppUrl, String name, String type, String location, String desc) {
+    public NavHeader(String ppUrl, String name, String type, String location) {
         this.ppUrl = ppUrl;
         this.name = name;
         this.type = type;
         this.location = location;
-        this.desc = desc;
     }
 
     public void setPpUrl(String ppUrl) {
@@ -31,10 +29,6 @@ public class NavHeader {
         this.location = location;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public String getPpUrl() {
         return ppUrl;
     }
@@ -49,9 +43,5 @@ public class NavHeader {
 
     public String getLocation() {
         return location;
-    }
-
-    public String getDesc() {
-        return desc;
     }
 }

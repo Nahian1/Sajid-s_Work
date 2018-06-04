@@ -7,6 +7,8 @@
 
 package com.cryptenet.thanatos.dtmweb.code.mvp;
 
+import android.content.Context;
+
 import com.cryptenet.thanatos.dtmweb.code.CodeActivity;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
@@ -31,7 +33,7 @@ public class CodeActivityModel
     }
 
     @Override
-    public void saveResetCode(String code) {
-        repository.saveResetCode(code);
+    public void saveResetCode(String code, Context context) {
+        repository.saveResetCode(code, context);
     }
 }
