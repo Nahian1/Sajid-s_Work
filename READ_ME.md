@@ -1,14 +1,18 @@
 **Fikra**
 ---
+
 A business platform for the initiators and investors to collaborate among themselves and grow their ideas.
+
 ---
 
-Copyright (c) 2018
+**Copyright (c) 2018**
 
-Contributors' Credit:
-      **Alamgir Hossain**
-      **Md. Rezwanur Rahman Khan**
-      **Ashif Mujtoba**
+Contributors' Credit: <br />
+
+**Alamgir Hossain**,<br />
+**Md. Rezwanur Rahman Khan**,<br />
+**Ashif Mujtoba**
+	 
 ---      
 
 
