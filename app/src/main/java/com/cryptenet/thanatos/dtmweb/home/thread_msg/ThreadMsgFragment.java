@@ -11,6 +11,7 @@
 package com.cryptenet.thanatos.dtmweb.home.thread_msg;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -107,7 +108,7 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
                     }
 
                     sendMessage.setText("");
-                }else {
+                } else {
                     Toast.makeText(activityContext, "Please enter text message!", Toast.LENGTH_SHORT).show();
                 }
                 return true;
