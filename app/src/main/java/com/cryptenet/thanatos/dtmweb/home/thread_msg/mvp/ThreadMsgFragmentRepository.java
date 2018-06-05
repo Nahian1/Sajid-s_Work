@@ -31,6 +31,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class ThreadMsgFragmentRepository extends BaseFragRepository
 
                 // response.body().toString();
 
-                if (response.isSuccessful()) {
+                if (response.isSuccessful()){
 
 //                    threadID = response.body().getId();
 //                    getMessageList(threadID);
@@ -89,25 +90,17 @@ public class ThreadMsgFragmentRepository extends BaseFragRepository
                 //  response.body().toString();
 
                 if (response.isSuccessful()) {
-
-                    List<Results> messageThreadModels = Arrays.asList(response.body().getResults());
+                    List<Results> messageThreadModels = new ArrayList<>(Arrays.asList(response.body().getResults()));
 
                     EventBus.getDefault().post(new MessageListReceivedEvent(messageThreadModels));
-
-
                 } else {
-
                     EventBus.getDefault().post(new MessageListFailureEvent(true));
-
                 }
             }
 
             @Override
             public void onFailure(Call<MessageListModel> call, Throwable t) {
-
                 EventBus.getDefault().post(new MessageListFailureEvent(true));
-
-//                Toast.makeText(context, context.getString(R.string.error_message), Toast.LENGTH_SHORT).show();
             }
         });
     }
