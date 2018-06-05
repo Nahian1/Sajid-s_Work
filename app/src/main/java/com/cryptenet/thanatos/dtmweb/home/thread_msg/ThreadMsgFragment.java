@@ -252,7 +252,6 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
 
     @Override
     public void restoreState(Bundle savedState) {
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
