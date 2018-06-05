@@ -40,6 +40,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
     int threadId;
 
     public ThreadMsgFragment() {
-        // Required empty public constructor
+        resultsList = new ArrayList<>();
     }
 
 
@@ -262,15 +263,13 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
         resultsList = event.messageThreadModels;
 
         if (resultsList.size() == 0) {
-
             Toast.makeText(activityContext, activityContext.getString(R.string.no_messages), Toast.LENGTH_SHORT).show();
-
+            mAdapter = new MessagingAdapter(resultsList);
+            mRecyclerView.setAdapter(mAdapter);
         } else {
-
             mAdapter = new MessagingAdapter(resultsList);
             mRecyclerView.setAdapter(mAdapter);
             mLayoutManager.scrollToPosition(resultsList.size() - 1);
-
         }
 
     }
