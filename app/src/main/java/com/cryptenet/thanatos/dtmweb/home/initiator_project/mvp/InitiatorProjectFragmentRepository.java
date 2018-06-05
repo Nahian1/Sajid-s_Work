@@ -62,7 +62,7 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
                         assert allPlansResponse != null;
                         setProjects(allPlansResponse.getResults());
                         if (allPlansResponse.getResults().size() == 0)
-                            Toast.makeText(context, context.getString(R.string.no_man_requests), Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, context.getString(R.string.no_man_projects), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
                     }
@@ -83,7 +83,7 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
                         assert allPlansResponse != null;
                         setManageProjects(allPlansResponse.getResults());
                         if (allPlansResponse.getResults().size() == 0)
-                            Toast.makeText(context, context.getString(R.string.no_man_projects), Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, context.getString(R.string.no_man_requests), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
                     }

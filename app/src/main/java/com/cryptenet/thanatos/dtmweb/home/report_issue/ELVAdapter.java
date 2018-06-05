@@ -72,9 +72,9 @@ public class ELVAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String parentTitle = issueParents.get(groupPosition).getName();
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context
+            LayoutInflater inflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.node_elv_parent, parent, false);
+            convertView = inflater.inflate(R.layout.node_elv_parent, parent, false);
         }
         TextView header_text = convertView.findViewById(R.id.tv_elv_parent);
 

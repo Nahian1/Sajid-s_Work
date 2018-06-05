@@ -80,6 +80,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     private File imageFile;
     private String accType;
     private int countryCode, cityCode;
+    private int prevCountryCode, prevCityCode;
     private List<Country> countries;
     private List<City> cities;
     private List<String> accTypes, sCountries, sCities;
@@ -178,6 +179,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             imageUrl = sharedPreferences.getString(ConstantProvider.SP_PICTURE_URL, null);
+            prevCountryCode = sharedPreferences.getInt(ConstantProvider.SP_COUNTRY, 1);
+            prevCityCode = sharedPreferences.getInt(ConstantProvider.SP_CITY, 1);
+
 
             if (imageUrl != null) {
 
@@ -395,24 +399,37 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCountryFetchEvent(CountryFetchEvent event) {
+        int position = 0;
         this.countries = event.countries;
         sCountries.clear();
-        for (Country country : this.countries)
-            sCountries.add(country.getName());
+        for (int i = 0; i < this.countries.size(); i++) {
+            sCountries.add(this.countries.get(i).getName());
+
+            if (isEdit && this.countries.get(i).getId() == prevCountryCode)
+                position = i;
+        }
         countryCode = countries.get(0).getId();
         presenter.getLimitedCities(countries.get(0).getId());
         spinCountryAdapter.notifyDataSetChanged();
+        spinCountry.setSelection(position);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCityFetchEvent(CityFetchEvent event) {
+        int position = 0;
         this.cities = event.cities;
         sCities.clear();
-        for (City city : this.cities)
-            sCities.add(city.getName());
+        for (int i = 0; i < this.cities.size(); i++) {
+            sCities.add(this.cities.get(i).getName());
+
+            if (isEdit && this.cities.get(i).getId() == prevCityCode)
+                position = i;
+        }
+
         if (cities.size() > 0) {
             cityCode = cities.get(0).getId();
             spinCityAdapter.notifyDataSetChanged();
+            spinCity.setSelection(position);
         }
 
     }

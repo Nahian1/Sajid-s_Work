@@ -345,14 +345,20 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @Subscribe
     public void toCategoriesReceiveEvent(CategoriesReceiveEvent event) {
-        this.categoriesList.clear();
+        int position = 0;
         this.list.clear();
         this.list.addAll(event.categoriesList);
 
-        for (Categories categories : event.categoriesList)
-            this.categoriesList.add(categories.getName());
+        for (int i = 0; i < this.list.size(); i++) {
+            this.categoriesList.add(this.list.get(i).getName());
 
+            if(project.isEditMode() && this.list.get(i).getId() == project.getCategory())
+                position = i;
+        }
+
+        this.categoriesList.clear();
         spinCatAdapter.notifyDataSetChanged();
+        spinnerProjectCategory.setSelection(position);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

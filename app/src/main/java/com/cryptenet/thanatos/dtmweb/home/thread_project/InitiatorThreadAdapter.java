@@ -62,6 +62,7 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
                 .load(messageThreadModels[position].getInvestor_picture())
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .apply(RequestOptions.circleCropTransform())
                 .into(holder.icon);
 
         holder.lastmessage.setText(messageThreadModels[position].getLast_text());
