@@ -101,7 +101,8 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         this.projectsRspList = event.projectsRspList;
         for (ProjectsRsp projectsRsp : projectsRspList)
             Log.d(TAG, "onProjectListReceiveEvent: " + projectsRsp.getTitle());
-        adapter.updateList(this.projectsRspList);
+        if (this.projectsRspList != null)
+            adapter.updateList(this.projectsRspList);
     }
 
     @Subscribe

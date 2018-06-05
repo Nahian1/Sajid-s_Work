@@ -326,4 +326,27 @@ public class ProjectsRsp implements Parcelable
         return  0;
     }
 
+    @Override
+    public String toString() {
+        return "ProjectsRsp{" +
+                "id=" + id +
+                ", initiator=" + initiator +
+                ", initiatorsName='" + initiatorsName + '\'' +
+                ", title='" + title + '\'' +
+                ", category=" + category +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", longDescription='" + longDescription + '\'' +
+                ", minimumInvestmentCost='" + minimumInvestmentCost + '\'' +
+                ", maximumInvestmentCost='" + maximumInvestmentCost + '\'' +
+                ", initiatorAddress='" + initiatorAddress + '\'' +
+                ", initiatorImage='" + initiatorImage + '\'' +
+                ", accessPrice='" + accessPrice + '\'' +
+                ", cover='" + cover + '\'' +
+                ", uploadedFile='" + uploadedFile + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", coverThumbnail='" + coverThumbnail + '\'' +
+                ", isApproved=" + isApproved +
+                ", isEditMode=" + isEditMode +
+                '}';
+    }
 }

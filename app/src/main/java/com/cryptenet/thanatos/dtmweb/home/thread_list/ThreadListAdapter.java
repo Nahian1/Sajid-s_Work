@@ -96,12 +96,12 @@ public class ThreadListAdapter extends ArrayAdapter<ThreadIdentity> {
 
         try {
             Date date = inputDateFormat.parse(threadIdentities.get(position).getLastActive());
-            dateTV.setText(outputDateFormat.format(date));
+            dateTV.append(outputDateFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
             e.printStackTrace();
-            dateTV.setText("");
+            dateTV.append(context.getString(R.string.none));
         }
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 //

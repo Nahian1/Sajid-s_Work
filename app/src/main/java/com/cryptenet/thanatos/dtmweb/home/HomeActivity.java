@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -282,6 +283,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     @OnClick(R.id.logOut)
     public void logOut(View view) {
         presenter.clearUserData(this);
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
 
@@ -429,7 +431,7 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     public void onThreadIdReceiveEvent(ThreadIdReceiveEvent event) {
         ThreadMsgFragment fragment = new ThreadMsgFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("thread_init", event.threadInitResponse);
+        bundle.putInt("thread_id", event.threadInitResponse.getId());
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
 

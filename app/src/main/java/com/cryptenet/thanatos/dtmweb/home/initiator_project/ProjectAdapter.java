@@ -56,10 +56,13 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
     }
 
     public void updateList(List<ProjectsRsp> projs) {
-        this.projects.clear();
-        this.projects.addAll(projs);
-        this.filteredList.clear();
-        this.filteredList.addAll(projs);
+//        this.projects.clear();
+//        this.projects.addAll(projs);
+//        this.filteredList.clear();
+//        this.filteredList.addAll(projs);
+
+        this.projects = projs;
+        this.filteredList = projs;
         this.notifyDataSetChanged();
     }
 

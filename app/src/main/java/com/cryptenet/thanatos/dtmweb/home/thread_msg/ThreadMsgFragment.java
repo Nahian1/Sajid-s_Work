@@ -19,11 +19,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.MessageListFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.MessageListFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.MessageListReceivedEvent;
 import com.cryptenet.thanatos.dtmweb.events.onMessageSentEvent;
@@ -37,6 +39,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Presenter>
@@ -63,16 +66,18 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_thread_msg, container, false);
+        View convertView = inflater.inflate(R.layout.fragment_thread_msg, container, false);
 
         ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.thread_msg));
 
         threadId = getArguments().getInt("thread_id");
-        mRecyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView = convertView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(activityContext);
+//        mLayoutManager.setReverseLayout(true);
+//        mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        sendMessage = view.findViewById(R.id.et_message);
+        sendMessage = convertView.findViewById(R.id.et_message);
 
 
 //        String userRole =  PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_USER_TYPE, null);
@@ -94,14 +99,22 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
                 String message = sendMessage.getText().toString().trim();
                 if (message.length() > 0) {
                     setSendMessage();
-                } else {
+
+                    View view = getActivity().getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+
+                    sendMessage.setText("");
+                }else {
                     Toast.makeText(activityContext, "Please enter text message!", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
             return false;
         });
-        return view;
+        return convertView;
     }
 
 
@@ -228,7 +241,6 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
     @Override
     public void showMessage(String message) {
         Toast.makeText(activityContext, message, Toast.LENGTH_LONG).show();
-
     }
 
     @Override
@@ -256,6 +268,7 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
 
             mAdapter = new MessagingAdapter(resultsList);
             mRecyclerView.setAdapter(mAdapter);
+            mLayoutManager.scrollToPosition(resultsList.size() - 1);
 
         }
 
@@ -266,6 +279,7 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
         resultsList.add(event.results);
         mAdapter.setData(resultsList);
         mAdapter.notifyDataSetChanged();
+        mLayoutManager.scrollToPosition(resultsList.size() - 1);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

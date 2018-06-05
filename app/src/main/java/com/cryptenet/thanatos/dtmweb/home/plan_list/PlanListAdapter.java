@@ -53,6 +53,7 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
         this.projects.clear();
         if (projs != null)
             this.projects.addAll(projs);
+//        this.projects = projs;
         this.notifyDataSetChanged();
     }
 

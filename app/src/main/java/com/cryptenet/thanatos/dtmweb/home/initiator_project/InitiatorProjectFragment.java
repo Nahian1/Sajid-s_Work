@@ -134,7 +134,9 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         ProgressDialogHelper.hideProgress();
 
         this.projectsRspList = event.projectsRspList;
-        manageProjectAdapter.updateList(this.projectsRspList);
+
+        if (projectsRspList != null)
+            manageProjectAdapter.updateList(this.projectsRspList);
     }
 
     @Subscribe

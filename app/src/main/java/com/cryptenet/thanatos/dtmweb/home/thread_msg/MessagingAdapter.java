@@ -36,8 +36,10 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
     private List<Results> messageThreadModels;
 
     public MessagingAdapter(List<Results> messageThreadModels) {
+        Collections.reverse(messageThreadModels);
         this.messageThreadModels = messageThreadModels;
-        Collections.reverse(this.messageThreadModels);
+//        this.messageThreadModels = messageThreadModels;
+//        Collections.reverse(this.messageThreadModels);
     }
 
     @NonNull
@@ -54,7 +56,8 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
 
     public void setData(List<Results> data) {
         this.messageThreadModels = data;
-        Collections.reverse(this.messageThreadModels);
+//        Collections.reverse(this.messageThreadModels);
+//        this.notifyDataSetChanged();
     }
 
     @Override
@@ -65,13 +68,20 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
 
 
 
-        if (userID == Integer.parseInt(messageThreadModels.get(position).getSender().toString())){
+        if (userID == Integer.parseInt(messageThreadModels.get(position).getSender())){
 
             //  Toast.makeText(mContext, "sender", Toast.LENGTH_SHORT).show();
 
             holder.receiver.setVisibility(View.GONE);
             holder.sender.setVisibility(View.VISIBLE);
             holder.sendMessage.setText(messageThreadModels.get(position).getText());
+
+            Glide.with(mContext)
+                    .load(messageThreadModels.get(position).getReceiver_picture())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.iconSender);
         }else {
 
             //Toast.makeText(mContext, "receiver", Toast.LENGTH_SHORT).show();
@@ -79,11 +89,11 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
             holder.sender.setVisibility(View.GONE);
 
             Glide.with(mContext)
-                    .load(messageThreadModels.get(position).getSender_picture())
+                    .load(messageThreadModels.get(position).getReceiver_picture())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(holder.icon);
-
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.iconReceiver);
 
             holder.message.setText(messageThreadModels.get(position).getText());
 
@@ -94,10 +104,6 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
 //       }else {
 //
 //       }
-
-
-
-
     }
 
     @Override
@@ -107,7 +113,7 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
 
     public class InitiatorThreadHolder extends RecyclerView.ViewHolder {
 
-        private ImageView icon;
+        private ImageView iconReceiver, iconSender;
         private TextView message,sendMessage;
 
         LinearLayout sender, receiver;
@@ -116,7 +122,8 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
         public InitiatorThreadHolder(View itemView) {
             super(itemView);
 
-            icon = itemView.findViewById(R.id.icon);
+            iconReceiver = itemView.findViewById(R.id.icon_receiver);
+            iconSender = itemView.findViewById(R.id.icon_sender);
             message = itemView.findViewById(R.id.message);
             sender = itemView.findViewById(R.id.sender);
             receiver = itemView.findViewById(R.id.receiver);
