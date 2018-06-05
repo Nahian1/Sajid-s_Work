@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseActivity;
+import com.cryptenet.thanatos.dtmweb.events.LogInFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
@@ -149,7 +150,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
                 if (!email.isEmpty()) {
                     if (!password.isEmpty()) {
 
-                        ProgressDialogHelper.init(this).showProgress();
+                        ProgressDialogHelper.init(LoginActivity.this).showProgress();
 
                         presenter.requestForLogin(
                                 etEmail.getText().toString().trim(),
@@ -193,6 +194,15 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
             });
 
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLogInFailureEvent(LogInFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        showMessage(getString(R.string.login_failed));
+
     }
 
     @Override

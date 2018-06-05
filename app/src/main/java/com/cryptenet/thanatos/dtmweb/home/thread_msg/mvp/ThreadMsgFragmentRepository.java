@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
+import com.cryptenet.thanatos.dtmweb.events.MessageListFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.MessageListReceivedEvent;
 import com.cryptenet.thanatos.dtmweb.events.onMessageSentEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
@@ -55,7 +56,7 @@ public class ThreadMsgFragmentRepository extends BaseFragRepository
 
                 // response.body().toString();
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 
 //                    threadID = response.body().getId();
 //                    getMessageList(threadID);
@@ -87,24 +88,26 @@ public class ThreadMsgFragmentRepository extends BaseFragRepository
             public void onResponse(Call<MessageListModel> call, Response<MessageListModel> response) {
                 //  response.body().toString();
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                    if (response.body().getResults().length > 0){
-                        //Toast.makeText(context, " Plan founds", Toast.LENGTH_SHORT).show();
-//                        Results[] messageThreadModels  = response.body().getResults();
-                        List<Results> messageThreadModels  = Arrays.asList(response.body().getResults());
-                        EventBus.getDefault().post(new MessageListReceivedEvent(messageThreadModels));
-                    }else {
+                    List<Results> messageThreadModels = Arrays.asList(response.body().getResults());
 
-                        Toast.makeText(context, context.getString(R.string.no_messages), Toast.LENGTH_SHORT).show();
-                    }
+                    EventBus.getDefault().post(new MessageListReceivedEvent(messageThreadModels));
+
+
+                } else {
+
+                    EventBus.getDefault().post(new MessageListFailureEvent(true));
+
                 }
             }
 
             @Override
             public void onFailure(Call<MessageListModel> call, Throwable t) {
-                Toast.makeText(context, "error from message list", Toast.LENGTH_SHORT).show();
 
+                EventBus.getDefault().post(new MessageListFailureEvent(true));
+
+//                Toast.makeText(context, context.getString(R.string.error_message), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
+import com.cryptenet.thanatos.dtmweb.events.MessageListFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.MessageListReceivedEvent;
 import com.cryptenet.thanatos.dtmweb.events.onMessageSentEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
@@ -34,6 +35,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -239,23 +241,40 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
 
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageListReceivedEvent(MessageListReceivedEvent event) {
 
         ProgressDialogHelper.hideProgress();
 
         resultsList = event.messageThreadModels;
-        mAdapter = new MessagingAdapter(resultsList);
-        mRecyclerView.setAdapter(mAdapter);
+
+        if (resultsList.size() == 0) {
+
+            Toast.makeText(activityContext, activityContext.getString(R.string.no_messages), Toast.LENGTH_SHORT).show();
+
+        } else {
+
+            mAdapter = new MessagingAdapter(resultsList);
+            mRecyclerView.setAdapter(mAdapter);
+
+        }
+
     }
 
-    @Subscribe()
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageSentEvent(onMessageSentEvent event) {
         resultsList.add(event.results);
         mAdapter.setData(resultsList);
         mAdapter.notifyDataSetChanged();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageListFailureEvent(MessageListFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        showMessage(getString(R.string.no_messages));
+    }
 
     @Override
     public void onResume() {

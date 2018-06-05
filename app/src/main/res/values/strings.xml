@@ -127,4 +127,6 @@
     <string name="no_man_requests">You have no requests yet!!</string>
     <string name="no_search_result">No matching plans found!!</string>
     <string name="no_threads_found">No threads found</string>
+    <string name="error_message">Error getting message list, try again.</string>
+    <string name="login_failed">Login failed, try again.</string>
 </resources>
