@@ -19,10 +19,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 
-/**
- * Created by Ashif on 12/10/17.
- */
-
 public class ToStringConverterFactory extends Converter.Factory {
     private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain");
 

@@ -20,7 +20,7 @@ android {
 
     defaultConfig {
         applicationId "com.cryptenet.thanatos.dtmweb"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"

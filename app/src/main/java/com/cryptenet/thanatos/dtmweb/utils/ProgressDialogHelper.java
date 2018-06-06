@@ -12,13 +12,8 @@ package com.cryptenet.thanatos.dtmweb.utils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 
 import com.cryptenet.thanatos.dtmweb.R;
-
-/**
- * Created by Asif on 5/30/2018.
- */
 
 public class ProgressDialogHelper {
 

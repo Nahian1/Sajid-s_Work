@@ -1,0 +1,23 @@
+<!--
+  ~  Copyright (c) 2018.
+  ~  Development Lead: Cryptenet Ltd.
+  ~  Developer Credit:
+  ~     Alamgir Hossain,
+  ~     Md. Rezwanur Rahman Khan,
+  ~     Ashif Mujtoba
+  ~  This project is under Apache License 2.0
+  -->
+
+<vector android:autoMirrored="true" android:height="2928dp"
+    android:viewportHeight="2928" android:viewportWidth="1648"
+    android:width="1648dp" xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:pathData="M0,0l1648,0l0,2928l-1648,0z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:endX="824" android:endY="3391.78"
+                android:startX="2472" android:startY="463.78" android:type="linear">
+                <item android:color="#FF0097D9" android:offset="0"/>
+                <item android:color="#FF0073B8" android:offset="1"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>

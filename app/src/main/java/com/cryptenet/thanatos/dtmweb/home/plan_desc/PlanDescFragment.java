@@ -120,7 +120,6 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
 
     @OnClick(R.id.buttonRequestDetails)
     public void buttonRequestDetails(View view) {
-
         if (type >= 20) {
             showMessage("Log in as Investor!");
         } else {
