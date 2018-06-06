@@ -33,6 +33,8 @@ import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -209,6 +211,16 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
+
+        GoogleApiAvailability availability = GoogleApiAvailability.getInstance();
+
+        int resultCode = availability.isGooglePlayServicesAvailable(getApplicationContext());
+
+        if (resultCode == ConnectionResult.SUCCESS){
+            Log.i(TAG, "isGooglePlayServicesAvailable SUCCESS");
+        }else{
+            availability.getErrorDialog(this, resultCode,  ConstantProvider.PLAY_SERVICES_RESOLUTION_REQUEST);
+        }
     }
 
     @Override

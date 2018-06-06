@@ -65,13 +65,11 @@ public class ThreadProjectFragmentRepository extends BaseFragRepository
                 //  response.body().toString();
 
                 if (response.isSuccessful()) {
-
                     if (response.body().getResults().length > 0) {
                         //Toast.makeText(context, " Plan founds", Toast.LENGTH_SHORT).show();
                         ThreadInv[] results = response.body().getResults();
                         EventBus.getDefault().post(new ThreadProjectListReceiveEvent(results));
                     } else {
-
                         Toast.makeText(context, context.getString(R.string.no_threads_found), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -80,7 +78,6 @@ public class ThreadProjectFragmentRepository extends BaseFragRepository
             @Override
             public void onFailure(Call<MessageThreadModel> call, Throwable t) {
                 Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
-
             }
         });
     }

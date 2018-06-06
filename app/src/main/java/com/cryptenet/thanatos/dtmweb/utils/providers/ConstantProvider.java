@@ -17,7 +17,7 @@ public class ConstantProvider {
     public static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
 
 
-    public static final String CLIENT_KEY = "xcziSPz2aLcKc5Egm1janzwGBS5jcNvi68BA88GP:VHSlol14f1AKcaXcdefMzsNA9kMKyngVPrSD5FxdxcQzukBzH8axcQRts4NUMdztZ035bSI4RGgzSRUsm4N7h7e106T9SfnijBvSgmRizIyPrXzKetePl5HpO49XQ3LK";
+//    public static final String CLIENT_KEY = "xcziSPz2aLcKc5Egm1janzwGBS5jcNvi68BA88GP:VHSlol14f1AKcaXcdefMzsNA9kMKyngVPrSD5FxdxcQzukBzH8axcQRts4NUMdztZ035bSI4RGgzSRUsm4N7h7e106T9SfnijBvSgmRizIyPrXzKetePl5HpO49XQ3LK";
     public static final String ACCESS_BASIC = "eGN6aVNQejJhTGNLYzVFZ20xamFuendHQlM1amNOdmk2OEJBODhHUDpWSFNsb2wxNGYxQUtjYVhjZGVmTXpzTkE5a01LeW5nVlByU0Q1RnhkeGNRenVrQnpIOGF4Y1FSdHM0TlVNZHp0WjAzNWJTSTRSR2d6U1JVc200TjdoN2UxMDZUOVNmbmlqQnZTZ21SaXpJeVByWHpLZXRlUGw1SHBPNDlYUTNMSw==";
 
     public static final int RESULT_LOAD_IMG = 101;
@@ -52,4 +52,9 @@ public class ConstantProvider {
     public static final String REQ_TYPE_CREATE_PLAN = "3";
     public static final String REQ_TYPE_EDIT_PLAN = "4";
 
+    public static final String CHANNEL_ID = "plans_update_channel";
+    public static final String CHANNEL_NAME = "Plan update channel";
+    public static final String CHANNEL_DESC = "Delivers plan update for subscribed category";
+
+    public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 5050;
 }

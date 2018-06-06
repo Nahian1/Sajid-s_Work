@@ -130,4 +130,6 @@
     <string name="no_threads_found">No threads found</string>
     <string name="error_message">Error getting message list, try again.</string>
     <string name="login_failed">Login failed, try again.</string>
+
+    <string name="notification_channel_id" translatable="false">plans_update_channel</string>
 </resources>

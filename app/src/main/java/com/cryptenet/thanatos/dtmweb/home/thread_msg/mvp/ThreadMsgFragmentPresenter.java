@@ -27,11 +27,6 @@ public class ThreadMsgFragmentPresenter extends BaseFragPresenter<ThreadMsgFragm
     }
 
     @Override
-    public void getThreadIdForInvestor(Context context, int threadID) {
-        view.onThreadIdReceive(model.getThreadIdForInvestor(context, threadID));
-    }
-
-    @Override
     public void getMessageList(Context context, int threadID) {
         model.getMessageList(context, threadID);
     }

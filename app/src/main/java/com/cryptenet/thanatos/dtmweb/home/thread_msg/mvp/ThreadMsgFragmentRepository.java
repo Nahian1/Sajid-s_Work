@@ -45,39 +45,6 @@ public class ThreadMsgFragmentRepository extends BaseFragRepository
     private static String TAG = TagProvider.getDebugTag(ThreadMsgFragmentRepository.class);
 
     @Override
-    public int getThreadIdForInvestor(Context context, int threadID) {
-        Call<ThreadRequestModel> threadCall = apiClient.getThreadID(
-                "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
-                threadID
-        );
-
-        threadCall.enqueue(new Callback<ThreadRequestModel>() {
-            @Override
-            public void onResponse(Call<ThreadRequestModel> call, Response<ThreadRequestModel> response) {
-
-                // response.body().toString();
-
-                if (response.isSuccessful()){
-
-//                    threadID = response.body().getId();
-//                    getMessageList(threadID);
-//
-//                    Toast.makeText(context, "success", Toast.LENGTH_SHORT).show();
-
-                    getMessageList(context, Integer.parseInt(response.body().getId()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ThreadRequestModel> call, Throwable t) {
-                Toast.makeText(context, "error from threadid", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        return 0;
-    }
-
-    @Override
     public void getMessageList(Context context, int threadID) {
         Call<MessageListModel> threadCall = apiClient.getMessages(
                 "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),

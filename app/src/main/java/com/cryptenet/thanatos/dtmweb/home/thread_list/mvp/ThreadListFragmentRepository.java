@@ -13,7 +13,9 @@ package com.cryptenet.thanatos.dtmweb.home.thread_list.mvp;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.DistinctThreadsReceived;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
@@ -57,6 +59,10 @@ public class ThreadListFragmentRepository extends BaseFragRepository
                         ThreadDistinctResponse allPlansResponse = response.body();
                         assert allPlansResponse != null;
                         setAllThreads(allPlansResponse.getResults());
+                        if (allPlansResponse.getResults().size() == 0)
+                            Toast.makeText(context, context.getString(R.string.no_threads_found), Toast.LENGTH_LONG).show();
+                    } else {
+                        Log.d(TAG, "onResponse: " + response.code());
                     }
                 }
 
@@ -78,6 +84,10 @@ public class ThreadListFragmentRepository extends BaseFragRepository
                         ThreadDistinctResponse allPlansResponse = response.body();
                         assert allPlansResponse != null;
                         setAllThreads(allPlansResponse.getResults());
+                        if (allPlansResponse.getResults().size() == 0)
+                            Toast.makeText(context, context.getString(R.string.no_threads_found), Toast.LENGTH_LONG).show();
+                    } else {
+                        Log.d(TAG, "onResponse: " + response.code());
                     }
                 }
 

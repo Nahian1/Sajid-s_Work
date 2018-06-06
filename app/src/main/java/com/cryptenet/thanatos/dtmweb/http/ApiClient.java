@@ -113,11 +113,11 @@ public interface ApiClient {
 //            @FieldMap Map<String, String> map
 //    );
 
-    @POST("/api/v1/plan-access/")
-    Call<TransactionDetails> submitTransaction(
-            @Header("Authorization") String token,
-            RequestBody formBody
-    );
+//    @POST("/api/v1/plan-access/")
+//    Call<TransactionDetails> submitTransaction(
+//            @Header("Authorization") String token,
+//            RequestBody formBody
+//    );
 
 
 //    @GET("GET /api/v1/plan/{id}")
@@ -211,12 +211,25 @@ public interface ApiClient {
 
     @FormUrlEncoded
     @POST("api/v1/message/")
-    Call<SendMessageModel> sendMessage(@Header("Authorization") String token , @Field("thread") String threadId , @Field("text") String text);
+    Call<SendMessageModel> sendMessage(
+            @Header("Authorization") String token,
+            @Field("thread") String threadId,
+            @Field("text") String text
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/message/")
+    Call<SendMessageModel> sendFCMToken(
+            @Header("Authorization") String token,
+            @Field("registration_id") String registrationId,
+            @Field("device_id") String deviceId,
+            @Field("type") String type
+    );
 
     @GET("api/v1/message-thread/{thread_id}/messages/")
     Call<MessageListModel> getMessages(@Header("Authorization") String token , @Path("thread_id") String threadId);
 
-    @FormUrlEncoded
-    @POST("api/v1/message-thread/")
-    Call<ThreadRequestModel> getThreadID(@Header("Authorization") String token , @Field("plan") int planId);
+//    @FormUrlEncoded
+//    @POST("api/v1/message-thread/")
+//    Call<ThreadRequestModel> getThreadID(@Header("Authorization") String token , @Field("plan") int planId);
 }

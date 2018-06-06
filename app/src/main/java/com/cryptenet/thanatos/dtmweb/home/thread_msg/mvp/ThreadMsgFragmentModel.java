@@ -26,12 +26,6 @@ public class ThreadMsgFragmentModel extends BaseFragModel<ThreadMsgFragmentContr
         super(repository);
     }
 
-
-    @Override
-    public int getThreadIdForInvestor(Context context, int threadID) {
-        return repository.getThreadIdForInvestor(context, threadID);
-    }
-
     @Override
     public void getMessageList(Context context, int threadID) {
         repository.getMessageList(context, threadID);
