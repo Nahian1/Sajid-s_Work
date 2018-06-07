@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector android:autoMirrored="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:viewportWidth="11"
-    android:viewportHeight="17"
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="11dp"
-    android:height="17dp">
+    android:height="17dp"
+    android:autoMirrored="true"
+    android:viewportHeight="17"
+    android:viewportWidth="11">
     <group
         android:rotation="1.24349"
         android:scaleX="-1.5"
@@ -13,10 +13,10 @@
         android:translateY="8.61738">
         <path
             android:pathData="M0 0L5 4.746"
-            android:strokeWidth="1.2"
+            android:strokeColor="#666666"
             android:strokeLineCap="round"
             android:strokeMiterLimit="10"
-            android:strokeColor="#666666" />
+            android:strokeWidth="1.2" />
     </group>
     <group
         android:rotation="1.24349"
@@ -26,9 +26,9 @@
         android:translateY="1.50007">
         <path
             android:pathData="M5 0L0 4.746"
-            android:strokeWidth="1.2"
+            android:strokeColor="#666666"
             android:strokeLineCap="round"
             android:strokeMiterLimit="10"
-            android:strokeColor="#666666" />
+            android:strokeWidth="1.2" />
     </group>
 </vector>

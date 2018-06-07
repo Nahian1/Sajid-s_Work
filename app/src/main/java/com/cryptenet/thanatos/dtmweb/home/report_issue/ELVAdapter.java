@@ -91,12 +91,14 @@ public class ELVAdapter extends BaseExpandableListAdapter {
 
         if (isExpanded) {
             header_text.setTypeface(null, Typeface.BOLD);
-            if (locale.equals("en"))
+            if (locale.equals("en")) {
                 header_text.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-                    R.drawable.ic_right_arrow, 0);
-            else
-                header_text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_right_arrow, 0,
+                        R.drawable.ic_right_arrow, 0);
+            } else {
+                header_text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_left_arrow, 0,
                         0, 0);
+            }
+
         } else {
             // If group is not expanded then change the text back into normal
             // and change the icon
