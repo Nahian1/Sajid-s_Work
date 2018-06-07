@@ -10,7 +10,6 @@
 
 package com.cryptenet.thanatos.dtmweb.home.about;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,7 +25,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 public class AboutFragment extends Fragment {
     public static final String TAG = TagProvider.getDebugTag(AboutFragment.class);
