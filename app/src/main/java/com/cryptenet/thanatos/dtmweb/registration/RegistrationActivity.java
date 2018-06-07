@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -46,7 +47,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.City;
 import com.cryptenet.thanatos.dtmweb.pojo.Country;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
-import com.cryptenet.thanatos.dtmweb.utils.ImageUtil;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
@@ -122,6 +122,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
     @BindView(R.id.spin_city)
     Spinner spinCity;
+
+    @BindView(R.id.chk_agree)
+    CheckBox chkAgree;
 
     @BindView(R.id.btn_sign_in_reg)
     Button btnSignInReg;
@@ -286,7 +289,11 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             processInputForUpdateUserProfile();
         } else
             processInputForNewUserRegistration();
+    }
 
+    @OnClick(R.id.tv_terms_nav)
+    public void toTerms(View view) {
+        navigator.toTermsActivity(this);
     }
 
     // to register new user
@@ -305,13 +312,16 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                 && !bankName.isEmpty() && !bankAccName.isEmpty() && !bankAccNum.isEmpty()) {
             if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 if (pwd.equals(cPwd)) {
+                    if (chkAgree.isChecked()) {
+                        ProgressDialogHelper.init(this).showProgress();
 
-                    ProgressDialogHelper.init(this).showProgress();
-
-                    presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER, imageFile, accType,
-                            name, email, pwd, address, countryCode, cityCode,
-                            bankName, bankAccName, bankAccNum
-                    );
+                        presenter.carryRegData(ConstantProvider.REQ_TYPE_REG_USER, imageFile, accType,
+                                name, email, pwd, address, countryCode, cityCode,
+                                bankName, bankAccName, bankAccNum
+                        );
+                    } else {
+                        showMessage("Must agree to Terms and Conditions");
+                    }
                 } else {
                     showMessage("Password did not match!");
                 }

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
+import com.cryptenet.thanatos.dtmweb.terms.TermsActivity;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,7 +46,12 @@ public class TermsFragment extends Fragment {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_terms, container, false);
 
-        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.nav_tc));
+        boolean flag = getArguments().getBoolean("flag", false);
+
+        if (flag)
+            ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.nav_tc));
+//        else
+//            ((TermsActivity) getActivity()).setToolBarTitle(getString(R.string.nav_tc));
 
         ButterKnife.bind(this, convertView);
 
