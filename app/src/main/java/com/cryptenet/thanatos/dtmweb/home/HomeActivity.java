@@ -36,6 +36,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragActivity;
+import com.cryptenet.thanatos.dtmweb.di.components.AppComponent;
 import com.cryptenet.thanatos.dtmweb.events.InitiatorThreadsEvent;
 import com.cryptenet.thanatos.dtmweb.events.InvestorThreadsEvent;
 import com.cryptenet.thanatos.dtmweb.events.IssueTopicChosenEvent;
@@ -467,7 +468,13 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         switch (view.getId()) {
             case R.id.terms:
                 drawerLayout.closeDrawer(GravityCompat.START);
-                replaceFragment(R.id.frame_container, new TermsFragment());
+                TermsFragment fragment = new TermsFragment();
+                Bundle bundle = new Bundle();
+
+                bundle.putBoolean("flag", true);
+                fragment.setArguments(bundle);
+
+                replaceFragment(R.id.frame_container, fragment);
                 break;
             case R.id.rateUs:
                 showMessage(getString(R.string.nav_rate));

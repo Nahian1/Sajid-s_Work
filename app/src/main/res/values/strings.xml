@@ -9,7 +9,7 @@
   -->
 
 <resources>
-    <string name="app_name">Fikra</string>
+    <string name="app_name">Fikrah</string>
     <string name="action_settings" translatable="false">Settings</string>
     <string name="title_activity_registration" translatable="false">RegistrationActivity</string>
     <string name="title_activity_forgot" translatable="false">ForgotActivity</string>
@@ -134,4 +134,6 @@
     <string name="notification_channel_id" translatable="false">plans_update_channel</string>
 
     <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</string>
+
+    <string name="chk_agree_txt">I agree to the</string>
 </resources>
