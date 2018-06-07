@@ -35,7 +35,6 @@
         </activity>
         <activity
             android:name=".terms.TermsActivity"
-            android:label="@string/nav_tc"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:parentActivityName=".registration.RegistrationActivity">

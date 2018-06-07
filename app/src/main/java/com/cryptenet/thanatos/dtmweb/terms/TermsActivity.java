@@ -1,16 +1,19 @@
 package com.cryptenet.thanatos.dtmweb.terms;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ImageView;
+import android.view.MenuItem;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.home.terms.TermsFragment;
+import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,8 +21,6 @@ import butterknife.ButterKnife;
 public class TermsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.menuRight)
-    ImageView ivMenuRight;
     private FragmentManager fragmentManager;
 
     @Override
@@ -30,7 +31,12 @@ public class TermsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        ivMenuRight.setVisibility(View.GONE);
+        if (getSupportActionBar() != null) {
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(getString(R.string.nav_tc));
+
+        }
 
         fragmentManager = getSupportFragmentManager();
 
@@ -48,5 +54,20 @@ public class TermsActivity extends AppCompatActivity {
 //                .addToBackStack(null) //commented out by Asif
                 .add(containerViewId, fragment)
                 .commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home)
+            super.onBackPressed();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String lang = PreferenceManager.getDefaultSharedPreferences(newBase).getString(ConstantProvider.SELECTED_LANGUAGE, "en");
+        super.attachBaseContext(LocaleHelper.setNewLocale(newBase, lang));
     }
 }

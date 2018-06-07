@@ -22,10 +22,10 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_vertical_40"
         android:paddingEnd="@dimen/padding_horizontal"
         android:paddingStart="@dimen/padding_horizontal"
-        android:paddingTop="@dimen/padding_vertical"
-        android:paddingBottom="@dimen/margin_vertical_40">
+        android:paddingTop="@dimen/padding_vertical">
 
         <ImageView
             android:id="@+id/iv_pp"
@@ -84,9 +84,10 @@
             <Spinner
                 android:id="@+id/spin_acc_type"
                 style="@style/Widget.AppCompat.DropDownItem.Spinner"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/white"
+                android:gravity="start"
                 android:popupBackground="@color/spin_pop"
                 android:spinnerMode="dropdown" />
         </LinearLayout>
@@ -320,10 +321,10 @@
             android:id="@+id/lin_lay_terms"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/margin_vertical_8"
-            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_bank_acc_name_reg">
 
             <CheckBox
@@ -333,7 +334,7 @@
                 android:layout_marginEnd="4dp"
                 android:text="@string/chk_agree_txt"
                 android:textColor="@color/white"
-                android:theme="@style/CustomCheckbox"/>
+                android:theme="@style/CustomCheckbox" />
 
             <TextView
                 android:id="@+id/tv_terms_nav"
@@ -341,7 +342,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nav_tc"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <Button
@@ -366,12 +367,11 @@
             android:id="@+id/tv_have_acc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_horizontal_56"
             android:layout_marginStart="@dimen/margin_horizontal_56"
-            android:paddingTop="@dimen/margin_vertical_8"
             android:paddingBottom="@dimen/margin_vertical_8"
             android:paddingEnd="@dimen/margin_vertical_8"
             android:paddingStart="0dp"
+            android:paddingTop="@dimen/margin_vertical_8"
             android:text="@string/tv_have_account"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@android:color/white"
@@ -385,11 +385,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_horizontal_56"
-            android:layout_marginRight="@dimen/margin_horizontal_56"
-            android:paddingTop="@dimen/margin_vertical_8"
             android:paddingBottom="@dimen/margin_vertical_8"
-            android:paddingStart="@dimen/margin_vertical_8"
             android:paddingEnd="0dp"
+            android:paddingStart="@dimen/margin_vertical_8"
+            android:paddingTop="@dimen/margin_vertical_8"
             android:text="@string/tv_sign_in"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
             android:textColor="@android:color/white"

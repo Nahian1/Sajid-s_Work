@@ -215,7 +215,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             etBankAccNumberReg.setText(sharedPreferences.getString(ConstantProvider.SP_BANK_ACC_NO, null));
 
             accType = sharedPreferences.getString(ConstantProvider.SP_USER_TYPE, null);
-            accTypes.add(accType);
+            accTypes.add(accType.equals(getString(R.string.acc_type_initiator))
+                    ? getString(R.string.acc_type_initiator) : getString(R.string.acc_type_investor));
             spinAccType.setEnabled(false);
 
         } else {
