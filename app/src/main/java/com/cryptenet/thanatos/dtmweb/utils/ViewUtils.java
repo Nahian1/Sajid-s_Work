@@ -20,10 +20,6 @@ import java.util.regex.Pattern;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-/**
- * Created by Asif on 6/2/2018.
- */
-
 public class ViewUtils {
 
     public static void hideKeyboard(Activity context) {

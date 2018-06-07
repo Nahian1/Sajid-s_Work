@@ -10,7 +10,6 @@
 
 package com.cryptenet.thanatos.dtmweb.home.edit_project;
 
-
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -69,7 +68,6 @@ import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
 
-
 public class EditProjectFragment extends BaseFragment<EditProjectFragmentContract.Presenter>
         implements EditProjectFragmentContract.View, AdapterView.OnItemSelectedListener {
     public static final String TAG = TagProvider.getDebugTag(EditProjectFragment.class);
@@ -109,7 +107,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -133,7 +130,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
             editTextShortDescription.setText(project.getShortDescription());
             editTextLongDescription.setText(project.getLongDescription());
             editTextAccessPrice.setText(project.getAccessPrice());
-
         }
 
         list = new ArrayList<>();
@@ -348,6 +344,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
         int position = 0;
         this.list.clear();
         this.list.addAll(event.categoriesList);
+        this.categoriesList.clear();
 
         for (int i = 0; i < this.list.size(); i++) {
             this.categoriesList.add(this.list.get(i).getName());
@@ -356,7 +353,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                 position = i;
         }
 
-        this.categoriesList.clear();
         spinCatAdapter.notifyDataSetChanged();
         spinnerProjectCategory.setSelection(position);
     }
