@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright (c) 2018.
   ~  Development Lead: Cryptenet Ltd.
   ~  Developer Credit:
@@ -10,41 +9,42 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:padding="8dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/iv_pp"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_profile_blue" />
+                app:srcCompat="@drawable/ic_thumb_plan_cover" />
 
             <LinearLayout
                 android:id="@+id/right_layout"
-                android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_toEndOf="@+id/iv_pp"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/titleTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Title"
                     android:layout_marginTop="2dp"
+                    android:text="Title"
                     android:textColor="#939393"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -53,9 +53,9 @@
                     android:id="@+id/tv_investor_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/investor_tag_line"
-                    android:maxLines="1"
                     android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/investor_tag_line"
                     android:textColor="#939393"
                     android:textSize="12sp" />
 
