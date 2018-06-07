@@ -10,35 +10,15 @@
 
 package com.cryptenet.thanatos.dtmweb.services;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.telephony.TelephonyManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.cryptenet.thanatos.dtmweb.events.DataSendSuccessEvent;
-import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
+import com.cryptenet.thanatos.dtmweb.events.FCMTokenEvent;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.io.IOException;
-
-import javax.inject.Inject;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class InstanceIdService extends FirebaseInstanceIdService {
     public static final String TAG = TagProvider.getDebugTag(InstanceIdService.class);
@@ -52,14 +32,19 @@ public class InstanceIdService extends FirebaseInstanceIdService {
         super.onTokenRefresh();
         String token = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "onTokenRefresh: " + token);
-//        sendToServer(token);
+        sendToServer(token);
     }
 
-    @SuppressLint("HardwareIds")
     private void sendToServer(String token) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("TOKEN", token).apply();
+    }
+
+
+//    private void sendToServer(String token) {
 //        try {
 //            String head = "application/json";
-//            String oauth = preferences.getString(ConstantProvider.SP_ACCESS_TOKEN, null);
+//            String oauth = PreferenceManager.getDefaultSharedPreferences(this)
+//                    .getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 //
 //            if (oauth != null) {
 //                OkHttpClient client = new OkHttpClient();
@@ -69,12 +54,14 @@ public class InstanceIdService extends FirebaseInstanceIdService {
 //                        .add("registration_id", token)
 //                        .add("device_id", deviceId)
 //                        .add("type", "android")
+//                        .add("active", "true")
 //                        .build();
 //
 //                final Request request = new Request.Builder()
 //                        .url(ConstantProvider.BASE_URL + "api/v1/fcm/")
 //                        .post(formBody)
 //                        .addHeader("Content-Type", head)
+//                        .addHeader("Authorization", oauth)
 //                        .build();
 //
 //                client.newCall(request).enqueue(new Callback() {
@@ -86,14 +73,13 @@ public class InstanceIdService extends FirebaseInstanceIdService {
 //                    @Override
 //                    public void onResponse(Call call, Response response) throws IOException {
 //                        try {
-//                            if (response.code() == 200)
-//                                EventBus.getDefault().post(new DataSendSuccessEvent(true));
+//                            if (response.isSuccessful())
+//                                Log.d(TAG, response.body().string());
 //                            else
 //                                Log.d(TAG, "onResponse: " + response.code());
 //                        } catch (Exception e) {
 //                            e.printStackTrace();
 //                        }
-//
 //                    }
 //                });
 //            }
@@ -101,5 +87,5 @@ public class InstanceIdService extends FirebaseInstanceIdService {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-    }
+//    }
 }
