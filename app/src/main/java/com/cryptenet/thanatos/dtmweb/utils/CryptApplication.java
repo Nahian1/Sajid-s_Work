@@ -73,8 +73,7 @@ public class CryptApplication extends Application implements HasActivityInjector
             // The following line triggers the initialization of ACRA
             ACRA.init(this);
 
-            Fabric.with(this, new Crashlytics());
-            Fabric.with(this, new Answers());
+            Fabric.with(this, new Crashlytics(), new Answers());
 
         }
 
