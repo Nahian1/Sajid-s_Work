@@ -40,7 +40,7 @@ import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 @ReportsCrashes(
-        mailTo = "asif.rahman307@gmail.com",
+        mailTo = "asif.rahman307@gmail.com, cryptenet@gmail.com",
         mode = ReportingInteractionMode.TOAST,
         resToastText = R.string.toast_crash,
         customReportContent = {

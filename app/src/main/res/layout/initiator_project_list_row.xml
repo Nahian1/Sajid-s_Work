@@ -60,8 +60,9 @@
 
             <ImageView
                 android:id="@+id/editIV"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="5dp"
                 android:layout_alignBottom="@+id/titleTV"
                 android:layout_alignParentEnd="true"
                 app:srcCompat="@drawable/ic_edit" />

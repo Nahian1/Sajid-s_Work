@@ -28,12 +28,12 @@ public class ProgressDialogHelper {
 
         mContext = context;
 
+        mProgressDialog = new ProgressDialog(context);
+
         if (progressDialogHelper == null) {
 
-            if (mProgressDialog == null)
-                mProgressDialog = new ProgressDialog(context);
+            progressDialogHelper = new ProgressDialogHelper();
 
-            return new ProgressDialogHelper();
         }
 
         return progressDialogHelper;
@@ -53,9 +53,6 @@ public class ProgressDialogHelper {
 
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
-
-            mProgressDialog = null;
-            progressDialogHelper = null;
         }
     }
 }
