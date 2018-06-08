@@ -56,5 +56,8 @@ public class ConstantProvider {
     public static final String CHANNEL_NAME = "Plan update channel";
     public static final String CHANNEL_DESC = "Delivers plan update for subscribed category";
 
+    public static final String FCM_TOKEN = "token";
+    public static final String FCM_FLAG = "flag";
+
     public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 5050;
 }

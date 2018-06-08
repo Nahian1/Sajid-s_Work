@@ -13,12 +13,10 @@ package com.cryptenet.thanatos.dtmweb.services;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.cryptenet.thanatos.dtmweb.events.FCMTokenEvent;
+import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class InstanceIdService extends FirebaseInstanceIdService {
     public static final String TAG = TagProvider.getDebugTag(InstanceIdService.class);
@@ -36,7 +34,7 @@ public class InstanceIdService extends FirebaseInstanceIdService {
     }
 
     private void sendToServer(String token) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("TOKEN", token).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString(ConstantProvider.FCM_TOKEN, token).apply();
     }
 
 

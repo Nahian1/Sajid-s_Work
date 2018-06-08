@@ -14,6 +14,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.AllCategoriesResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.FCMRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.MessageThreadModel;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
@@ -218,12 +219,13 @@ public interface ApiClient {
     );
 
     @FormUrlEncoded
-    @POST("api/v1/message/")
-    Call<SendMessageModel> sendFCMToken(
+    @POST("api/v1/fcm/")
+    Call<FCMRsp> sendFCMToken(
             @Header("Authorization") String token,
             @Field("registration_id") String registrationId,
             @Field("device_id") String deviceId,
-            @Field("type") String type
+            @Field("type") String type,
+            @Field("active") Boolean isActive
     );
 
     @GET("api/v1/message-thread/{thread_id}/messages/")

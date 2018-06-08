@@ -42,4 +42,9 @@ public class HomeActivityModel extends BaseModel<HomeActivityContract.Repository
     public boolean clearUserData(Context context) {
         return repository.clearUserData(context);
     }
+
+    @Override
+    public void sendFCMData(Context context) {
+        repository.sendFCMData(context);
+    }
 }
