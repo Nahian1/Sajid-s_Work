@@ -95,7 +95,7 @@
             android:background="@drawable/btn_shape_blue"
             android:clickable="false"
             android:text="@string/see_more"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/blue"
             android:textSize="12sp" />
 
     </LinearLayout>

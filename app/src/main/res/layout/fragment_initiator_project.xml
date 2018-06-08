@@ -33,7 +33,7 @@
             android:background="@drawable/blue_button_selector"
             android:scaleType="fitXY"
             android:text="@string/add_plan"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/blue" />
 
         <ListView
             android:id="@+id/projectListView"

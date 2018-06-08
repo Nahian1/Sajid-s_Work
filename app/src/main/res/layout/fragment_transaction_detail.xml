@@ -331,7 +331,7 @@
                 android:layout_marginTop="50dp"
                 android:background="@drawable/blue_button_selector"
                 android:text="@string/btn_done"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/blue" />
 
         </LinearLayout>
 
