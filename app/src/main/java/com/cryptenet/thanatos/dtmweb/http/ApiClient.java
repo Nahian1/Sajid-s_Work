@@ -16,35 +16,29 @@ import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.FCMRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.MessageListModel;
 import com.cryptenet.thanatos.dtmweb.pojo.MessageThreadModel;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.SendMessageModel;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
-import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
-import com.cryptenet.thanatos.dtmweb.pojo.MessageListModel;
-import com.cryptenet.thanatos.dtmweb.pojo.SendMessageModel;
-import com.cryptenet.thanatos.dtmweb.pojo.ThreadRequestModel;
-
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 
 import okhttp3.MultipartBody;
-
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Path;
-
-import retrofit2.http.Multipart;
 import retrofit2.http.Part;
-
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -75,7 +69,11 @@ public interface ApiClient {
 //    );
 
     @GET("api/v1/plan/")
-    Call<AllPlansResponse> getAllPlans(@Header("Authorization") String token);
+    Call<AllPlansResponse> getAllPlans(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset
+    );
 
     @GET("api/v1/plan/my/")
     Call<AllPlansResponse> getAllMyPlans(@Header("Authorization") String token);

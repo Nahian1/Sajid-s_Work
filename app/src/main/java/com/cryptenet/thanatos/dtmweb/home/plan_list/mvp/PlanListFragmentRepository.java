@@ -45,7 +45,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
     }
 
     @Override
-    public void getAllProjects(Context context, String token) {
+    public void getAllProjects(Context context, int offset) {
         String head = "application/json";
         //PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 //        Log.d(TAG, "getAllProjects: " + token);
@@ -80,7 +80,11 @@ public class PlanListFragmentRepository extends BaseFragRepository
 //                }
 //            });
 //        }
-        Call<AllPlansResponse> req = apiClient.getAllPlans("Bearer " + token);
+        Call<AllPlansResponse> req = apiClient.getAllPlans(
+                "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
+                10,
+                offset
+        );
         req.enqueue(new Callback<AllPlansResponse>() {
             @Override
             public void onResponse(Call<AllPlansResponse> call, retrofit2.Response<AllPlansResponse> response) {

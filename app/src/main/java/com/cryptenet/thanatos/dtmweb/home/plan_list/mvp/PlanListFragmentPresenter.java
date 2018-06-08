@@ -27,8 +27,8 @@ public class PlanListFragmentPresenter extends BaseFragPresenter<PlanListFragmen
         super(model);
     }
 
-    public void getProjectList(Context context, String token) {
-        model.getProjectList(context, token);
+    public void getProjectList(Context context, int offset) {
+        model.getProjectList(context, offset);
     }
 
     @Override
