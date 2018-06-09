@@ -27,7 +27,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -38,7 +37,7 @@ import butterknife.ButterKnife;
 
 public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.Presenter>
         implements ForgotActivityContract.View, View.OnClickListener {
-    public static final String TAG = TagProvider.getDebugTag(ForgotPasswordActivity.class);
+//    public static final String TAG = TagProvider.getDebugTag(ForgotPasswordActivity.class);
 
     @BindView(R.id.et_forgot)
     EditText etForgot;

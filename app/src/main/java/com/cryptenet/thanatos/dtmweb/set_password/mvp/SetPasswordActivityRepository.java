@@ -12,14 +12,12 @@ package com.cryptenet.thanatos.dtmweb.set_password.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.events.PwdResetEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,7 +34,7 @@ import okhttp3.Response;
 @PerActivity
 public class SetPasswordActivityRepository extends BaseRepository
         implements SetPasswordActivityContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(SetPasswordActivityRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(SetPasswordActivityRepository.class);
 
     @Override
     public void sendPwdResetRequest(String newPwd, Context context) {
@@ -59,7 +57,7 @@ public class SetPasswordActivityRepository extends BaseRepository
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: reset");
+//                Log.d(TAG, "onFailure: reset");
                 EventBus.getDefault().post(new PwdResetEvent(false));
             }
 

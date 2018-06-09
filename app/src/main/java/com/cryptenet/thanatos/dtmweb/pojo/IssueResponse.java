@@ -33,8 +33,6 @@ public class IssueResponse implements Parcelable
     @Expose
     private List<IssueParent> results = null;
     public final static Creator<IssueResponse> CREATOR = new Creator<IssueResponse>() {
-
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -45,9 +43,7 @@ public class IssueResponse implements Parcelable
         public IssueResponse[] newArray(int size) {
             return (new IssueResponse[size]);
         }
-
-    }
-    ;
+    };
 
     protected IssueResponse(Parcel in) {
         this.count = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -130,5 +126,4 @@ public class IssueResponse implements Parcelable
     public int describeContents() {
         return  0;
     }
-
 }

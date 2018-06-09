@@ -12,14 +12,12 @@ package com.cryptenet.thanatos.dtmweb.forgot_password.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.events.DataSendSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,7 +34,7 @@ import okhttp3.Response;
 @PerActivity
 public class ForgotPasswordActivityRepository extends BaseRepository
         implements ForgotActivityContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(ForgotPasswordActivityRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(ForgotPasswordActivityRepository.class);
 
     @Override
     public void sendIdentifier(String identifier) {
@@ -57,7 +55,7 @@ public class ForgotPasswordActivityRepository extends BaseRepository
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: forgot");
+//                Log.d(TAG, "onFailure: forgot");
             }
 
             @Override
@@ -65,8 +63,8 @@ public class ForgotPasswordActivityRepository extends BaseRepository
                 try {
                     if (response.code() == 200)
                         EventBus.getDefault().post(new DataSendSuccessEvent(true));
-                    else
-                        Log.d(TAG, "onResponse: " + response.code());
+//                    else
+//                        Log.d(TAG, "onResponse: " + response.code());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -16,8 +16,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Topic implements Parcelable
-{
+public class Topic implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -39,8 +38,7 @@ public class Topic implements Parcelable
         public Topic[] newArray(int size) {
             return (new Topic[size]);
         }
-    }
-    ;
+    };
 
     protected Topic(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));

@@ -18,14 +18,13 @@ import com.cryptenet.thanatos.dtmweb.events.CodeEnteredEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.CodeActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
 @PerActivity
 public class CodeActivityRepository extends BaseRepository
         implements CodeActivityContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(CodeActivityRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(CodeActivityRepository.class);
 
     @Override
     public void saveResetCode(String code, Context context) {

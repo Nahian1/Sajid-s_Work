@@ -16,12 +16,11 @@ import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
 import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
 public class SetPasswordActivityModel extends BaseModel<SetPasswordActivityContract.Repository, SetPasswordActivity>
         implements SetPasswordActivityContract.Model {
-    private static final String TAG = TagProvider.getDebugTag(SetPasswordActivityModel.class);
+//    private static final String TAG = TagProvider.getDebugTag(SetPasswordActivityModel.class);
 
     public SetPasswordActivityModel(SetPasswordActivityContract.Repository repository) {
         super(repository);

@@ -16,8 +16,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ThreadIdentity implements Parcelable
-{
+public class ThreadIdentity implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -62,8 +61,6 @@ public class ThreadIdentity implements Parcelable
     @Expose
     private String initiatorPicture;
     public final static Creator<ThreadIdentity> CREATOR = new Creator<ThreadIdentity>() {
-
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -74,9 +71,7 @@ public class ThreadIdentity implements Parcelable
         public ThreadIdentity[] newArray(int size) {
             return (new ThreadIdentity[size]);
         }
-
-    }
-    ;
+    };
 
     protected ThreadIdentity(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -289,5 +284,4 @@ public class ThreadIdentity implements Parcelable
     public int describeContents() {
         return  0;
     }
-
 }

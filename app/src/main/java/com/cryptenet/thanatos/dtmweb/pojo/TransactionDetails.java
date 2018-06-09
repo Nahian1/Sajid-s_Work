@@ -55,8 +55,6 @@ public class TransactionDetails implements Parcelable {
     @Expose
     private Double planAccessPrice;
     public final static Creator<TransactionDetails> CREATOR = new Creator<TransactionDetails>() {
-
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -67,9 +65,7 @@ public class TransactionDetails implements Parcelable {
         public TransactionDetails[] newArray(int size) {
             return (new TransactionDetails[size]);
         }
-
-    }
-    ;
+    };
 
     protected TransactionDetails(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -256,5 +252,4 @@ public class TransactionDetails implements Parcelable {
     public int describeContents() {
         return  0;
     }
-
 }

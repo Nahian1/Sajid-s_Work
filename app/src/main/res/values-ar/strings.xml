@@ -86,7 +86,7 @@
     <string name="update_cover">تحديث تغطية المشروع</string>
     <string name="plan_desc">وصف الخطة</string>
     <string name="edit_plan">تحرير الخطة</string>
-    <string name="req_details">طلب التفاصيل</string>
+    <string name="req_details">طلب تفاصيل</string>
     <string name="submit_issue">تقديم القضية</string>
     <string name="report_issue">قضية تقرير</string>
     <string name="thread_list">قائمة الموضوع</string>

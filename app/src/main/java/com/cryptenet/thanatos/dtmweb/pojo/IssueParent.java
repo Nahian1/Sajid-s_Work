@@ -34,7 +34,6 @@ public class IssueParent implements Parcelable
     @Expose
     private List<Topic> topics = null;
     public final static Creator<IssueParent> CREATOR = new Creator<IssueParent>() {
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -45,7 +44,6 @@ public class IssueParent implements Parcelable
         public IssueParent[] newArray(int size) {
             return (new IssueParent[size]);
         }
-
     };
 
     protected IssueParent(Parcel in) {
@@ -125,5 +123,4 @@ public class IssueParent implements Parcelable
     public int describeContents() {
         return  0;
     }
-
 }

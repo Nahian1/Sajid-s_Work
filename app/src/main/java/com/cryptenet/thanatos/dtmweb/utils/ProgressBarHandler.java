@@ -23,7 +23,6 @@ import com.cryptenet.thanatos.dtmweb.R;
 
 
 public class ProgressBarHandler {
-
     private ProgressBar mProgressBar;
 
     public ProgressBarHandler(Context context) {
@@ -51,7 +50,6 @@ public class ProgressBarHandler {
 
     public void showProgress() {
         mProgressBar.setVisibility(View.VISIBLE);
-
     }
 
     public void hideProgress() {

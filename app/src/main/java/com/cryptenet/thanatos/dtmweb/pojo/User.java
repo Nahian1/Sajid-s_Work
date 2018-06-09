@@ -66,8 +66,6 @@ public class User  implements Parcelable {
     @Expose
     private String userType;
     public final static Parcelable.Creator<User> CREATOR = new Creator<User>() {
-
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -78,9 +76,7 @@ public class User  implements Parcelable {
         public User[] newArray(int size) {
             return (new User[size]);
         }
-
-    }
-            ;
+    };
 
     protected User(Parcel in) {
         this.accessToken = ((String) in.readValue((String.class.getClassLoader())));

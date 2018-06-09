@@ -16,8 +16,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ProjectsRsp implements Parcelable
-{
+public class ProjectsRsp implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -74,8 +73,6 @@ public class ProjectsRsp implements Parcelable
     private boolean isEditMode;
 
     public final static Creator<ProjectsRsp> CREATOR = new Creator<ProjectsRsp>() {
-
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -86,9 +83,7 @@ public class ProjectsRsp implements Parcelable
         public ProjectsRsp[] newArray(int size) {
             return (new ProjectsRsp[size]);
         }
-
-    }
-    ;
+    };
 
     protected ProjectsRsp(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));

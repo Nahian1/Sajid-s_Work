@@ -11,6 +11,5 @@
 package com.cryptenet.thanatos.dtmweb.utils;
 
 public interface JsonKeys {
-
     String TRANSACTION_DETAILS = "transaction_details";
 }

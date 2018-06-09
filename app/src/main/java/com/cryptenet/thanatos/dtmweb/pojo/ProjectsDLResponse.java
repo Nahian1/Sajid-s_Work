@@ -13,12 +13,11 @@ package com.cryptenet.thanatos.dtmweb.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ProjectsDLResponse implements Parcelable
-{
+public class ProjectsDLResponse implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -75,8 +74,6 @@ public class ProjectsDLResponse implements Parcelable
     @Expose
     private String categoryName;
     public final static Creator<ProjectsDLResponse> CREATOR = new Creator<ProjectsDLResponse>() {
-
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -87,9 +84,7 @@ public class ProjectsDLResponse implements Parcelable
         public ProjectsDLResponse[] newArray(int size) {
             return (new ProjectsDLResponse[size]);
         }
-
-    }
-    ;
+    };
 
     protected ProjectsDLResponse(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -354,5 +349,4 @@ public class ProjectsDLResponse implements Parcelable
     public int describeContents() {
         return  0;
     }
-
 }

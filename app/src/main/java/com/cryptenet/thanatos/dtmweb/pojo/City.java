@@ -25,8 +25,6 @@ public class City implements Parcelable {
     @Expose
     private String name;
     public final static Parcelable.Creator<City> CREATOR = new Creator<City>() {
-
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -37,9 +35,7 @@ public class City implements Parcelable {
         public City[] newArray(int size) {
             return (new City[size]);
         }
-
-    }
-            ;
+    };
 
     protected City(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));

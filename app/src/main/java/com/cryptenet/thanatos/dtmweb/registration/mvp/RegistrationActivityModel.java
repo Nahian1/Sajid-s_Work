@@ -19,14 +19,13 @@ import com.cryptenet.thanatos.dtmweb.pojo.RegistrationInput;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileInput;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import java.io.File;
 
 @PerActivity
 public class RegistrationActivityModel extends BaseModel<RegistrationActivityContract.Repository, RegistrationActivity>
         implements RegistrationActivityContract.Model {
-    private static final String TAG = TagProvider.getDebugTag(RegistrationActivityModel.class);
+//    private static final String TAG = TagProvider.getDebugTag(RegistrationActivityModel.class);
 
     public RegistrationActivityModel(RegistrationActivityContract.Repository repository) {
         super(repository);

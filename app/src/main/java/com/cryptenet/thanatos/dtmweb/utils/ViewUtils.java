@@ -11,8 +11,6 @@
 package com.cryptenet.thanatos.dtmweb.utils;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 
 import java.util.regex.Matcher;
@@ -31,14 +29,6 @@ public class ViewUtils {
             // TODO: handle exception
         }
     }
-
-//    public static ProgressDialog showProgress(Context context) {
-//
-//        ProgressDialog mProgressDialog = new ProgressDialog(context);
-//        mProgressDialog.setMessage("Please wait...");
-//
-//        return mProgressDialog;
-//    }
 
     public static boolean isValidEmail(String email) {
 

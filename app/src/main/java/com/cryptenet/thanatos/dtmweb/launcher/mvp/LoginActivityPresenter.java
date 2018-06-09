@@ -14,13 +14,12 @@ import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
 public class LoginActivityPresenter
         extends BasePresenter<LoginActivityContract.View, LoginActivityContract.Model>
         implements LoginActivityContract.Presenter {
-    private static final String TAG = TagProvider.getDebugTag(LoginActivityPresenter.class);
+//    private static final String TAG = TagProvider.getDebugTag(LoginActivityPresenter.class);
 
     public LoginActivityPresenter(LoginActivityContract.Model model) {
         super(model);

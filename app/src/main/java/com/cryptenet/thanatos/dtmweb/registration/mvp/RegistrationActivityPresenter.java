@@ -11,21 +11,18 @@
 package com.cryptenet.thanatos.dtmweb.registration.mvp;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RegistrationActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
-import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import java.io.File;
 
 @PerActivity
 public class RegistrationActivityPresenter extends BasePresenter<RegistrationActivityContract.View, RegistrationActivityContract.Model>
         implements RegistrationActivityContract.Presenter {
-    private static final String TAG = TagProvider.getDebugTag(RegistrationActivityPresenter.class);
+//    private static final String TAG = TagProvider.getDebugTag(RegistrationActivityPresenter.class);
 
     public RegistrationActivityPresenter(RegistrationActivityContract.Model model) {
         super(model);

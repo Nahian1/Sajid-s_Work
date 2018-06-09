@@ -16,12 +16,11 @@ import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.forgot_password.ForgotPasswordActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ForgotActivityContract;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
 public class ForgotPasswordActivityModel extends BaseModel<ForgotActivityContract.Repository, ForgotPasswordActivity>
         implements ForgotActivityContract.Model {
-        private static final String TAG = TagProvider.getDebugTag(ForgotPasswordActivityModel.class);
+//        private static final String TAG = TagProvider.getDebugTag(ForgotPasswordActivityModel.class);
 
         public ForgotPasswordActivityModel(ForgotActivityContract.Repository repository) {
                 super(repository);

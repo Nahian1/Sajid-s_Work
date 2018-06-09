@@ -12,10 +12,8 @@ package com.cryptenet.thanatos.dtmweb.home.request_detail;
 
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +32,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.BackToManageRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDataReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
+import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
@@ -47,7 +46,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,6 +107,9 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View convertView = inflater.inflate(R.layout.fragment_request_detail, container, false);
+
+        ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.req_details));
+
 
         unbinder = ButterKnife.bind(this, convertView);
 

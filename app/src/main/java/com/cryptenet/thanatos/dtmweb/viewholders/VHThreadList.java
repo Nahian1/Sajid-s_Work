@@ -1,3 +1,13 @@
+/*
+ *  Copyright (c) 2018.
+ *  Development Lead: Cryptenet Ltd.
+ *  Developer Credit:
+ *      Alamgir Hossain,
+ *      Md. Rezwanur Rahman Khan,
+ *      Ashif Mujtoba
+ *  This project is under Apache License 2.0
+ */
+
 package com.cryptenet.thanatos.dtmweb.viewholders;
 
 import android.annotation.SuppressLint;
@@ -47,13 +57,6 @@ public class VHThreadList {
             e.printStackTrace();
             dateTV.append(context.getString(R.string.none));
         }
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-//
-//        try {
-//            dateTV.setText(dateFormat.format(dateFormat.parse(threadIdentities.get(position).getCreatedAt())));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
 
         titleTV.setText(threadIdentity.getPlanTitle());
     }

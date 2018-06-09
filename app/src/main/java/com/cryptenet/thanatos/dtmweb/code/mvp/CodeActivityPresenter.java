@@ -15,13 +15,12 @@ import android.content.Context;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.CodeActivityContract;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
 public class CodeActivityPresenter
         extends BasePresenter<CodeActivityContract.View, CodeActivityContract.Model>
         implements CodeActivityContract.Presenter {
-    private static final String TAG = TagProvider.getDebugTag(CodeActivityPresenter.class);
+//    private static final String TAG = TagProvider.getDebugTag(CodeActivityPresenter.class);
 
     public CodeActivityPresenter(CodeActivityContract.Model model) {
         super(model);

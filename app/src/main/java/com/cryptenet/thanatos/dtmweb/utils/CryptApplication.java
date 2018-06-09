@@ -69,12 +69,10 @@ public class CryptApplication extends Application implements HasActivityInjector
         id(this);
 
         if (BuildConfig.DEBUG) {
-
             // The following line triggers the initialization of ACRA
             ACRA.init(this);
 
             Fabric.with(this, new Crashlytics(), new Answers());
-
         }
 
         DaggerAppComponent.builder().create(this).inject(this);

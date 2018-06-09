@@ -159,10 +159,6 @@ public class ProjectsRq {
      * @param accessPrice
      * @param minimumInvestmentCost
      */
-
-
-
-
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(title);
         dest.writeValue(category);

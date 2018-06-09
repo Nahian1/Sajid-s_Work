@@ -61,7 +61,6 @@ public class TermsActivity extends AppCompatActivity {
     private void addFragment(@IdRes int containerViewId, Fragment fragment) {
         fragmentManager
                 .beginTransaction()
-//                .addToBackStack(null) //commented out by Asif
                 .add(containerViewId, fragment)
                 .commit();
     }

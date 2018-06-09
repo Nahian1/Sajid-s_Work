@@ -18,14 +18,11 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
-import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-
 import java.util.Locale;
 
 import static com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider.SELECTED_LANGUAGE;
 
 public class LocaleHelper {
-
     public static Context onAttach(Context context) {
         String lang = getPersistedData(context, Locale.getDefault().getLanguage());
         return setNewLocale(context, lang);

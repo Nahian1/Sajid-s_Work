@@ -34,8 +34,6 @@ public class PlanAccessResponse implements Parcelable {
     @Expose
     private List<Plans> results = null;
     public final static Parcelable.Creator<PlanAccessResponse> CREATOR = new Creator<PlanAccessResponse>() {
-
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -46,9 +44,7 @@ public class PlanAccessResponse implements Parcelable {
         public PlanAccessResponse[] newArray(int size) {
             return (new PlanAccessResponse[size]);
         }
-
-    }
-            ;
+    };
 
     protected PlanAccessResponse(Parcel in) {
         this.count = ((Integer) in.readValue((Integer.class.getClassLoader())));

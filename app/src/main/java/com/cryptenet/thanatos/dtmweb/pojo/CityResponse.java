@@ -34,8 +34,6 @@ public class CityResponse implements Parcelable
     @Expose
     private List<City> results = null;
     public final static Parcelable.Creator<CityResponse> CREATOR = new Creator<CityResponse>() {
-
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -46,9 +44,7 @@ public class CityResponse implements Parcelable
         public CityResponse[] newArray(int size) {
             return (new CityResponse[size]);
         }
-
-    }
-            ;
+    };
 
     protected CityResponse(Parcel in) {
         this.count = ((Integer) in.readValue((Integer.class.getClassLoader())));

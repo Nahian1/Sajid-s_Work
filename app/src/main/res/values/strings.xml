@@ -113,7 +113,7 @@
     <string name="approved">Approved</string>
     <string name="plan_desc">Plan Description</string>
     <string name="edit_plan">Edit Plan</string>
-    <string name="req_details">Details Request</string>
+    <string name="req_details">Request Details</string>
     <string name="submit_issue">Submit Issue</string>
     <string name="report_issue">Report Issue</string>
     <string name="thread_list">Thread List</string>

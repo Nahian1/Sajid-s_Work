@@ -35,8 +35,6 @@ public class ThreadDistinctResponse implements Parcelable
     @Expose
     private List<ThreadIdentity> results = null;
     public final static Creator<ThreadDistinctResponse> CREATOR = new Creator<ThreadDistinctResponse>() {
-
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -47,9 +45,7 @@ public class ThreadDistinctResponse implements Parcelable
         public ThreadDistinctResponse[] newArray(int size) {
             return (new ThreadDistinctResponse[size]);
         }
-
-    }
-    ;
+    };
 
     protected ThreadDistinctResponse(Parcel in) {
         this.count = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -132,5 +128,4 @@ public class ThreadDistinctResponse implements Parcelable
     public int describeContents() {
         return  0;
     }
-
 }

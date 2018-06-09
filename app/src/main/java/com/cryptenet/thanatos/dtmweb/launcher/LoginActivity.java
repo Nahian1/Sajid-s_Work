@@ -10,7 +10,6 @@
 
 package com.cryptenet.thanatos.dtmweb.launcher;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,7 +32,6 @@ import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.Gson;
@@ -49,9 +47,7 @@ import io.fabric.sdk.android.services.concurrency.AsyncTask;
 
 public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         implements LoginActivityContract.View, View.OnClickListener {
-    private static final String TAG = TagProvider.getDebugTag(LoginActivity.class);
-    private User user;
-
+//    private static final String TAG = TagProvider.getDebugTag(LoginActivity.class);
     @BindView(R.id.et_email)
     EditText etEmail;
 
@@ -67,7 +63,6 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
     @BindView(R.id.tv_forgot_pwd)
     TextView tvForgotPwd;
 
-    ProgressDialog progressDialog;
     SharedPreferences preferences;
 
     @Override
@@ -86,7 +81,6 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
         if (lang == null) {
             LocaleHelper.setNewLocale(this, "en");
-//            preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
         } else {
             LocaleHelper.setNewLocale(this, lang);
         }
@@ -125,28 +119,6 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
                 ViewUtils.hideKeyboard(this);
 
-                //for debug only
-//                String email = etEmail.getText().toString().trim();
-//
-//                if (email.equals("1")) {
-//
-//                    ProgressDialogHelper.init(this).showProgress();
-//
-//                    presenter.requestForLogin("michaelperez@collier.com", "asdasd123");
-//
-//                } else if (email.equals("2")) {
-//
-//                    ProgressDialogHelper.init(this).showProgress();
-//
-//                    presenter.requestForLogin("creynolds@montgomery.com", "asdasd123");
-//
-//                } else {
-//                    showMessage("Give a type!");
-//                }
-
-//                presenter.requestForLogin("azam@gmail.com","asdasd123");
-
-                //original code commented out for debug purpose
                 String email = etEmail.getText().toString().trim();
                 String password = etPwd.getText().toString().trim();
 
@@ -183,13 +155,10 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogInSuccessEvent(LogInSuccessEvent event) {
-//        this.user = event.string;
-
         ProgressDialogHelper.hideProgress();
 
         if (event.isSuccess) {
             AsyncTask.execute(() -> {
-//                    showMessage("Loading data...");
                 try {
                     if (presenter.saveUserData(new Gson().fromJson(event.string, User.class))) {
                         navigator.toHomeActivity(LoginActivity.this, event.string);
@@ -223,7 +192,7 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
         int resultCode = availability.isGooglePlayServicesAvailable(getApplicationContext());
 
         if (resultCode == ConnectionResult.SUCCESS) {
-            Log.i(TAG, "isGooglePlayServicesAvailable SUCCESS");
+//            Log.i(TAG, "isGooglePlayServicesAvailable SUCCESS");
         } else {
             availability.getErrorDialog(this, resultCode, ConstantProvider.PLAY_SERVICES_RESOLUTION_REQUEST);
         }

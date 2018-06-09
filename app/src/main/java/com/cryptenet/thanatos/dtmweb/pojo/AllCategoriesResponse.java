@@ -33,8 +33,6 @@ public class AllCategoriesResponse implements Parcelable {
     @Expose
     private List<Categories> results = null;
     public final static Parcelable.Creator<AllCategoriesResponse> CREATOR = new Creator<AllCategoriesResponse>() {
-
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -45,9 +43,7 @@ public class AllCategoriesResponse implements Parcelable {
         public AllCategoriesResponse[] newArray(int size) {
             return (new AllCategoriesResponse[size]);
         }
-
-    }
-            ;
+    };
 
     protected AllCategoriesResponse(Parcel in) {
         this.count = ((Integer) in.readValue((Integer.class.getClassLoader())));

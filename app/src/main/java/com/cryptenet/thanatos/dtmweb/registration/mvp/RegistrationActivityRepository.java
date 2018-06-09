@@ -12,7 +12,6 @@ package com.cryptenet.thanatos.dtmweb.registration.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.events.CityFetchEvent;
@@ -35,7 +34,6 @@ import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileInput;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressBarHandler;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -55,7 +53,7 @@ import rx.schedulers.Schedulers;
 @PerActivity
 public class RegistrationActivityRepository extends BaseRepository
         implements RegistrationActivityContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(RegistrationActivityRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(RegistrationActivityRepository.class);
     private List<Country> countries;
     private List<City> cities;
 
@@ -74,7 +72,7 @@ public class RegistrationActivityRepository extends BaseRepository
             @Override
             public void onResponse(retrofit2.Call<CountryResponse> call, retrofit2.Response<CountryResponse> response) {
                 try {
-                    Log.d(TAG, "onResponse: " + response.body().getResults());
+//                    Log.d(TAG, "onResponse: " + response.body().getResults());
                     setCountries(response.body().getResults());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -83,7 +81,7 @@ public class RegistrationActivityRepository extends BaseRepository
 
             @Override
             public void onFailure(retrofit2.Call<CountryResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: country");
+//                Log.d(TAG, "onFailure: country");
             }
         });
     }
@@ -96,7 +94,7 @@ public class RegistrationActivityRepository extends BaseRepository
             public void onResponse(retrofit2.Call<CityResponse> call, retrofit2.Response<CityResponse> response) {
 
                 try {
-                    Log.d(TAG, "onResponse: " + response.body().getResults());
+//                    Log.d(TAG, "onResponse: " + response.body().getResults());
                     setCities(response.body().getResults());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -106,7 +104,7 @@ public class RegistrationActivityRepository extends BaseRepository
 
             @Override
             public void onFailure(retrofit2.Call<CityResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: city");
+//                Log.d(TAG, "onFailure: city");
             }
         });
     }
@@ -137,8 +135,6 @@ public class RegistrationActivityRepository extends BaseRepository
 
     //calling method to register new profile
     private void registerNewUserProfile(String reqType, final RegistrationInput regData) {
-        //mProgressBarHandler.showProgress();
-
         RequestBody name = RequestBody.create(MediaType.parse("text/plain"), regData.getName());
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), regData.getEmail());
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), regData.getPassword());
@@ -163,7 +159,7 @@ public class RegistrationActivityRepository extends BaseRepository
                     @Override
                     public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
                         if (response.isSuccessful()) {
-                            Log.d(TAG, "reg response: " + response.body().toString());
+//                            Log.d(TAG, "reg response: " + response.body().toString());
                             EventBus.getDefault().post(new RegistrationSuccessEvent(response.body()));
                         } else {
                             EventBus.getDefault().post(new RegistrationFailureEvent(true));
@@ -185,14 +181,10 @@ public class RegistrationActivityRepository extends BaseRepository
         ProgressBarHandler progressBarHandler = new ProgressBarHandler(context);
         progressBarHandler.showProgress();
 
-        Log.d(TAG, "sending: " + regData.toString());
+//        Log.d(TAG, "sending: " + regData.toString());
 
         int user_id = PreferenceManager.getDefaultSharedPreferences(context).getInt(ConstantProvider.SP_ID, -1);
         String access_token = "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
-
-        //RequestBody name = RequestBody.create(MediaType.parse("text/plain"), regData.getName());
-        //RequestBody email = RequestBody.create(MediaType.parse("text/plain"), regData.getEmail());
-        //RequestBody password = RequestBody.create(MediaType.parse("text/plain"), regData.getPassword());
 
         String name = regData.getName();
         String email = regData.getEmail();
@@ -205,17 +197,7 @@ public class RegistrationActivityRepository extends BaseRepository
         if (regData.getPicture() != null) {
             filePicture = RequestBody.create(MediaType.parse("image/*"), regData.getPicture());
             bodyPicture = MultipartBody.Part.createFormData("picture", regData.getPicture().getName(), filePicture);
-
         }
-
-
-        //RequestBody city = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(regData.getCity()));
-        //RequestBody country = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(regData.getCountry()));
-        //RequestBody bank_name = RequestBody.create(MediaType.parse("text/plain"), regData.getBankName());
-        //RequestBody bank_account_name = RequestBody.create(MediaType.parse("text/plain"), regData.getBankAccountName());
-        //RequestBody bank_account_number = RequestBody.create(MediaType.parse("text/plain"), regData.getBankAccountNumber());
-        //RequestBody user_type = RequestBody.create(MediaType.parse("text/plain"), regData.getUserType());
-        //RequestBody address = RequestBody.create(MediaType.parse("text/plain"), regData.getAddress());
 
         String city = String.valueOf(regData.getCity());
         String country = String.valueOf(regData.getCountry());
@@ -246,12 +228,10 @@ public class RegistrationActivityRepository extends BaseRepository
                     @Override
                     public void onNext(UpdateProfileResponse updateProfileResponse) {
                         progressBarHandler.hideProgress();
-                        Log.d(TAG, "update response: " + updateProfileResponse.toString());
+//                        Log.d(TAG, "update response: " + updateProfileResponse.toString());
                         EventBus.getDefault().post(new UpdateProfileSuccessEvent(updateProfileResponse));
                     }
                 });
-
-
     }
 
     @Override

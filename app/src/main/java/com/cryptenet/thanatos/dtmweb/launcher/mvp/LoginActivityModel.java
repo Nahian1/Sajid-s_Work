@@ -15,13 +15,12 @@ import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
 public class LoginActivityModel
         extends BaseModel<LoginActivityContract.Repository, LoginActivity>
         implements LoginActivityContract.Model {
-    private static final String TAG = TagProvider.getDebugTag(LoginActivityModel.class);
+//    private static final String TAG = TagProvider.getDebugTag(LoginActivityModel.class);
 
     public LoginActivityModel(LoginActivityContract.Repository repository) {
         super(repository);

@@ -21,7 +21,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,7 +37,7 @@ import okhttp3.Response;
 @PerActivity
 public class LoginActivityRepository extends BaseRepository
         implements LoginActivityContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(LoginActivityRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(LoginActivityRepository.class);
 
     public LoginActivityRepository() {
 
@@ -48,12 +47,6 @@ public class LoginActivityRepository extends BaseRepository
     public void validateLogin(String email, String password) {
         String head = "application/x-www-form-urlencoded";
 
-//        String raw = ConstantProvider.CLIENT_ID.trim() + ":".trim() + ConstantProvider.CLIENT_SECRET.trim();
-//        Log.d(TAG, "validateLogin: " + raw);
-//        String key = Base64.encodeToString(ConstantProvider.CLIENT_KEY.getBytes(), Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING);
-//        Log.d(TAG, "validateLogin: " + key);
-
-
         OkHttpClient client = new OkHttpClient();
 
         RequestBody formBody = new FormBody.Builder()
@@ -61,7 +54,7 @@ public class LoginActivityRepository extends BaseRepository
                 .add("username", email)
                 .add("password", password)
                 .build();
-        Log.d(TAG, "validateLogin: " + formBody.toString());
+//        Log.d(TAG, "validateLogin: " + formBody.toString());
         final Request request = new Request.Builder()
                 .url(ConstantProvider.BASE_URL + "o/token/")
                 .post(formBody)
@@ -72,7 +65,7 @@ public class LoginActivityRepository extends BaseRepository
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: login");
+//                Log.d(TAG, "onFailure: login");
                 EventBus.getDefault().post(new LogInFailureEvent(true));
                 e.printStackTrace();
             }
@@ -113,6 +106,5 @@ public class LoginActivityRepository extends BaseRepository
                 .putString(ConstantProvider.SP_USER_TYPE, user.getUserType())
                 .putLong(ConstantProvider.SP_EXPIRES_IN, expiresIn)
                 .commit();
-//        Log.d(TAG, "saveUserToSP: " + user.getAccessToken());
     }
 }

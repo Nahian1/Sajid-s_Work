@@ -40,7 +40,6 @@ public class Transaction implements Parcelable {
     ProjectsDetailed projectsDetailed;
 
     public final static Parcelable.Creator<Transaction> CREATOR = new Creator<Transaction>() {
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -51,7 +50,6 @@ public class Transaction implements Parcelable {
         public Transaction[] newArray(int size) {
             return (new Transaction[size]);
         }
-
     };
 
     protected Transaction(Parcel in) {
@@ -135,5 +133,4 @@ public class Transaction implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
 }

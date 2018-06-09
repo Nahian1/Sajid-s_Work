@@ -16,8 +16,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ThreadInitResponse implements Parcelable
-{
+public class ThreadInitResponse implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -62,8 +61,6 @@ public class ThreadInitResponse implements Parcelable
     @Expose
     private String initiatorPicture;
     public final static Creator<ThreadInitResponse> CREATOR = new Creator<ThreadInitResponse>() {
-
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -74,9 +71,7 @@ public class ThreadInitResponse implements Parcelable
         public ThreadInitResponse[] newArray(int size) {
             return (new ThreadInitResponse[size]);
         }
-
-    }
-    ;
+    };
 
     protected ThreadInitResponse(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -289,5 +284,4 @@ public class ThreadInitResponse implements Parcelable
     public int describeContents() {
         return  0;
     }
-
 }

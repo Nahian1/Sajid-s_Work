@@ -51,7 +51,6 @@ import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -75,7 +74,7 @@ import butterknife.OnClick;
 
 public class RegistrationActivity extends BaseActivity<RegistrationActivityContract.Presenter>
         implements RegistrationActivityContract.View, AdapterView.OnItemSelectedListener {
-    private static final String TAG = TagProvider.getDebugTag(RegistrationActivity.class);
+//    private static final String TAG = TagProvider.getDebugTag(RegistrationActivity.class);
 
     private File imageFile;
     private String accType;
@@ -194,17 +193,6 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                         .apply(RequestOptions.circleCropTransform())
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(ivPp);
-
-
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        imageFile = ImageUtil.getImageFromUrl(getApplicationContext(), imageUrl);
-//
-//                    }
-//                });
-
             }
 
             etNameReg.setText(sharedPreferences.getString(ConstantProvider.SP_NAME, null));
@@ -251,7 +239,6 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     public void restoreState(Bundle savedState) {
 
     }
-
 
     @OnClick(R.id.iv_pp)
     public void getPp(View view) {
@@ -379,7 +366,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String realPath = null;
+        String realPath;
         Bitmap selectedImage;
 
         if (resultCode == RESULT_OK) {
@@ -399,7 +386,6 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                             .transition(DrawableTransitionOptions.withCrossFade())
                             .into(ivPp);
 
-//                    ivPp.setImageBitmap(selectedImage);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -500,7 +486,7 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
             case R.id.spin_country:
                 if (countries != null)
                     countryCode = (countries.get(position)).getId();
-                Log.d(TAG, "onItemSelected: " + countryCode);
+//                Log.d(TAG, "onItemSelected: " + countryCode);
                 presenter.getLimitedCities(countryCode);
                 break;
             case R.id.spin_city:

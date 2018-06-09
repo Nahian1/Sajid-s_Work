@@ -15,12 +15,11 @@ import android.content.Context;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BasePresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.SetPasswordActivityContract;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
 public class SetPasswordActivityPresenter extends BasePresenter<SetPasswordActivityContract.View, SetPasswordActivityContract.Model>
         implements SetPasswordActivityContract.Presenter {
-    private static final String TAG = TagProvider.getDebugTag(SetPasswordActivityPresenter.class);
+//    private static final String TAG = TagProvider.getDebugTag(SetPasswordActivityPresenter.class);
 
     public SetPasswordActivityPresenter(SetPasswordActivityContract.Model model) {
         super(model);

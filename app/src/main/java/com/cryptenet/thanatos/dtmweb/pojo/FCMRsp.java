@@ -12,7 +12,7 @@ package com.cryptenet.thanatos.dtmweb.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -37,8 +37,6 @@ public class FCMRsp implements Parcelable {
     @Expose
     private String type;
     public final static Creator<FCMRsp> CREATOR = new Creator<FCMRsp>() {
-
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -49,9 +47,7 @@ public class FCMRsp implements Parcelable {
         public FCMRsp[] newArray(int size) {
             return (new FCMRsp[size]);
         }
-
-    }
-    ;
+    };
 
     protected FCMRsp(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));

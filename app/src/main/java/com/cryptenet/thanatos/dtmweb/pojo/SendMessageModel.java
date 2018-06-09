@@ -132,8 +132,7 @@ public class SendMessageModel {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ClassPojo [sender = "+sender+", id = "+id+", text = "+text+", sender_picture = "+sender_picture+", receiver = "+receiver+", thread = "+thread+", created_at = "+created_at+", sender_name = "+sender_name+", receiver_picture = "+receiver_picture+", receiver_name = "+receiver_name+"]";
     }
 }

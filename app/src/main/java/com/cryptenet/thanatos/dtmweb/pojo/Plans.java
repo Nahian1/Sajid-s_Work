@@ -55,8 +55,6 @@ public class Plans implements Parcelable {
     @Expose
     private Double planAccessPrice;
     public final static Parcelable.Creator<Plans> CREATOR = new Creator<Plans>() {
-
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -67,9 +65,7 @@ public class Plans implements Parcelable {
         public Plans[] newArray(int size) {
             return (new Plans[size]);
         }
-
-    }
-            ;
+    };
 
     protected Plans(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));

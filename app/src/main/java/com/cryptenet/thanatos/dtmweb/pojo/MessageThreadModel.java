@@ -10,8 +10,7 @@
 
 package com.cryptenet.thanatos.dtmweb.pojo;
 
-public class MessageThreadModel
-{
+public class MessageThreadModel {
     private ThreadInv[] results;
 
     private String previous;
@@ -61,8 +60,7 @@ public class MessageThreadModel
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ClassPojo [results = "+results+", previous = "+previous+", count = "+count+", next = "+next+"]";
     }
 }

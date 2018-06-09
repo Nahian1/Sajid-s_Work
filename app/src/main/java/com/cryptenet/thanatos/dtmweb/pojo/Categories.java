@@ -25,8 +25,6 @@ public class Categories implements Parcelable {
     @Expose
     private String name;
     public final static Parcelable.Creator<Categories> CREATOR = new Creator<Categories>() {
-
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -37,9 +35,7 @@ public class Categories implements Parcelable {
         public Categories[] newArray(int size) {
             return (new Categories[size]);
         }
-
-    }
-            ;
+    };
 
     protected Categories(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -96,5 +92,4 @@ public class Categories implements Parcelable {
     public int describeContents() {
         return  0;
     }
-
 }

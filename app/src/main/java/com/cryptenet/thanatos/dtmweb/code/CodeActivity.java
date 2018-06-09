@@ -26,7 +26,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.CodeActivityContract;
 import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,7 +35,7 @@ import butterknife.ButterKnife;
 
 public class CodeActivity extends BaseActivity<CodeActivityContract.Presenter>
         implements CodeActivityContract.View, View.OnClickListener {
-    public static final String TAG = TagProvider.getDebugTag(CodeActivity.class);
+//    public static final String TAG = TagProvider.getDebugTag(CodeActivity.class);
 
     @BindView(R.id.et_code)
     EditText etCode;

@@ -12,7 +12,6 @@ package com.cryptenet.thanatos.dtmweb.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -78,8 +77,6 @@ public class ProjectsDetailed implements Parcelable {
     private String bankName;
 
     public final static Creator<ProjectsDetailed> CREATOR = new Creator<ProjectsDetailed>() {
-
-
         @SuppressWarnings({
                 "unchecked"
         })
@@ -90,7 +87,6 @@ public class ProjectsDetailed implements Parcelable {
         public ProjectsDetailed[] newArray(int size) {
             return (new ProjectsDetailed[size]);
         }
-
     };
 
     protected ProjectsDetailed(Parcel in) {
@@ -378,5 +374,4 @@ public class ProjectsDetailed implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
 }

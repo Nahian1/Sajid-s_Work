@@ -54,8 +54,7 @@ public class ThreadRequestModel {
         return investor_picture;
     }
 
-    public void setInvestor_picture (String investor_picture)
-    {
+    public void setInvestor_picture (String investor_picture) {
         this.investor_picture = investor_picture;
     }
 
@@ -154,8 +153,7 @@ public class ThreadRequestModel {
         return initiator_picture;
     }
 
-    public void setInitiator_picture (String initiator_picture)
-    {
+    public void setInitiator_picture (String initiator_picture) {
         this.initiator_picture = initiator_picture;
     }
 
@@ -180,8 +178,7 @@ public class ThreadRequestModel {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ClassPojo [initiator_name = "+initiator_name+", investor_picture = "+investor_picture+", investor = "+investor+", last_text = "+last_text+", plan_title = "+plan_title+", last_active = "+last_active+", investor_name = "+investor_name+", id = "+id+", plan_cover = "+plan_cover+", plan = "+plan+", initiator = "+initiator+", initiator_picture = "+initiator_picture+", activated = "+activated+", created_at = "+created_at+"]";
     }
 }
