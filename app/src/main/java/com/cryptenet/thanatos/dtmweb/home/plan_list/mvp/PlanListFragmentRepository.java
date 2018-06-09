@@ -48,7 +48,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
     public void getAllProjects(Context context, int offset) {
         Call<AllPlansResponse> req = apiClient.getAllPlans(
                 "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
-                10,
+                50,
                 offset
         );
         req.enqueue(new Callback<AllPlansResponse>() {

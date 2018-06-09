@@ -27,7 +27,7 @@ public class InvestorProjectFragmentModel extends BaseFragModel<InvestorProjectF
     }
 
     @Override
-    public void getMyProjectList(int reqType, Context context) {
-        repository.getMyProjectList(reqType,context);
+    public void getMyProjectList(int reqType, Context context, int offset) {
+        repository.getMyProjectList(reqType,context, offset);
     }
 }

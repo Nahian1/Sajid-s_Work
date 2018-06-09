@@ -49,7 +49,6 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     private String token;
     private boolean doMoreRequest;
     private boolean moreDataAvailable;
-//    private ProgressDialog progressDialog;
 
     public PlanListFragment() {
         projectsRspList = new ArrayList<>();
@@ -107,6 +106,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     @Override
     public void toDetailsView(ProjectsRsp projectsRsp, int type) {
+        projectsRspList.clear();
         if (type == 1) {
             EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 10));
         } else {
@@ -153,7 +153,6 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         super.onResume();
 
         presenter.attachView(this);
-
 
         ProgressDialogHelper.init(getActivity()).showProgress();
 
