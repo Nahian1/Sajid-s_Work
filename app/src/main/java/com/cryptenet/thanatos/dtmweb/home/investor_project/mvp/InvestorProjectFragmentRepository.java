@@ -36,7 +36,7 @@ import retrofit2.Response;
 @PerFragment
 public class InvestorProjectFragmentRepository extends BaseFragRepository
         implements InvestorProjectFragmentContract.Repository {
-//    private static String TAG = TagProvider.getDebugTag(InvestorProjectFragmentRepository.class);
+    //    private static String TAG = TagProvider.getDebugTag(InvestorProjectFragmentRepository.class);
     private List<Plans> projectsRspList;
 
     public InvestorProjectFragmentRepository() {
@@ -110,8 +110,8 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
 
     private void setProjects(List<Plans> projectsRspList) {
         this.projectsRspList = projectsRspList;
-        for (Plans projectsRsp : projectsRspList)
+//        for (Plans projectsRsp : projectsRspList)
 //            Log.d(TAG, "setProjects: " + projectsRsp.getPlanTitle());
-        EventBus.getDefault().post(new ManageProjectReceiveEvent(this.projectsRspList));
+        EventBus.getDefault().post(new ManageProjectReceiveEvent(projectsRspList));
     }
 }
