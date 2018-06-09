@@ -19,6 +19,7 @@ public class ConstantProvider {
 
 //    public static final String CLIENT_KEY = "xcziSPz2aLcKc5Egm1janzwGBS5jcNvi68BA88GP";
 //    public static final String CLIENT_SECRET = "VHSlol14f1AKcaXcdefMzsNA9kMKyngVPrSD5FxdxcQzukBzH8axcQRts4NUMdztZ035bSI4RGgzSRUsm4N7h7e106T9SfnijBvSgmRizIyPrXzKetePl5HpO49XQ3LK";
+
     public static final String ACCESS_BASIC = "eGN6aVNQejJhTGNLYzVFZ20xamFuendHQlM1amNOdmk2OEJBODhHUDpWSFNsb2wxNGYxQUtjYVhjZGVmTXpzTkE5a01LeW5nVlByU0Q1RnhkeGNRenVrQnpIOGF4Y1FSdHM0TlVNZHp0WjAzNWJTSTRSR2d6U1JVc200TjdoN2UxMDZUOVNmbmlqQnZTZ21SaXpJeVByWHpLZXRlUGw1SHBPNDlYUTNMSw==";
 
     public static final int RESULT_LOAD_IMG = 101;
