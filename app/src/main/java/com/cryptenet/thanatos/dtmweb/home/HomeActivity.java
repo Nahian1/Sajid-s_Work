@@ -201,10 +201,8 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     public void language(View view) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (preferences.getString(ConstantProvider.SELECTED_LANGUAGE, null).equals("en")) {
-//            LocaleHelper.setNewLocale(this, "ar");
             preferences.edit().putString(ConstantProvider.SELECTED_LANGUAGE, "ar").apply();
         } else {
-//            LocaleHelper.setNewLocale(this, "en");
             preferences.edit().putString(ConstantProvider.SELECTED_LANGUAGE, "en").apply();
         }
         finish();
@@ -256,10 +254,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     public void onConversation(View view) {
 
         drawerLayout.closeDrawer(GravityCompat.START);
-
-//
-//        Intent intent = new Intent(HomeActivity.this, MessageRequestActivity.class);
-//        startActivity(intent);
 
         ThreadListFragment fragment1 = new ThreadListFragment();
         Bundle bundle1 = new Bundle();
