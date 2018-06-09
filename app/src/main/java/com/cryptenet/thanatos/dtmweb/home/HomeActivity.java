@@ -145,7 +145,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
         PlanListFragment fragment = new PlanListFragment();
 
-        addFragment(R.id.frame_container, fragment);
+        if (!fragment.isAdded())
+            addFragment(R.id.frame_container, fragment);
+
 
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
