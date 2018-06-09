@@ -14,30 +14,19 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.viewholders.VHInitiatorProjectList;
-import com.cryptenet.thanatos.dtmweb.viewholders.VHProjectList;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class ProjectAdapter extends BaseAdapter implements Filterable {
     private Context context;
@@ -123,17 +112,11 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
             vhInitiatorProjectList.editIV = convertView.findViewById(R.id.editIV);
 
             convertView.setTag(vhInitiatorProjectList);
-
         } else {
-
             vhInitiatorProjectList = (VHInitiatorProjectList) convertView.getTag();
-
         }
 
         vhInitiatorProjectList.setData(context, filteredList.get(position));
-
-        count++;
-        Log.e("project", "getView: " + count);
 
         return convertView;
     }

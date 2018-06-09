@@ -12,13 +12,9 @@ package com.cryptenet.thanatos.dtmweb.viewholders;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
@@ -40,15 +36,12 @@ public class VHInitiatorProjectList {
     @SuppressLint("SetTextI18n")
     public void setData(Context context, ProjectsRsp projectsRsp) {
 
-        editIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        editIV.setOnClickListener(view -> {
 
-                ProjectsRsp pro = projectsRsp;
-                pro.setEditMode(true);
+            ProjectsRsp pro = projectsRsp;
+            pro.setEditMode(true);
 
-                EventBus.getDefault().post(new ToEditPlanEvent(pro));
-            }
+            EventBus.getDefault().post(new ToEditPlanEvent(pro));
         });
 
         titleTV.setText(projectsRsp.getTitle());

@@ -17,11 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
-import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +32,7 @@ public class VHInitiatorProjectManageReqList {
     public TextView statusTV;
 
     @SuppressLint("SetTextI18n")
-    public void setData(Context context, Plans plans, int reqType) {
+    public void setData(Context context, Plans plans) {
 
         titleTV.setText(plans.getPlanTitle());
         priceTV.setText(context.getString(R.string.price) + " " + String.valueOf(plans.getPlanAccessPrice()));
@@ -62,9 +58,6 @@ public class VHInitiatorProjectManageReqList {
             statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
         }
 
-        //statusTV.setText(plans.getStatus());
-        if (reqType != 1)
-            editIV.setVisibility(View.GONE);
-
+        editIV.setVisibility(View.GONE);
     }
 }
