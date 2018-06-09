@@ -31,6 +31,7 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
     private Context context;
     private LayoutInflater inflater;
     private List<ProjectsRsp> projects;
+//    private ItemClickListener itemClickListener;
 
     public PlanListAdapter(@NonNull Context context, List<ProjectsRsp> projects) {
         super(context, R.layout.plan_list_row, projects);

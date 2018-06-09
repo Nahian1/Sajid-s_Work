@@ -79,19 +79,19 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
             holder.sendMessage.setText(messageThreadModels.get(position).getText());
 
             Glide.with(mContext)
-                    .load(messageThreadModels.get(position).getReceiver_picture())
+                    .load(messageThreadModels.get(position).getSender_picture())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.iconSender);
-        }else {
+        } else {
 
             //Toast.makeText(mContext, "receiver", Toast.LENGTH_SHORT).show();
             holder.receiver.setVisibility(View.VISIBLE);
             holder.sender.setVisibility(View.GONE);
 
             Glide.with(mContext)
-                    .load(messageThreadModels.get(position).getReceiver_picture())
+                    .load(messageThreadModels.get(position).getSender_picture())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(RequestOptions.circleCropTransform())
