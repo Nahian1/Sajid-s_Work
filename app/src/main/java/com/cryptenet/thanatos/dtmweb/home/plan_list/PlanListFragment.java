@@ -49,6 +49,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     private String token;
     private boolean doMoreRequest;
     private boolean moreDataAvailable;
+    private boolean isSearchResult;
 
     public PlanListFragment() {
         projectsRspList = new ArrayList<>();
@@ -75,8 +76,8 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 final int lastItem = firstVisibleItem + visibleItemCount;
 
-                if(lastItem == totalItemCount && totalItemCount > 0) {
-                    if (moreDataAvailable && doMoreRequest) {
+                if (lastItem == totalItemCount && totalItemCount > 0) {
+                    if (!isSearchResult && moreDataAvailable && doMoreRequest) {
                         presenter.getProjectList(activityContext, totalItemCount);
                         doMoreRequest = false;
                     }
@@ -118,18 +119,33 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
         ProgressDialogHelper.hideProgress();
 
-        if (event.projectsRspList.isEmpty())
-            moreDataAvailable = false;
-        else
-            moreDataAvailable = true;
+        if (!event.isSearchResult) {
 
-        if (this.projectsRspList.size() == 0)
-            this.projectsRspList = event.projectsRspList;
-        else if (doMoreRequest)
-            this.projectsRspList.addAll(event.projectsRspList);
+            this.isSearchResult = false;
 
-        if (this.projectsRspList != null)
-            adapter.updateList(this.projectsRspList);
+            if (event.projectsRspList.isEmpty())
+                moreDataAvailable = false;
+            else
+                moreDataAvailable = true;
+
+            if (this.projectsRspList.size() == 0)
+                this.projectsRspList = event.projectsRspList;
+            else if (doMoreRequest)
+                this.projectsRspList.addAll(event.projectsRspList);
+
+            if (this.projectsRspList != null)
+                adapter.updateList(this.projectsRspList);
+
+        } else {
+
+            this.isSearchResult = true;
+
+            if (this.projectsRspList != null)
+                adapter.updateList(event.projectsRspList);
+
+        }
+
+
     }
 
     @Subscribe
@@ -140,10 +156,18 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     @Subscribe
     public void onSearchEvent(SearchEvent event) {
-        if (event.searchTxt.isEmpty())
+
+        projectsRspList.clear();
+
+        if (event.searchTxt.isEmpty()) {
+
             presenter.getProjectList(activityContext, 0);
-        else
+
+        } else {
+
             presenter.searchMyPlans(activityContext, token, event.searchTxt);
+
+        }
 
     }
 

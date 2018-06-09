@@ -27,6 +27,8 @@ import android.widget.TextView;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.viewholders.VHInitiatorProjectList;
+import com.cryptenet.thanatos.dtmweb.viewholders.VHProjectList;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -43,6 +45,7 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
     private List<ProjectsRsp> filteredList;
     private int count = 0;
     private int reqType;
+    private LayoutInflater inflater;
     private InitiatorProjectFilter initiatorProjectFilter;
 
     public ProjectAdapter(@NonNull Context context, List<ProjectsRsp> projects, int reqType) {
@@ -51,6 +54,7 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
         this.projects = projects;
         this.filteredList = projects;
         this.reqType = reqType;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         getFilter();
     }
@@ -103,48 +107,30 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.initiator_project_list_row, parent, false);
-        TextView titleTV = convertView.findViewById(R.id.titleTV);
-        TextView priceTV = convertView.findViewById(R.id.priceTV);
-        TextView dateTV = convertView.findViewById(R.id.dateTV);
-        TextView statusTV = convertView.findViewById(R.id.statusTV);
-        ImageView editIV = convertView.findViewById(R.id.editIV);
 
-        editIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        VHInitiatorProjectList vhInitiatorProjectList;
 
-                ProjectsRsp pro = filteredList.get(position);
-                pro.setEditMode(true);
+        if (convertView == null) {
 
-                EventBus.getDefault().post(new ToEditPlanEvent(pro));
-            }
-        });
+            convertView = inflater.inflate(R.layout.initiator_project_list_row, parent, false);
 
-        titleTV.setText(filteredList.get(position).getTitle());
-        priceTV.setText(context.getString(R.string.price) + " " + String.valueOf(filteredList.get(position).getAccessPrice()));
+            vhInitiatorProjectList = new VHInitiatorProjectList();
 
-        String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        String dateOutputPattern = "dd MMM yyyy";
+            vhInitiatorProjectList.titleTV = convertView.findViewById(R.id.titleTV);
+            vhInitiatorProjectList.priceTV = convertView.findViewById(R.id.priceTV);
+            vhInitiatorProjectList.dateTV = convertView.findViewById(R.id.dateTV);
+            vhInitiatorProjectList.statusTV = convertView.findViewById(R.id.statusTV);
+            vhInitiatorProjectList.editIV = convertView.findViewById(R.id.editIV);
 
-        SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
-        SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
+            convertView.setTag(vhInitiatorProjectList);
 
-        try {
-            Date date = inputDateFormat.parse(filteredList.get(position).getCreatedAt());
-            dateTV.setText(outputDateFormat.format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (filteredList.get(position).getIsApproved()) {
-            statusTV.setText(context.getString(R.string.approved));
-            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
         } else {
-            statusTV.setText(context.getString(R.string.pending));
-            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
+
+            vhInitiatorProjectList = (VHInitiatorProjectList) convertView.getTag();
+
         }
+
+        vhInitiatorProjectList.setData(context, filteredList.get(position));
 
         count++;
         Log.e("project", "getView: " + count);

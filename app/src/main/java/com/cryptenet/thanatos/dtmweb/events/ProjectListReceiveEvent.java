@@ -16,8 +16,10 @@ import java.util.List;
 
 public class ProjectListReceiveEvent {
     public final List<ProjectsRsp> projectsRspList;
+    public final boolean isSearchResult;
 
-    public ProjectListReceiveEvent(List<ProjectsRsp> projectsRspList) {
+    public ProjectListReceiveEvent(List<ProjectsRsp> projectsRspList, boolean isSearchResult) {
         this.projectsRspList = projectsRspList;
+        this.isSearchResult = isSearchResult;
     }
 }

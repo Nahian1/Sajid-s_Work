@@ -48,7 +48,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
     public void getAllProjects(Context context, int offset) {
         Call<AllPlansResponse> req = apiClient.getAllPlans(
                 "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
-                50,
+                10,
                 offset
         );
         req.enqueue(new Callback<AllPlansResponse>() {
@@ -84,7 +84,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
             public void onResponse(Call<AllPlansResponse> call, Response<AllPlansResponse> response) {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
-                    EventBus.getDefault().post(new ProjectListReceiveEvent(response.body().getResults()));
+                    EventBus.getDefault().post(new ProjectListReceiveEvent(response.body().getResults(), true));
                     if (response.body().getResults().size() == 0)
                         Toast.makeText(context, context.getString(R.string.no_search_result), Toast.LENGTH_LONG).show();
                 } else {
@@ -115,6 +115,6 @@ public class PlanListFragmentRepository extends BaseFragRepository
         this.projectsRspList = projectsRspList;
         for (ProjectsRsp projectsRsp : projectsRspList)
             Log.d(TAG, "setProjects: " + projectsRsp.getTitle());
-        EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsRspList));
+        EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsRspList, false));
     }
 }

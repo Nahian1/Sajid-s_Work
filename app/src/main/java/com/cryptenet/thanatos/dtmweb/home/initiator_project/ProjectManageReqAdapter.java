@@ -26,6 +26,8 @@ import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
+import com.cryptenet.thanatos.dtmweb.viewholders.VHInitiatorProjectList;
+import com.cryptenet.thanatos.dtmweb.viewholders.VHInitiatorProjectManageReqList;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +42,7 @@ public class ProjectManageReqAdapter extends BaseAdapter implements Filterable {
     private List<Plans> filteredList = new ArrayList<>();
     private int count = 0;
     private int reqType;
+    private LayoutInflater inflater;
     private InitiatorProjectFilter initiatorProjectFilter;
 
     public ProjectManageReqAdapter(@NonNull Context context, List<Plans> projects, int reqType) {
@@ -48,6 +51,7 @@ public class ProjectManageReqAdapter extends BaseAdapter implements Filterable {
         this.projects = projects;
         this.filteredList = projects;
         this.reqType = reqType;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         getFilter();
     }
@@ -97,41 +101,28 @@ public class ProjectManageReqAdapter extends BaseAdapter implements Filterable {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.initiator_project_list_row, parent, false);
-        TextView titleTV = convertView.findViewById(R.id.titleTV);
-        TextView priceTV = convertView.findViewById(R.id.priceTV);
-        TextView dateTV = convertView.findViewById(R.id.dateTV);
-        TextView statusTV = convertView.findViewById(R.id.statusTV);
-        ImageView editIV = convertView.findViewById(R.id.editIV);
 
-        titleTV.setText(filteredList.get(position).getPlanTitle());
-        priceTV.setText(context.getString(R.string.price) + " " + String.valueOf(filteredList.get(position).getPlanAccessPrice()));
+        VHInitiatorProjectManageReqList vhInitiatorProjectManageReqList;
 
-        String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        String dateOutputPattern = "dd MMM yyyy";
+        if (convertView == null) {
 
-        SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
-        SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
+            convertView = inflater.inflate(R.layout.initiator_project_list_row, parent, false);
 
-        try {
-            Date date = inputDateFormat.parse(filteredList.get(position).getCreatedAt());
-            dateTV.setText(outputDateFormat.format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            vhInitiatorProjectManageReqList = new VHInitiatorProjectManageReqList();
 
-        if (filteredList.get(position).getIsApproved()) {
-            statusTV.setText(context.getString(R.string.approved));
-            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_apr));
+            vhInitiatorProjectManageReqList.titleTV = convertView.findViewById(R.id.titleTV);
+            vhInitiatorProjectManageReqList.priceTV = convertView.findViewById(R.id.priceTV);
+            vhInitiatorProjectManageReqList.dateTV = convertView.findViewById(R.id.dateTV);
+            vhInitiatorProjectManageReqList.statusTV = convertView.findViewById(R.id.statusTV);
+            vhInitiatorProjectManageReqList.editIV = convertView.findViewById(R.id.editIV);
+
         } else {
-            statusTV.setText(context.getString(R.string.pending));
-            statusTV.setBackground(context.getResources().getDrawable(R.drawable.tv_shape_pnd));
+
+            vhInitiatorProjectManageReqList = (VHInitiatorProjectManageReqList) convertView.getTag();
+
         }
 
-        //statusTV.setText(filteredList.get(position).getStatus());
-        if (reqType != 1)
-            editIV.setVisibility(View.GONE);
+        vhInitiatorProjectManageReqList.setData(context, filteredList.get(position), reqType);
 
         count++;
         Log.e("project", "getView: " + count);
