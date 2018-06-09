@@ -14,7 +14,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,6 @@ import java.util.Locale;
 public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
     private Context context;
     private List<ProjectsRsp> projects;
-    private int count = 0;
 //    private ItemClickListener itemClickListener;
 
     public PlanListAdapter(@NonNull Context context, List<ProjectsRsp> projects) {
@@ -104,8 +102,6 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
 
         titleTV.setText(projects.get(position).getTitle());
         priceTV.setText(context.getString(R.string.price) + " " + projects.get(position).getAccessPrice());
-        count++;
-        Log.e("student", "getView: " + count);
 
         return convertView;
 
