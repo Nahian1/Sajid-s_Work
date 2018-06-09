@@ -198,11 +198,11 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     public void language(View view) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (preferences.getString(ConstantProvider.SELECTED_LANGUAGE, null).equals("en")) {
-            LocaleHelper.setNewLocale(this, "ar");
-//            preferences.edit().putString(ConstantProvider.SELECTED_LANGUAGE, "ar").apply();
+//            LocaleHelper.setNewLocale(this, "ar");
+            preferences.edit().putString(ConstantProvider.SELECTED_LANGUAGE, "ar").apply();
         } else {
-            LocaleHelper.setNewLocale(this, "en");
-//            preferences.edit().putString(ConstantProvider.LOCALE, "en").apply();
+//            LocaleHelper.setNewLocale(this, "en");
+            preferences.edit().putString(ConstantProvider.SELECTED_LANGUAGE, "en").apply();
         }
         finish();
         startActivity(new Intent(HomeActivity.this, HomeActivity.class));
@@ -436,8 +436,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         presenter.attachView(this);
 
         presenter.getNavHeaderData(this);
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(ConstantProvider.FCM_FLAG, true));
-            presenter.sendFCMData(this);
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(ConstantProvider.FCM_FLAG, true))
+            ;
+        presenter.sendFCMData(this);
     }
 
     @Override
