@@ -27,6 +27,7 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadInv;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
+import com.cryptenet.thanatos.dtmweb.utils.providers.FakeDataProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,7 +44,7 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
 //    @BindView(R.id.threadProjectListView)
 //    ListView projectLV;
 
-//    private ThreadProjectAdapter adapter;
+    //    private ThreadProjectAdapter adapter;
     private int planId;
 //
 //    Unbinder unbinder;
@@ -52,6 +53,9 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
     private InitiatorThreadAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<ThreadInv> threadInvs;
+
+    private boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
 
     public ThreadProjectFragment() {
         this.threadInvs = new ArrayList<>();
@@ -78,8 +82,30 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new InitiatorThreadAdapter(this.threadInvs);
+//        mAdapter = new InitiatorThreadAdapter(this.threadInvs);
+        mAdapter = new InitiatorThreadAdapter(FakeDataProvider.getThreadProjects()); //dummy data for debug
         mRecyclerView.setAdapter(mAdapter);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = mLayoutManager.getChildCount();
+                    totalItemCount = mLayoutManager.getItemCount();
+                    pastVisiblesItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            Log.v("lastitemcheck", "Last Item Wow !");
+                            showMessage("Last Item Reached");
+                            //Do pagination.. i.e. fetch new data
+                        }
+                    }
+                }
+            }
+        });
 
         return convertView;
     }
@@ -88,6 +114,11 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
     public void onThreadProjectListReceive(ThreadProjectListReceiveEvent event) {
 
         ProgressDialogHelper.hideProgress();
+
+        if (event.threadInvs != null) {
+            mAdapter.setData(event.threadInvs);
+            mAdapter.notifyDataSetChanged();
+        }
 
 //        if (event.threadInvs.isEmpty())
 //            moreDataAvailable = false;
@@ -126,10 +157,10 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
         super.onResume();
         presenter.attachView(this);
 
-        ProgressDialogHelper.init(getActivity()).showProgress();
+//        ProgressDialogHelper.init(getActivity()).showProgress();
 
-        threadInvs.clear();
-        presenter.getInvestorThreads(planId, activityContext, 0);
+//        threadInvs.clear();
+//        presenter.getInvestorThreads(planId, activityContext, 0);
     }
 
     @Override
