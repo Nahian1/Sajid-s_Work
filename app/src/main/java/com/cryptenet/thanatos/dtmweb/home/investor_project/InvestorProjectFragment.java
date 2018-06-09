@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -86,7 +88,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 final int lastItem = firstVisibleItem + visibleItemCount;
-                if(lastItem == totalItemCount && totalItemCount > 0) {
+                if (lastItem == totalItemCount && totalItemCount > 0) {
                     if (moreDataAvailable && doMoreRequest) {
                         presenter.getMyProjectList(reqType, activityContext, totalItemCount);
                         doMoreRequest = false;
@@ -95,14 +97,22 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
             }
         });
 
-        if (reqType == 1) {
-            projectLV.setOnItemClickListener((parent, view, position, id) ->
-                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getPlan(), 11)));
+        projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        } else {
-            projectLV.setOnItemClickListener((parent, view, position, id) ->
-                    EventBus.getDefault().post(new RequestDetailFragmentEvent(projectsRspList.get(position).getId())));
-        }
+                if (reqType == 1) {
+
+                    ViewUtils.hideKeyboard(getActivity());
+                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getPlan(), 11));
+
+                } else {
+
+                    ViewUtils.hideKeyboard(getActivity());
+                    EventBus.getDefault().post(new RequestDetailFragmentEvent(projectsRspList.get(position).getId()));
+                }
+            }
+        });
 
         return convertView;
     }

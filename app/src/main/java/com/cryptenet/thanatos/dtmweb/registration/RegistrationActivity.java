@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ import com.cryptenet.thanatos.dtmweb.utils.LocaleHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
+import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -74,6 +76,8 @@ import butterknife.OnClick;
 
 public class RegistrationActivity extends BaseActivity<RegistrationActivityContract.Presenter>
         implements RegistrationActivityContract.View, AdapterView.OnItemSelectedListener {
+
+    private static final String TAG = TagProvider.getDebugTag(RegistrationActivity.class);
 //    private static final String TAG = TagProvider.getDebugTag(RegistrationActivity.class);
 
     private File imageFile;
@@ -134,6 +138,9 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     @BindView(R.id.tv_sign_in)
     TextView tvSignIn;
 
+    @BindView(R.id.lin_lay_terms)
+    LinearLayout linLayTerms;
+
     String imageUrl;
 
     @Override
@@ -174,6 +181,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
 
         if (isEdit) {
+
+            linLayTerms.setVisibility(View.GONE);
 
             btnSignInReg.setText(R.string.update_profile);
             tvHaveAcc.setVisibility(View.GONE);

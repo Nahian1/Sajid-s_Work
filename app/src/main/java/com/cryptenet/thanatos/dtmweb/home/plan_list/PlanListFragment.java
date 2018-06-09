@@ -26,12 +26,14 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
+import com.cryptenet.thanatos.dtmweb.events.SearchTextClearEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.TokenRefreshEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -143,6 +145,8 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
             this.isSearchResult = true;
 
+            this.projectsRspList = event.projectsRspList;
+
             if (this.projectsRspList != null)
                 adapter.updateList(event.projectsRspList);
         }
@@ -163,6 +167,8 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     @Subscribe
     public void onItemClickEvent(String clickPosition) {
+        EventBus.getDefault().post(new SearchTextClearEvent(true));
+        ViewUtils.hideKeyboard(getActivity());
         presenter.checkUserType(projectsRspList.get(Integer.parseInt(clickPosition)), activityContext);
 
     }
