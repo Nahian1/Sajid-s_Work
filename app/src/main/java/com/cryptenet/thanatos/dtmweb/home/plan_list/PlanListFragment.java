@@ -26,6 +26,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.events.TokenRefreshEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
@@ -142,10 +143,12 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
             if (this.projectsRspList != null)
                 adapter.updateList(event.projectsRspList);
-
         }
+    }
 
-
+    @Subscribe
+    public void onTokenRefreshEvent(TokenRefreshEvent event) {
+        presenter.getProjectList(activityContext, 0);
     }
 
     @Subscribe
