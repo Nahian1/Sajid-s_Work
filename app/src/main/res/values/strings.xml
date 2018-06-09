@@ -126,8 +126,16 @@
     <string name="no_man_projects">You have no approved plans!!</string>
     <string name="no_man_requests">You have no requests yet!!</string>
     <string name="no_search_result">No matching plans found!!</string>
-    <string name="none">None</string>
     <string name="no_threads_found">No threads found</string>
+
+    <string name="no_more_plans">No more plans to show!!</string>
+    <string name="no_more_messages">You do not have any more messages!!</string>
+    <string name="no_more_man_projects">You do not have any more approved plans!!</string>
+    <string name="no_more_man_requests">You do not have any more requests!!</string>
+    <string name="no_more_threads_found">No more threads found</string>
+
+
+    <string name="none">None</string>
     <string name="error_message">Error getting message list, try again.</string>
     <string name="login_failed">Login failed, try again.</string>
 

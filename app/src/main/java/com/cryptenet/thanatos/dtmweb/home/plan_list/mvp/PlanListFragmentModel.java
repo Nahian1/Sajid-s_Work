@@ -26,8 +26,8 @@ public class PlanListFragmentModel extends BaseFragModel<PlanListFragmentContrac
         super(repository);
     }
 
-    public void getProjectList(Context context, String token) {
-        repository.getAllProjects(context, token);
+    public void getProjectList(Context context, int offset) {
+        repository.getAllProjects(context, offset);
     }
 
     @Override

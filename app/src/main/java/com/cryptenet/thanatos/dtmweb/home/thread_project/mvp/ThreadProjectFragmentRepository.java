@@ -12,6 +12,7 @@ package com.cryptenet.thanatos.dtmweb.home.thread_project.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
@@ -26,6 +27,10 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,7 +41,7 @@ public class ThreadProjectFragmentRepository extends BaseFragRepository
     private static String TAG = TagProvider.getDebugTag(ThreadProjectFragmentRepository.class);
 
     @Override
-    public void getInvestorThreads(int planId, Context context) {
+    public void getInvestorThreads(int planId, Context context, int offset) {
 //        Call<ThreadDistinctResponse> req = apiClient.getThreadInv("Bearer " +
 //                PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null), planId);
 //
@@ -56,7 +61,11 @@ public class ThreadProjectFragmentRepository extends BaseFragRepository
 
         Call<MessageThreadModel> threadCall = apiClient.getThreads(
                 "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).
-                        getString(ConstantProvider.SP_ACCESS_TOKEN, null), planId);
+                        getString(ConstantProvider.SP_ACCESS_TOKEN, null),
+                50,
+                offset,
+                planId
+        );
 
         threadCall.enqueue(new Callback<MessageThreadModel>() {
             @Override
@@ -65,13 +74,28 @@ public class ThreadProjectFragmentRepository extends BaseFragRepository
                 //  response.body().toString();
 
                 if (response.isSuccessful()) {
-                    if (response.body().getResults().length > 0) {
+//                    if (response.body().getResults().length > 0) {
                         //Toast.makeText(context, " Plan founds", Toast.LENGTH_SHORT).show();
-                        ThreadInv[] results = response.body().getResults();
+                        List<ThreadInv> results = new ArrayList<>(Arrays.asList(response.body().getResults()));
+
+//                        List<ThreadInv> results = new ArrayList<>();
+//
+//                        List<ThreadInv> threadProjects = FakeDataProvider.getThreadProjects();
+//                        for (int i = 0; i < offset+10; i++) {
+//                            results.add(threadProjects.get(i));
+//                        }
+
                         EventBus.getDefault().post(new ThreadProjectListReceiveEvent(results));
-                    } else {
-                        Toast.makeText(context, context.getString(R.string.no_threads_found), Toast.LENGTH_SHORT).show();
-                    }
+
+                        if (results.size() == 0 && offset == 0)
+                            Toast.makeText(context, context.getString(R.string.no_threads_found), Toast.LENGTH_LONG).show();
+                        else if (results.size() == 0 && offset > 0)
+                            Toast.makeText(context, context.getString(R.string.no_more_threads_found), Toast.LENGTH_LONG).show();
+//                    } else {
+//                        Toast.makeText(context, context.getString(R.string.no_threads_found), Toast.LENGTH_SHORT).show();
+//                    }
+                } else {
+                    Log.d(TAG, "onResponse: " + response.code());
                 }
             }
 

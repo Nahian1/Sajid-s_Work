@@ -45,10 +45,13 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
     }
 
     @Override
-    public void getMyProjectList(int reqType, Context context) {
+    public void getMyProjectList(int reqType, Context context, int offset) {
         if (reqType == 2) {
             Call<PlanAccessResponse> req = apiClient.getAllMyReqInv("Bearer " +
-                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
+                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null),
+                    50,
+                    offset
+            );
             req.enqueue(new Callback<PlanAccessResponse>() {
                 @Override
                 public void onResponse(Call<PlanAccessResponse> call, Response<PlanAccessResponse> response) {
@@ -56,8 +59,10 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
                         PlanAccessResponse allPlansResponse = response.body();
                         assert allPlansResponse != null;
                         setProjects(allPlansResponse.getResults());
-                        if (allPlansResponse.getResults().size() == 0)
+                        if (response.body().getResults().size() == 0 && offset == 0)
                             Toast.makeText(context, context.getString(R.string.no_man_requests), Toast.LENGTH_LONG).show();
+                        else if (response.body().getResults().size() == 0 && offset > 0)
+                            Toast.makeText(context, context.getString(R.string.no_more_man_requests), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
                     }
@@ -69,7 +74,12 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
                 }
             });
         } else {
-            Call<PlanAccessResponse> req = apiClient.getAllMyReqInvApr("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
+            Call<PlanAccessResponse> req = apiClient.getAllMyReqInvApr(
+                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null),
+                    50,
+                    offset,
+                    true
+            );
             req.enqueue(new Callback<PlanAccessResponse>() {
                 @Override
                 public void onResponse(Call<PlanAccessResponse> call, Response<PlanAccessResponse> response) {
@@ -77,8 +87,11 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
                         PlanAccessResponse allPlansResponse = response.body();
                         assert allPlansResponse != null;
                         setProjects(allPlansResponse.getResults());
-                        if (allPlansResponse.getResults().size() == 0)
+
+                        if (response.body().getResults().size() == 0 && offset == 0)
                             Toast.makeText(context, context.getString(R.string.no_man_projects), Toast.LENGTH_LONG).show();
+                        else if (response.body().getResults().size() == 0 && offset > 0)
+                            Toast.makeText(context, context.getString(R.string.no_more_man_projects), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
                     }

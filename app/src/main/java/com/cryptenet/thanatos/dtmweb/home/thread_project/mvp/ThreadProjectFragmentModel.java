@@ -27,7 +27,7 @@ public class ThreadProjectFragmentModel extends BaseFragModel<ThreadProjectFragm
     }
 
     @Override
-    public void getInvestorThreads(int threadId, Context context) {
-        repository.getInvestorThreads(threadId, context);
+    public void getInvestorThreads(int threadId, Context context, int offset) {
+        repository.getInvestorThreads(threadId, context, offset);
     }
 }

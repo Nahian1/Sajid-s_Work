@@ -438,9 +438,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         presenter.attachView(this);
 
         presenter.getNavHeaderData(this);
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(ConstantProvider.FCM_FLAG, true))
-            ;
-        presenter.sendFCMData(this);
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(ConstantProvider.FCM_FLAG, true)
+                && PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null).equals("Investor"))
+            presenter.sendFCMData(this);
     }
 
     @Override

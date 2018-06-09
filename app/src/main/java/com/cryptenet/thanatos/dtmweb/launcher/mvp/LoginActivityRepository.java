@@ -20,7 +20,6 @@ import com.cryptenet.thanatos.dtmweb.events.LogInSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.LoginActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
-import com.cryptenet.thanatos.dtmweb.utils.ProgressBarHandler;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
@@ -95,6 +94,8 @@ public class LoginActivityRepository extends BaseRepository
 
     @Override
     public boolean saveUserToSP(User user, Context context) {
+        long expiresIn = System.currentTimeMillis() + (user.getExpiresIn() * 1000);
+
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(ConstantProvider.SP_ACCESS_TOKEN, user.getAccessToken())
@@ -110,6 +111,7 @@ public class LoginActivityRepository extends BaseRepository
                 .putString(ConstantProvider.SP_BANK_ACC_NAME, user.getBankAccountName())
                 .putString(ConstantProvider.SP_BANK_ACC_NO, user.getBankAccountNumber())
                 .putString(ConstantProvider.SP_USER_TYPE, user.getUserType())
+                .putLong(ConstantProvider.SP_EXPIRES_IN, expiresIn)
                 .commit();
 //        Log.d(TAG, "saveUserToSP: " + user.getAccessToken());
     }

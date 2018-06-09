@@ -14,17 +14,17 @@ import android.content.Context;
 
 public interface InitiatorProjectFragmentContract {
     interface Presenter extends BaseFragContract.Presenter<InitiatorProjectFragmentContract.View> {
-        void getMyProjectList(int reqType,Context context);
+        void getMyProjectList(int reqType,Context context, int offset);
     }
 
     interface View extends BaseFragContract.View {
     }
 
     interface Model extends BaseFragContract.Model {
-        void getMyProjectList(int reqType,Context context);
+        void getMyProjectList(int reqType,Context context, int offset);
     }
 
     interface Repository extends BaseFragContract.Repository {
-        void getMyProjectList(int reqType,Context context);
+        void getMyProjectList(int reqType,Context context, int offset);
     }
 }

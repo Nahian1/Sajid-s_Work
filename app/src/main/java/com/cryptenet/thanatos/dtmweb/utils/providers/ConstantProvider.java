@@ -38,6 +38,7 @@ public class ConstantProvider {
     public static final String SP_BANK_ACC_NAME = "u_bank_acc_name";
     public static final String SP_BANK_ACC_NO = "u_bank_acc_no";
     public static final String SP_USER_TYPE = "u_type";
+    public static final String SP_EXPIRES_IN = "expires_in";
 
     public static final String SP_FORGOT_PASSWORD_EMAIL = "forgot_pass";
     public static final String SP_FORGOT_PASSWORD_CODE = "forgot_pass_code";
