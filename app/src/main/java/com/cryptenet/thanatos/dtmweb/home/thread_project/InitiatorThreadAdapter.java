@@ -11,7 +11,6 @@
 package com.cryptenet.thanatos.dtmweb.home.thread_project;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +31,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThreadAdapter.InitiatorThreadHolder> {
@@ -39,10 +39,16 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
 
 
     private Context mContext;
-    private ThreadInv[] messageThreadModels;
+    private List<ThreadInv> messageThreadModels;
 
-    public InitiatorThreadAdapter(ThreadInv[] messageThreadModels) {
+    public InitiatorThreadAdapter(List<ThreadInv> messageThreadModels) {
         this.messageThreadModels = messageThreadModels;
+    }
+
+    public void setData(List<ThreadInv> data) {
+        this.messageThreadModels = data;
+//        Collections.reverse(this.messageThreadModels);
+//        this.notifyDataSetChanged();
     }
 
     @NonNull
@@ -50,7 +56,7 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
     public InitiatorThreadHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.thread_project_list_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.node_thread_project_2, parent, false);
         InitiatorThreadHolder viewHolder = new InitiatorThreadHolder(view);
         return viewHolder;
     }
@@ -59,14 +65,14 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
     public void onBindViewHolder(@NonNull InitiatorThreadHolder holder, int position) {
 
         Glide.with(mContext)
-                .load(messageThreadModels[position].getInvestor_picture())
+                .load(messageThreadModels.get(position).getInvestor_picture())
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_blue))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.icon);
 
-        holder.lastmessage.setText(messageThreadModels[position].getLast_text());
-        holder.name.setText(messageThreadModels[position].getInvestor_name());
+        holder.lastmessage.setText(messageThreadModels.get(position).getLast_text());
+        holder.name.setText(messageThreadModels.get(position).getInvestor_name());
 
         String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         String dateOutputPattern = "dd MMM yyyy";
@@ -75,7 +81,7 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
         SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
 
         try {
-            Date dateF = inputDateFormat.parse(messageThreadModels[position].getLast_active());
+            Date dateF = inputDateFormat.parse(messageThreadModels.get(position).getLast_active());
             holder.date.setText(outputDateFormat.format(dateF));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -95,7 +101,7 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
 //                Intent intent = new Intent(mContext, MessagingActivity.class);
 //                mContext.startActivity(intent);
 
-                EventBus.getDefault().post(new InvestorThreadsEvent(Integer.parseInt(messageThreadModels[position].getId())));
+                EventBus.getDefault().post(new InvestorThreadsEvent(Integer.parseInt(messageThreadModels.get(position).getId())));
             }
         });
 
@@ -104,7 +110,7 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
 
     @Override
     public int getItemCount() {
-        return messageThreadModels.length;
+        return messageThreadModels.size();
     }
 
     public class InitiatorThreadHolder extends RecyclerView.ViewHolder {

@@ -12,10 +12,12 @@ package com.cryptenet.thanatos.dtmweb.events;
 
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadInv;
 
-public class ThreadProjectListReceiveEvent {
-    public final ThreadInv[] threadInvs;
+import java.util.List;
 
-    public ThreadProjectListReceiveEvent(ThreadInv[] threadInvs) {
+public class ThreadProjectListReceiveEvent {
+    public final List<ThreadInv> threadInvs;
+
+    public ThreadProjectListReceiveEvent(List<ThreadInv> threadInvs) {
         this.threadInvs = threadInvs;
     }
 }

@@ -27,7 +27,7 @@ public class ThreadProjectFragmentPresenter extends BaseFragPresenter<ThreadProj
     }
 
     @Override
-    public void getInvestorThreads(int threadId, Context context) {
-        model.getInvestorThreads(threadId, context);
+    public void getInvestorThreads(int threadId, Context context, int offset) {
+        model.getInvestorThreads(threadId, context, offset);
     }
 }

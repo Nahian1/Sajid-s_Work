@@ -28,7 +28,7 @@ public class ThreadListFragmentPresenter
     }
 
     @Override
-    public void getThreadList(Context context) {
-        model.getThreadList(context);
+    public void getThreadList(Context context, int offset) {
+        model.getThreadList(context, offset);
     }
 }

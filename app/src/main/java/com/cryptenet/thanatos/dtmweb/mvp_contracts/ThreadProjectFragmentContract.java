@@ -14,17 +14,17 @@ import android.content.Context;
 
 public interface ThreadProjectFragmentContract {
     interface Presenter extends BaseFragContract.Presenter<ThreadProjectFragmentContract.View> {
-        void getInvestorThreads(int threadId, Context context);
+        void getInvestorThreads(int threadId, Context context, int offset);
     }
 
     interface View extends BaseFragContract.View {
     }
 
     interface Model extends BaseFragContract.Model {
-        void getInvestorThreads(int threadId, Context context);
+        void getInvestorThreads(int threadId, Context context, int offset);
     }
 
     interface Repository extends BaseFragContract.Repository {
-        void getInvestorThreads(int threadId, Context context);
+        void getInvestorThreads(int threadId, Context context, int offset);
     }
 }

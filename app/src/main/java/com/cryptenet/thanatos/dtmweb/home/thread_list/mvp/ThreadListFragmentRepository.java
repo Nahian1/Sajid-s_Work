@@ -45,7 +45,7 @@ public class ThreadListFragmentRepository extends BaseFragRepository
     }
 
     @Override
-    public void getThreadList(Context context) {
+    public void getThreadList(Context context, int offset) {
         if (PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_USER_TYPE, null).equals("Initiator")) {
             Call<ThreadDistinctResponse> req = apiClient.getThreadList("Bearer " +
                     PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null));
@@ -72,8 +72,11 @@ public class ThreadListFragmentRepository extends BaseFragRepository
                 }
             });
         } else {
-            Call<ThreadDistinctResponse> req = apiClient.getThreadInv("Bearer " +
-                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null));
+            Call<ThreadDistinctResponse> req = apiClient.getThreadInv(
+                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
+                    50,
+                    offset
+            );
 
 
             req.enqueue(new Callback<ThreadDistinctResponse>() {
@@ -84,8 +87,11 @@ public class ThreadListFragmentRepository extends BaseFragRepository
                         ThreadDistinctResponse allPlansResponse = response.body();
                         assert allPlansResponse != null;
                         setAllThreads(allPlansResponse.getResults());
-                        if (allPlansResponse.getResults().size() == 0)
+
+                        if (response.body().getResults().size() == 0 && offset == 0)
                             Toast.makeText(context, context.getString(R.string.no_threads_found), Toast.LENGTH_LONG).show();
+                        else if (response.body().getResults().size() == 0 && offset > 0)
+                            Toast.makeText(context, context.getString(R.string.no_more_threads_found), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
                     }
