@@ -85,6 +85,8 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
     private List<String> accTypes, sCountries, sCities;
     private ArrayAdapter<String> spinAccTypeAdapter, spinCountryAdapter, spinCityAdapter;
     private boolean isEdit;
+    private int countryPosition;
+    private int cityPosition;
 
     @BindView(R.id.iv_pp)
     ImageView ivPp;
@@ -397,41 +399,46 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
 
             }
         }
+
+        if (countryPosition != 0 && cityPosition != 0) {
+            spinCountry.setSelection(countryPosition);
+            spinCity.setSelection(cityPosition);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCountryFetchEvent(CountryFetchEvent event) {
-        int position = 0;
+        countryPosition = 0;
         this.countries = event.countries;
         sCountries.clear();
         for (int i = 0; i < this.countries.size(); i++) {
             sCountries.add(this.countries.get(i).getName());
 
             if (isEdit && this.countries.get(i).getId() == prevCountryCode)
-                position = i;
+                countryPosition = i;
         }
         countryCode = countries.get(0).getId();
         presenter.getLimitedCities(countries.get(0).getId());
         spinCountryAdapter.notifyDataSetChanged();
-        spinCountry.setSelection(position);
+        spinCountry.setSelection(countryPosition);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCityFetchEvent(CityFetchEvent event) {
-        int position = 0;
+        cityPosition = 0;
         this.cities = event.cities;
         sCities.clear();
         for (int i = 0; i < this.cities.size(); i++) {
             sCities.add(this.cities.get(i).getName());
 
             if (isEdit && this.cities.get(i).getId() == prevCityCode)
-                position = i;
+                cityPosition = i;
         }
 
         if (cities.size() > 0) {
             cityCode = cities.get(0).getId();
             spinCityAdapter.notifyDataSetChanged();
-            spinCity.setSelection(position);
+            spinCity.setSelection(cityPosition);
         }
 
     }
@@ -489,14 +496,18 @@ public class RegistrationActivity extends BaseActivity<RegistrationActivityContr
                 accType = spinAccType.getSelectedItem().toString();
                 break;
             case R.id.spin_country:
-                if (countries != null)
+                if (countries != null) {
                     countryCode = (countries.get(position)).getId();
+                    countryPosition = position;
+                }
 //                Log.d(TAG, "onItemSelected: " + countryCode);
                 presenter.getLimitedCities(countryCode);
                 break;
             case R.id.spin_city:
-                if (cities != null)
+                if (cities != null) {
                     cityCode = cities.get(position).getId();
+                    cityPosition = position;
+                }
                 break;
         }
     }

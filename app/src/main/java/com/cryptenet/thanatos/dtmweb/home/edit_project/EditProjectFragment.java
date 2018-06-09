@@ -72,7 +72,6 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 //    public static final String TAG = TagProvider.getDebugTag(EditProjectFragment.class);
     @BindView(R.id.spinner_project_category)
     Spinner spinnerProjectCategory;
-
     Unbinder unbinder;
     @BindView(R.id.editTextName)
     EditText editTextName;
@@ -101,6 +100,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     private ArrayAdapter<String> spinCatAdapter;
     private int categoryCode;
     private File imageFile, planFile;
+    private int catPosition;
 
     public EditProjectFragment() {
         // Required empty public constructor
@@ -333,7 +333,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
 
     @Subscribe
     public void toCategoriesReceiveEvent(CategoriesReceiveEvent event) {
-        int position = 0;
+        catPosition = 0;
         this.list.clear();
         this.list.addAll(event.categoriesList);
         this.categoriesList.clear();
@@ -342,11 +342,11 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
             this.categoriesList.add(this.list.get(i).getName());
 
             if(project.isEditMode() && this.list.get(i).getId() == project.getCategory())
-                position = i;
+                catPosition = i;
         }
 
         spinCatAdapter.notifyDataSetChanged();
-        spinnerProjectCategory.setSelection(position);
+        spinnerProjectCategory.setSelection(catPosition);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -405,6 +405,8 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
                 }
             }
         }
+
+        spinnerProjectCategory.setSelection(catPosition);
     }
 
     @Override
@@ -436,6 +438,7 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (list != null && list.size() > 0) {
             this.categoryCode = list.get(position).getId();
+            catPosition = position;
         }
     }
 
