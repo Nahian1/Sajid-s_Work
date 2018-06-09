@@ -43,6 +43,7 @@ import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDetailFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
+import com.cryptenet.thanatos.dtmweb.events.SearchTextClearEvent;
 import com.cryptenet.thanatos.dtmweb.events.ThreadIdReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
@@ -405,6 +406,13 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putString("project", new Gson().toJson(event.project));
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSearchTextClearEvent(SearchTextClearEvent event) {
+
+        editTextSearch.setText("");
 
     }
 

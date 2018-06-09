@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDetailFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
+import com.cryptenet.thanatos.dtmweb.events.SearchTextClearEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
@@ -34,6 +36,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContr
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
+import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -86,9 +89,15 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
             manageProjectAdapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
             projectLV.setAdapter(manageProjectAdapter);
 
-            projectLV.setOnItemClickListener((parent, view, position, id) -> {
-                EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 21));
-                projectsRspList.clear();
+            projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    ViewUtils.hideKeyboard(getActivity());
+                    EventBus.getDefault().post(new SearchTextClearEvent(true));
+                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 21));
+                    projectsRspList.clear();
+                }
             });
 
         } else {
@@ -115,8 +124,15 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
                 }
             });
 
-            projectLV.setOnItemClickListener((parent, view, position, id) ->
-                    EventBus.getDefault().post(new RequestDetailFragmentEvent(plansList.get(position).getId())));
+            projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    EventBus.getDefault().post(new SearchTextClearEvent(true));
+                    ViewUtils.hideKeyboard(getActivity());
+                    EventBus.getDefault().post(new RequestDetailFragmentEvent(plansList.get(position).getId()));
+                }
+            });
+
         }
 
         return convertView;
