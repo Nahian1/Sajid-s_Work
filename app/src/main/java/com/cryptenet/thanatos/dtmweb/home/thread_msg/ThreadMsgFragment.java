@@ -50,11 +50,7 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
     private RecyclerView.LayoutManager mLayoutManager;
 
     private EditText sendMessage;
-    //    private Results[] results;
     private List<Results> resultsList;
-
-    //    String threadIDString;
-//    String threadID;
     int threadId;
 
     public ThreadMsgFragment() {
@@ -74,28 +70,11 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
         mRecyclerView = convertView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(activityContext);
-//        mLayoutManager.setReverseLayout(true);
-//        mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         sendMessage = convertView.findViewById(R.id.et_message);
 
-
-//        String userRole =  PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_USER_TYPE, null);
-//        if (userRole.equalsIgnoreCase("Investor")){
-//            //threadIDString = threadID;
-//            getThreadIdForInvestor();
-//        }else {
-//            getMessageList(threadId);
-//        }
-
-
-        // Toast.makeText(this, StaticVaribles.threadID.toString(), Toast.LENGTH_SHORT).show();
-        //getMessageList();
-
-
         sendMessage.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND) {
-                // setSendMessage();
                 String message = sendMessage.getText().toString().trim();
                 if (message.length() > 0) {
                     setSendMessage();
@@ -117,126 +96,9 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
         return convertView;
     }
 
-
-//    private void getMessageList(String threadID) {
-//
-//        final ApiClient apiCallData = ApiClientBase.getApiService();
-//        Call<MessageListModel> threadCall = apiCallData.getMessages("Bearer KYPJ0G1IbdSAVYTIkLLjVRh7pDnnNO",threadID);
-//
-//        threadCall.enqueue(new Callback<MessageListModel>() {
-//            @Override
-//            public void onResponse(Call<MessageListModel> call, Response<MessageListModel> response) {
-//
-//
-//
-//
-//                //  response.body().toString();
-//
-//                if (response.isSuccessful()){
-//
-//                    if (response.body().getResults().length>0){
-//                        //Toast.makeText(context, " Plan founds", Toast.LENGTH_SHORT).show();
-//                        Results[] messageThreadModels  = response.body().getResults();
-//
-//                        mAdapter = new MessagingAdapter(messageThreadModels);
-//                        mRecyclerView.setAdapter(mAdapter);
-//
-//                    }else {
-//
-//                        Toast.makeText(context, "No Plan founds", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//
-//
-//                }else {
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MessageListModel> call, Throwable t) {
-//                Toast.makeText(context, "error from message list", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//
-//    }
-
-
     private void setSendMessage() {
         presenter.setSendMessage(activityContext, threadId, sendMessage.getText().toString().trim());
     }
-
-//        final ApiClient apiCallData = ApiClientBase.getApiService();
-//        Call<SendMessageModel> threadCall = apiCallData.sendMessage(
-//                "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
-//                threadIDString,
-//                sendMessage.getText().toString()
-//        );
-//
-//        threadCall.enqueue(new Callback<SendMessageModel>() {
-//            @Override
-//            public void onResponse(Call<SendMessageModel> call, Response<SendMessageModel> response) {
-//
-//                response.body().toString();
-//
-//                if (response.isSuccessful()){
-//
-//                    Toast.makeText(context, "success", Toast.LENGTH_SHORT).show();
-//                    mAdapter.notifyDataSetChanged();
-//                    mRecyclerView.invalidate();
-//
-//
-//                }else {
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<SendMessageModel> call, Throwable t) {
-//                Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
-//
-//            }
-////        });
-//
-//    }
-
-
-//    private void getThreadIdForInvestor() {
-//
-//        final ApiClient apiCallData = ApiClientBase.getApiService();
-//        Call<ThreadRequestModel> threadCall = apiCallData.getThreadID("Bearer XQZZpcSV4cDLuQglPQ6fq1yO47ouWb",Integer.parseInt(StaticVaribles.PlanID));
-//
-//        threadCall.enqueue(new Callback<ThreadRequestModel>() {
-//            @Override
-//            public void onResponse(Call<ThreadRequestModel> call, Response<ThreadRequestModel> response) {
-//
-//                // response.body().toString();
-//
-//                if (response.isSuccessful()){
-//
-//                    threadID = response.body().getId();
-//                    getMessageList(threadID);
-//
-//                    Toast.makeText(context, "success", Toast.LENGTH_SHORT).show();
-//
-//
-//                }else {
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ThreadRequestModel> call, Throwable t) {
-//                Toast.makeText(context, "error from threadid", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//
-//    }
 
     @Override
     public void showMessage(String message) {

@@ -19,15 +19,12 @@ import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AboutFragment extends Fragment {
-    public static final String TAG = TagProvider.getDebugTag(AboutFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(AboutFragment.class);
     @BindView(R.id.tv_para1)
     TextView tvPara1;
     @BindView(R.id.tv_para2)

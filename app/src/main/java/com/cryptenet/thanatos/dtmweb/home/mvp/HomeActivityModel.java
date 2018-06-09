@@ -17,12 +17,11 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.HomeActivityContract;
 import com.cryptenet.thanatos.dtmweb.pojo.NavHeader;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerActivity
 public class HomeActivityModel extends BaseModel<HomeActivityContract.Repository, HomeActivity>
         implements HomeActivityContract.Model {
-    private static final String TAG = TagProvider.getDebugTag(HomeActivityModel.class);
+//    private static final String TAG = TagProvider.getDebugTag(HomeActivityModel.class);
 
     public HomeActivityModel(HomeActivityContract.Repository repository) {
         super(repository);

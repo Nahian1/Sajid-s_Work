@@ -12,7 +12,6 @@ package com.cryptenet.thanatos.dtmweb.home.other_report.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.IssueSubmittedEvent;
@@ -20,7 +19,6 @@ import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.OtherReportFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -37,7 +35,7 @@ import okhttp3.Response;
 @PerFragment
 public class OtherReportFragmentRepository extends BaseFragRepository
         implements OtherReportFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(OtherReportFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(OtherReportFragmentRepository.class);
 
     @Override
     public void sendIssue(Context context, int issueCode, String issue) {
@@ -61,7 +59,7 @@ public class OtherReportFragmentRepository extends BaseFragRepository
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: reset");
+//                Log.d(TAG, "onFailure: reset");
 
                 EventBus.getDefault().post(new RequestFailureEvent(true));
             }

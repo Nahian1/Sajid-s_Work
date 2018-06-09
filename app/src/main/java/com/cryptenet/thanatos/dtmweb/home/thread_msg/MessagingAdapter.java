@@ -38,11 +38,7 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
     public MessagingAdapter(List<Results> messageThreadModels) {
         Collections.reverse(messageThreadModels);
         this.messageThreadModels = messageThreadModels;
-//        this.messageThreadModels = messageThreadModels;
-//        Collections.reverse(this.messageThreadModels);
     }
-
-
 
     @NonNull
     @Override
@@ -52,23 +48,15 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.node_message_list, parent, false);
         InitiatorThreadHolder viewHolder = new InitiatorThreadHolder(view);
         return viewHolder;
-
-
     }
 
     public void setData(List<Results> data) {
         this.messageThreadModels = data;
-//        Collections.reverse(this.messageThreadModels);
-//        this.notifyDataSetChanged();
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessagingAdapter.InitiatorThreadHolder holder, int position) {
         int userID =  PreferenceManager.getDefaultSharedPreferences(mContext).getInt(ConstantProvider.SP_ID,0);
-        // Toast.makeText(mContext, Integer.toString(userID), Toast.LENGTH_SHORT).show();
-        // Toast.makeText(mContext, messageThreadModels[position].getSender().toString(), Toast.LENGTH_SHORT).show();
-
-
 
         if (userID == Integer.parseInt(messageThreadModels.get(position).getSender())){
 
@@ -85,8 +73,6 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.iconSender);
         } else {
-
-            //Toast.makeText(mContext, "receiver", Toast.LENGTH_SHORT).show();
             holder.receiver.setVisibility(View.VISIBLE);
             holder.sender.setVisibility(View.GONE);
 
@@ -98,14 +84,7 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
                     .into(holder.iconReceiver);
 
             holder.message.setText(messageThreadModels.get(position).getText());
-
         }
-//       if(messageThreadModels[position].getSender().toString().equalsIgnoreCase(Integer.toString(userID))){
-//
-//
-//       }else {
-//
-//       }
     }
 
     @Override
@@ -119,7 +98,6 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
         private TextView message,sendMessage;
 
         LinearLayout sender, receiver;
-
 
         public InitiatorThreadHolder(View itemView) {
             super(itemView);

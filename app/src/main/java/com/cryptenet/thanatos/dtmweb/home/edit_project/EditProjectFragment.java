@@ -41,7 +41,6 @@ import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ImageFilePath;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.karumi.dexter.Dexter;
@@ -70,7 +69,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class EditProjectFragment extends BaseFragment<EditProjectFragmentContract.Presenter>
         implements EditProjectFragmentContract.View, AdapterView.OnItemSelectedListener {
-    public static final String TAG = TagProvider.getDebugTag(EditProjectFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(EditProjectFragment.class);
     @BindView(R.id.spinner_project_category)
     Spinner spinnerProjectCategory;
 
@@ -263,18 +262,11 @@ public class EditProjectFragment extends BaseFragment<EditProjectFragmentContrac
             if (planFile != null)
                 projectsRq.setUploadedFile(planFile);
 
-//            if (imageFile == null || planFile == null) {
-//                showMessage("Attach your file/image !");
-//            }
-
             projectsRq.setNew(false);
-
-            // if (imageFile != null && planFile != null) {
 
             ProgressDialogHelper.init(getActivity()).showProgress();
 
             presenter.saveUpdatePlan(projectsRq, activityContext, project.getId());
-            // }
 
         } else {
             showMessage("Please fill all fields");

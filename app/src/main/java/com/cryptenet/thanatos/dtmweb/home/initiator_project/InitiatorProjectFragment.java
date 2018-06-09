@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -56,7 +55,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
     public static final String TAG = TagProvider.getDebugTag(InitiatorProjectFragment.class);
 
     private List<ProjectsRsp> projectsRspList;
-    private List<Plans> plansList = new ArrayList<>();
+    private List<Plans> plansList;
     private ListView projectLV;
     private ProjectAdapter manageProjectAdapter;
     private ProjectManageReqAdapter manageReqAdapter;
@@ -68,6 +67,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
     public InitiatorProjectFragment() {
         projectsRspList = new ArrayList<>();
+        plansList = new ArrayList<>();
     }
 
     @Override
@@ -85,24 +85,19 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         projectLV = convertView.findViewById(R.id.projectListView);
 
         if (reqType == 1) {
-//        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
             manageProjectAdapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
             projectLV.setAdapter(manageProjectAdapter);
 
-            projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            projectLV.setOnItemClickListener((parent, view, position, id) -> {
 
-                    ViewUtils.hideKeyboard(getActivity());
-                    EventBus.getDefault().post(new SearchTextClearEvent(true));
-                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 21));
-                    projectsRspList.clear();
-                }
+                ViewUtils.hideKeyboard(getActivity());
+                EventBus.getDefault().post(new SearchTextClearEvent(true));
+                EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 21));
+                projectsRspList.clear();
             });
 
         } else {
             convertView.findViewById(R.id.btnAddPlan).setVisibility(View.GONE);
-//        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
             manageReqAdapter = new ProjectManageReqAdapter(activityContext, plansList, reqType);
             projectLV.setAdapter(manageReqAdapter);
 
@@ -124,13 +119,10 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
                 }
             });
 
-            projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    EventBus.getDefault().post(new SearchTextClearEvent(true));
-                    ViewUtils.hideKeyboard(getActivity());
-                    EventBus.getDefault().post(new RequestDetailFragmentEvent(plansList.get(position).getId()));
-                }
+            projectLV.setOnItemClickListener((parent, view, position, id) -> {
+                EventBus.getDefault().post(new SearchTextClearEvent(true));
+                ViewUtils.hideKeyboard(getActivity());
+                EventBus.getDefault().post(new RequestDetailFragmentEvent(plansList.get(position).getId()));
             });
 
         }

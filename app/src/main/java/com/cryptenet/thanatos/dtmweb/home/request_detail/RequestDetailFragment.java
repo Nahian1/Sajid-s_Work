@@ -36,7 +36,6 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -55,7 +54,7 @@ import butterknife.Unbinder;
 
 public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentContract.Presenter>
         implements RequestDetailFragmentContract.View {
-    private static final String TAG = TagProvider.getDebugTag(RequestDetailFragment.class);
+//    private static final String TAG = TagProvider.getDebugTag(RequestDetailFragment.class);
     @BindView(R.id.textViewTitle)
     TextView textViewTitle;
     @BindView(R.id.price)

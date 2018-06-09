@@ -12,9 +12,7 @@ package com.cryptenet.thanatos.dtmweb.home.edit_project.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
-import com.cryptenet.thanatos.dtmweb.borrowed.PostAsync;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.CategoriesReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.EditPlanSuccessEvent;
@@ -26,10 +24,7 @@ import com.cryptenet.thanatos.dtmweb.pojo.AllCategoriesResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Categories;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRq;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
-import com.cryptenet.thanatos.dtmweb.utils.ProgressBarHandler;
-import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,7 +40,7 @@ import rx.schedulers.Schedulers;
 @PerFragment
 public class EditProjectFragmentRepository extends BaseFragRepository
         implements EditProjectFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(EditProjectFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(EditProjectFragmentRepository.class);
 
     private ApiClient mApiClient = RetrofitServiceFactory.createRetrofitService();
 
@@ -58,7 +53,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
             public void onResponse(retrofit2.Call<AllCategoriesResponse> call, retrofit2.Response<AllCategoriesResponse> response) {
                 try {
                     AllCategoriesResponse categoriesResponse = response.body();
-                    Log.d(TAG, "onResponse: " + categoriesResponse.toString());
+//                    Log.d(TAG, "onResponse: " + categoriesResponse.toString());
                     setCategories(categoriesResponse.getResults());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -67,7 +62,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
             @Override
             public void onFailure(retrofit2.Call<AllCategoriesResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: AllPlansResponse");
+//                Log.d(TAG, "onFailure: AllPlansResponse");
             }
         });
     }
@@ -76,7 +71,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
     public void saveUpdatePlan(ProjectsRq plan, Context context, int plan_id) {
         if (plan.isNew()) {
 
-            Log.d(TAG, "sending add plan: " + plan.toString());
+//            Log.d(TAG, "sending add plan: " + plan.toString());
 
             String access_token = "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 
@@ -121,7 +116,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
                         @Override
                         public void onNext(ProjectsRsp projectsRsp) {
-                            Log.d(TAG, "add plan rsp: " + projectsRsp.toString());
+//                            Log.d(TAG, "add plan rsp: " + projectsRsp.toString());
 
                             EventBus.getDefault().post(new EditPlanSuccessEvent(projectsRsp));
 
@@ -131,7 +126,7 @@ public class EditProjectFragmentRepository extends BaseFragRepository
 
         } else {
 
-            Log.d(TAG, "sending edit plan: " + plan.toString());
+//            Log.d(TAG, "sending edit plan: " + plan.toString());
             String access_token = "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
 
             String title = plan.getTitle();
@@ -171,12 +166,11 @@ public class EditProjectFragmentRepository extends BaseFragRepository
                         @Override
                         public void onError(Throwable e) {
                             e.printStackTrace();
-                            //EventBus.getDefault().post(new EditPlanFailureEvent(true));
                         }
 
                         @Override
                         public void onNext(ProjectsRsp projectsRsp) {
-                            Log.d(TAG, "edit plan rsp: " + projectsRsp.toString());
+//                            Log.d(TAG, "edit plan rsp: " + projectsRsp.toString());
                             EventBus.getDefault().post(new EditPlanSuccessEvent(projectsRsp));
                         }
                     });

@@ -12,7 +12,6 @@ package com.cryptenet.thanatos.dtmweb.home.thread_list.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
@@ -24,7 +23,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadIdentity;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,7 +36,7 @@ import retrofit2.Response;
 @PerFragment
 public class ThreadListFragmentRepository extends BaseFragRepository
         implements ThreadListFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(ThreadListFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(ThreadListFragmentRepository.class);
     List<ThreadIdentity> threadIdentities;
 
     public ThreadListFragmentRepository() {
@@ -63,14 +61,14 @@ public class ThreadListFragmentRepository extends BaseFragRepository
                         if (allPlansResponse.getResults().size() == 0)
                             Toast.makeText(context, context.getString(R.string.no_threads_found), Toast.LENGTH_LONG).show();
                     } else {
-                        Log.d(TAG, "onResponse: " + response.code());
+//                        Log.d(TAG, "onResponse: " + response.code());
                         EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ThreadDistinctResponse> call, Throwable t) {
-                    Log.d(TAG, "onFailure: AllPlansResponse");
+//                    Log.d(TAG, "onFailure: AllPlansResponse");
                     EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
@@ -96,14 +94,14 @@ public class ThreadListFragmentRepository extends BaseFragRepository
                         else if (response.body().getResults().size() == 0 && offset > 0)
                             Toast.makeText(context, context.getString(R.string.no_more_threads_found), Toast.LENGTH_LONG).show();
                     } else {
-                        Log.d(TAG, "onResponse: " + response.code());
+//                        Log.d(TAG, "onResponse: " + response.code());
                         EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ThreadDistinctResponse> call, Throwable t) {
-                    Log.d(TAG, "onFailure: AllPlansResponse");
+//                    Log.d(TAG, "onFailure: AllPlansResponse");
                     EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });

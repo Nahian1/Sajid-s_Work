@@ -28,7 +28,6 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ReportIssueFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueParent;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +39,7 @@ import java.util.List;
 
 public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContract.Presenter>
         implements ReportIssueFragmentContract.View {
-    public static final String TAG = TagProvider.getDebugTag(ReportIssueFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(ReportIssueFragment.class);
 
     private ExpandableListView expandableListView;
     private ELVAdapter adapter;
@@ -75,21 +74,6 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
     }
 
     void setListener() {
-
-//        // This listener will show toast on group click
-//        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-//
-//            @Override
-//            public boolean onGroupClick(ExpandableListView listview, View view,
-//                                        int group_pos, long id) {
-//
-//                Toast.makeText(activityContext,
-//                        "You clicked : " + adapter.getGroup(group_pos),
-//                        Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        });
-
         expandableListView
                 .setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
@@ -108,18 +92,9 @@ public class ReportIssueFragment extends BaseFragment<ReportIssueFragmentContrac
                 });
 
         expandableListView.setOnChildClickListener((listview, view, groupPos, childPos, id) -> {
-
-//            getActivity().onBackPressed();
-
             EventBus.getDefault().post(new IssueTopicChosenEvent(
                     issueParents.get(groupPos).getTopics().get(childPos).getId()
             ));
-
-//            getActivity().onBackPressed();
-//            Toast.makeText(
-//                    activityContext,
-//                    "You clicked : " + issueParents.get(groupPos).getTopics().get(childPos).getName(),
-//                    Toast.LENGTH_SHORT).show();
             return true;
         });
     }

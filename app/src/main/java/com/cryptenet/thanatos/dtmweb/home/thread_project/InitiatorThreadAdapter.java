@@ -35,9 +35,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThreadAdapter.InitiatorThreadHolder> {
-
-
-
     private Context mContext;
     private List<ThreadInv> messageThreadModels;
 
@@ -47,8 +44,6 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
 
     public void setData(List<ThreadInv> data) {
         this.messageThreadModels = data;
-//        Collections.reverse(this.messageThreadModels);
-//        this.notifyDataSetChanged();
     }
 
     @NonNull
@@ -71,7 +66,7 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.icon);
 
-        holder.lastmessage.setText(messageThreadModels.get(position).getLast_text());
+        holder.lastMessage.setText(messageThreadModels.get(position).getLast_text());
         holder.name.setText(messageThreadModels.get(position).getInvestor_name());
 
         String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
@@ -88,22 +83,8 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
         }
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                StaticVaribles.threadID = messageThreadModels[position].getId();
-//
-//
-//                /**
-//                 * please make a event bus here and comment the activity code
-//                 */
-//
-//                Intent intent = new Intent(mContext, MessagingActivity.class);
-//                mContext.startActivity(intent);
-
-                EventBus.getDefault().post(new InvestorThreadsEvent(Integer.parseInt(messageThreadModels.get(position).getId())));
-            }
-        });
+        holder.itemView.setOnClickListener(view ->
+                EventBus.getDefault().post(new InvestorThreadsEvent(Integer.parseInt(messageThreadModels.get(position).getId()))));
 
 
     }
@@ -116,7 +97,7 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
     public class InitiatorThreadHolder extends RecyclerView.ViewHolder {
 
         private ImageView icon;
-        private TextView lastmessage,name,date;
+        private TextView lastMessage, name, date;
 
 
         public InitiatorThreadHolder(View itemView) {
@@ -124,7 +105,7 @@ public class InitiatorThreadAdapter extends RecyclerView.Adapter<InitiatorThread
 
             icon = itemView.findViewById(R.id.iv_pp);
             name = itemView.findViewById(R.id.titleTV);
-            lastmessage = itemView.findViewById(R.id.tv_investor_name);
+            lastMessage = itemView.findViewById(R.id.tv_investor_name);
             date = itemView.findViewById(R.id.dateTV);
         }
     }

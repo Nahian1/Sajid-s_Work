@@ -12,7 +12,6 @@ package com.cryptenet.thanatos.dtmweb.home.initiator_project.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
@@ -27,7 +26,6 @@ import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -41,7 +39,7 @@ import retrofit2.Response;
 @PerFragment
 public class InitiatorProjectFragmentRepository extends BaseFragRepository
         implements InitiatorProjectFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(InitiatorProjectFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(InitiatorProjectFragmentRepository.class);
     private List<ProjectsRsp> projectsRspList;
     private List<Plans> plansList;
 
@@ -65,7 +63,7 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
                         if (allPlansResponse.getResults().size() == 0)
                             Toast.makeText(context, context.getString(R.string.no_man_projects), Toast.LENGTH_LONG).show();
                     } else {
-                        Log.d(TAG, "onResponse: " + response.code());
+//                        Log.d(TAG, "onResponse: " + response.code());
 
                         EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
@@ -73,7 +71,7 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
 
                 @Override
                 public void onFailure(Call<AllPlansResponse> call, Throwable t) {
-                    Log.d(TAG, "onFailure: AllPlansResponse");
+//                    Log.d(TAG, "onFailure: AllPlansResponse");
 
                     EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
@@ -97,7 +95,7 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
                         else if (response.body().getResults().size() == 0 && offset > 0)
                             Toast.makeText(context, context.getString(R.string.no_more_man_requests), Toast.LENGTH_LONG).show();
                     } else {
-                        Log.d(TAG, "onResponse: " + response.code());
+//                        Log.d(TAG, "onResponse: " + response.code());
 
                         EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
@@ -105,7 +103,7 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
 
                 @Override
                 public void onFailure(Call<PlanAccessResponse> call, Throwable t) {
-                    Log.d(TAG, "onFailure: AllReqPlansResponse");
+//                    Log.d(TAG, "onFailure: AllReqPlansResponse");
 
                     EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
@@ -116,14 +114,14 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
     private void setProjects(List<ProjectsRsp> projectsRspList) {
         this.projectsRspList = projectsRspList;
         for (ProjectsRsp projectsRsp : projectsRspList)
-            Log.d(TAG, "setProjects: " + projectsRsp.getTitle());
+//            Log.d(TAG, "setProjects: " + projectsRsp.getTitle());
         EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsRspList, false));
     }
 
     private void setManageProjects(List<Plans> projectsRspList) {
         this.plansList = projectsRspList;
-        for (Plans projectsRsp : projectsRspList)
-            Log.d(TAG, "setProjects: " + projectsRsp.getPlanTitle());
+//        for (Plans projectsRsp : projectsRspList)
+//            Log.d(TAG, "setProjects: " + projectsRsp.getPlanTitle());
         EventBus.getDefault().post(new ManageProjectReceiveEvent(this.plansList));
     }
 }

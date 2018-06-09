@@ -16,12 +16,11 @@ import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragPresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerFragment
 public class PlanListFragmentPresenter extends BaseFragPresenter<PlanListFragmentContract.View, PlanListFragmentContract.Model>
         implements PlanListFragmentContract.Presenter {
-    private static final String TAG = TagProvider.getDebugTag(PlanListFragmentPresenter.class);
+//    private static final String TAG = TagProvider.getDebugTag(PlanListFragmentPresenter.class);
 
     public PlanListFragmentPresenter(PlanListFragmentContract.Model model) {
         super(model);

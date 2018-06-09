@@ -35,7 +35,6 @@ import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,8 +45,7 @@ import java.util.List;
 
 public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Presenter>
         implements PlanListFragmentContract.View {
-
-    public static final String TAG = TagProvider.getDebugTag(PlanListFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(PlanListFragment.class);
     private List<ProjectsRsp> projectsRspList;
     private ListView projectLV;
     private PlanListAdapter adapter;
@@ -90,7 +88,6 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
             }
         });
 
-//        token = getArguments().getString("token");
         token = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
         return convertView;
     }
@@ -201,21 +198,6 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         projectsRspList.clear();
         presenter.getProjectList(activityContext, 0);
     }
-
-    //commented out by Asif
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-//            EventBus.getDefault().register(this);
-//    }
-//
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-//            EventBus.getDefault().register(this);
-//    }
 
     @Override
     public void onStart() {

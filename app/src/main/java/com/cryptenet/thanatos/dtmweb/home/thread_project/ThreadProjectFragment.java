@@ -28,7 +28,6 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadInv;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,16 +39,9 @@ import java.util.List;
 
 public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentContract.Presenter>
         implements ThreadProjectFragmentContract.View {
-    public static final String TAG = TagProvider.getDebugTag(ThreadProjectFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(ThreadProjectFragment.class);
 
-//    @BindView(R.id.threadProjectListView)
-//    ListView projectLV;
-
-    //    private ThreadProjectAdapter adapter;
     private int planId;
-//
-//    Unbinder unbinder;
-
     private RecyclerView mRecyclerView;
     private InitiatorThreadAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -74,20 +66,13 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
 
         ((HomeActivity) getActivity()).setToolBarTitle(getString(R.string.nav_conversation));
 
-        // unbinder = ButterKnife.bind(this, convertView);
-
         planId = getArguments().getInt("plan_id");
-
-//        adapter = new ProjectAdapter(activityContext, ProjectListGenerator.generateProjects());
-//        projectLV.setAdapter(adapter);
-
 
         mRecyclerView = convertView.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new InitiatorThreadAdapter(this.threadInvs);
-//        mAdapter = new InitiatorThreadAdapter(FakeDataProvider.getThreadProjects()); //dummy data for debug
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -126,11 +111,6 @@ public class ThreadProjectFragment extends BaseFragment<ThreadProjectFragmentCon
     public void onThreadProjectListReceive(ThreadProjectListReceiveEvent event) {
 
         ProgressDialogHelper.hideProgress();
-
-//        if (event.threadInvs != null) {
-//            mAdapter.setData(event.threadInvs);
-//            mAdapter.notifyDataSetChanged();
-//        }
 
         if (event.threadInvs.isEmpty())
             moreDataAvailable = false;

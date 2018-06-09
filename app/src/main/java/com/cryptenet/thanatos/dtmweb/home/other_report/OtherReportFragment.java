@@ -28,13 +28,10 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.OtherReportFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +40,7 @@ import butterknife.OnClick;
 
 public class OtherReportFragment extends BaseFragment<OtherReportFragmentContract.Presenter>
         implements OtherReportFragmentContract.View {
-    public static final String TAG = TagProvider.getDebugTag(OtherReportFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(OtherReportFragment.class);
     @BindView(R.id.add_report)
     EditText addReport;
 

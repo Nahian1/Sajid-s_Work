@@ -33,7 +33,6 @@ public class ThreadListAdapter extends ArrayAdapter<ThreadIdentity> {
     private List<ThreadIdentity> threadIdentities;
     private int reqType;
     private LayoutInflater inflater;
-//    private ItemClickListener itemClickListener;
 
     public ThreadListAdapter(@NonNull Context context, List<ThreadIdentity> threadIdentities, int reqType) {
         super(context, R.layout.thread_project_list_row, threadIdentities);
@@ -41,7 +40,6 @@ public class ThreadListAdapter extends ArrayAdapter<ThreadIdentity> {
         this.threadIdentities = threadIdentities;
         this.reqType = reqType;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        itemClickListener = (ItemClickListener) context;
     }
 
     public void updateList(List<ThreadIdentity> projs) {

@@ -32,7 +32,6 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
     private Context context;
     private List<ProjectsRsp> projects;
     private List<ProjectsRsp> filteredList;
-    private int count = 0;
     private int reqType;
     private LayoutInflater inflater;
     private InitiatorProjectFilter initiatorProjectFilter;
@@ -49,11 +48,6 @@ public class ProjectAdapter extends BaseAdapter implements Filterable {
     }
 
     public void updateList(List<ProjectsRsp> projs) {
-//        this.projects.clear();
-//        this.projects.addAll(projs);
-//        this.filteredList.clear();
-//        this.filteredList.addAll(projs);
-
         this.projects = projs;
         this.filteredList = projs;
         this.notifyDataSetChanged();

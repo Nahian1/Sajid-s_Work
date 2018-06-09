@@ -12,7 +12,6 @@ package com.cryptenet.thanatos.dtmweb.home.request_detail.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.BackToManageRequestEvent;
@@ -23,7 +22,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -40,7 +38,7 @@ import retrofit2.Response;
 @PerFragment
 public class RequestDetailFragmentRepository extends BaseFragRepository
         implements RequestDetailFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(RequestDetailFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(RequestDetailFragmentRepository.class);
 
     @Override
     public void getTransactionDetails(Context context, int transactionId, int userType) {
@@ -54,36 +52,8 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
             call.enqueue(new Callback<TransactionDetails>() {
                 @Override
                 public void onResponse(Call<TransactionDetails> call, Response<TransactionDetails> response) {
-                    Log.d(TAG, "onResponse: " + response.body());
+//                    Log.d(TAG, "onResponse: " + response.body());
                     TransactionDetails details = response.body();
-
-//                    OkHttpClient client = new OkHttpClient();
-//
-//                    Request request = new Request.Builder()
-//                            .url(ConstantProvider.BASE_URL + "api/v1/user/" + response.body().getInvestor() + "/")
-//                            .get()
-//                            .addHeader("Content-Type", head)
-//                            .addHeader("Authorization", "Bearer " + PreferenceManager
-//                                    .getDefaultSharedPreferences(context)
-//                                    .getString(ConstantProvider.SP_ACCESS_TOKEN, null))
-//                            .build();
-//
-//                    client.newCall(request).enqueue(new okhttp3.Callback() {
-//                        @Override
-//                        public void onFailure(okhttp3.Call call, IOException e) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-//                            Log.d(TAG, response.body().string());
-//                            Gson gson = new Gson();
-//                            EventBus.getDefault().post(new RequestDataReceiveEvent(
-//                                    details,
-//                                    gson.fromJson(response.body().string(), User.class))
-//                            );
-//                        }
-//                    });
 
                     Call<User> userCall = apiClient.getUserData(
                             "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
@@ -93,15 +63,13 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
                     userCall.enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
-                            Log.d(TAG, response.body().toString());
+//                            Log.d(TAG, response.body().toString());
                             if (response.isSuccessful()) {
 
                                 EventBus.getDefault().post(new RequestDataReceiveEvent(details, response.body()));
 
                             } else {
-
                                 EventBus.getDefault().post(new RequestFailureEvent(true));
-
                             }
                         }
 
@@ -115,7 +83,7 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
 
                 @Override
                 public void onFailure(Call<TransactionDetails> call, Throwable t) {
-                    Log.d(TAG, "onFailure: " + "transaction details");
+//                    Log.d(TAG, "onFailure: " + "transaction details");
 
                     EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
@@ -129,7 +97,7 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
             call.enqueue(new Callback<TransactionDetails>() {
                 @Override
                 public void onResponse(Call<TransactionDetails> call, Response<TransactionDetails> response) {
-                    Log.d(TAG, "onResponse: " + response.body());
+//                    Log.d(TAG, "onResponse: " + response.body());
 
                     if (response.isSuccessful()) {
                         TransactionDetails details = response.body();
@@ -144,7 +112,7 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
 
                 @Override
                 public void onFailure(Call<TransactionDetails> call, Throwable t) {
-                    Log.d(TAG, "onFailure: " + "transaction details");
+//                    Log.d(TAG, "onFailure: " + "transaction details");
                     EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
@@ -172,7 +140,7 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
         client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
-                Log.d(TAG, "onFailure:");
+//                Log.d(TAG, "onFailure:");
                 e.printStackTrace();
 
                 EventBus.getDefault().post(new RequestFailureEvent(true));
@@ -181,7 +149,7 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
             @Override
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
                 assert response.body() != null;
-                Log.d(TAG, "onResponse: " + response.body().string());
+//                Log.d(TAG, "onResponse: " + response.body().string());
 
                 if (response.code() == 200) {
                     EventBus.getDefault().post(new BackToManageRequestEvent());

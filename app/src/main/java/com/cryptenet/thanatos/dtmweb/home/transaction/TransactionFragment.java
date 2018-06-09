@@ -33,7 +33,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.TransactionFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
 import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
 import com.cryptenet.thanatos.dtmweb.utils.JsonKeys;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,7 +49,7 @@ import butterknife.OnClick;
 
 public class TransactionFragment extends BaseFragment<TransactionFragmentContract.Presenter>
         implements TransactionFragmentContract.View {
-    public static final String TAG = TagProvider.getDebugTag(TransactionFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(TransactionFragment.class);
 
     @BindView(R.id.textViewTitle)
     TextView textViewTitle;
@@ -114,8 +113,6 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
                 String.format("%.2f", (Double.parseDouble(projectData.getMinimumInvestmentCost())
                         - Double.parseDouble(projectData.getMaximumInvestmentCost()))));
 
-//        date.setText(projectData.getTitle());
-//        status.setText(projectData.getTitle());
         String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         String dateOutputPattern = "dd MMM yyyy";
 
@@ -137,7 +134,6 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
                 .into(profilepic);
 
         textViewName.setText(projectData.getInitiatorsName());
-//        textViewType.setText(projectData.getTitle());
         address.setText(projectData.getInitiatorAddress());
 
         textBankName.setText(transactionData.getBankName());
@@ -169,14 +165,10 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
     public void onResume() {
         super.onResume();
         presenter.attachView(this);
-
-//        presenter.getTransactionDetails(activityContext, transactionId);
     }
 
     @OnClick(R.id.doneBtn)
     public void onViewClicked() {
-
         EventBus.getDefault().post(new ReturnToHomeEvent());
-//        getActivity().onBackPressed();
     }
 }

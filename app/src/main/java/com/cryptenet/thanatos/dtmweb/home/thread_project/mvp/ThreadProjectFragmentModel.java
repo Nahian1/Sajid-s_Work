@@ -15,12 +15,11 @@ import android.content.Context;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragModel;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadProjectFragmentContract;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerFragment
 public class ThreadProjectFragmentModel extends BaseFragModel<ThreadProjectFragmentContract.Repository>
         implements ThreadProjectFragmentContract.Model {
-    private static final String TAG = TagProvider.getDebugTag(ThreadProjectFragmentModel.class);
+//    private static final String TAG = TagProvider.getDebugTag(ThreadProjectFragmentModel.class);
 
     public ThreadProjectFragmentModel(ThreadProjectFragmentContract.Repository repository) {
         super(repository);

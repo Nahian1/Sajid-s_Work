@@ -12,10 +12,7 @@ package com.cryptenet.thanatos.dtmweb.home.thread_msg.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.MessageListFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.MessageListReceivedEvent;
@@ -25,9 +22,7 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadMsgFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.MessageListModel;
 import com.cryptenet.thanatos.dtmweb.pojo.Results;
 import com.cryptenet.thanatos.dtmweb.pojo.SendMessageModel;
-import com.cryptenet.thanatos.dtmweb.pojo.ThreadRequestModel;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -42,7 +37,7 @@ import retrofit2.Response;
 @PerFragment
 public class ThreadMsgFragmentRepository extends BaseFragRepository
         implements ThreadMsgFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(ThreadMsgFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(ThreadMsgFragmentRepository.class);
 
     @Override
     public void getMessageList(Context context, int threadID) {
@@ -97,14 +92,14 @@ public class ThreadMsgFragmentRepository extends BaseFragRepository
                 results.setReceiver_picture(response.body().getReceiver_picture());
 
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: " + "msg success");
+//                    Log.d(TAG, "onResponse: " + "msg success");
                     EventBus.getDefault().post(new onMessageSentEvent(results));
                 }
             }
 
             @Override
             public void onFailure(Call<SendMessageModel> call, Throwable t) {
-                Log.d(TAG, "onResponse: " + "msg fail");
+//                Log.d(TAG, "onResponse: " + "msg fail");
             }
         });
     }

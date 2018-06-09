@@ -28,7 +28,6 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadIdentity;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,7 +43,7 @@ import butterknife.Unbinder;
 
 public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.Presenter>
         implements ThreadListFragmentContract.View {
-    public static final String TAG = TagProvider.getDebugTag(ThreadListFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(ThreadListFragment.class);
     private List<ThreadIdentity> threadIdentities;
     private ThreadListAdapter adapter;
     private int reqType;
@@ -70,7 +69,6 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
         reqType = getArguments().getInt("reqType");
 
         adapter = new ThreadListAdapter(activityContext, threadIdentities, reqType);
-//        lvThreadList = convertView.findViewById(R.id.lv_thread_list);
         lvThreadList.setAdapter(adapter);
 
         lvThreadList.setOnScrollListener(new AbsListView.OnScrollListener() {

@@ -21,20 +21,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
-import com.cryptenet.thanatos.dtmweb.viewholders.VHInitiatorProjectList;
 import com.cryptenet.thanatos.dtmweb.viewholders.VHInvestorProjectManageList;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class ProjectManageAdapter extends BaseAdapter implements Filterable {
     private Context context;
@@ -46,7 +39,6 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
     private InitiatorProjectFilter initiatorProjectFilter;
 
     public ProjectManageAdapter(@NonNull Context context, List<Plans> projects, int reqType) {
-//        super(context, R.layout.initiator_project_list_row, projects);
         this.context = context;
         this.projects = projects;
         this.filteredList = projects;
@@ -57,10 +49,6 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
     }
 
     public void updateList(List<Plans> projs) {
-//        this.projects.clear();
-//        this.filteredList.clear();
-//        this.projects.addAll(projs);
-//        this.filteredList.addAll(projs);
         this.projects = projs;
         this.filteredList = projs;
         notifyDataSetChanged();
@@ -191,7 +179,6 @@ public class ProjectManageAdapter extends BaseAdapter implements Filterable {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filteredList = (List<Plans>) results.values;
-//            updateList(filteredList);
             notifyDataSetChanged();
         }
     }

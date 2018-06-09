@@ -26,7 +26,6 @@ import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,7 +45,7 @@ import retrofit2.Response;
 @PerFragment
 public class PlanListFragmentRepository extends BaseFragRepository
         implements PlanListFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(PlanListFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(PlanListFragmentRepository.class);
     private List<ProjectsRsp> projectsRspList;
 
     public PlanListFragmentRepository() {
@@ -76,7 +75,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
             client.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
                 public void onFailure(okhttp3.Call call, IOException e) {
-                    Log.d(TAG, "onFailure: " + "failed");
+//                    Log.d(TAG, "onFailure: " + "failed");
                     EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
 
@@ -111,7 +110,7 @@ public class PlanListFragmentRepository extends BaseFragRepository
                         else if (response.body().getResults().size() == 0 && offset > 0)
                             Toast.makeText(context, context.getString(R.string.no_more_plans), Toast.LENGTH_LONG).show();
                     } else {
-                        Log.d(TAG, "onResponse: " + response.code());
+//                        Log.d(TAG, "onResponse: " + response.code());
                         EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
@@ -137,14 +136,15 @@ public class PlanListFragmentRepository extends BaseFragRepository
                     EventBus.getDefault().post(new ProjectListReceiveEvent(response.body().getResults(), true));
                     if (response.body().getResults().size() == 0)
                         Toast.makeText(context, context.getString(R.string.no_search_result), Toast.LENGTH_LONG).show();
-                } else {
-                    Log.d(TAG, "onResponse: " + response.code());
                 }
+//                } else {
+//                    Log.d(TAG, "onResponse: " + response.code());
+//                }
             }
 
             @Override
             public void onFailure(Call<AllPlansResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + "search failed");
+//                Log.d(TAG, "onFailure: " + "search failed");
             }
         });
 
@@ -163,8 +163,8 @@ public class PlanListFragmentRepository extends BaseFragRepository
 
     private void setProjects(List<ProjectsRsp> projectsRspList) {
         this.projectsRspList = projectsRspList;
-        for (ProjectsRsp projectsRsp : projectsRspList)
-            Log.d(TAG, "setProjects: " + projectsRsp.getTitle());
+//        for (ProjectsRsp projectsRsp : projectsRspList)
+//            Log.d(TAG, "setProjects: " + projectsRsp.getTitle());
         EventBus.getDefault().post(new ProjectListReceiveEvent(this.projectsRspList, false));
     }
 
@@ -188,6 +188,5 @@ public class PlanListFragmentRepository extends BaseFragRepository
                 .putString(ConstantProvider.SP_USER_TYPE, user.getUserType())
                 .putLong(ConstantProvider.SP_EXPIRES_IN, expiresIn)
                 .commit();
-//        Log.d(TAG, "saveUserToSP: " + user.getAccessToken());
     }
 }

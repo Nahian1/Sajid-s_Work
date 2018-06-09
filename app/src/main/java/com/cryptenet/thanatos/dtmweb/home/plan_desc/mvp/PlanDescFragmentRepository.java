@@ -12,7 +12,6 @@ package com.cryptenet.thanatos.dtmweb.home.plan_desc.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
@@ -26,7 +25,6 @@ import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadInitResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +42,7 @@ import okhttp3.Response;
 @PerFragment
 public class PlanDescFragmentRepository extends BaseFragRepository
         implements PlanDescFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(PlanDescFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(PlanDescFragmentRepository.class);
 
     @Override
     public void getLongDetails(Context context, int id) {
@@ -112,12 +110,12 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                         .getDefaultSharedPreferences(context)
                         .getString(ConstantProvider.SP_ACCESS_TOKEN, null))
                 .build();
-        Log.d(TAG, " request : " + request.toString());
+//        Log.d(TAG, " request : " + request.toString());
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: " + "fetch short details failed");
+//                Log.d(TAG, "onFailure: " + "fetch short details failed");
                 EventBus.getDefault().post(new RequestFailureEvent(true));
 
             }
@@ -126,7 +124,7 @@ public class PlanDescFragmentRepository extends BaseFragRepository
             public void onResponse(Call call, Response response) throws IOException {
                 Gson gson = new Gson();
                 ProjectsDSResponse detailed = gson.fromJson(response.body().string(), ProjectsDSResponse.class);
-                Log.d(TAG, "onResponse: " + detailed.toString());
+//                Log.d(TAG, "onResponse: " + detailed.toString());
 
                 ProjectsDetailed detailed1 = new ProjectsDetailed();
                 detailed1.setId(detailed.getId());
@@ -191,7 +189,7 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                 .add("plan", String.valueOf(planId))
                 .build();
 
-        Log.d(TAG, "data: " + formBody.toString());
+//        Log.d(TAG, "data: " + formBody.toString());
 
         final Request request = new Request.Builder()
                 .url(ConstantProvider.BASE_URL + "api/v1/message-thread/")
@@ -203,7 +201,7 @@ public class PlanDescFragmentRepository extends BaseFragRepository
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure: " + "thread id failed");
+//                Log.d(TAG, "onFailure: " + "thread id failed");
             }
 
             @Override
@@ -212,7 +210,7 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                     Gson gson = new Gson();
                     ThreadInitResponse initResponse = gson.fromJson(response.body().string(), ThreadInitResponse.class);
                     EventBus.getDefault().post(new ThreadIdReceiveEvent(initResponse));
-                    Log.d(TAG, "onResponse: thread" + initResponse.toString());
+//                    Log.d(TAG, "onResponse: thread" + initResponse.toString());
                 }
             }
         });

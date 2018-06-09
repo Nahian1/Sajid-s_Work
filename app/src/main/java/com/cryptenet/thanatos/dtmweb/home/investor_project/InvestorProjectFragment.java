@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,7 +32,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContra
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -48,7 +46,7 @@ import butterknife.Unbinder;
 
 public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmentContract.Presenter>
         implements InvestorProjectFragmentContract.View {
-    public static final String TAG = TagProvider.getDebugTag(InvestorProjectFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(InvestorProjectFragment.class);
     private List<Plans> projectsRspList;
     private ListView projectLV;
     private ProjectManageAdapter adapter;
@@ -97,20 +95,17 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
             }
         });
 
-        projectLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        projectLV.setOnItemClickListener((parent, view, position, id) -> {
 
-                if (reqType == 1) {
+            if (reqType == 1) {
 
-                    ViewUtils.hideKeyboard(getActivity());
-                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getPlan(), 11));
+                ViewUtils.hideKeyboard(getActivity());
+                EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getPlan(), 11));
 
-                } else {
+            } else {
 
-                    ViewUtils.hideKeyboard(getActivity());
-                    EventBus.getDefault().post(new RequestDetailFragmentEvent(projectsRspList.get(position).getId()));
-                }
+                ViewUtils.hideKeyboard(getActivity());
+                EventBus.getDefault().post(new RequestDetailFragmentEvent(projectsRspList.get(position).getId()));
             }
         });
 
@@ -142,7 +137,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
 
     @Subscribe
     public void onManageProjectReceiveEvent(ManageProjectReceiveEvent event) {
-        Log.d(TAG, "onProjectListReceiveEvent: login");
+//        Log.d(TAG, "onProjectListReceiveEvent: login");
 
         ProgressDialogHelper.hideProgress();
 

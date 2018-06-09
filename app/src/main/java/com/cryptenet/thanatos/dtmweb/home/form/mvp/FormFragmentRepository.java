@@ -12,17 +12,14 @@ package com.cryptenet.thanatos.dtmweb.home.form.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
-import com.cryptenet.thanatos.dtmweb.events.FormSubmitEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.FormFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +37,7 @@ import okhttp3.Response;
 @PerFragment
 public class FormFragmentRepository extends BaseFragRepository
         implements FormFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(FormFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(FormFragmentRepository.class);
 
     @Override
     public void submitTransactionData(Transaction transaction, Context context) {
@@ -58,7 +55,7 @@ public class FormFragmentRepository extends BaseFragRepository
                 .add("note", transaction.getNote())
                 .build();
 
-        Log.d(TAG, "data: " + formBody.toString());
+//        Log.d(TAG, "data: " + formBody.toString());
 
         final Request request = new Request.Builder()
                 .url(ConstantProvider.BASE_URL + "api/v1/plan-access/")
@@ -70,7 +67,7 @@ public class FormFragmentRepository extends BaseFragRepository
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure:");
+//                Log.d(TAG, "onFailure:");
                 e.printStackTrace();
 
                 EventBus.getDefault().post(new RequestFailureEvent(true));

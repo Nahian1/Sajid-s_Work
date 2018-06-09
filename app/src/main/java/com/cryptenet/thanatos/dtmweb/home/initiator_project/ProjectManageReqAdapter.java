@@ -174,7 +174,6 @@ public class ProjectManageReqAdapter extends BaseAdapter implements Filterable {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filteredList = (List<Plans>) results.values;
-//            updateList(filteredList);
             notifyDataSetChanged();
         }
     }

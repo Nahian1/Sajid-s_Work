@@ -12,7 +12,6 @@ package com.cryptenet.thanatos.dtmweb.home.investor_project.mvp;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
@@ -24,7 +23,6 @@ import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContra
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.Plans;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,7 +36,7 @@ import retrofit2.Response;
 @PerFragment
 public class InvestorProjectFragmentRepository extends BaseFragRepository
         implements InvestorProjectFragmentContract.Repository {
-    private static String TAG = TagProvider.getDebugTag(InvestorProjectFragmentRepository.class);
+//    private static String TAG = TagProvider.getDebugTag(InvestorProjectFragmentRepository.class);
     private List<Plans> projectsRspList;
 
     public InvestorProjectFragmentRepository() {
@@ -65,14 +63,14 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
                         else if (response.body().getResults().size() == 0 && offset > 0)
                             Toast.makeText(context, context.getString(R.string.no_more_man_requests), Toast.LENGTH_LONG).show();
                     } else {
-                        Log.d(TAG, "onResponse: " + response.code());
+//                        Log.d(TAG, "onResponse: " + response.code());
                         EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<PlanAccessResponse> call, Throwable t) {
-                    Log.d(TAG, "onFailure: AllPlansResponse");
+//                    Log.d(TAG, "onFailure: AllPlansResponse");
                     EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
@@ -96,14 +94,14 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
                         else if (response.body().getResults().size() == 0 && offset > 0)
                             Toast.makeText(context, context.getString(R.string.no_more_man_projects), Toast.LENGTH_LONG).show();
                     } else {
-                        Log.d(TAG, "onResponse: " + response.code());
+//                        Log.d(TAG, "onResponse: " + response.code());
                         EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<PlanAccessResponse> call, Throwable t) {
-                    Log.d(TAG, "onFailure: AllReqPlansResponse");
+//                    Log.d(TAG, "onFailure: AllReqPlansResponse");
                     EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
@@ -113,7 +111,7 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
     private void setProjects(List<Plans> projectsRspList) {
         this.projectsRspList = projectsRspList;
         for (Plans projectsRsp : projectsRspList)
-            Log.d(TAG, "setProjects: " + projectsRsp.getPlanTitle());
+//            Log.d(TAG, "setProjects: " + projectsRsp.getPlanTitle());
         EventBus.getDefault().post(new ManageProjectReceiveEvent(this.projectsRspList));
     }
 }

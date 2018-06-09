@@ -26,16 +26,13 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
-import com.cryptenet.thanatos.dtmweb.events.FormSubmitEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
-import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.FormFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsDetailed;
 import com.cryptenet.thanatos.dtmweb.pojo.Transaction;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.ViewUtils;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -54,7 +51,7 @@ import butterknife.Unbinder;
 
 public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
         implements FormFragmentContract.View {
-    public static final String TAG = TagProvider.getDebugTag(FormFragment.class);
+//    public static final String TAG = TagProvider.getDebugTag(FormFragment.class);
 
     Unbinder unbinder;
     @BindView(R.id.textViewTitle)
@@ -125,8 +122,6 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
                 e.printStackTrace();
             }
 
-//        status.setText(details.getTitle());
-
             Glide.with(activityContext)
                     .load(details.getInitiatorImage())
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_profile_grey))
@@ -135,7 +130,6 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
                     .into(profilepic);
 
             textViewName.setText(details.getInitiatorsName());
-//        textViewType.setText(details.getInitiator());
             address.setText(details.getInitiatorAddress());
         }
         return view;
@@ -200,15 +194,6 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
                     transaction.setTransactionId(transId);
                     transaction.setNote(note);
                     transaction.setProjectsDetailed(details); //adding project details
-
-                    //for debug only
-//                    Transaction transaction = new Transaction();
-//                    transaction.setBankName("Bank");
-//                    transaction.setBankAccountName("My name");
-//                    transaction.setBankAccountNumber("1324657987");
-//                    transaction.setTransactionId("313546313");
-//                    transaction.setNote("note");
-//                    transaction.setProjectsDetailed(details); //adding project details
 
                     presenter.submitTransactionData(transaction, activityContext);
 

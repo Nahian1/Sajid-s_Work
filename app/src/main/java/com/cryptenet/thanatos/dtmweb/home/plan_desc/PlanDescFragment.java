@@ -79,9 +79,6 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
     TextView textViewFile;
     @BindView(R.id.layoutBankSection)
     LinearLayout layoutBankSection;
-
-    //    @BindView(R.id.profilepic)
-//    ImageView profileIV;
     @BindView(R.id.textBankAccName)
     TextView textBankAccName;
     @BindView(R.id.textBankAccNo)
@@ -256,12 +253,6 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         } else if (type == 11 || type == 21) {
             presenter.getLongDetails(activityContext, projectId);
         }
-
-//        if (type == 1) { //long
-//            presenter.getLongDetails(activityContext, projectId);
-//        } else { //short
-//            presenter.getShortDetails(activityContext, projectId);
-//        }
     }
 
     @Override

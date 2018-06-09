@@ -15,13 +15,12 @@ import android.content.Context;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragPresenter;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadListFragmentContract;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 @PerFragment
 public class ThreadListFragmentPresenter
         extends BaseFragPresenter<ThreadListFragmentContract.View, ThreadListFragmentContract.Model>
         implements ThreadListFragmentContract.Presenter {
-    private static final String TAG = TagProvider.getDebugTag(ThreadListFragmentPresenter.class);
+//    private static final String TAG = TagProvider.getDebugTag(ThreadListFragmentPresenter.class);
 
     public ThreadListFragmentPresenter(ThreadListFragmentContract.Model model) {
         super(model);
