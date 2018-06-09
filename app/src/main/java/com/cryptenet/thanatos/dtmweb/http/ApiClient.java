@@ -110,7 +110,11 @@ public interface ApiClient {
     Call<ThreadDistinctResponse> getThreadList(@Header("Authorization") String token);
 
     @GET("/api/v1/message-thread/")
-    Call<ThreadDistinctResponse> getThreadInv(@Header("Authorization") String token);
+    Call<ThreadDistinctResponse> getThreadInv(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset
+    );
 
     @GET("/api/v1/plan-access/{id}")
     Call<TransactionDetails> getTransactionDetails(@Header("Authorization") String token, @Path("id") int transactionId);
@@ -219,7 +223,11 @@ public interface ApiClient {
     );
 
     @GET("api/v1/message-thread/")
-    Call<MessageThreadModel> getThreads(@Header("Authorization") String token , @Query("plan") int planId);
+    Call<MessageThreadModel> getThreads(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset,
+            @Query("plan") int planId);
 
     @FormUrlEncoded
     @POST("api/v1/message/")

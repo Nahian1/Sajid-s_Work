@@ -26,10 +26,10 @@
 
             <ImageView
                 android:id="@+id/iv_pp"
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_image_placeholder" />
+                app:srcCompat="@drawable/ic_profile_grey" />
 
             <LinearLayout
                 android:id="@+id/right_layout"

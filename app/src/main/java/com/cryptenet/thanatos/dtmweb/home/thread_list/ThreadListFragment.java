@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -45,6 +46,8 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
     private List<ThreadIdentity> threadIdentities;
     private ThreadListAdapter adapter;
     private int reqType;
+    private boolean doMoreRequest;
+    private boolean moreDataAvailable;
 
     @BindView(R.id.lv_thread_list)
     ListView lvThreadList;
@@ -68,6 +71,24 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
 //        lvThreadList = convertView.findViewById(R.id.lv_thread_list);
         lvThreadList.setAdapter(adapter);
 
+        lvThreadList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                doMoreRequest = true;
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                final int lastItem = firstVisibleItem + visibleItemCount;
+
+                if(lastItem == totalItemCount && totalItemCount > 0) {
+                    if (moreDataAvailable && doMoreRequest) {
+                        presenter.getThreadList(activityContext, totalItemCount);
+                        doMoreRequest = false;
+                    }
+                }
+            }
+        });
 
         return convertView;
     }
@@ -92,8 +113,18 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
 
         ProgressDialogHelper.hideProgress();
 
-        this.threadIdentities = event.threadIdentities;
-        adapter.updateList(this.threadIdentities);
+        if (event.threadIdentities.isEmpty())
+            moreDataAvailable = false;
+        else
+            moreDataAvailable = true;
+
+        if (this.threadIdentities.size() == 0)
+            this.threadIdentities = event.threadIdentities;
+        else if (doMoreRequest)
+            this.threadIdentities.addAll(event.threadIdentities);
+
+        if (this.threadIdentities != null)
+            adapter.updateList(this.threadIdentities);
     }
 
     @Override
@@ -103,7 +134,10 @@ public class ThreadListFragment extends BaseFragment<ThreadListFragmentContract.
         presenter.attachView(this);
 
         ProgressDialogHelper.init(getActivity()).showProgress();
-        presenter.getThreadList(activityContext);
+
+        threadIdentities.clear();
+
+        presenter.getThreadList(activityContext, 0);
     }
 
     @Override
