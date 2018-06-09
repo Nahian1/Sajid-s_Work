@@ -106,7 +106,6 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
     @Override
     public void toDetailsView(ProjectsRsp projectsRsp, int type) {
-        projectsRspList.clear();
         if (type == 1) {
             EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRsp.getId(), 10));
         } else {
@@ -156,6 +155,7 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
         ProgressDialogHelper.init(getActivity()).showProgress();
 
+        projectsRspList.clear();
         presenter.getProjectList(activityContext, 0);
     }
 

@@ -94,16 +94,12 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
         });
 
         if (reqType == 1) {
-            projectLV.setOnItemClickListener((parent, view, position, id) -> {
-                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getPlan(), 11));
-                    projectsRspList.clear();
-            });
+            projectLV.setOnItemClickListener((parent, view, position, id) ->
+                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getPlan(), 11)));
 
         } else {
-            projectLV.setOnItemClickListener((parent, view, position, id) -> {
-                    EventBus.getDefault().post(new RequestDetailFragmentEvent(projectsRspList.get(position).getId()));
-                    projectsRspList.clear();
-            });
+            projectLV.setOnItemClickListener((parent, view, position, id) ->
+                    EventBus.getDefault().post(new RequestDetailFragmentEvent(projectsRspList.get(position).getId())));
         }
 
         return convertView;
@@ -160,6 +156,7 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
 
         ProgressDialogHelper.init(getActivity()).showProgress();
 
+        projectsRspList.clear();
         presenter.getMyProjectList(reqType, activityContext, 0);
     }
 

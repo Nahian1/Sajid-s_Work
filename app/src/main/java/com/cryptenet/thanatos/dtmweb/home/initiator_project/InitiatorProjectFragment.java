@@ -113,10 +113,8 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
                 }
             });
 
-            projectLV.setOnItemClickListener((parent, view, position, id) -> {
-                    EventBus.getDefault().post(new RequestDetailFragmentEvent(plansList.get(position).getId()));
-                    plansList.clear();
-            });
+            projectLV.setOnItemClickListener((parent, view, position, id) ->
+                    EventBus.getDefault().post(new RequestDetailFragmentEvent(plansList.get(position).getId())));
         }
 
         return convertView;
@@ -199,6 +197,11 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         presenter.attachView(this);
 
         ProgressDialogHelper.init(getActivity()).showProgress();
+
+        if (reqType == 1)
+            projectsRspList.clear();
+        else
+            plansList.clear();
 
         presenter.getMyProjectList(reqType, activityContext, 0);
     }
