@@ -120,7 +120,7 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
 
     private void setManageProjects(List<Plans> projectsRspList) {
         this.plansList = projectsRspList;
-//        for (Plans projectsRsp : projectsRspList)
+        for (Plans projectsRsp : projectsRspList)
 //            Log.d(TAG, "setProjects: " + projectsRsp.getPlanTitle());
         EventBus.getDefault().post(new ManageProjectReceiveEvent(this.plansList));
     }

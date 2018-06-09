@@ -55,7 +55,8 @@
                     android:text="@string/hint_et_bank_name"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="viewStart"/>
 
                 <TextView
                     android:id="@+id/tv_nav_type"
