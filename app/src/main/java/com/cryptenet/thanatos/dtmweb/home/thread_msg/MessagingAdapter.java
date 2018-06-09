@@ -42,6 +42,8 @@ public class MessagingAdapter extends RecyclerView.Adapter<MessagingAdapter.Init
 //        Collections.reverse(this.messageThreadModels);
     }
 
+
+
     @NonNull
     @Override
     public MessagingAdapter.InitiatorThreadHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

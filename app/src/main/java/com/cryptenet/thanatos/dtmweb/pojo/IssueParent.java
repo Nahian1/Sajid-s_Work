@@ -27,11 +27,13 @@ public class IssueParent implements Parcelable
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("name_ar")
+    @Expose
+    private String nameAr;
     @SerializedName("topics")
     @Expose
     private List<Topic> topics = null;
     public final static Creator<IssueParent> CREATOR = new Creator<IssueParent>() {
-
 
         @SuppressWarnings({
             "unchecked"
@@ -88,6 +90,14 @@ public class IssueParent implements Parcelable
         this.name = name;
     }
 
+    public String getNameAr() {
+        return nameAr;
+    }
+
+    public void setNameAr(String nameAr) {
+        this.nameAr = nameAr;
+    }
+
     public List<Topic> getTopics() {
         return topics;
     }
@@ -107,6 +117,7 @@ public class IssueParent implements Parcelable
         return "IssueParent{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", name_ar='" + nameAr + '\'' +
                 ", topics=" + topics +
                 '}';
     }

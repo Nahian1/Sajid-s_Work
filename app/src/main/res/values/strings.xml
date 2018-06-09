@@ -9,7 +9,7 @@
   -->
 
 <resources>
-    <string name="app_name">Fikra</string>
+    <string name="app_name">Fikrah</string>
     <string name="action_settings" translatable="false">Settings</string>
     <string name="title_activity_registration" translatable="false">RegistrationActivity</string>
     <string name="title_activity_forgot" translatable="false">ForgotActivity</string>
@@ -126,10 +126,22 @@
     <string name="no_man_projects">You have no approved plans!!</string>
     <string name="no_man_requests">You have no requests yet!!</string>
     <string name="no_search_result">No matching plans found!!</string>
-    <string name="none">None</string>
     <string name="no_threads_found">No threads found</string>
+
+    <string name="no_more_plans">No more plans to show!!</string>
+    <string name="no_more_messages">You do not have any more messages!!</string>
+    <string name="no_more_man_projects">You do not have any more approved plans!!</string>
+    <string name="no_more_man_requests">You do not have any more requests!!</string>
+    <string name="no_more_threads_found">No more threads found</string>
+
+
+    <string name="none">None</string>
     <string name="error_message">Error getting message list, try again.</string>
     <string name="login_failed">Login failed, try again.</string>
 
     <string name="notification_channel_id" translatable="false">plans_update_channel</string>
+
+    <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</string>
+
+    <string name="chk_agree_txt">I agree to the</string>
 </resources>

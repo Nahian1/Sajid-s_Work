@@ -20,7 +20,6 @@ import java.util.List;
 
 public class IssueResponse implements Parcelable
 {
-
     @SerializedName("count")
     @Expose
     private Integer count;

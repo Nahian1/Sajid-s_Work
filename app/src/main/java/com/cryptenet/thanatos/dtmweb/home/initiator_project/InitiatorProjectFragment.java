@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -49,13 +50,15 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
         implements InitiatorProjectFragmentContract.View {
     public static final String TAG = TagProvider.getDebugTag(InitiatorProjectFragment.class);
 
-    private List<ProjectsRsp> projectsRspList = new ArrayList<>();
+    private List<ProjectsRsp> projectsRspList;
     private List<Plans> plansList = new ArrayList<>();
     private ListView projectLV;
     private ProjectAdapter manageProjectAdapter;
     private ProjectManageReqAdapter manageReqAdapter;
     private int reqType;
     private Unbinder unbinder;
+    private boolean doMoreRequest;
+    private boolean moreDataAvailable;
 
 
     public InitiatorProjectFragment() {
@@ -81,14 +84,34 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
             manageProjectAdapter = new ProjectAdapter(activityContext, projectsRspList, reqType);
             projectLV.setAdapter(manageProjectAdapter);
 
-            projectLV.setOnItemClickListener((parent, view, position, id) ->
-                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 21)));
+            projectLV.setOnItemClickListener((parent, view, position, id) -> {
+                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 21));
+                    projectsRspList.clear();
+            });
 
         } else {
             convertView.findViewById(R.id.btnAddPlan).setVisibility(View.GONE);
 //        adapter = new ProjectAdapter(activityContext, INVPlanGenerator.getList(), reqType); //test search with dummy data
             manageReqAdapter = new ProjectManageReqAdapter(activityContext, plansList, reqType);
             projectLV.setAdapter(manageReqAdapter);
+
+            projectLV.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+                    doMoreRequest = true;
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    final int lastItem = firstVisibleItem + visibleItemCount;
+                    if(lastItem == totalItemCount && totalItemCount > 0) {
+                        if (moreDataAvailable && doMoreRequest) {
+                            presenter.getMyProjectList(reqType, activityContext, totalItemCount);
+                            doMoreRequest = false;
+                        }
+                    }
+                }
+            });
 
             projectLV.setOnItemClickListener((parent, view, position, id) ->
                     EventBus.getDefault().post(new RequestDetailFragmentEvent(plansList.get(position).getId())));
@@ -145,8 +168,18 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         ProgressDialogHelper.hideProgress();
 
-        this.plansList = event.projectsRspList;
-        manageReqAdapter.updateList(this.plansList);
+        if (event.projectsRspList.isEmpty())
+            moreDataAvailable = false;
+        else
+            moreDataAvailable = true;
+
+        if (this.plansList.size() == 0)
+            this.plansList = event.projectsRspList;
+        else if (doMoreRequest)
+            this.plansList.addAll(event.projectsRspList);
+
+        if (this.plansList != null)
+            manageReqAdapter.updateList(this.plansList);
     }
 
     @OnClick(R.id.btnAddPlan)
@@ -165,7 +198,12 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         ProgressDialogHelper.init(getActivity()).showProgress();
 
-        presenter.getMyProjectList(reqType, activityContext);
+        if (reqType == 1)
+            projectsRspList.clear();
+        else
+            plansList.clear();
+
+        presenter.getMyProjectList(reqType, activityContext, 0);
     }
 
 

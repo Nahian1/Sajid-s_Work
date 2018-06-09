@@ -294,7 +294,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/grey_button_selector"
                         android:text="@string/cancel"
-                        android:textColor="#404040" />
+                        android:textColor="@color/colorAccent" />
 
                     <Button
                         android:id="@+id/submitBtn"
@@ -305,7 +305,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/blue_button_selector"
                         android:text="@string/submit"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="@color/blue" />
                 </LinearLayout>
 
             </LinearLayout>

@@ -14,36 +14,31 @@ import com.cryptenet.thanatos.dtmweb.pojo.AllCategoriesResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CityResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.CountryResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.FCMRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.MessageListModel;
 import com.cryptenet.thanatos.dtmweb.pojo.MessageThreadModel;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
 import com.cryptenet.thanatos.dtmweb.pojo.RegistrationResponse;
+import com.cryptenet.thanatos.dtmweb.pojo.SendMessageModel;
 import com.cryptenet.thanatos.dtmweb.pojo.ThreadDistinctResponse;
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
-import com.cryptenet.thanatos.dtmweb.pojo.User;
 import com.cryptenet.thanatos.dtmweb.pojo.UpdateProfileResponse;
-import com.cryptenet.thanatos.dtmweb.pojo.MessageListModel;
-import com.cryptenet.thanatos.dtmweb.pojo.SendMessageModel;
-import com.cryptenet.thanatos.dtmweb.pojo.ThreadRequestModel;
-
+import com.cryptenet.thanatos.dtmweb.pojo.User;
 
 import okhttp3.MultipartBody;
-
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Path;
-
-import retrofit2.http.Multipart;
 import retrofit2.http.Part;
-
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -74,7 +69,11 @@ public interface ApiClient {
 //    );
 
     @GET("api/v1/plan/")
-    Call<AllPlansResponse> getAllPlans(@Header("Authorization") String token);
+    Call<AllPlansResponse> getAllPlans(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset
+    );
 
     @GET("api/v1/plan/my/")
     Call<AllPlansResponse> getAllMyPlans(@Header("Authorization") String token);
@@ -83,13 +82,26 @@ public interface ApiClient {
     Call<AllPlansResponse> getAllMyPlansSearch(@Header("Authorization") String token, @Query("search") String searchTerm);
 
     @GET("/api/v1/plan-access/")
-    Call<PlanAccessResponse> getAllMyReqInv(@Header("Authorization") String token);
+    Call<PlanAccessResponse> getAllMyReqInv(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset
+    );
 
-    @GET("/api/v1/plan-access/?is_approved=True")
-    Call<PlanAccessResponse> getAllMyReqInvApr(@Header("Authorization") String token);
+    @GET("/api/v1/plan-access/")
+    Call<PlanAccessResponse> getAllMyReqInvApr(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset,
+            @Query("is_approved") boolean isApproved
+    );
 
     @GET("api/v1/plan-access/")
-    Call<PlanAccessResponse> getAllReqPlansINT(@Header("Authorization") String token);
+    Call<PlanAccessResponse> getAllReqPlansINT(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset
+    );
 
     @GET("/api/v1/issue/categories/")
     Call<IssueResponse> getAllIssues(@Header("Authorization") String token);
@@ -98,7 +110,11 @@ public interface ApiClient {
     Call<ThreadDistinctResponse> getThreadList(@Header("Authorization") String token);
 
     @GET("/api/v1/message-thread/")
-    Call<ThreadDistinctResponse> getThreadInv(@Header("Authorization") String token);
+    Call<ThreadDistinctResponse> getThreadInv(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset
+    );
 
     @GET("/api/v1/plan-access/{id}")
     Call<TransactionDetails> getTransactionDetails(@Header("Authorization") String token, @Path("id") int transactionId);
@@ -207,7 +223,11 @@ public interface ApiClient {
     );
 
     @GET("api/v1/message-thread/")
-    Call<MessageThreadModel> getThreads(@Header("Authorization") String token , @Query("plan") int planId);
+    Call<MessageThreadModel> getThreads(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset,
+            @Query("plan") int planId);
 
     @FormUrlEncoded
     @POST("api/v1/message/")
@@ -218,12 +238,13 @@ public interface ApiClient {
     );
 
     @FormUrlEncoded
-    @POST("api/v1/message/")
-    Call<SendMessageModel> sendFCMToken(
+    @POST("api/v1/fcm/")
+    Call<FCMRsp> sendFCMToken(
             @Header("Authorization") String token,
             @Field("registration_id") String registrationId,
             @Field("device_id") String deviceId,
-            @Field("type") String type
+            @Field("type") String type,
+            @Field("active") Boolean isActive
     );
 
     @GET("api/v1/message-thread/{thread_id}/messages/")

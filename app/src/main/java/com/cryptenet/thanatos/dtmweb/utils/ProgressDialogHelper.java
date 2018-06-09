@@ -12,13 +12,8 @@ package com.cryptenet.thanatos.dtmweb.utils;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 
 import com.cryptenet.thanatos.dtmweb.R;
-
-/**
- * Created by Asif on 5/30/2018.
- */
 
 public class ProgressDialogHelper {
 
@@ -33,12 +28,12 @@ public class ProgressDialogHelper {
 
         mContext = context;
 
+        mProgressDialog = new ProgressDialog(context);
+
         if (progressDialogHelper == null) {
 
-            if (mProgressDialog == null)
-                mProgressDialog = new ProgressDialog(context);
+            progressDialogHelper = new ProgressDialogHelper();
 
-            return new ProgressDialogHelper();
         }
 
         return progressDialogHelper;
@@ -58,9 +53,6 @@ public class ProgressDialogHelper {
 
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
-
-            mProgressDialog = null;
-            progressDialogHelper = null;
         }
     }
 }

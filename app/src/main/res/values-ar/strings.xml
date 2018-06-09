@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright (c) 2018.
   ~  Development Lead: Cryptenet Ltd.
   ~  Developer Credit:
@@ -61,7 +60,7 @@
     <string name="upload_cover">تحميل غطاء المشروع</string>
     <string name="hint_et_note">ملاحظة</string>
     <string name="view_file">استعراض الملف</string>
-    <string name="update_profile">تحديث</string>
+    <string name="update_profile">تسجيل</string>
     <string name="btn_cancel">الغاء</string>
     <string name="hint_et_issue">اخبرنا عن مشكلتك</string>
     <string name="tag_accepted">مقبول</string>
@@ -101,4 +100,12 @@
     <string name="no_threads_found">لم يتم العثور على خيوط</string>
     <string name="error_message">حدث خطأ في الحصول على قائمة الرسائل ، حاول مرة أخرى.</string>
     <string name="login_failed">فشل تسجيل الدخول حاول مرة أخرى.</string>
+
+    <string name="lorem">هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم لأنها تعطي توزيعاَ طبيعياَ -إلى حد ما- للأحرف عوضاً عن استخدام "هنا يوجد محتوى نصي، هنا يوجد محتوى نصي" فتجعلها تبدو (أي الأحرف) وكأنها نص مقروء. العديد من برامح النشر المكتبي وبرامح تحرير صفحات الويب تستخدم لوريم إيبسوم بشكل إفتراضي كنموذج عن النص، وإذا قمت بإدخال</string>
+    <string name="chk_agree_txt">أنا أوافق على</string>
+    <string name="no_more_plans">لا مزيد من الخطط لإظهار!!</string>
+    <string name="no_more_messages">ليس لديك المزيد من الرسائل !!</string>
+    <string name="no_more_man_projects">ليس لديك أي خطط معتمدة أكثر !!</string>
+    <string name="no_more_man_requests">ليس لديك أي طلبات أخرى !!</string>
+    <string name="no_more_threads_found">لا مزيد من المواضيع وجدت !!</string>
 </resources>

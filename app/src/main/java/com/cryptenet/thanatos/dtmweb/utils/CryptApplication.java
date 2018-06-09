@@ -40,7 +40,7 @@ import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 @ReportsCrashes(
-        mailTo = "asif.rahman307@gmail.com",
+        mailTo = "asif.rahman307@gmail.com, cryptenet@gmail.com",
         mode = ReportingInteractionMode.TOAST,
         resToastText = R.string.toast_crash,
         customReportContent = {
@@ -73,8 +73,7 @@ public class CryptApplication extends Application implements HasActivityInjector
             // The following line triggers the initialization of ACRA
             ACRA.init(this);
 
-            Fabric.with(this, new Crashlytics());
-            Fabric.with(this, new Answers());
+            Fabric.with(this, new Crashlytics(), new Answers());
 
         }
 

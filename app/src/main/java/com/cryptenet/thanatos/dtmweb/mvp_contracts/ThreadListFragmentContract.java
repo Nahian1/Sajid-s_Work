@@ -14,17 +14,17 @@ import android.content.Context;
 
 public interface ThreadListFragmentContract {
     interface Presenter extends BaseFragContract.Presenter<ThreadListFragmentContract.View> {
-        void getThreadList(Context context);
+        void getThreadList(Context context, int offset);
     }
 
     interface View extends BaseFragContract.View {
     }
 
     interface Model extends BaseFragContract.Model {
-        void getThreadList(Context context);
+        void getThreadList(Context context, int offset);
     }
 
     interface Repository extends BaseFragContract.Repository {
-        void getThreadList(Context context);
+        void getThreadList(Context context, int offset);
     }
 }

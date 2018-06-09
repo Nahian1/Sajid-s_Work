@@ -20,6 +20,7 @@ import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
+import com.cryptenet.thanatos.dtmweb.terms.TermsActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -62,6 +63,11 @@ public class Navigator {
         if (string != null) {
             intent.putExtra("user", string);
         }
+        context.startActivity(intent);
+    }
+
+    public void toTermsActivity(Context context) {
+        Intent intent = new Intent(context, TermsActivity.class);
         context.startActivity(intent);
     }
 }

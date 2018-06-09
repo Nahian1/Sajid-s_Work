@@ -27,7 +27,7 @@ public class InvestorProjectFragmentPresenter extends BaseFragPresenter<Investor
         }
 
         @Override
-        public void getMyProjectList(int reqType, Context context) {
-                model.getMyProjectList(reqType,context);
+        public void getMyProjectList(int reqType, Context context, int offset) {
+                model.getMyProjectList(reqType,context, offset);
         }
 }

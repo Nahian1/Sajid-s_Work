@@ -11,12 +11,12 @@
 package com.cryptenet.thanatos.dtmweb.home.investor_project;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -50,6 +50,8 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
     private ProjectManageAdapter adapter;
     private int reqType;
     private Unbinder unbinder;
+    private boolean doMoreRequest;
+    private boolean moreDataAvailable;
 
     public InvestorProjectFragment() {
         projectsRspList = new ArrayList<>();
@@ -73,9 +75,28 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
         adapter = new ProjectManageAdapter(activityContext, projectsRspList, reqType);
         projectLV.setAdapter(adapter);
 
+        projectLV.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                doMoreRequest = true;
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                final int lastItem = firstVisibleItem + visibleItemCount;
+                if(lastItem == totalItemCount && totalItemCount > 0) {
+                    if (moreDataAvailable && doMoreRequest) {
+                        presenter.getMyProjectList(reqType, activityContext, totalItemCount);
+                        doMoreRequest = false;
+                    }
+                }
+            }
+        });
+
         if (reqType == 1) {
             projectLV.setOnItemClickListener((parent, view, position, id) ->
                     EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList.get(position).getPlan(), 11)));
+
         } else {
             projectLV.setOnItemClickListener((parent, view, position, id) ->
                     EventBus.getDefault().post(new RequestDetailFragmentEvent(projectsRspList.get(position).getId())));
@@ -113,9 +134,17 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
 
         ProgressDialogHelper.hideProgress();
 
-        this.projectsRspList = event.projectsRspList;
+        if (event.projectsRspList.isEmpty())
+            moreDataAvailable = false;
+        else
+            moreDataAvailable = true;
 
-        if (projectsRspList != null)
+        if (this.projectsRspList.size() == 0)
+            this.projectsRspList = event.projectsRspList;
+        else if (doMoreRequest)
+            this.projectsRspList.addAll(event.projectsRspList);
+
+        if (this.projectsRspList != null)
             adapter.updateList(this.projectsRspList);
     }
 
@@ -127,7 +156,8 @@ public class InvestorProjectFragment extends BaseFragment<InvestorProjectFragmen
 
         ProgressDialogHelper.init(getActivity()).showProgress();
 
-        presenter.getMyProjectList(reqType, activityContext);
+        projectsRspList.clear();
+        presenter.getMyProjectList(reqType, activityContext, 0);
     }
 
 

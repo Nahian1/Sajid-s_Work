@@ -25,9 +25,10 @@ public class Topic implements Parcelable
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("name_ar")
+    @Expose
+    private String nameAr;
     public final static Creator<Topic> CREATOR = new Creator<Topic>() {
-
-
         @SuppressWarnings({
             "unchecked"
         })
@@ -38,13 +39,13 @@ public class Topic implements Parcelable
         public Topic[] newArray(int size) {
             return (new Topic[size]);
         }
-
     }
     ;
 
     protected Topic(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.name = ((String) in.readValue((String.class.getClassLoader())));
+        this.nameAr = ((String) in.readValue((String.class.getClassLoader())));
     }
 
     /**
@@ -59,10 +60,11 @@ public class Topic implements Parcelable
      * @param id
      * @param name
      */
-    public Topic(Integer id, String name) {
+    public Topic(Integer id, String name, String nameAr) {
         super();
         this.id = id;
         this.name = name;
+        this.nameAr = nameAr;
     }
 
     public Integer getId() {
@@ -81,9 +83,18 @@ public class Topic implements Parcelable
         this.name = name;
     }
 
+    public String getNameAr() {
+        return nameAr;
+    }
+
+    public void setNameAr(String nameAr) {
+        this.nameAr = nameAr;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
         dest.writeValue(name);
+        dest.writeValue(nameAr);
     }
 
     @Override
@@ -91,6 +102,7 @@ public class Topic implements Parcelable
         return "Topic{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", name_ar='" + nameAr + '\'' +
                 '}';
     }
 

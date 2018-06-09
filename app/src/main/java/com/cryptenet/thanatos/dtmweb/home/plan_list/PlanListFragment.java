@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.events.TokenRefreshEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
@@ -46,7 +48,9 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     private ListView projectLV;
     private PlanListAdapter adapter;
     private String token;
-//    private ProgressDialog progressDialog;
+    private boolean doMoreRequest;
+    private boolean moreDataAvailable;
+    private boolean isSearchResult;
 
     public PlanListFragment() {
         projectsRspList = new ArrayList<>();
@@ -63,6 +67,24 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
         adapter = new PlanListAdapter(activityContext, projectsRspList);
         projectLV = convertView.findViewById(R.id.projectListPlan);
         projectLV.setAdapter(adapter);
+        projectLV.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                doMoreRequest = true;
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                final int lastItem = firstVisibleItem + visibleItemCount;
+
+                if (lastItem == totalItemCount && totalItemCount > 0) {
+                    if (!isSearchResult && moreDataAvailable && doMoreRequest) {
+                        presenter.getProjectList(activityContext, totalItemCount);
+                        doMoreRequest = false;
+                    }
+                }
+            }
+        });
 
 //        token = getArguments().getString("token");
         token = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(ConstantProvider.SP_ACCESS_TOKEN, null);
@@ -98,11 +120,35 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
         ProgressDialogHelper.hideProgress();
 
-        this.projectsRspList = event.projectsRspList;
-        for (ProjectsRsp projectsRsp : projectsRspList)
-            Log.d(TAG, "onProjectListReceiveEvent: " + projectsRsp.getTitle());
-        if (this.projectsRspList != null)
-            adapter.updateList(this.projectsRspList);
+        if (!event.isSearchResult) {
+
+            this.isSearchResult = false;
+
+            if (event.projectsRspList.isEmpty())
+                moreDataAvailable = false;
+            else
+                moreDataAvailable = true;
+
+            if (this.projectsRspList.size() == 0)
+                this.projectsRspList = event.projectsRspList;
+            else if (doMoreRequest)
+                this.projectsRspList.addAll(event.projectsRspList);
+
+            if (this.projectsRspList != null)
+                adapter.updateList(this.projectsRspList);
+
+        } else {
+
+            this.isSearchResult = true;
+
+            if (this.projectsRspList != null)
+                adapter.updateList(event.projectsRspList);
+        }
+    }
+
+    @Subscribe
+    public void onTokenRefreshEvent(TokenRefreshEvent event) {
+        presenter.getProjectList(activityContext, 0);
     }
 
     @Subscribe
@@ -114,10 +160,17 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     @Subscribe
     public void onSearchEvent(SearchEvent event) {
 
-        if (event.searchTxt.isEmpty())
-            presenter.getProjectList(activityContext, token);
-        else
+        projectsRspList.clear();
+
+        if (event.searchTxt.isEmpty()) {
+
+            presenter.getProjectList(activityContext, 0);
+
+        } else {
+
             presenter.searchMyPlans(activityContext, token, event.searchTxt);
+
+        }
 
     }
 
@@ -127,10 +180,10 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
 
         presenter.attachView(this);
 
-
         ProgressDialogHelper.init(getActivity()).showProgress();
 
-        presenter.getProjectList(activityContext, token);
+        projectsRspList.clear();
+        presenter.getProjectList(activityContext, 0);
     }
 
     //commented out by Asif

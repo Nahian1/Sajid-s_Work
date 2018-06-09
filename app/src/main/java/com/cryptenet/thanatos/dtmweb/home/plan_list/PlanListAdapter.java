@@ -18,25 +18,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
+import com.cryptenet.thanatos.dtmweb.viewholders.VHProjectList;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
     private Context context;
+    private LayoutInflater inflater;
     private List<ProjectsRsp> projects;
 //    private ItemClickListener itemClickListener;
 
@@ -44,14 +37,15 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
         super(context, R.layout.plan_list_row, projects);
         this.context = context;
         this.projects = projects;
-//        itemClickListener = (ItemClickListener) context;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void updateList(List<ProjectsRsp> projs) {
+    public void updateList(List<ProjectsRsp> projectsRsps) {
         this.projects.clear();
-        if (projs != null)
-            this.projects.addAll(projs);
-//        this.projects = projs;
+
+        if (projectsRsps != null)
+            this.projects.addAll(projectsRsps);
+
         this.notifyDataSetChanged();
     }
 
@@ -59,56 +53,27 @@ public class PlanListAdapter extends ArrayAdapter<ProjectsRsp> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.plan_list_row, parent, false);
-        ImageView projectIV = convertView.findViewById(R.id.projectImg);
-        TextView nameTV = convertView.findViewById(R.id.nameTV);
-        TextView dateTV = convertView.findViewById(R.id.dateTV);
-        TextView titleTV = convertView.findViewById(R.id.titleTV);
-        TextView priceTV = convertView.findViewById(R.id.priceTV);
+        VHProjectList vhProjectList;
 
-        convertView.findViewById(R.id.viewProject).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.plan_list_row, parent, false);
 
-//                itemClickListener.onItemClick(position);
+            vhProjectList = new VHProjectList();
 
-                EventBus.getDefault().post(String.valueOf(position));
+            vhProjectList.projectIV = convertView.findViewById(R.id.projectImg);
+            vhProjectList.nameTV = convertView.findViewById(R.id.nameTV);
+            vhProjectList.dateTV = convertView.findViewById(R.id.dateTV);
+            vhProjectList.titleTV = convertView.findViewById(R.id.titleTV);
+            vhProjectList.priceTV = convertView.findViewById(R.id.priceTV);
 
-            }
-        });
-//        ImageView seemoreIV = convertView.findViewById(R.id.seemoreImg);
+            convertView.setTag(vhProjectList);
+        } else
+            vhProjectList = (VHProjectList) convertView.getTag();
 
-        Glide.with(context)
-                .load(projects.get(position).getCoverThumbnail())
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_image_placeholder))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(projectIV);
+        vhProjectList.setProjectData(context, projects.get(position));
 
-        nameTV.setText(projects.get(position).getInitiatorsName());
-
-        String dateInputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        String dateOutputPattern = "dd MMM yyyy";
-
-        SimpleDateFormat inputDateFormat = new SimpleDateFormat(dateInputPattern, Locale.getDefault());
-        SimpleDateFormat outputDateFormat = new SimpleDateFormat(dateOutputPattern, Locale.getDefault());
-
-        try {
-            Date date = inputDateFormat.parse(projects.get(position).getCreatedAt());
-            dateTV.setText(outputDateFormat.format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        titleTV.setText(projects.get(position).getTitle());
-        priceTV.setText(context.getString(R.string.price) + " " + projects.get(position).getAccessPrice());
+        convertView.findViewById(R.id.viewProject).setOnClickListener(view -> EventBus.getDefault().post(String.valueOf(position)));
 
         return convertView;
-
     }
-
-//    public interface ItemClickListener {
-//
-//        void onItemClick(int position);
-//    }
 }

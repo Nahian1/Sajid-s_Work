@@ -27,12 +27,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-/**
- * Created by Ashif on 10/26/17.
- * this class will be used when its needed outside of
- * dependency injection
- */
-
 public class RetrofitServiceFactory {
     /**
      * Creates a retrofit service from an arbitrary class (clazz)

@@ -27,7 +27,7 @@
 
             <ImageView
                 android:id="@+id/demoIV"
-                android:layout_width="80dp"
+                android:layout_width="81dp"
                 android:layout_height="60dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_image_placeholder" />

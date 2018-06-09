@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright (c) 2018.
   ~  Development Lead: Cryptenet Ltd.
   ~  Developer Credit:
@@ -7,7 +6,7 @@
   ~     Md. Rezwanur Rahman Khan,
   ~     Ashif Mujtoba
   ~  This project is under Apache License 2.0
-  -->
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cryptenet.thanatos.dtmweb">
 
@@ -33,6 +32,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".terms.TermsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".registration.RegistrationActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity" />
         </activity>
         <activity
             android:name=".registration.RegistrationActivity"
@@ -109,12 +118,11 @@
         </service>
 
         <meta-data
-        android:name="io.fabric.ApiKey"
-        android:value="e7b9dc049d6364ccc5822791b1eebaf1b3c3cb2e" />
-
+            android:name="io.fabric.ApiKey"
+            android:value="e7b9dc049d6364ccc5822791b1eebaf1b3c3cb2e" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/notification_channel_id"/>
+            android:value="@string/notification_channel_id" />
     </application>
 
 </manifest>

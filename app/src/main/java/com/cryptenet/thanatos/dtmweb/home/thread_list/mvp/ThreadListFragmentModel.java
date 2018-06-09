@@ -27,7 +27,7 @@ public ThreadListFragmentModel(ThreadListFragmentContract.Repository repository)
         }
 
         @Override
-        public void getThreadList(Context context) {
-                repository.getThreadList(context);
+        public void getThreadList(Context context, int offset) {
+                repository.getThreadList(context, offset);
         }
 }

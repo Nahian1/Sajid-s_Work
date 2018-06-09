@@ -47,6 +47,7 @@ import com.cryptenet.thanatos.dtmweb.events.ThreadIdReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
 import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
+import com.cryptenet.thanatos.dtmweb.home.about.AboutFragment;
 import com.cryptenet.thanatos.dtmweb.home.edit_project.EditProjectFragment;
 import com.cryptenet.thanatos.dtmweb.home.form.FormFragment;
 import com.cryptenet.thanatos.dtmweb.home.initiator_project.InitiatorProjectFragment;
@@ -56,6 +57,7 @@ import com.cryptenet.thanatos.dtmweb.home.plan_desc.PlanDescFragment;
 import com.cryptenet.thanatos.dtmweb.home.plan_list.PlanListFragment;
 import com.cryptenet.thanatos.dtmweb.home.report_issue.ReportIssueFragment;
 import com.cryptenet.thanatos.dtmweb.home.request_detail.RequestDetailFragment;
+import com.cryptenet.thanatos.dtmweb.home.terms.TermsFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_list.ThreadListFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_msg.ThreadMsgFragment;
 import com.cryptenet.thanatos.dtmweb.home.thread_project.ThreadProjectFragment;
@@ -265,8 +267,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @OnClick(R.id.report)
     public void onReport(View view) {
-
-
         drawerLayout.closeDrawer(GravityCompat.START);
         replaceFragment(R.id.frame_container, new ReportIssueFragment());
     }
@@ -320,7 +320,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
     }
 
     public void setToolBarTitle(String title) {
-
         hideSearchBar(true);
         textToolBarTitle.setText(title);
     }
@@ -394,8 +393,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putString("project_details", new Gson().toJson(event.detailed));
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
-
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -417,14 +414,11 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putInt("issue_code", event.issueCode);
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
-
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReturnToHomeEvent(ReturnToHomeEvent event) {
         replaceFragment(R.id.frame_container, new PlanListFragment());
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -434,8 +428,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         bundle.putInt("thread_id", event.threadInitResponse.getId());
         fragment.setArguments(bundle);
         replaceFragment(R.id.frame_container, fragment);
-
-
     }
 
     @Override
@@ -444,6 +436,9 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
         presenter.attachView(this);
 
         presenter.getNavHeaderData(this);
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(ConstantProvider.FCM_FLAG, true)
+                && PreferenceManager.getDefaultSharedPreferences(this).getString(ConstantProvider.SP_USER_TYPE, null).equals("Investor"))
+            presenter.sendFCMData(this);
     }
 
     @Override
@@ -470,16 +465,25 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @OnClick({R.id.terms, R.id.rateUs, R.id.about})
     public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.terms:
+                drawerLayout.closeDrawer(GravityCompat.START);
+                TermsFragment fragment = new TermsFragment();
+                Bundle bundle = new Bundle();
 
-        showMessage("Coming soon...");
-//        switch (view.getId()) {
-//            case R.id.terms:
-//                break;
-//            case R.id.rateUs:
-//                break;
-//            case R.id.about:
-//                break;
-//        }
+                bundle.putBoolean("flag", true);
+                fragment.setArguments(bundle);
+
+                replaceFragment(R.id.frame_container, fragment);
+                break;
+            case R.id.rateUs:
+                showMessage(getString(R.string.nav_rate));
+                break;
+            case R.id.about:
+                drawerLayout.closeDrawer(GravityCompat.START);
+                replaceFragment(R.id.frame_container, new AboutFragment());
+                break;
+        }
     }
 
     @Override

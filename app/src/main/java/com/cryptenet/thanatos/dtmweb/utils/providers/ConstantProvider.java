@@ -38,6 +38,7 @@ public class ConstantProvider {
     public static final String SP_BANK_ACC_NAME = "u_bank_acc_name";
     public static final String SP_BANK_ACC_NO = "u_bank_acc_no";
     public static final String SP_USER_TYPE = "u_type";
+    public static final String SP_EXPIRES_IN = "expires_in";
 
     public static final String SP_FORGOT_PASSWORD_EMAIL = "forgot_pass";
     public static final String SP_FORGOT_PASSWORD_CODE = "forgot_pass_code";
@@ -55,6 +56,9 @@ public class ConstantProvider {
     public static final String CHANNEL_ID = "plans_update_channel";
     public static final String CHANNEL_NAME = "Plan update channel";
     public static final String CHANNEL_DESC = "Delivers plan update for subscribed category";
+
+    public static final String FCM_TOKEN = "token";
+    public static final String FCM_FLAG = "flag";
 
     public static final int PLAY_SERVICES_RESOLUTION_REQUEST = 5050;
 }

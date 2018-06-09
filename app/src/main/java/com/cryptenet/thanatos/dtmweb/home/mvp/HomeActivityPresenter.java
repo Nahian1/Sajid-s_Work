@@ -37,4 +37,9 @@ public class HomeActivityPresenter
         if (model.clearUserData(context))
             view.userDataCleaned();
     }
+
+    @Override
+    public void sendFCMData(Context context) {
+        model.sendFCMData(context);
+    }
 }
