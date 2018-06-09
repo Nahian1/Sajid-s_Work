@@ -88,7 +88,7 @@ public interface ApiClient {
             @Query("offset") int offset
     );
 
-    @GET("/api/v1/plan-access/?is_approved=True")
+    @GET("/api/v1/plan-access/")
     Call<PlanAccessResponse> getAllMyReqInvApr(
             @Header("Authorization") String token,
             @Query("limit") int limit,
@@ -97,7 +97,11 @@ public interface ApiClient {
     );
 
     @GET("api/v1/plan-access/")
-    Call<PlanAccessResponse> getAllReqPlansINT(@Header("Authorization") String token);
+    Call<PlanAccessResponse> getAllReqPlansINT(
+            @Header("Authorization") String token,
+            @Query("limit") int limit,
+            @Query("offset") int offset
+    );
 
     @GET("/api/v1/issue/categories/")
     Call<IssueResponse> getAllIssues(@Header("Authorization") String token);

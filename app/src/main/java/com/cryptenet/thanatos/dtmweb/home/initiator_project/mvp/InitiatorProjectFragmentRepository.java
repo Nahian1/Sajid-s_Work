@@ -49,7 +49,7 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
     }
 
     @Override
-    public void getMyProjectList(int reqType, Context context) {
+    public void getMyProjectList(int reqType, Context context, int offset) {
 
         if (reqType == 1) {
             Call<AllPlansResponse> req = apiClient.getAllMyPlans("Bearer " +
@@ -74,7 +74,11 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
                 }
             });
         } else {
-            Call<PlanAccessResponse> req = apiClient.getAllReqPlansINT("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
+            Call<PlanAccessResponse> req = apiClient.getAllReqPlansINT(
+                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null),
+                    50,
+                    offset
+            );
             req.enqueue(new Callback<PlanAccessResponse>() {
                 @Override
                 public void onResponse(Call<PlanAccessResponse> call, Response<PlanAccessResponse> response) {
@@ -82,8 +86,11 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
                         PlanAccessResponse allPlansResponse = response.body();
                         assert allPlansResponse != null;
                         setManageProjects(allPlansResponse.getResults());
-                        if (allPlansResponse.getResults().size() == 0)
+
+                        if (response.body().getResults().size() == 0 && offset == 0)
                             Toast.makeText(context, context.getString(R.string.no_man_requests), Toast.LENGTH_LONG).show();
+                        else if (response.body().getResults().size() == 0 && offset > 0)
+                            Toast.makeText(context, context.getString(R.string.no_more_man_requests), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
                     }
