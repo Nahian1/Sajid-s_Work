@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.IssueSubmittedEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.ReturnToHomeEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.OtherReportFragmentContract;
@@ -31,6 +32,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Objects;
 
@@ -102,6 +104,14 @@ public class OtherReportFragment extends BaseFragment<OtherReportFragmentContrac
             EventBus.getDefault().post(new ReturnToHomeEvent());
 
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRequestFailureEvent(RequestFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        showMessage("Couldn't fetch data, try again!");
     }
 
     @OnClick({R.id.report_submit, R.id.report_cancel})

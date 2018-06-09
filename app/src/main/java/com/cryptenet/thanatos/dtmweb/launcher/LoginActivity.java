@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -151,18 +152,23 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
                 if (!email.isEmpty()) {
                     if (!password.isEmpty()) {
+                        if (Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString().trim()).matches()) {
 
-                        ProgressDialogHelper.init(LoginActivity.this).showProgress();
+                            ProgressDialogHelper.init(LoginActivity.this).showProgress();
 
-                        presenter.requestForLogin(
-                                etEmail.getText().toString().trim(),
-                                etPwd.getText().toString().trim()
-                        );
+                            presenter.requestForLogin(
+                                    etEmail.getText().toString().trim(),
+                                    etPwd.getText().toString().trim()
+                            );
+
+                        } else {
+                            showMessage("Invalid email!");
+                        }
                     } else {
-                        showMessage("Password can not be empty!");
+                        showMessage("Password cannot be empty!");
                     }
                 } else {
-                    showMessage("Email can not be empty!");
+                    showMessage("Email cannot be empty!");
                 }
 
                 break;
@@ -216,10 +222,10 @@ public class LoginActivity extends BaseActivity<LoginActivityContract.Presenter>
 
         int resultCode = availability.isGooglePlayServicesAvailable(getApplicationContext());
 
-        if (resultCode == ConnectionResult.SUCCESS){
+        if (resultCode == ConnectionResult.SUCCESS) {
             Log.i(TAG, "isGooglePlayServicesAvailable SUCCESS");
-        }else{
-            availability.getErrorDialog(this, resultCode,  ConstantProvider.PLAY_SERVICES_RESOLUTION_REQUEST);
+        } else {
+            availability.getErrorDialog(this, resultCode, ConstantProvider.PLAY_SERVICES_RESOLUTION_REQUEST);
         }
     }
 

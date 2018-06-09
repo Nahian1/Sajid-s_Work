@@ -17,6 +17,7 @@ import android.util.Log;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.BackToManageRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDataReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.TransactionDetails;
@@ -46,7 +47,7 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
         if (userType == 2) {
             String head = "application/json";
             Call<TransactionDetails> call = apiClient.getTransactionDetails(
-                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null),
+                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
                     transactionId
             );
 
@@ -85,7 +86,7 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
 //                    });
 
                     Call<User> userCall = apiClient.getUserData(
-                            "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null),
+                            "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
                             details.getInvestor()
                     );
 
@@ -93,12 +94,21 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             Log.d(TAG, response.body().toString());
-                            EventBus.getDefault().post(new RequestDataReceiveEvent(details, response.body()));
+                            if (response.isSuccessful()) {
+
+                                EventBus.getDefault().post(new RequestDataReceiveEvent(details, response.body()));
+
+                            } else {
+
+                                EventBus.getDefault().post(new RequestFailureEvent(true));
+
+                            }
                         }
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
 
+                            EventBus.getDefault().post(new RequestFailureEvent(true));
                         }
                     });
                 }
@@ -106,11 +116,13 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
                 @Override
                 public void onFailure(Call<TransactionDetails> call, Throwable t) {
                     Log.d(TAG, "onFailure: " + "transaction details");
+
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
         } else {
             Call<TransactionDetails> call = apiClient.getTransactionDetails(
-                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null),
+                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
                     transactionId
             );
 
@@ -118,14 +130,22 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
                 @Override
                 public void onResponse(Call<TransactionDetails> call, Response<TransactionDetails> response) {
                     Log.d(TAG, "onResponse: " + response.body());
-                    TransactionDetails details = response.body();
 
-                    EventBus.getDefault().post(new RequestDataReceiveEvent(details, null));
+                    if (response.isSuccessful()) {
+                        TransactionDetails details = response.body();
+
+                        EventBus.getDefault().post(new RequestDataReceiveEvent(details, null));
+
+                    } else {
+                        EventBus.getDefault().post(new RequestFailureEvent(true));
+                    }
+
                 }
 
                 @Override
                 public void onFailure(Call<TransactionDetails> call, Throwable t) {
                     Log.d(TAG, "onFailure: " + "transaction details");
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
         }
@@ -154,6 +174,8 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
             public void onFailure(okhttp3.Call call, IOException e) {
                 Log.d(TAG, "onFailure:");
                 e.printStackTrace();
+
+                EventBus.getDefault().post(new RequestFailureEvent(true));
             }
 
             @Override
@@ -163,6 +185,8 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
 
                 if (response.code() == 200) {
                     EventBus.getDefault().post(new BackToManageRequestEvent());
+                } else {
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             }
         });

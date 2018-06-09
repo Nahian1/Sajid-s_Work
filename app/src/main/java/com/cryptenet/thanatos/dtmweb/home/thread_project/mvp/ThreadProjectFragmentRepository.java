@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.ThreadProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ThreadProjectFragmentContract;
@@ -96,12 +97,14 @@ public class ThreadProjectFragmentRepository extends BaseFragRepository
 //                    }
                 } else {
                     Log.d(TAG, "onResponse: " + response.code());
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             }
 
             @Override
             public void onFailure(Call<MessageThreadModel> call, Throwable t) {
                 Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
+                EventBus.getDefault().post(new RequestFailureEvent(true));
             }
         });
     }

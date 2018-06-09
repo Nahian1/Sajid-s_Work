@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.FormSubmitEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.FormFragmentContract;
@@ -71,6 +72,8 @@ public class FormFragmentRepository extends BaseFragRepository
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure:");
                 e.printStackTrace();
+
+                EventBus.getDefault().post(new RequestFailureEvent(true));
             }
 
             @Override
@@ -78,10 +81,13 @@ public class FormFragmentRepository extends BaseFragRepository
                 Transaction transaction1 = new Gson().fromJson(response.body().string(), Transaction.class);
                 transaction1.setProjectsDetailed(transaction.getProjectsDetailed());
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-//                    EventBus.getDefault().post(new FormSubmitEvent(transaction1));
                     EventBus.getDefault().post(new TransactionSuccessEvent(transaction1));
+
+                } else {
+
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
 
             }

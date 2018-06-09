@@ -19,6 +19,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InitiatorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.AllPlansResponse;
@@ -65,12 +66,16 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
                             Toast.makeText(context, context.getString(R.string.no_man_projects), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
+
+                        EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<AllPlansResponse> call, Throwable t) {
                     Log.d(TAG, "onFailure: AllPlansResponse");
+
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
         } else {
@@ -93,12 +98,16 @@ public class InitiatorProjectFragmentRepository extends BaseFragRepository
                             Toast.makeText(context, context.getString(R.string.no_more_man_requests), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
+
+                        EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<PlanAccessResponse> call, Throwable t) {
                     Log.d(TAG, "onFailure: AllReqPlansResponse");
+
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
         }

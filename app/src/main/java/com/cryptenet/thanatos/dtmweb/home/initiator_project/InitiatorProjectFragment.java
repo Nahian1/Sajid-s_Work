@@ -25,6 +25,7 @@ import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDetailFragmentEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToEditPlanEvent;
@@ -37,6 +38,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,8 +87,8 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
             projectLV.setAdapter(manageProjectAdapter);
 
             projectLV.setOnItemClickListener((parent, view, position, id) -> {
-                    EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 21));
-                    projectsRspList.clear();
+                EventBus.getDefault().post(new ToDetailsFragmentEvent(projectsRspList != null && projectsRspList.size() > 0 ? projectsRspList.get(position).getId() : 0, 21));
+                projectsRspList.clear();
             });
 
         } else {
@@ -104,7 +106,7 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                     final int lastItem = firstVisibleItem + visibleItemCount;
-                    if(lastItem == totalItemCount && totalItemCount > 0) {
+                    if (lastItem == totalItemCount && totalItemCount > 0) {
                         if (moreDataAvailable && doMoreRequest) {
                             presenter.getMyProjectList(reqType, activityContext, totalItemCount);
                             doMoreRequest = false;
@@ -180,6 +182,15 @@ public class InitiatorProjectFragment extends BaseFragment<InitiatorProjectFragm
 
         if (this.plansList != null)
             manageReqAdapter.updateList(this.plansList);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRequestFailureEvent(RequestFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        showMessage("Couldn't fetch data, try again!");
     }
 
     @OnClick(R.id.btnAddPlan)

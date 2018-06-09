@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.SearchEvent;
 import com.cryptenet.thanatos.dtmweb.events.ToDetailsFragmentEvent;
 import com.cryptenet.thanatos.dtmweb.events.TokenRefreshEvent;
@@ -36,6 +37,7 @@ import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +151,14 @@ public class PlanListFragment extends BaseFragment<PlanListFragmentContract.Pres
     @Subscribe
     public void onTokenRefreshEvent(TokenRefreshEvent event) {
         presenter.getProjectList(activityContext, 0);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRequestFailureEvent(RequestFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        showMessage("Couldn't fetch data, try again!");
     }
 
     @Subscribe

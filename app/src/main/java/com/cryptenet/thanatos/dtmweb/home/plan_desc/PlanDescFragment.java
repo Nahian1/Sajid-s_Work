@@ -33,6 +33,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.PlanDetailsRequestEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.ShowPlanDetailsEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanDescFragmentContract;
@@ -201,6 +202,14 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
         }
 
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRequestFailureEvent(RequestFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        showMessage("Couldn't fetch data, try again!");
     }
 
     @Override

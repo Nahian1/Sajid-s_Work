@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.IssueListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.ReportIssueFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.IssueParent;
@@ -39,18 +40,29 @@ public class ReportIssueFragmentRepository extends BaseFragRepository
 
     @Override
     public void getAllIssues(Context context) {
-        Call<IssueResponse> req = apiClient.getAllIssues("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null));
+        Call<IssueResponse> req = apiClient.getAllIssues("Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null));
         req.enqueue(new Callback<IssueResponse>() {
             @Override
             public void onResponse(Call<IssueResponse> call, Response<IssueResponse> response) {
-                IssueResponse issueResponse = response.body();
-                assert issueResponse != null;
-                setAllIssues(issueResponse.getResults());
+
+                if (response.isSuccessful()) {
+
+                    IssueResponse issueResponse = response.body();
+                    assert issueResponse != null;
+                    setAllIssues(issueResponse.getResults());
+
+                } else {
+
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
+                }
+
             }
 
             @Override
             public void onFailure(Call<IssueResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: AllReqPlansResponse");
+
+                EventBus.getDefault().post(new RequestFailureEvent(true));
             }
         });
     }

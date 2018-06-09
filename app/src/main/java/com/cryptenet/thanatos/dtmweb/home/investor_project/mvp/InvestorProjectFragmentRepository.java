@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ManageProjectReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.InvestorProjectFragmentContract;
 import com.cryptenet.thanatos.dtmweb.pojo.PlanAccessResponse;
@@ -48,7 +49,7 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
     public void getMyProjectList(int reqType, Context context, int offset) {
         if (reqType == 2) {
             Call<PlanAccessResponse> req = apiClient.getAllMyReqInv("Bearer " +
-                    PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null),
+                            PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
                     50,
                     offset
             );
@@ -65,17 +66,19 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
                             Toast.makeText(context, context.getString(R.string.no_more_man_requests), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
+                        EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<PlanAccessResponse> call, Throwable t) {
                     Log.d(TAG, "onFailure: AllPlansResponse");
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
         } else {
             Call<PlanAccessResponse> req = apiClient.getAllMyReqInvApr(
-                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN,null),
+                    "Bearer " + PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_ACCESS_TOKEN, null),
                     50,
                     offset,
                     true
@@ -94,12 +97,14 @@ public class InvestorProjectFragmentRepository extends BaseFragRepository
                             Toast.makeText(context, context.getString(R.string.no_more_man_projects), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
+                        EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<PlanAccessResponse> call, Throwable t) {
                     Log.d(TAG, "onFailure: AllReqPlansResponse");
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
         }

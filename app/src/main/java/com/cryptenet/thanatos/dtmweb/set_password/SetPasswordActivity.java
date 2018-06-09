@@ -107,6 +107,9 @@ public class SetPasswordActivity extends BaseActivity<SetPasswordActivityContrac
             showMessage("Reset Done!!");
             navigator.toLoginActivity(this);
             finish();
+        } else {
+
+            showMessage("Try again.");
         }
     }
 

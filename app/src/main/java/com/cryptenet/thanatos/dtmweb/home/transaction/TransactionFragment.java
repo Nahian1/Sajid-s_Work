@@ -170,7 +170,7 @@ public class TransactionFragment extends BaseFragment<TransactionFragmentContrac
         super.onResume();
         presenter.attachView(this);
 
-        presenter.getTransactionDetails(activityContext, transactionId);
+//        presenter.getTransactionDetails(activityContext, transactionId);
     }
 
     @OnClick(R.id.doneBtn)

@@ -60,6 +60,7 @@ public class SetPasswordActivityRepository extends BaseRepository
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure: reset");
+                EventBus.getDefault().post(new PwdResetEvent(false));
             }
 
             @Override
@@ -68,7 +69,8 @@ public class SetPasswordActivityRepository extends BaseRepository
                     if (response.code() == 200)
                         EventBus.getDefault().post(new PwdResetEvent(true));
                     else
-                        Log.d(TAG, "onResponse: " + response.code());
+                        EventBus.getDefault().post(new PwdResetEvent(false));
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

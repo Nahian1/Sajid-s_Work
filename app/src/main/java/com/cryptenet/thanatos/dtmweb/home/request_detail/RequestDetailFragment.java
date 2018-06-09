@@ -33,6 +33,7 @@ import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.BackToManageRequestEvent;
 import com.cryptenet.thanatos.dtmweb.events.RequestDataReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.RequestDetailFragmentContract;
 import com.cryptenet.thanatos.dtmweb.utils.ProgressDialogHelper;
 import com.cryptenet.thanatos.dtmweb.utils.providers.ConstantProvider;
@@ -203,6 +204,14 @@ public class RequestDetailFragment extends BaseFragment<RequestDetailFragmentCon
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBackToManageRequestEvent(BackToManageRequestEvent event) {
         getActivity().onBackPressed();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRequestFailureEvent(RequestFailureEvent event) {
+
+        ProgressDialogHelper.hideProgress();
+
+        showMessage("Couldn't fetch data, try again!");
     }
 
     @Override

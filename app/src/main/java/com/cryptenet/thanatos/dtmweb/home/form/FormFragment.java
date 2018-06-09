@@ -27,6 +27,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.FormSubmitEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.TransactionSuccessEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.FormFragmentContract;
@@ -39,6 +40,7 @@ import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -235,13 +237,12 @@ public class FormFragment extends BaseFragment<FormFragmentContract.Presenter>
 
     }
 
-    @Subscribe
-    public void onFormSubmitEvent(FormSubmitEvent event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRequestFailureEvent(RequestFailureEvent event) {
 
-//        EventBus.getDefault().post(new TransactionSuccessEvent(event.transaction));
+        ProgressDialogHelper.hideProgress();
 
-//        getFragmentManager().popBackStackImmediate();
-//        getActivity().onBackPressed();
+        showMessage("Couldn't submit data, try again!");
     }
 
 }

@@ -83,16 +83,24 @@ public class ForgotPasswordActivity extends BaseActivity<ForgotActivityContract.
 
         String mail = etForgot.getText().toString().trim();
 
-        if (!mail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
+        if (!mail.isEmpty()) {
 
-            presenter.saveIdentifier(mail, this);
-            presenter.sendIdentifier(mail);
+            if (Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
 
-            navigator.toCodeActivity(this);
+                presenter.saveIdentifier(mail, this);
+                presenter.sendIdentifier(mail);
+
+                navigator.toCodeActivity(this);
+
+            } else {
+
+                showMessage("Invalid email.");
+
+            }
 
         } else {
 
-            showMessage("Field can not be empty");
+            showMessage("Field can not be empty.");
         }
     }
 

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
 import com.cryptenet.thanatos.dtmweb.events.ProjectListReceiveEvent;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.TokenRefreshEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.PlanListFragmentContract;
@@ -76,17 +77,19 @@ public class PlanListFragmentRepository extends BaseFragRepository
                 @Override
                 public void onFailure(okhttp3.Call call, IOException e) {
                     Log.d(TAG, "onFailure: " + "failed");
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
 
                 @Override
                 public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         Gson gson = new Gson();
                         User user = gson.fromJson(response.body().string(), User.class);
                         saveUserToSP(user, context);
                         EventBus.getDefault().post(new TokenRefreshEvent());
-                    }else {
-                        Log.d("login failed",response.body().toString());
+                    } else {
+                        Log.d("login failed", response.body().toString());
+                        EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
             });
@@ -109,12 +112,13 @@ public class PlanListFragmentRepository extends BaseFragRepository
                             Toast.makeText(context, context.getString(R.string.no_more_plans), Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(TAG, "onResponse: " + response.code());
+                        EventBus.getDefault().post(new RequestFailureEvent(true));
                     }
                 }
 
                 @Override
                 public void onFailure(Call<AllPlansResponse> call, Throwable t) {
-
+                    EventBus.getDefault().post(new RequestFailureEvent(true));
                 }
             });
         }

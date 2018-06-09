@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cryptenet.thanatos.dtmweb.di.scopes.PerFragment;
+import com.cryptenet.thanatos.dtmweb.events.RequestFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.ShowPlanDetailsEvent;
 import com.cryptenet.thanatos.dtmweb.events.ThreadIdReceiveEvent;
 import com.cryptenet.thanatos.dtmweb.mvp_base.BaseFragRepository;
@@ -63,6 +64,8 @@ public class PlanDescFragmentRepository extends BaseFragRepository
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+
+                EventBus.getDefault().post(new RequestFailureEvent(true));
 
             }
 
@@ -136,6 +139,8 @@ public class PlanDescFragmentRepository extends BaseFragRepository
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onFailure: " + "fetch short details failed");
+                EventBus.getDefault().post(new RequestFailureEvent(true));
+
             }
 
             @Override
@@ -172,6 +177,8 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
+
+                        EventBus.getDefault().post(new RequestFailureEvent(true));
 
                     }
 
@@ -215,6 +222,8 @@ public class PlanDescFragmentRepository extends BaseFragRepository
             @Override
             public void onFailure(Call call, IOException e) {
 
+                EventBus.getDefault().post(new RequestFailureEvent(true));
+
             }
 
             @Override
@@ -251,6 +260,8 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
+
+                        EventBus.getDefault().post(new RequestFailureEvent(true));
 
                     }
 
