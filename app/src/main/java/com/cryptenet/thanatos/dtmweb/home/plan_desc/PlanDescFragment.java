@@ -12,11 +12,8 @@ package com.cryptenet.thanatos.dtmweb.home.plan_desc;
 
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -201,7 +198,8 @@ public class PlanDescFragment extends BaseFragment<PlanDescFragmentContract.Pres
             icInitConversation.setVisibility(View.VISIBLE);
         }
 
-
+        if (type == 21)
+            textViewType.setText(getString(R.string.acc_type_initiator));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -8,7 +8,6 @@
  *  This project is under Apache License 2.0
  */
 
-
 package com.cryptenet.thanatos.dtmweb.events;
 
 public class InvestorThreadsEvent {

@@ -10,8 +10,6 @@
 
 package com.cryptenet.thanatos.dtmweb.events;
 
-import com.cryptenet.thanatos.dtmweb.pojo.ProjectsRsp;
-
 public class ToDetailsFragmentEvent {
     public final int projectId;
     public final int layoutType;

@@ -27,7 +27,6 @@ import com.cryptenet.thanatos.dtmweb.launcher.LoginActivity;
 import com.cryptenet.thanatos.dtmweb.registration.RegistrationActivity;
 import com.cryptenet.thanatos.dtmweb.set_password.SetPasswordActivity;
 import com.cryptenet.thanatos.dtmweb.utils.CryptApplication;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 import javax.inject.Singleton;
 
@@ -51,7 +50,7 @@ import dagger.multibindings.IntoMap;
         }
 )
 public abstract class AppModule {
-    private static final String TAG = TagProvider.getDebugTag(AppModule.class);
+//    private static final String TAG = TagProvider.getDebugTag(AppModule.class);
 
     @Provides
     @Singleton

@@ -10,7 +10,6 @@
 
 package com.cryptenet.thanatos.dtmweb.events;
 
-
 public class LogInFailureEvent {
     public final boolean isFailure;
 

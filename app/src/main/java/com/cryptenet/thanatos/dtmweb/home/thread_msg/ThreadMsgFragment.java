@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.cryptenet.thanatos.dtmweb.R;
 import com.cryptenet.thanatos.dtmweb.base.BaseFragment;
 import com.cryptenet.thanatos.dtmweb.events.MessageListFailureEvent;
-import com.cryptenet.thanatos.dtmweb.events.MessageListFailureEvent;
 import com.cryptenet.thanatos.dtmweb.events.MessageListReceivedEvent;
 import com.cryptenet.thanatos.dtmweb.events.onMessageSentEvent;
 import com.cryptenet.thanatos.dtmweb.home.HomeActivity;
@@ -41,7 +40,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Presenter>
@@ -309,10 +307,5 @@ public class ThreadMsgFragment extends BaseFragment<ThreadMsgFragmentContract.Pr
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onThreadIdReceive(int threadId) {
-        this.threadId = threadId;
     }
 }

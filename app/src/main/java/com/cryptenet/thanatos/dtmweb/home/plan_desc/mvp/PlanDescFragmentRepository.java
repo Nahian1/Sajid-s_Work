@@ -73,7 +73,6 @@ public class PlanDescFragmentRepository extends BaseFragRepository
             public void onResponse(Call call, Response response) throws IOException {
                 Gson gson = new Gson();
                 ProjectsDLResponse detailed = gson.fromJson(response.body().string(), ProjectsDLResponse.class);
-//                Log.d(TAG, "onResponse: " + detailed.toString());
 
                 ProjectsDetailed detailed1 = new ProjectsDetailed();
                 detailed1.setId(detailed.getId());
@@ -97,26 +96,6 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                 EventBus.getDefault().post(new ShowPlanDetailsEvent(detailed1));
             }
         });
-
-//        Call<ResponseBody> detailedCall = apiClient.getLongDesc(
-//                "Bearer " + PreferenceManager
-//                        .getDefaultSharedPreferences(context)
-//                        .getString(ConstantProvider.SP_ACCESS_TOKEN, null),
-//                id
-//        );
-//
-//        detailedCall.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                ProjectsDetailed detailed = new ProjectsDetailed();
-//                response.body();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -195,91 +174,6 @@ public class PlanDescFragmentRepository extends BaseFragRepository
                         detailed1.setInitiatorAddress(user.getAddress());
 
                         EventBus.getDefault().post(new ShowPlanDetailsEvent(detailed1));
-                    }
-                });
-
-            }
-        });
-    }
-
-    @Override
-    public void getShortDetailsIni(Context context, int id) {
-        String head = "application/json";
-
-        OkHttpClient client = new OkHttpClient();
-
-        final Request request = new Request.Builder()
-                .url(ConstantProvider.BASE_URL + "api/v1/plan/" + id)
-                .get()
-                .addHeader("Content-Type", head)
-                .addHeader("Authorization", "Bearer " + PreferenceManager
-                        .getDefaultSharedPreferences(context)
-                        .getString(ConstantProvider.SP_ACCESS_TOKEN, null))
-                .build();
-        Log.d(TAG, " request : " + request.toString());
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-                EventBus.getDefault().post(new RequestFailureEvent(true));
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Gson gson = new Gson();
-                ProjectsDSResponse detailed = gson.fromJson(response.body().string(), ProjectsDSResponse.class);
-//                Log.d(TAG, "onResponse: " + detailed.toString());
-
-                ProjectsDetailed detailed1 = new ProjectsDetailed();
-                detailed1.setId(detailed.getId());
-                detailed1.setCategoryName(detailed.getCategoryName());
-                detailed1.setCover(detailed.getCover());
-                detailed1.setTitle(detailed.getTitle());
-                detailed1.setCategory(detailed.getCategory());
-                detailed1.setMaximumInvestmentCost(detailed.getMaximumInvestmentCost());
-                detailed1.setMinimumInvestmentCost(detailed.getMinimumInvestmentCost());
-                detailed1.setShortDescription(detailed.getShortDescription());
-                detailed1.setInitiator(detailed.getInitiator());
-                detailed1.setInitiatorsName(detailed.getInitiatorsName());
-                detailed1.setUploadedFile(detailed.getUploadedFile());
-                detailed1.setAccessPrice(detailed.getAccessPrice());
-                detailed1.setCreatedAt(detailed.getCreatedAt());
-                detailed1.setIsApproved(detailed.getIsApproved());
-
-                Request request = new Request.Builder()
-                        .url(ConstantProvider.BASE_URL + "api/v1/user/" + detailed.getInitiator() + "/")
-                        .get()
-                        .addHeader("Content-Type", head)
-                        .addHeader("Authorization", "Bearer " + PreferenceManager
-                                .getDefaultSharedPreferences(context)
-                                .getString(ConstantProvider.SP_ACCESS_TOKEN, null))
-                        .build();
-
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-
-                        EventBus.getDefault().post(new RequestFailureEvent(true));
-
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        Gson gson = new Gson();
-                        User user = gson.fromJson(response.body().string(), User.class);
-
-                        detailed1.setBankName(user.getBankName());
-                        detailed1.setBankAccountName(user.getBankAccountName());
-                        detailed1.setBankAccountNumber(user.getBankAccountNumber());
-                        detailed1.setInitiatorAddress(user.getAddress());
-                        detailed1.setInitiatorImage(user.getPicture());
-                        detailed1.setInitiatorAddress(user.getAddress());
-
-
-                        EventBus.getDefault().post(new ShowPlanDetailsEvent(detailed1));
-
                     }
                 });
 

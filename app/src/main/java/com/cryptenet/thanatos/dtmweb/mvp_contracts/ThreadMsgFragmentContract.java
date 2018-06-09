@@ -19,7 +19,6 @@ public interface ThreadMsgFragmentContract {
     }
 
     interface View extends BaseFragContract.View {
-        void onThreadIdReceive(int threadId);
     }
 
     interface Model extends BaseFragContract.Model {

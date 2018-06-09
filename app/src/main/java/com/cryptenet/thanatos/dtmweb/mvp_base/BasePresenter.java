@@ -14,11 +14,10 @@ import android.arch.lifecycle.LifecycleObserver;
 import android.os.Bundle;
 
 import com.cryptenet.thanatos.dtmweb.mvp_contracts.BaseContract;
-import com.cryptenet.thanatos.dtmweb.utils.providers.TagProvider;
 
 public abstract class BasePresenter<V extends BaseContract.View, M extends BaseContract.Model>
         implements LifecycleObserver, BaseContract.Presenter<V> {
-    private static final String TAG = TagProvider.getDebugTag(BasePresenter.class);
+//    private static final String TAG = TagProvider.getDebugTag(BasePresenter.class);
     protected V view;
     protected M model;
 

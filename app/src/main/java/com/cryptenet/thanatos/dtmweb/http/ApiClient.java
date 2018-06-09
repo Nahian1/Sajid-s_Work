@@ -43,30 +43,8 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 public interface ApiClient {
-//    @GET("api/v1/country/")
-//    Call<CountryResponse> getCountries();
-
     @GET("api/v1/plan-category/")
     Call<AllCategoriesResponse> getCategories(@Header("Authorization") String token);
-
-//    @GET("api/v1/city/")
-//    Call<CityResponse> getCities(@Query("country") int countryCode);
-//
-//    @FormUrlEncoded
-//    @POST("api/v1/user")
-//    Call<ResponseBody> attemptReg(
-//            @Field("picture")File picture,
-//            @Field("user_type") String user_type,
-//            @Field("name") String name,
-//            @Field("email") String email,
-//            @Field("password") String password,
-//            @Field("address") String address,
-//            @Field("country") String country,
-//            @Field("city") String city,
-//            @Field("bank_name") String bank_name,
-//            @Field("bank_account_name") String bank_account_name,
-//            @Field("bank_account_number") String bank_account_number
-//    );
 
     @GET("api/v1/plan/")
     Call<AllPlansResponse> getAllPlans(
@@ -121,26 +99,6 @@ public interface ApiClient {
 
     @GET("/api/v1/user/{id}")
     Call<User> getUserData(@Header("Authorization") String token, @Path("id") int transactionId);
-
-//    @FormUrlEncoded
-//    @POST("/api/v1/plan-access/")
-//    Call<TransactionDetails> submitTransaction(
-//            @Header("Authorization") String token,
-//            @FieldMap Map<String, String> map
-//    );
-
-//    @POST("/api/v1/plan-access/")
-//    Call<TransactionDetails> submitTransaction(
-//            @Header("Authorization") String token,
-//            RequestBody formBody
-//    );
-
-
-//    @GET("GET /api/v1/plan/{id}")
-//    Call<ProjectsDSResponse> getShortDesc(@Header("Authorization") String token, @Path("id") int id);
-//
-//    @GET("GET /api/v1/plan/{id}/details")
-//    Call<ResponseBody> getLongDesc(@Header("Authorization") String token, @Path("id") int id);
 
     @Multipart
     @POST("api/v1/user/")
@@ -249,8 +207,4 @@ public interface ApiClient {
 
     @GET("api/v1/message-thread/{thread_id}/messages/")
     Call<MessageListModel> getMessages(@Header("Authorization") String token , @Path("thread_id") String threadId);
-
-//    @FormUrlEncoded
-//    @POST("api/v1/message-thread/")
-//    Call<ThreadRequestModel> getThreadID(@Header("Authorization") String token , @Field("plan") int planId);
 }

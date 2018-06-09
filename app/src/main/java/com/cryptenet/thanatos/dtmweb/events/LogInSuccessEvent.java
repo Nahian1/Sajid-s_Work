@@ -10,7 +10,6 @@
 
 package com.cryptenet.thanatos.dtmweb.events;
 
-
 public class LogInSuccessEvent {
     public final String string;
     public final boolean isSuccess;
