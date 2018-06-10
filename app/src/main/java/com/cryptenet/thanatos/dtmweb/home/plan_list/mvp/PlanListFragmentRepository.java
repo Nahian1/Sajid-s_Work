@@ -61,8 +61,8 @@ public class PlanListFragmentRepository extends BaseFragRepository
 
             RequestBody formBody = new FormBody.Builder()
                     .add("grant_type", "refresh_token")
-                    .add("client_id", "")
-                    .add("client_secret", "")
+                    .add("client_id", PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.CLIENT_KEY, ""))
+                    .add("client_secret", PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.CLIENT_SECRET, ""))
                     .add("refresh_token", PreferenceManager.getDefaultSharedPreferences(context).getString(ConstantProvider.SP_REFRESH_TOKEN, ""))
                     .build();
 

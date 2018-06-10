@@ -13,19 +13,18 @@ package com.cryptenet.thanatos.dtmweb.utils.providers;
 public class ConstantProvider {
     public static final String ACTIVITY_FRAGMENT_MANAGER = "ActivityFragmentManager";
 
-//    public static final String LOCALE = "locale";
     public static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
 
 
-//    public static final String CLIENT_KEY = "xcziSPz2aLcKc5Egm1janzwGBS5jcNvi68BA88GP";
-//    public static final String CLIENT_SECRET = "VHSlol14f1AKcaXcdefMzsNA9kMKyngVPrSD5FxdxcQzukBzH8axcQRts4NUMdztZ035bSI4RGgzSRUsm4N7h7e106T9SfnijBvSgmRizIyPrXzKetePl5HpO49XQ3LK";
+    public static final String CLIENT_KEY = "BCO3kddY84FAU6MC6M8zuKpc3qlWJd7nC7ji88Vi";
+    public static final String CLIENT_SECRET = "knTSLcT7ipRiY7TxhlcerrWocNqSRXaVmogRx1jdtbooMMwhWOWip4IKUWkD1EnmCEsR18tUDvpOl5SCPmOD6cuVyAcy89FcQEVt4H2Qu9OqrfLkzHZamYGTumzz90EG";
 
-    public static final String ACCESS_BASIC = "eGN6aVNQejJhTGNLYzVFZ20xamFuendHQlM1amNOdmk2OEJBODhHUDpWSFNsb2wxNGYxQUtjYVhjZGVmTXpzTkE5a01LeW5nVlByU0Q1RnhkeGNRenVrQnpIOGF4Y1FSdHM0TlVNZHp0WjAzNWJTSTRSR2d6U1JVc200TjdoN2UxMDZUOVNmbmlqQnZTZ21SaXpJeVByWHpLZXRlUGw1SHBPNDlYUTNMSw==";
+    public static final String ACCESS_BASIC = "QkNPM2tkZFk4NEZBVTZNQzZNOHp1S3BjM3FsV0pkN25DN2ppODhWaTprblRTTGNUN2lwUmlZN1R4aGxjZXJyV29jTnFTUlhhVm1vZ1J4MWpkdGJvb01Nd2hXT1dpcDRJS1VXa0QxRW5tQ0VzUjE4dFVEdnBPbDVTQ1BtT0Q2Y3VWeUFjeTg5RmNRRVZ0NEgyUXU5T3FyZkxrekhaYW1ZR1R1bXp6OTBFRw==";
 
     public static final int RESULT_LOAD_IMG = 101;
     public static final int RESULT_FILE_IMG = 102;
 
-    public static final String BASE_URL = "https://fa-sa-801-dev.herokuapp.com/";
+    public static final String BASE_URL = "https://fa-sa-801.herokuapp.com/";
 
     public static final String SP_ACCESS_TOKEN = "ac_token";
     public static final String SP_REFRESH_TOKEN = "rs_token";
