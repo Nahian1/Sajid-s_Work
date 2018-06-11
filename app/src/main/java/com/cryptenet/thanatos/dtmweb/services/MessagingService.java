@@ -39,12 +39,14 @@ public class MessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT
         );
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, ConstantProvider.CHANNEL_ID);
-        builder
-                .setContentTitle(getString(R.string.app_name))
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                this,
+                ConstantProvider.CHANNEL_ID);
+
+        builder.setContentTitle(getString(R.string.app_name))
                 .setContentText(remoteMessage.getNotification().getBody())
                 .setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

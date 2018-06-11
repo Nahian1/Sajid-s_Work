@@ -459,7 +459,6 @@ public class HomeActivity extends BaseFragActivity<HomeActivityContract.Presente
 
     @Override
     public void onBackPressed() {
-
         if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
         else

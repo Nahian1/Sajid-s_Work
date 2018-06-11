@@ -38,7 +38,7 @@ import retrofit2.Response;
 @PerFragment
 public class RequestDetailFragmentRepository extends BaseFragRepository
         implements RequestDetailFragmentContract.Repository {
-//    private static String TAG = TagProvider.getDebugTag(RequestDetailFragmentRepository.class);
+//  private static String TAG = TagProvider.getDebugTag(RequestDetailFragmentRepository.class);
 
     @Override
     public void getTransactionDetails(Context context, int transactionId, int userType) {
@@ -129,7 +129,7 @@ public class RequestDetailFragmentRepository extends BaseFragRepository
         MediaType mediaType = MediaType.parse("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
         RequestBody body = RequestBody.create(mediaType, "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"is_approved\"\r\n\r\ntrue\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--");
         Request request = new Request.Builder()
-                .url("http://fa-sa-801-dev.herokuapp.com/api/v1/plan-access/" + transactionId + "/access/")
+                .url(ConstantProvider.BASE_URL + "api/v1/plan-access/" + transactionId + "/access/")
                 .put(body)
                 .addHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
                 .addHeader("Content-Type", head)
