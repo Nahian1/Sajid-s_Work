@@ -49,8 +49,10 @@
                     android:id="@+id/message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxWidth="290dp"
                     android:minHeight="@dimen/margin_horizontal_40"
                     android:text="Hello"
+                    android:maxLines="500"
                     android:gravity="start"
                     android:paddingTop="@dimen/margin_vertical_8"
                     android:paddingBottom="@dimen/margin_vertical_8"
@@ -84,7 +86,7 @@
 
                 <TextView
                     android:id="@+id/send_message"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_horizontal_8"
                     android:layout_marginStart="@dimen/margin_horizontal_8"
@@ -93,6 +95,7 @@
                     android:paddingBottom="@dimen/margin_vertical_8"
                     android:paddingTop="@dimen/margin_vertical_8"
                     android:text="hello"
+                    android:maxLines="500"
                     android:textColor="@color/white" />
             </LinearLayout>
 

@@ -11,9 +11,9 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_thread_msg">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -50,11 +50,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/round_shape_chat"
-            android:hint="Aaa..."
+            android:hint="@string/hint_et_thread_msg"
             android:imeOptions="actionSend"
             android:inputType="text"
-            android:paddingBottom="8dp"
-            android:paddingLeft="20dp"
-            android:singleLine="true" />
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            android:maxLines="1" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -108,4 +108,5 @@
     <string name="no_more_man_projects">ليس لديك أي خطط معتمدة أكثر !!</string>
     <string name="no_more_man_requests">ليس لديك أي طلبات أخرى !!</string>
     <string name="no_more_threads_found">لا مزيد من المواضيع وجدت !!</string>
+    <string name="hint_et_thread_msg">أأأ …</string>
 </resources>

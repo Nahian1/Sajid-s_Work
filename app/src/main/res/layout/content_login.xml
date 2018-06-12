@@ -49,8 +49,9 @@
         android:layout_height="wrap_content"
         android:text="فكرة"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:layout_marginTop="@dimen/margin_vertical_8"
+        android:textSize="22sp"
+        android:fontFamily="@font/tahoma_font_family"
+        android:layout_marginTop="@dimen/margin_vertical_32"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_logo" />
@@ -63,7 +64,7 @@
         android:layout_marginLeft="@dimen/margin_horizontal_8"
         android:layout_marginRight="@dimen/margin_horizontal_8"
         android:layout_marginStart="@dimen/margin_horizontal_8"
-        android:layout_marginTop="@dimen/margin_vertical_16"
+        android:layout_marginTop="@dimen/margin_vertical_32"
         android:backgroundTint="@android:color/white"
         android:hint="@string/hint_et_email"
         android:inputType="textEmailAddress"
@@ -153,6 +154,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20" />
+        app:layout_constraintGuide_percent="0.18" />
 
 </android.support.constraint.ConstraintLayout>

@@ -87,6 +87,7 @@
     <string name="update_profile">Update</string>
 
     <string name="hint_et_issue">Tell us about the issue …</string>
+    <string name="hint_et_thread_msg">Aaa …</string>
     <string name="tag_accepted">Accepted</string>
     <string name="tag_pending">Pending</string>
     <string name="last_conversation">Last Conv: </string>
