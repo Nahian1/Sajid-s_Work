@@ -1,6 +1,8 @@
 **Fikra**
 ---
 
+SKU: DTMFIK-MOB-AND-0518
+
 A business platform for the initiators and investors to collaborate among themselves and grow their ideas.
 
 ---
