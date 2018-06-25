@@ -2,15 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'cryptenet'
-            keyPassword 'crypt3n3t.th'
-            storeFile file('/media/thanatos/Workspace/cryptenet.jks')
-            storePassword 'crypt3n3t.th'
-        }
-    }
-
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
 
@@ -33,10 +24,8 @@ android {
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
         debug {
-//            signingConfig signingConfigs.config
         }
     }
 
